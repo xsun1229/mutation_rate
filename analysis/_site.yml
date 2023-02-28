@@ -1,0 +1,17 @@
+name: "mutation_rate"
+output_dir: ../docs
+navbar:
+  title: "mutation_rate"
+  left:
+  - text: Home
+    href: index.html
+  - text: About
+    href: about.html
+  - text: License
+    href: license.html
+output:
+  workflowr::wflow_html:
+    toc: yes
+    toc_float: yes
+    theme: cosmo
+    highlight: textmate
