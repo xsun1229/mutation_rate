@@ -1,7 +1,7 @@
-name: "mutation_rate"
+name: mutation_rate
 output_dir: ../docs
 navbar:
-  title: "mutation_rate"
+  title: mutation_rate
   left:
   - text: Home
     href: index.html
@@ -9,6 +9,10 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  right:
+  - icon: fab fa-github
+    text: Source code
+    href: https://github.com/xsun1229/mutation_rate
 output:
   workflowr::wflow_html:
     toc: yes
