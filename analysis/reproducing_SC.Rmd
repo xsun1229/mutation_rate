@@ -1,0 +1,124 @@
+---
+title: "Reproducing Simons-control"
+author: "XSun"
+date: "2023-02-28"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(smashr))
+```
+
+# C -> T, nonCpG, window size = 500k, constant variance
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE,fig.height=5, fig.width=10}
+
+folder <- "/project2/xinhe/Shengtong/mutation_rate/mutation.rate/Simons_WGS/controls/mutation.C_to_T/nonCpG/"
+file <- paste0(folder,"table.ASCWGS_20180504.WGS1902_hg19_controls_SNV_remove_recurrent_mutation.C_to_T.nonCpG.ExpObsVar.bed.bed.added.500k" )
+sum_mut <- read.table(file)
+
+sum_mut <- sum_mut[sum_mut$V4 != ".",]
+mu.e1 <- smash.poiss(as.numeric(sum_mut$V4))
+print("poisson, observed mutation count")
+plot(sum_mut$V4, type="l")
+lines(mu.e1,col="2")
+
+print("gauss, predicted mutation count")
+mu.e2 <- smash.gaus(as.numeric(sum_mut$V5))
+plot(sum_mut$V5, type="l")
+lines(mu.e2,col="2")
+
+print("gauss, observed mutation count - predicted mutation count")
+diff <- as.numeric(sum_mut$V4) - as.numeric(sum_mut$V5)
+mu.e3 <- smash.gaus(diff)
+plot(diff, type="l")
+lines(mu.e3,col="2")
+
+
+```
+
+
+# C -> T, nonCpG, window size = 20k, constant variance
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE,fig.height=5, fig.width=10}
+
+folder <- "/project2/xinhe/Shengtong/mutation_rate/mutation.rate/Simons_WGS/controls/mutation.C_to_T/nonCpG/"
+file <- paste0(folder,"table.ASCWGS_20180504.WGS1902_hg19_controls_SNV_remove_recurrent_mutation.C_to_T.nonCpG.ExpObsVar.bed.bed.added.20k" )
+sum_mut <- read.table(file)
+
+sum_mut <- sum_mut[sum_mut$V4 != ".",]
+#mu.e1 <- smash.poiss(as.numeric(sum_mut$V4))
+print("observed mutation count")
+plot(sum_mut$V4, type="l")
+#lines(mu.e1,col="2")
+
+print("predicted mutation count")
+#mu.e2 <- smash.gaus(as.numeric(sum_mut$V5))
+plot(sum_mut$V5, type="l")
+#lines(mu.e2,col="2")
+
+print("observed mutation count - predicted mutation count")
+diff <- as.numeric(sum_mut$V4) - as.numeric(sum_mut$V5)
+#mu.e3 <- smash.gaus(diff)
+plot(diff, type="l")
+#lines(mu.e3,col="2")
+
+```
+
+
+# C -> T, nonCpG, window size = 1000bp, constant variance
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE,fig.height=5, fig.width=10}
+
+folder <- "/project2/xinhe/Shengtong/mutation_rate/mutation.rate/Simons_WGS/controls/mutation.C_to_T/nonCpG/"
+file <- paste0(folder,"table.ASCWGS_20180504.WGS1902_hg19_controls_SNV_remove_recurrent_mutation.C_to_T.nonCpG.ExpObsVar.bed.bed.added.1000bp" )
+sum_mut <- read.table(file)
+
+sum_mut <- sum_mut[sum_mut$V4 != ".",]
+#mu.e1 <- smash.poiss(as.numeric(sum_mut$V4))
+print("observed mutation count")
+plot(sum_mut$V4, type="l")
+#lines(mu.e1,col="2")
+
+print("predicted mutation count")
+#mu.e2 <- smash.gaus(as.numeric(sum_mut$V5))
+plot(sum_mut$V5, type="l")
+#lines(mu.e2,col="2")
+
+print("observed mutation count - predicted mutation count")
+diff <- as.numeric(sum_mut$V4) - as.numeric(sum_mut$V5)
+#mu.e3 <- smash.gaus(diff)
+plot(diff, type="l")
+#lines(mu.e3,col="2")
+
+```
+
+
+<!-- # C -> T, nonCpG, window size = 100bp, constant variance -->
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=FALSE,fig.height=5, fig.width=10} -->
+
+<!-- folder <- "/project2/xinhe/Shengtong/mutation_rate/mutation.rate/Simons_WGS/controls/mutation.C_to_T/nonCpG/" -->
+<!-- file <- paste0(folder,"table.ASCWGS_20180504.WGS1902_hg19_controls_SNV_remove_recurrent_mutation.C_to_T.nonCpG.ExpObsVar.bed.bed.added.100bp" ) -->
+<!-- sum_mut <- read.table(file) -->
+
+<!-- sum_mut <- sum_mut[sum_mut$V4 != ".",] -->
+<!-- #mu.e1 <- smash.poiss(as.numeric(sum_mut$V4)) -->
+<!-- print("observed mutation count") -->
+<!-- plot(sum_mut$V4, type="l") -->
+<!-- #lines(mu.e1,col="2") -->
+
+<!-- print("predicted mutation count") -->
+<!-- #mu.e2 <- smash.gaus(as.numeric(sum_mut$V5)) -->
+<!-- plot(sum_mut$V5, type="l") -->
+<!-- #lines(mu.e2,col="2") -->
+
+<!-- print("observed mutation count - predicted mutation count") -->
+<!-- diff <- as.numeric(sum_mut$V4) - as.numeric(sum_mut$V5) -->
+<!-- #mu.e3 <- smash.gaus(diff) -->
+<!-- plot(diff, type="l") -->
+<!-- #lines(mu.e3,col="2") -->
+
+<!-- ``` -->

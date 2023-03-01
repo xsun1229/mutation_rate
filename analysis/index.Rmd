@@ -8,4 +8,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+# Mutation Rate Modeling
+
+- [Reproducing - Simons-control](https://xsun1229.github.io/mutation_rate/reproducing_SC.html)
