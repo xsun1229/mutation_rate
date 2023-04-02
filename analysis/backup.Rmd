@@ -158,45 +158,46 @@ load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_
 
 ```
 
-Considering the 6 mutation types collectively
+- Considering the 6 mutation types collectively
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 print(head(merged))
-print(paste0("The observed mutation count is ", sum(merged$AC,na.rm = T)))
+print(paste0("The observed mutation count is ", sum(!duplicated(merged$POS))))
 print(paste0("The expected mutation rate is ", sum(merged$p,na.rm = T)))
 ```
 
-Considering the 6 mutation types separately
+- Considering the 6 mutation types separately
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
 print("A-C")
-print(paste0("The observed mutation count is ", sum(merged_ac$AC,na.rm = T)))
+print(paste0("The observed mutation count is ", sum(!duplicated(merged_ac$POS))))
 print(paste0("The expected mutation rate is ", sum(merged_ac$p,na.rm = T)))
 
 print("A-G")
-print(paste0("The observed mutation count is ", sum(merged_ag$AC,na.rm = T)))
+print(paste0("The observed mutation count is ", sum(!duplicated(merged_ag$POS))))
 print(paste0("The expected mutation rate is ", sum(merged_ag$p,na.rm = T)))
 
 print("A-T")
-print(paste0("The observed mutation count is ", sum(merged_at$AC,na.rm = T)))
+print(paste0("The observed mutation count is ", sum(!duplicated(merged_at$POS))))
 print(paste0("The expected mutation rate is ", sum(merged_at$p,na.rm = T)))
 
 
 print("C-A")
-print(paste0("The observed mutation count is ", sum(merged_ca$AC,na.rm = T)))
+print(paste0("The observed mutation count is ", sum(!duplicated(merged_ca$POS))))
 print(paste0("The expected mutation rate is ", sum(merged_ca$p,na.rm = T)))
 
 print("C-G")
-print(paste0("The observed mutation count is ", sum(merged_cg$AC,na.rm = T)))
+print(paste0("The observed mutation count is ", sum(!duplicated(merged_cg$POS))))
 print(paste0("The expected mutation rate is ", sum(merged_cg$p,na.rm = T)))
 
 
 print("C-T")
-print(paste0("The observed mutation count is ", sum(merged_ct$AC,na.rm = T)))
+print(paste0("The observed mutation count is ", sum(!duplicated(merged_ct$POS))))
 print(paste0("The expected mutation rate is ", sum(merged_ct$p,na.rm = T)))
 
-observed <- c(sum(merged_at$AC,na.rm = T),sum(merged_ac$AC,na.rm = T),sum(merged_ag$AC,na.rm = T),sum(merged_ct$AC,na.rm = T),sum(merged_cg$AC,na.rm = T),sum(merged_ca$AC,na.rm = T))
-expected <- c(sum(merged_at$p,na.rm = T),sum(merged_ac$p,na.rm = T),sum(merged_ag$p,na.rm = T),sum(merged_ct$p,na.rm = T),sum(merged_cg$p,na.rm = T),sum(merged_ca$p,na.rm = T))
+#observed <- c(sum(!duplicated(merged_ac$POS)),sum(!duplicated(merged_ag$POS)),sum(!duplicated(merged_at$POS)),sum(!duplicated(merged_ca$POS)),sum(!duplicated(merged_cg$POS)),sum(!duplicated(merged_ct$POS)))
+observed <- c(sum(is.na(merged_ac$AC)),sum(is.na(merged_ag$AC)),sum(is.na(merged_at$AC)),sum(is.na(merged_ca$AC)),sum(is.na(merged_cg$AC)),sum(is.na(merged_ct$AC)))
+expected <- c(sum(merged_ac$p,na.rm = T),sum(merged_ag$p,na.rm = T),sum(merged_at$p,na.rm = T),sum(merged_ca$p,na.rm = T),sum(merged_cg$p,na.rm = T),sum(merged_ct$p,na.rm = T))
 
 print("fitting: observed ~ expexted + 0")
 fit <- lm(observed ~ expected + 0)
