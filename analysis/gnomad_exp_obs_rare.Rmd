@@ -32,6 +32,7 @@ merged_ct <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/e
 
 mut_obs <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data/chr22.SNV.txt")
 colnames(mut_obs) <- c("CHROM","POS","ID","REF","ALT","QUAL","FILTER","AN","AC","AF")
+mut_obs <- mut_obs[mut_obs$AF<0.001,]
 obs_ac <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ac_rare_chr22.csv")
 obs_ag <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ag_rare_chr22.csv")
 obs_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_at_rare_chr22.csv")
@@ -131,3 +132,4 @@ abline(fit)
 print(summary(fit))
 
 ```
+
