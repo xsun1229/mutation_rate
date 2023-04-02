@@ -432,10 +432,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -528,15 +528,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree38fef7774b3e923dbc7e5ac57a85624c50a3820etargetblank38fef77a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreeb6671be3fe171847f02eef4634709aa0e49c7395targetblankb6671bea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/38fef7774b3e923dbc7e5ac57a85624c50a3820e" target="_blank">38fef77</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/b6671be3fe171847f02eef4634709aa0e49c7395" target="_blank">b6671be</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree38fef7774b3e923dbc7e5ac57a85624c50a3820etargetblank38fef77a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreeb6671be3fe171847f02eef4634709aa0e49c7395targetblankb6671bea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -546,7 +546,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/38fef7774b3e923dbc7e5ac57a85624c50a3820e" target="_blank">38fef77</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/b6671be3fe171847f02eef4634709aa0e49c7395" target="_blank">b6671be</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -560,11 +560,9 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/gnomad_exp_obs.Rmd
-
 Unstaged changes:
-    Modified:   analysis/reproducing_SC.Rmd
+    Modified:   analysis/gnomad_exp_obs.Rmd
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -579,10 +577,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/gnomad_exp_obs.Rmd</code>) and
+HTML (<code>docs/gnomad_exp_obs.html</code>) files. If you’ve configured
+a remote Git repository (see <code>?wflow_git_remote</code>), click on
+the hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b6671be3fe171847f02eef4634709aa0e49c7395/analysis/gnomad_exp_obs.Rmd" target="_blank">b6671be</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/b6671be3fe171847f02eef4634709aa0e49c7395/docs/gnomad_exp_obs.html" target="_blank">b6671be</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -592,7 +654,7 @@ There are no past versions. Publish this analysis with
 <p>SNV from gnomAD v3.1 whole genome</p>
 </div>
 <div id="chr22" class="section level1">
-<h1>Chr22</h1>
+<h1>CHR22</h1>
 <div id="considerting-the-entire-chromosome" class="section level2">
 <h2>Considerting the entire chromosome</h2>
 <div
@@ -600,7 +662,9 @@ id="count-the-number-of-rare-snvsaf-0.001-do-p-1-exp-mu-conversion-of-mutation-r
 class="section level3">
 <h3>Count the number of rare SNVs(AF &lt;0.001), do p = 1-exp(-mu)
 conversion of mutation rate to prob. of being polymorphic.</h3>
-<p>Considering the 6 mutation types as a whole</p>
+<ul>
+<li>Considering the 6 mutation types collectively</li>
+</ul>
 <pre><code>  CHROM      POS REF ALT ID_exp QUAL_exp FILTER_exp    MR          p
 1    22 10510413   G   A      .        .        low 0.128 0.12014662
 2    22 10510413   G   C      .        .        low 0.051 0.04972133
@@ -617,7 +681,9 @@ conversion of mutation rate to prob. of being polymorphic.</h3>
 6         &lt;NA&gt;     &lt;NA&gt;       &lt;NA&gt;    NA NA          NA</code></pre>
 <pre><code>[1] &quot;The observed mutation count is 40317642&quot;</code></pre>
 <pre><code>[1] &quot;The expected mutation rate is 2238558.13213428&quot;</code></pre>
-<p>Considering the 6 mutation types separately</p>
+<ul>
+<li>Considering the 6 mutation types separately</li>
+</ul>
 <pre><code>[1] &quot;A-C&quot;</code></pre>
 <pre><code>[1] &quot;The observed mutation count is 2435592&quot;</code></pre>
 <pre><code>[1] &quot;The expected mutation rate is 83414.7154197101&quot;</code></pre>
@@ -638,6 +704,43 @@ conversion of mutation rate to prob. of being polymorphic.</h3>
 <pre><code>[1] &quot;The expected mutation rate is 1251380.81877508&quot;</code></pre>
 <pre><code>[1] &quot;fitting: observed ~ expexted + 0&quot;</code></pre>
 <p><img src="figure/gnomad_exp_obs.Rmd/unnamed-chunk-3-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b6671be3fe171847f02eef4634709aa0e49c7395/docs/figure/gnomad_exp_obs.Rmd/unnamed-chunk-3-1.png" target="_blank">b6671be</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 Call:
 lm(formula = observed ~ expected + 0)
@@ -655,12 +758,15 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 1726000 on 5 degrees of freedom
 Multiple R-squared:  0.9694,    Adjusted R-squared:  0.9633 
 F-statistic: 158.5 on 1 and 5 DF,  p-value: 5.614e-05</code></pre>
+</div>
 <div
 id="all-snvs-add-up-the-total-ac-allelic-counts-of-all-svns-just-add-up-the-rates."
-class="section level4">
-<h4>all SNVs, Add up the total AC (allelic counts) of all SVNs, just add
-up the rates.</h4>
-<p>Considering the 6 mutation types as a whole</p>
+class="section level3">
+<h3>all SNVs, Add up the total AC (allelic counts) of all SVNs, just add
+up the rates.</h3>
+<ul>
+<li>Considering the 6 mutation types collectively</li>
+</ul>
 <pre><code>  CHROM      POS REF ALT ID_exp QUAL_exp FILTER_exp    MR       ID_obs QUAL_obs
 1    22 10510413   G   A      .        .        low 0.128            .        .
 2    22 10510413   G   C      .        .        low 0.051         &lt;NA&gt;     &lt;NA&gt;
@@ -698,6 +804,43 @@ up the rates.</h4>
 <pre><code>[1] &quot;The expected mutation rate is 2367972.749&quot;</code></pre>
 <pre><code>[1] &quot;fitting: observed ~ expexted + 0&quot;</code></pre>
 <p><img src="figure/gnomad_exp_obs.Rmd/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b6671be3fe171847f02eef4634709aa0e49c7395/docs/figure/gnomad_exp_obs.Rmd/unnamed-chunk-6-1.png" target="_blank">b6671be</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 Call:
 lm(formula = observed ~ expected + 0)
@@ -718,7 +861,6 @@ F-statistic: 53.22 on 1 and 5 DF,  p-value: 0.0007576</code></pre>
 </div>
 </div>
 </div>
-</div>
 <div id="chr21" class="section level1">
 <h1>CHR21</h1>
 <div id="considerting-the-entire-chromosome-1" class="section level2">
@@ -728,7 +870,7 @@ id="count-the-number-of-rare-snvsaf-0.001-do-p-1-exp-mu-conversion-of-mutation-r
 class="section level3">
 <h3>Count the number of rare SNVs(AF &lt;0.001), do p = 1-exp(-mu)
 conversion of mutation rate to prob. of being polymorphic.</h3>
-<p>Considering the 6 mutation types as a whole</p>
+<p>Considering the 6 mutation types collectively</p>
 <pre><code>  CHROM     POS REF ALT ID_exp QUAL_exp FILTER_exp    MR          p ID_obs
 1    21 5030526   G   A      .        .        low 0.174 0.15970310      .
 2    21 5030526   G   C      .        .        low 0.041 0.04017087   &lt;NA&gt;
@@ -766,6 +908,43 @@ conversion of mutation rate to prob. of being polymorphic.</h3>
 <pre><code>[1] &quot;The expected mutation rate is 980285.227535679&quot;</code></pre>
 <pre><code>[1] &quot;fitting: observed ~ expexted + 0&quot;</code></pre>
 <p><img src="figure/gnomad_exp_obs.Rmd/unnamed-chunk-9-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b6671be3fe171847f02eef4634709aa0e49c7395/docs/figure/gnomad_exp_obs.Rmd/unnamed-chunk-9-1.png" target="_blank">b6671be</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 Call:
 lm(formula = observed ~ expected + 0)
@@ -783,12 +962,13 @@ Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&
 Residual standard error: 1493000 on 5 degrees of freedom
 Multiple R-squared:  0.9707,    Adjusted R-squared:  0.9648 
 F-statistic: 165.7 on 1 and 5 DF,  p-value: 5.042e-05</code></pre>
+</div>
 <div
 id="all-snvs-add-up-the-total-ac-allelic-counts-of-all-svns-just-add-up-the-rates.-1"
-class="section level4">
-<h4>all SNVs, Add up the total AC (allelic counts) of all SVNs, just add
-up the rates.</h4>
-<p>Considering the 6 mutation types as a whole</p>
+class="section level3">
+<h3>all SNVs, Add up the total AC (allelic counts) of all SVNs, just add
+up the rates.</h3>
+<p>Considering the 6 mutation types collectively</p>
 <pre><code>  CHROM     POS REF ALT ID_exp QUAL_exp FILTER_exp    MR ID_obs QUAL_obs
 1    21 5030526   G   A      .        .        low 0.174      .        .
 2    21 5030526   G   C      .        .        low 0.041   &lt;NA&gt;     &lt;NA&gt;
@@ -826,6 +1006,43 @@ up the rates.</h4>
 <pre><code>[1] &quot;The expected mutation rate is 1777701.405&quot;</code></pre>
 <pre><code>[1] &quot;fitting: observed ~ expexted + 0&quot;</code></pre>
 <p><img src="figure/gnomad_exp_obs.Rmd/unnamed-chunk-12-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b6671be3fe171847f02eef4634709aa0e49c7395/docs/figure/gnomad_exp_obs.Rmd/unnamed-chunk-12-1.png" target="_blank">b6671be</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 Call:
 lm(formula = observed ~ expected + 0)
@@ -866,17 +1083,17 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     rstudioapi_0.13  knitr_1.39       magrittr_2.0.3  
- [5] workflowr_1.7.0  R6_2.5.1         rlang_1.0.5      fastmap_1.1.0   
- [9] fansi_1.0.3      highr_0.9        stringr_1.4.0    tools_4.2.0     
-[13] xfun_0.30        utf8_1.2.2       cli_3.3.0        git2r_0.30.1    
-[17] jquerylib_0.1.4  htmltools_0.5.2  ellipsis_0.3.2   rprojroot_2.0.3 
-[21] yaml_2.3.5       digest_0.6.29    tibble_3.1.7     lifecycle_1.0.1 
-[25] crayon_1.5.1     later_1.3.0      sass_0.4.1       vctrs_0.4.1     
-[29] promises_1.2.0.1 fs_1.5.2         glue_1.6.2       evaluate_0.15   
-[33] rmarkdown_2.14   stringi_1.7.6    bslib_0.3.1      compiler_4.2.0  
-[37] pillar_1.7.0     jsonlite_1.8.0   httpuv_1.6.5     pkgconfig_2.0.3 </code></pre>
-</div>
+ [1] Rcpp_1.0.8.3     rstudioapi_0.13  whisker_0.4      knitr_1.39      
+ [5] magrittr_2.0.3   workflowr_1.7.0  R6_2.5.1         rlang_1.0.5     
+ [9] fastmap_1.1.0    fansi_1.0.3      highr_0.9        stringr_1.4.0   
+[13] tools_4.2.0      xfun_0.30        utf8_1.2.2       cli_3.3.0       
+[17] git2r_0.30.1     jquerylib_0.1.4  htmltools_0.5.2  ellipsis_0.3.2  
+[21] rprojroot_2.0.3  yaml_2.3.5       digest_0.6.29    tibble_3.1.7    
+[25] lifecycle_1.0.1  crayon_1.5.1     later_1.3.0      sass_0.4.1      
+[29] vctrs_0.4.1      promises_1.2.0.1 fs_1.5.2         glue_1.6.2      
+[33] evaluate_0.15    rmarkdown_2.14   stringi_1.7.6    bslib_0.3.1     
+[37] compiler_4.2.0   pillar_1.7.0     jsonlite_1.8.0   httpuv_1.6.5    
+[41] pkgconfig_2.0.3 </code></pre>
 </div>
 </div>
 </div>

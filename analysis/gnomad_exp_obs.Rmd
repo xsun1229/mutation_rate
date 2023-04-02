@@ -13,7 +13,7 @@ editor_options:
 
 SNV from gnomAD v3.1 whole genome 
 
-# Chr22
+# CHR22
 
 ## Considerting the entire chromosome
 
@@ -30,7 +30,7 @@ load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_
 
 ```
 
-Considering the 6 mutation types as a whole
+- Considering the 6 mutation types collectively
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 print(head(merged))
@@ -38,7 +38,7 @@ print(paste0("The observed mutation count is ", sum(merged$AC,na.rm = T)))
 print(paste0("The expected mutation rate is ", sum(merged$p,na.rm = T)))
 ```
 
-Considering the 6 mutation types separately
+- Considering the 6 mutation types separately
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
 print("A-C")
@@ -79,7 +79,7 @@ print(summary(fit))
 ```
 
 
-#### all SNVs, Add up the total AC (allelic counts) of all SVNs, just add up the rates.
+### all SNVs, Add up the total AC (allelic counts) of all SVNs, just add up the rates.
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_all.rdata")
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_all_ac.rdata")
@@ -91,7 +91,7 @@ load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_
 ```
 
 
-Considering the 6 mutation types as a whole
+- Considering the 6 mutation types collectively
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 print(head(merged))
@@ -157,7 +157,7 @@ load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_
 
 ```
 
-Considering the 6 mutation types as a whole
+Considering the 6 mutation types collectively
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 print(head(merged))
@@ -206,7 +206,7 @@ print(summary(fit))
 ```
 
 
-#### all SNVs, Add up the total AC (allelic counts) of all SVNs, just add up the rates.
+### all SNVs, Add up the total AC (allelic counts) of all SVNs, just add up the rates.
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_all_chr21.rdata")
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_all_ac_chr21.rdata")
@@ -218,7 +218,7 @@ load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_exp_merged_
 ```
 
 
-Considering the 6 mutation types as a whole
+Considering the 6 mutation types collectively
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 print(head(merged))
