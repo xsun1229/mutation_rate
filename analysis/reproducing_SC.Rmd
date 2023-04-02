@@ -79,7 +79,7 @@ sum_mut <- read.table(file)
 sum_mut <- sum_mut[sum_mut$V4 != ".",]
 #mu.e1 <- smash.poiss(as.numeric(sum_mut$V4))
 print("observed mutation count")
-plot(sum_mut$V4, type="l")
+plot(sum_mut$V4, type="p")
 #lines(mu.e1,col="2")
 
 print("predicted mutation count")
