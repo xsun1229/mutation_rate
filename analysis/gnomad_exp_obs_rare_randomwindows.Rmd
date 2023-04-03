@@ -1,5 +1,5 @@
 ---
-title: "Comparing the expected mutation rate and ovserved mutation counts"
+title: "Comparing the expected mutation rate and ovserved mutation counts -- random windows"
 author: "XSun"
 date: "2023-04-02"
 output: workflowr::wflow_html
@@ -16,10 +16,6 @@ library(data.table)
 SNV with AF < 0.001, from gnomAD v3.1 whole genome 
 
 # CHR22
-
-## Considerting the entire chromosome
-
-### probability of being polymorphic -- do p = 1-exp(-mu) conversion of mutation rate to prob. of being polymorphic.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_rare_chr22.csv")
@@ -40,101 +36,6 @@ obs_ca <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_
 obs_cg <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_cg_rare_chr22.csv")
 obs_ct <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ct_rare_chr22.csv")
 ```
-
-- Considering the 6 mutation types collectively
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-print(head(merged))
-print(paste0("The observed number of positions that are polymorphic =", sum(!duplicated(mut_obs))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged$p,na.rm = T)))
-```
-
-- Considering the 6 mutation types separately
-
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
-print("A-C")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ac$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ac$p,na.rm = T)))
-
-print("A-G")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ag$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ag$p,na.rm = T)))
-
-print("A-T")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_at$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_at$p,na.rm = T)))
-
-print("C-A")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ca$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ca$p,na.rm = T)))
-
-print("C-G")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_cg$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_cg$p,na.rm = T)))
-
-print("C-T")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ct$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ct$p,na.rm = T)))
-
-observed <- c(sum(!duplicated(obs_ac$POS)),sum(!duplicated(obs_ag$POS)),sum(!duplicated(obs_at$POS)),sum(!duplicated(obs_ca$POS)),sum(!duplicated(obs_cg$POS)),sum(!duplicated(obs_ct$POS)))
-expected <- c(sum(merged_ac$p,na.rm = T),sum(merged_ag$p,na.rm = T),sum(merged_at$p,na.rm = T),sum(merged_ca$p,na.rm = T),sum(merged_cg$p,na.rm = T),sum(merged_ct$p,na.rm = T))
-
-print("fitting: observed ~ expexted + 0")
-fit <- lm(observed ~ expected + 0)
-plot(expected, observed)
-abline(fit)
-print(summary(fit))
-
-```
-
-
-
-### Number of allele count -- add up the mutation rates
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-print(paste0("The observed allele count =", sum(mut_obs$AC,na.rm = T)))
-print(paste0("The expected allele coun = ", sum(merged$MR,na.rm = T)))
-```
-
-
-- Considering the 6 mutation types separately
-
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
-print("A-C")
-print(paste0("The observed allele count = ", sum(obs_ac$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ac$MR,na.rm = T)))
-
-print("A-G")
-print(paste0("The observed allele count = ", sum(obs_ag$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ag$MR,na.rm = T)))
-
-print("A-T")
-print(paste0("The observed allele count = ", sum(obs_at$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_at$MR,na.rm = T)))
-
-print("C-A")
-print(paste0("The observed allele count = ", sum(obs_ca$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ca$MR,na.rm = T)))
-
-print("C-G")
-print(paste0("The observed allele count = ", sum(obs_cg$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_cg$MR,na.rm = T)))
-
-print("C-T")
-print(paste0("The observed allele count = ", sum(obs_ct$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ct$MR,na.rm = T)))
-
-observed <- c(sum(obs_at$AC,na.rm = T),sum(obs_ac$AC,na.rm = T),sum(obs_ag$AC,na.rm = T),sum(obs_ct$AC,na.rm = T),sum(obs_cg$AC,na.rm = T),sum(obs_ca$AC,na.rm = T))
-expected <- c(sum(merged_at$MR,na.rm = T),sum(merged_ac$MR,na.rm = T),sum(merged_ag$MR,na.rm = T),sum(merged_ct$MR,na.rm = T),sum(merged_cg$MR,na.rm = T),sum(merged_ca$MR,na.rm = T))
-
-print("fitting: observed ~ expexted + 0")
-fit <- lm(observed ~ expected + 0)
-plot(expected, observed)
-abline(fit)
-print(summary(fit))
-
-```
-
 
 ## Considering random windows -- 1kb
 
