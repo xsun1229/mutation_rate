@@ -431,10 +431,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -562,6 +562,9 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
 
+Untracked files:
+    Untracked:  analysis/gnomad_random_obsexp_SNV.Rmd
+
 Unstaged changes:
     Modified:   analysis/gnomad_random_obsexp_AC.Rmd
 
@@ -578,75 +581,10 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/gnomad_random_obsexp_AC.Rmd</code>) and HTML
-(<code>docs/gnomad_random_obsexp_AC.html</code>) files. If you’ve
-configured a remote Git repository (see <code>?wflow_git_remote</code>),
-click on the hyperlinks in the table below to view the files as they
-were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/analysis/gnomad_random_obsexp_AC.Rmd" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/gnomad_random_obsexp_AC.html" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-<td>
-update
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
@@ -660,641 +598,38 @@ the random effects on these different windows.</p>
 <h1>Modelling the allele count – 1kb</h1>
 <div id="all-6-mutation-types-in-total" class="section level2">
 <h2>All 6 mutation types in total</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-2-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
-Past versions of unnamed-chunk-2-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-2-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-2-1.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-2-2.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-2">
-Past versions of unnamed-chunk-2-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-2-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-2-2.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<pre><code>[1] &quot;random effect: SNV_obs/SNV_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-2.png" width="1920" style="display: block; margin: auto;" /></p>
 </div>
 <div id="a---c" class="section level2">
 <h2>A - C</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-3-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-3-1.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-3-2.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
-Past versions of unnamed-chunk-3-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-3-2.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-2.png" width="1920" style="display: block; margin: auto;" /></p>
 </div>
 <div id="a---t" class="section level2">
 <h2>A - T</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-4-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-4-1.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-4-2.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
-Past versions of unnamed-chunk-4-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-4-2.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-2.png" width="1920" style="display: block; margin: auto;" /></p>
 </div>
 <div id="a---g" class="section level2">
 <h2>A - G</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-5-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-5-1.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-5-2.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
-Past versions of unnamed-chunk-5-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-5-2.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-2.png" width="1920" style="display: block; margin: auto;" /></p>
 </div>
 <div id="c---a" class="section level2">
 <h2>C - A</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-6-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-6-1.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-6-2.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
-Past versions of unnamed-chunk-6-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-6-2.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-2.png" width="1920" style="display: block; margin: auto;" /></p>
 </div>
 <div id="c---g" class="section level2">
 <h2>C - G</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-7-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
-Past versions of unnamed-chunk-7-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-7-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-7-1.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-7-2.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
-Past versions of unnamed-chunk-7-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-7-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-7-2.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-2.png" width="1920" style="display: block; margin: auto;" /></p>
 </div>
 <div id="c---t" class="section level2">
 <h2>C - T</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-8-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
-Past versions of unnamed-chunk-8-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-8-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-8-1.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-8-2.png" width="1920" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
-Past versions of unnamed-chunk-8-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-8-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f555b42b807c1abf45ece1cf73553a7029d5dcde/docs/figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-8-2.png" target="_blank">f555b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="modelling-the-allele-count-10kb" class="section level1">
-<h1>Modelling the allele count – 10kb</h1>
-<div id="all-6-mutation-types-in-total-1" class="section level2">
-<h2>All 6 mutation types in total</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-9-1.png" width="1920" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;gauss, predicted mutation count&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-9-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="a---c-1" class="section level2">
-<h2>A - C</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-10-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-10-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="a---t-1" class="section level2">
-<h2>A - T</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-11-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-11-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="a---g-1" class="section level2">
-<h2>A - G</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-12-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-12-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="c---a-1" class="section level2">
-<h2>C - A</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-13-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-13-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="c---g-1" class="section level2">
-<h2>C - G</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-14-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-14-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="c---t-1" class="section level2">
-<h2>C - T</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-15-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-15-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="modelling-the-allele-count-100bp" class="section level1">
-<h1>Modelling the allele count – 100bp</h1>
-<div id="all-6-mutation-types-in-total-2" class="section level2">
-<h2>All 6 mutation types in total</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-16-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-16-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="a---c-2" class="section level2">
-<h2>A - C</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-17-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-17-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="a---t-2" class="section level2">
-<h2>A - T</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-18-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-18-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="a---g-2" class="section level2">
-<h2>A - G</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-19-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-19-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="c---a-2" class="section level2">
-<h2>C - A</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-20-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-20-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="c---g-2" class="section level2">
-<h2>C - G</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-21-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-21-2.png" width="1920" style="display: block; margin: auto;" /></p>
-</div>
-<div id="c---t-2" class="section level2">
-<h2>C - T</h2>
-<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-22-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-22-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-2.png" width="1920" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1331,10 +666,10 @@ loaded via a namespace (and not attached):
 [29] caTools_1.18.2   fs_1.5.2         vctrs_0.4.1      sass_0.4.1      
 [33] grid_4.2.0       rprojroot_2.0.3  glue_1.6.2       R6_2.5.1        
 [37] fansi_1.0.3      rmarkdown_2.14   mixsqp_0.3-43    irlba_2.3.5     
-[41] ashr_2.2-54      magrittr_2.0.3   whisker_0.4      MASS_7.3-58.2   
-[45] promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.2  httpuv_1.6.5    
-[49] wavethresh_4.7.2 utf8_1.2.2       stringi_1.7.6    truncnorm_1.0-8 
-[53] SQUAREM_2021.1   crayon_1.5.1    </code></pre>
+[41] ashr_2.2-54      magrittr_2.0.3   MASS_7.3-58.2    promises_1.2.0.1
+[45] ellipsis_0.3.2   htmltools_0.5.2  httpuv_1.6.5     wavethresh_4.7.2
+[49] utf8_1.2.2       stringi_1.7.6    truncnorm_1.0-8  SQUAREM_2021.1  
+[53] crayon_1.5.1    </code></pre>
 </div>
 </div>
 </div>
