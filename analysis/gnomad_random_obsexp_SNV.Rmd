@@ -40,7 +40,7 @@ plot(eff_rand)
 merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ac_1kb_SNV.bed")
 colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
 
-print("random effect: AC_obs/AC_exp")
+print("random effect: SNV_obs/SNV_exp")
 
 eff_rand <- merged$AC_obs/merged$MR_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
@@ -55,7 +55,7 @@ plot(eff_rand)
 merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_at_1kb_SNV.bed")
 colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
 
-print("random effect: AC_obs/AC_exp")
+print("random effect: SNV_obs/SNV_exp")
 
 eff_rand <- merged$AC_obs/merged$MR_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
@@ -71,7 +71,7 @@ plot(eff_rand)
 merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ag_1kb_SNV.bed")
 colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
 
-print("random effect: AC_obs/AC_exp")
+print("random effect: SNV_obs/SNV_exp")
 
 eff_rand <- merged$AC_obs/merged$MR_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
@@ -86,7 +86,7 @@ plot(eff_rand)
 merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ca_1kb_SNV.bed")
 colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
 
-print("random effect: AC_obs/AC_exp")
+print("random effect: SNV_obs/SNV_exp")
 
 eff_rand <- merged$AC_obs/merged$MR_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
@@ -101,7 +101,7 @@ plot(eff_rand)
 merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ct_1kb_SNV.bed")
 colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
 
-print("random effect: AC_obs/AC_exp")
+print("random effect: SNV_obs/SNV_exp")
 
 eff_rand <- merged$AC_obs/merged$MR_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
@@ -117,7 +117,7 @@ plot(eff_rand)
 merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ct_1kb_SNV.bed")
 colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
 
-print("random effect: AC_obs/AC_exp")
+print("random effect: SNV_obs/SNV_exp")
 
 eff_rand <- merged$AC_obs/merged$MR_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
