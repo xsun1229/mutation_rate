@@ -13,7 +13,7 @@
 
 <meta name="date" content="2023-04-04" />
 
-<title>Random effect modelling – Allele Count</title>
+<title>Random effect modelling – SNV</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -362,7 +362,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Random effect modelling – Allele Count</h1>
+<h1 class="title toc-ignore">Random effect modelling – SNV</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2023-04-04</h4>
 
@@ -431,10 +431,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -527,15 +527,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreef555b42b807c1abf45ece1cf73553a7029d5dcdetargetblankf555b42a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreedbee50de900f66e09fd69ca1f3808d49bc2e8808targetblankdbee50da">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/f555b42b807c1abf45ece1cf73553a7029d5dcde" target="_blank">f555b42</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/dbee50de900f66e09fd69ca1f3808d49bc2e8808" target="_blank">dbee50d</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreef555b42b807c1abf45ece1cf73553a7029d5dcdetargetblankf555b42a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreedbee50de900f66e09fd69ca1f3808d49bc2e8808targetblankdbee50da"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -545,7 +545,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/f555b42b807c1abf45ece1cf73553a7029d5dcde" target="_blank">f555b42</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/dbee50de900f66e09fd69ca1f3808d49bc2e8808" target="_blank">dbee50d</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -562,11 +562,8 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
 
-Untracked files:
-    Untracked:  analysis/gnomad_random_obsexp_SNV.Rmd
-
 Unstaged changes:
-    Modified:   analysis/gnomad_random_obsexp_AC.Rmd
+    Modified:   analysis/gnomad_random_obsexp_SNV.Rmd
 
 </code></pre>
 <p>
@@ -581,10 +578,75 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/gnomad_random_obsexp_SNV.Rmd</code>) and HTML
+(<code>docs/gnomad_random_obsexp_SNV.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/analysis/gnomad_random_obsexp_SNV.Rmd" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/gnomad_random_obsexp_SNV.html" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -599,37 +661,562 @@ the random effects on these different windows.</p>
 <div id="all-6-mutation-types-in-total" class="section level2">
 <h2>All 6 mutation types in total</h2>
 <pre><code>[1] &quot;random effect: SNV_obs/SNV_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-1.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-2">
+Past versions of unnamed-chunk-2-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-2-2.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="a---c" class="section level2">
 <h2>A - C</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-1.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
+Past versions of unnamed-chunk-3-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-3-2.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="a---t" class="section level2">
 <h2>A - T</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-1.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
+Past versions of unnamed-chunk-4-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-4-2.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="a---g" class="section level2">
 <h2>A - G</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-1.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
+Past versions of unnamed-chunk-5-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-5-2.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="c---a" class="section level2">
 <h2>C - A</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-1.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-6-2.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="c---g" class="section level2">
 <h2>C - G</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-1.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
+Past versions of unnamed-chunk-7-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-7-2.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="c---t" class="section level2">
 <h2>C - T</h2>
 <pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
-<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-1.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
+Past versions of unnamed-chunk-8-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/dbee50de900f66e09fd69ca1f3808d49bc2e8808/docs/figure/gnomad_random_obsexp_SNV.Rmd/unnamed-chunk-8-2.png" target="_blank">dbee50d</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -666,10 +1253,10 @@ loaded via a namespace (and not attached):
 [29] caTools_1.18.2   fs_1.5.2         vctrs_0.4.1      sass_0.4.1      
 [33] grid_4.2.0       rprojroot_2.0.3  glue_1.6.2       R6_2.5.1        
 [37] fansi_1.0.3      rmarkdown_2.14   mixsqp_0.3-43    irlba_2.3.5     
-[41] ashr_2.2-54      magrittr_2.0.3   MASS_7.3-58.2    promises_1.2.0.1
-[45] ellipsis_0.3.2   htmltools_0.5.2  httpuv_1.6.5     wavethresh_4.7.2
-[49] utf8_1.2.2       stringi_1.7.6    truncnorm_1.0-8  SQUAREM_2021.1  
-[53] crayon_1.5.1    </code></pre>
+[41] ashr_2.2-54      magrittr_2.0.3   whisker_0.4      MASS_7.3-58.2   
+[45] promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.2  httpuv_1.6.5    
+[49] wavethresh_4.7.2 utf8_1.2.2       stringi_1.7.6    truncnorm_1.0-8 
+[53] SQUAREM_2021.1   crayon_1.5.1    </code></pre>
 </div>
 </div>
 </div>

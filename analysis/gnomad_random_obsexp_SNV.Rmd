@@ -1,5 +1,5 @@
 ---
-title: "Random effect modelling -- Allele Count"
+title: "Random effect modelling -- SNV"
 author: "XSun"
 date: "2023-04-04"
 output: workflowr::wflow_html
