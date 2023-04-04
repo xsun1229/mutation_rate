@@ -18,25 +18,15 @@ SNV with AF < 0.001, from gnomAD v3.1 whole genome
 # CHR22
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_rare_chr22.csv")
-merged_ac <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ac_rare_chr22.csv")
-merged_ag <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ag_rare_chr22.csv")
-merged_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_at_rare_chr22.csv")
-merged_ca <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ca_rare_chr22.csv")
-merged_cg <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_cg_rare_chr22.csv")
-merged_ct <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ct_rare_chr22.csv")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_rare_chr22_rescal.csv")
+merged_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_at_rare_chr22_rescal.csv")
 
 mut_obs <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data/chr22.SNV.txt")
 colnames(mut_obs) <- c("CHROM","POS","ID","REF","ALT","QUAL","FILTER","AN","AC","AF")
 mut_obs <- mut_obs[mut_obs$AF<0.001,]
-obs_ac <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ac_rare_chr22.csv")
-obs_ag <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ag_rare_chr22.csv")
-obs_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_at_rare_chr22.csv")
-obs_ca <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ca_rare_chr22.csv")
-obs_cg <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_cg_rare_chr22.csv")
-obs_ct <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ct_rare_chr22.csv")
-```
+obs_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_at_rare_chr22_rescal.csv")
 
+```
 ## Considering random windows -- 1kb
 
 ### probability of being polymorphic -- do p = 1-exp(-mu) conversion of mutation rate to prob. of being polymorphic
@@ -68,7 +58,7 @@ expected <- c()
 for (i in 1:num_windows){
   
   dat_window_merged <- merged[merged$POS %in% c(windows[i,1]:windows[i,2]),]
-  expected[i] <- sum(dat_window_merged$p,na.rm = T)
+  expected[i] <- sum(dat_window_merged$p_rescale,na.rm = T)
   
   dat_window_obs <- mut_obs[mut_obs$POS %in% c(windows[i,1]:windows[i,2]),]
   observed[i] <- sum(!duplicated(dat_window_obs$POS))
@@ -81,7 +71,7 @@ abline(fit)
 ```
 
 
-- A to C
+- A to T
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
 pos_min <- min(merged_at$POS)
@@ -152,7 +142,7 @@ expected <- c()
 for (i in 1:num_windows){
   
   dat_window_merged <- merged[merged$POS %in% c(windows[i,1]:windows[i,2]),]
-  expected[i] <- sum(dat_window_merged$MR,na.rm = T)
+  expected[i] <- sum(dat_window_merged$MR_rescale,na.rm = T)
 
   observed[i] <- sum(dat_window_merged$AC,na.rm = T)
   
@@ -192,7 +182,7 @@ expected <- c()
 for (i in 1:num_windows){
   
   dat_window_merged_at <- merged_at[merged_at$POS %in% c(windows[i,1]:windows[i,2]),]
-  expected[i] <- sum(dat_window_merged_at$p,na.rm = T)
+  expected[i] <- sum(dat_window_merged_at$MR_rescale,na.rm = T)
   
   observed[i] <- sum(dat_window_merged_at$AC,na.rm = T)
   

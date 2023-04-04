@@ -386,7 +386,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-04-02
+<strong>Last updated:</strong> 2023-04-04
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -477,16 +477,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreeef1ae46f0f5abec43cc3316d0538afe296ef52d7targetblankef1ae46a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/xsun1229/mutation_rate/tree/ef1ae46f0f5abec43cc3316d0538afe296ef52d7" target="_blank">ef1ae46</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreef8bb2e9ceac78556b5dd40146857465f3a74ac44targetblankf8bb2e9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/xsun1229/mutation_rate/tree/f8bb2e9ceac78556b5dd40146857465f3a74ac44" target="_blank">f8bb2e9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreeef1ae46f0f5abec43cc3316d0538afe296ef52d7targetblankef1ae46a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreef8bb2e9ceac78556b5dd40146857465f3a74ac44targetblankf8bb2e9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/xsun1229/mutation_rate/tree/ef1ae46f0f5abec43cc3316d0538afe296ef52d7" target="_blank">ef1ae46</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/xsun1229/mutation_rate/tree/f8bb2e9ceac78556b5dd40146857465f3a74ac44" target="_blank">f8bb2e9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -495,8 +495,12 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
 
+Untracked files:
+    Untracked:  analysis/gnomad_random_obsexp.Rmd
+
 Unstaged changes:
     Modified:   analysis/gnomad_exp_obs_rare.Rmd
+    Modified:   analysis/gnomad_exp_obs_rare_randomwindows.Rmd
 
 </code></pre>
 <p>
@@ -535,6 +539,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/5c74646e725712b565c40b244989caf32c40c91c/analysis/gnomad_exp_obs_rare.Rmd" target="_blank">5c74646</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/780f89e75d091ee8ecd68eef8759e088671e048d/analysis/gnomad_exp_obs_rare.Rmd" target="_blank">780f89e</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/780f89e75d091ee8ecd68eef8759e088671e048d/docs/gnomad_exp_obs_rare.html" target="_blank">780f89e</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-02
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -595,31 +650,38 @@ update
 3:    22 10510100   C   T 0.151 0.14015230                            NA NA NA
 4:    22 10510101   T   A 0.020 0.01980133                            NA NA NA
 5:    22 10510101   T   C 0.083 0.07964885                            NA NA NA
-6:    22 10510101   T   G 0.020 0.01980133                            NA NA NA</code></pre>
+6:    22 10510101   T   G 0.020 0.01980133                            NA NA NA
+    p_rescale MR_rescale
+1: 0.02921044 0.13516466
+2: 0.03970327 0.18472503
+3: 0.13852089 0.68032878
+4: 0.01957083 0.09010977
+5: 0.07872172 0.37395555
+6: 0.01957083 0.09010977</code></pre>
 <pre><code>[1] &quot;The observed number of positions that are polymorphic =7247698&quot;</code></pre>
-<pre><code>[1] &quot;The expected number of positions that are polymorphic = 7497076.99803727&quot;</code></pre>
+<pre><code>[1] &quot;The expected number of positions that are polymorphic = 7247697.99999953&quot;</code></pre>
 <ul>
 <li>Considering the 6 mutation types separately</li>
 </ul>
 <pre><code>[1] &quot;A-C&quot;</code></pre>
 <pre><code>[1] &quot;The observed number of positions that are polymorphic = 526152&quot;</code></pre>
-<pre><code>[1] &quot;The expected number of positions that are polymorphic = 545154.289894787&quot;</code></pre>
+<pre><code>[1] &quot;The expected number of positions that are polymorphic = 534102.511381442&quot;</code></pre>
 <pre><code>[1] &quot;A-G&quot;</code></pre>
 <pre><code>[1] &quot;The observed number of positions that are polymorphic = 1698194&quot;</code></pre>
-<pre><code>[1] &quot;The expected number of positions that are polymorphic = 1746521.52268203&quot;</code></pre>
+<pre><code>[1] &quot;The expected number of positions that are polymorphic = 1708687.60826427&quot;</code></pre>
 <pre><code>[1] &quot;A-T&quot;</code></pre>
 <pre><code>[1] &quot;The observed number of positions that are polymorphic = 465289&quot;</code></pre>
-<pre><code>[1] &quot;The expected number of positions that are polymorphic = 483311.625045745&quot;</code></pre>
+<pre><code>[1] &quot;The expected number of positions that are polymorphic = 472684.55121723&quot;</code></pre>
 <pre><code>[1] &quot;C-A&quot;</code></pre>
 <pre><code>[1] &quot;The observed number of positions that are polymorphic = 825259&quot;</code></pre>
-<pre><code>[1] &quot;The expected number of positions that are polymorphic = 836075.775783448&quot;</code></pre>
+<pre><code>[1] &quot;The expected number of positions that are polymorphic = 807729.811917871&quot;</code></pre>
 <pre><code>[1] &quot;C-G&quot;</code></pre>
 <pre><code>[1] &quot;The observed number of positions that are polymorphic = 839204&quot;</code></pre>
-<pre><code>[1] &quot;The expected number of positions that are polymorphic = 840783.21090401&quot;</code></pre>
+<pre><code>[1] &quot;The expected number of positions that are polymorphic = 814971.337944687&quot;</code></pre>
 <pre><code>[1] &quot;C-T&quot;</code></pre>
 <pre><code>[1] &quot;The observed number of positions that are polymorphic = 2893600&quot;</code></pre>
-<pre><code>[1] &quot;The expected number of positions that are polymorphic = 3045230.57372868&quot;</code></pre>
-<pre><code>[1] &quot;fitting: observed ~ expexted + 0&quot;</code></pre>
+<pre><code>[1] &quot;The expected number of positions that are polymorphic = 2909522.17927584&quot;</code></pre>
+<pre><code>[1] &quot;fitting: observed ~ expected + 0&quot;</code></pre>
 <p><img src="figure/gnomad_exp_obs_rare.Rmd/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
@@ -663,44 +725,44 @@ Call:
 lm(formula = observed ~ expected + 0)
 
 Residuals:
-     1      2      3      4      5      6 
-  3002  22167   1485  22930  32357 -28716 
+    1     2     3     4     5     6 
+-6410 -5567 -6033 19858 26583 -7533 
 
 Coefficients:
          Estimate Std. Error t value Pr(&gt;|t|)    
-expected 0.959637   0.006377   150.5 2.46e-10 ***
+expected 0.997117   0.004378   227.7  3.1e-11 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 24080 on 5 degrees of freedom
-Multiple R-squared:  0.9998,    Adjusted R-squared:  0.9997 
-F-statistic: 2.264e+04 on 1 and 5 DF,  p-value: 2.459e-10</code></pre>
+Residual standard error: 15910 on 5 degrees of freedom
+Multiple R-squared:  0.9999,    Adjusted R-squared:  0.9999 
+F-statistic: 5.186e+04 on 1 and 5 DF,  p-value: 3.098e-11</code></pre>
 </div>
 <div id="number-of-allele-count-add-up-the-mutation-rates" class="section level3">
 <h3>Number of allele count – add up the mutation rates</h3>
 <pre><code>[1] &quot;The observed allele count =40394149&quot;</code></pre>
-<pre><code>[1] &quot;The expected allele coun = 9134347.16200151&quot;</code></pre>
+<pre><code>[1] &quot;The expected allele coun = 39891072.9999919&quot;</code></pre>
 <ul>
 <li>Considering the 6 mutation types separately</li>
 </ul>
 <pre><code>[1] &quot;A-C&quot;</code></pre>
 <pre><code>[1] &quot;The observed allele count = 2443397&quot;</code></pre>
-<pre><code>[1] &quot;The expected allele count = 555589.491000016&quot;</code></pre>
+<pre><code>[1] &quot;The expected allele count = 2481196.04395244&quot;</code></pre>
 <pre><code>[1] &quot;A-G&quot;</code></pre>
 <pre><code>[1] &quot;The observed allele count = 8521038&quot;</code></pre>
-<pre><code>[1] &quot;The expected allele count = 1879497.63100007&quot;</code></pre>
+<pre><code>[1] &quot;The expected allele count = 8379023.94600263&quot;</code></pre>
 <pre><code>[1] &quot;A-T&quot;</code></pre>
 <pre><code>[1] &quot;The observed allele count = 2230897&quot;</code></pre>
-<pre><code>[1] &quot;The expected allele count = 495126.94100005&quot;</code></pre>
+<pre><code>[1] &quot;The expected allele count = 2204636.04740361&quot;</code></pre>
 <pre><code>[1] &quot;C-A&quot;</code></pre>
 <pre><code>[1] &quot;The observed allele count = 3938803&quot;</code></pre>
-<pre><code>[1] &quot;The expected allele count = 871341.574999921&quot;</code></pre>
+<pre><code>[1] &quot;The expected allele count = 3835169.91065344&quot;</code></pre>
 <pre><code>[1] &quot;C-G&quot;</code></pre>
 <pre><code>[1] &quot;The observed allele count = 3906144&quot;</code></pre>
-<pre><code>[1] &quot;The expected allele count = 869026.408999931&quot;</code></pre>
+<pre><code>[1] &quot;The expected allele count = 3838978.10280219&quot;</code></pre>
 <pre><code>[1] &quot;C-T&quot;</code></pre>
 <pre><code>[1] &quot;The observed allele count = 19353870&quot;</code></pre>
-<pre><code>[1] &quot;The expected allele count = 4463765.11499999&quot;</code></pre>
+<pre><code>[1] &quot;The expected allele count = 19152068.94918&quot;</code></pre>
 <pre><code>[1] &quot;fitting: observed ~ expexted + 0&quot;</code></pre>
 <p><img src="figure/gnomad_exp_obs_rare.Rmd/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>
@@ -745,18 +807,18 @@ Call:
 lm(formula = observed ~ expected + 0)
 
 Residuals:
-      1       2       3       4       5       6 
-  64350   12281  296844 -178409  103510  126038 
+        1         2         3         4         5         6 
+    61.21 -67285.41  42438.30 -25800.84  21543.74  58056.19 
 
 Coefficients:
          Estimate Std. Error t value Pr(&gt;|t|)    
-expected  4.37574    0.03438   127.3 5.68e-10 ***
+expected  1.01188    0.00213   475.1 7.84e-13 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 173700 on 5 degrees of freedom
-Multiple R-squared:  0.9997,    Adjusted R-squared:  0.9996 
-F-statistic: 1.62e+04 on 1 and 5 DF,  p-value: 5.677e-10</code></pre>
+Residual standard error: 46540 on 5 degrees of freedom
+Multiple R-squared:      1, Adjusted R-squared:      1 
+F-statistic: 2.257e+05 on 1 and 5 DF,  p-value: 7.839e-13</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
