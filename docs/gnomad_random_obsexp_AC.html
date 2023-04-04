@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="XSun" />
 
+<meta name="date" content="2023-04-04" />
 
-<title>Home</title>
+<title>Random effect modelling – Allele Count</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -234,6 +239,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -241,6 +309,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -284,7 +362,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">Random effect modelling – Allele Count</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2023-04-04</h4>
 
 </div>
 
@@ -317,7 +397,7 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 1
 </p>
@@ -351,12 +431,96 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230228code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230228)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230228code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230228)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -418,265 +582,97 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML
-(<code>docs/index.html</code>) files. If you’ve configured a remote Git
-repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
-in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/f8bb2e9ceac78556b5dd40146857465f3a74ac44/analysis/index.Rmd" target="_blank">f8bb2e9</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/f8bb2e9ceac78556b5dd40146857465f3a74ac44/docs/index.html" target="_blank">f8bb2e9</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/5c74646e725712b565c40b244989caf32c40c91c/analysis/index.Rmd" target="_blank">5c74646</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/5c74646e725712b565c40b244989caf32c40c91c/docs/index.html" target="_blank">5c74646</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/ef1ae46f0f5abec43cc3316d0538afe296ef52d7/analysis/index.Rmd" target="_blank">ef1ae46</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/ef1ae46f0f5abec43cc3316d0538afe296ef52d7/docs/index.html" target="_blank">ef1ae46</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/430a58d40908f6d2048ecd1b18e333139a49237c/analysis/index.Rmd" target="_blank">430a58d</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/430a58d40908f6d2048ecd1b18e333139a49237c/docs/index.html" target="_blank">430a58d</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/38fef7774b3e923dbc7e5ac57a85624c50a3820e/docs/index.html" target="_blank">38fef77</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-03-01
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/84acb1411d0445e472815de7346e0a0925eca552/analysis/index.Rmd" target="_blank">84acb14</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-03-01
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/f7abd73c9a9575c02c3150f066ce9470a1edcd6b/docs/index.html" target="_blank">f7abd73</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-02-28
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/acf4b42d4229686b89f30a0d3e96d2ca33016197/analysis/index.Rmd" target="_blank">acf4b42</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-02-28
-</td>
-<td>
-Start workflowr project.
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="mutation-rate-modeling" class="section level1">
-<h1>Mutation Rate Modeling</h1>
-<ul>
-<li><p><a
-href="https://xsun1229.github.io/mutation_rate/reproducing_SC.html">Reproducing
-- Simons-control</a></p></li>
-<li><p><a
-href="https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare.html">Comparing
-the expected mutation rate and ovserved mutation counts – entire
-chromosome</a></p></li>
-<li><p><a
-href="https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare_randomwindows.html">Comparing
-the expected mutation rate and ovserved mutation counts – random
-window</a></p></li>
-<li><p><a
-href="https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_AC.html">Random
-effect – Allele Count</a></p></li>
-</ul>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In this part, the chr22 was grouped into 100bp windows. We evalueate
+the random effects on these 100bp windows.</p>
+</div>
+<div id="modelling-the-allele-count" class="section level1">
+<h1>Modelling the allele count</h1>
+<div id="all-6-mutation-types-in-total" class="section level2">
+<h2>All 6 mutation types in total</h2>
+<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-2-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-2-2.png" width="1920" style="display: block; margin: auto;" /></p>
+</div>
+<div id="a---c" class="section level2">
+<h2>A - C</h2>
+<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-3-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-3-2.png" width="1920" style="display: block; margin: auto;" /></p>
+</div>
+<div id="a---t" class="section level2">
+<h2>A - T</h2>
+<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-4-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-4-2.png" width="1920" style="display: block; margin: auto;" /></p>
+</div>
+<div id="a---g" class="section level2">
+<h2>A - G</h2>
+<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-5-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-5-2.png" width="1920" style="display: block; margin: auto;" /></p>
+</div>
+<div id="c---a" class="section level2">
+<h2>C - A</h2>
+<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-6-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-6-2.png" width="1920" style="display: block; margin: auto;" /></p>
+</div>
+<div id="c---g" class="section level2">
+<h2>C - G</h2>
+<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-7-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-7-2.png" width="1920" style="display: block; margin: auto;" /></p>
+</div>
+<div id="c---t" class="section level2">
+<h2>C - T</h2>
+<pre><code>[1] &quot;random effect: AC_obs/AC_exp&quot;</code></pre>
+<p><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-8-1.png" width="1920" style="display: block; margin: auto;" /><img src="figure/gnomad_random_obsexp_AC.Rmd/unnamed-chunk-8-2.png" width="1920" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] smashr_1.2-9      data.table_1.14.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.8.3     highr_0.9        pillar_1.7.0     compiler_4.2.0  
+ [5] bslib_0.3.1      later_1.3.0      jquerylib_0.1.4  git2r_0.30.1    
+ [9] workflowr_1.7.0  bitops_1.0-7     tools_4.2.0      digest_0.6.29   
+[13] lattice_0.20-45  jsonlite_1.8.0   evaluate_0.15    lifecycle_1.0.1 
+[17] tibble_3.1.7     pkgconfig_2.0.3  rlang_1.0.5      Matrix_1.5-3    
+[21] cli_3.3.0        rstudioapi_0.13  yaml_2.3.5       xfun_0.30       
+[25] fastmap_1.1.0    invgamma_1.1     stringr_1.4.0    knitr_1.39      
+[29] caTools_1.18.2   fs_1.5.2         vctrs_0.4.1      sass_0.4.1      
+[33] grid_4.2.0       rprojroot_2.0.3  glue_1.6.2       R6_2.5.1        
+[37] fansi_1.0.3      rmarkdown_2.14   mixsqp_0.3-43    irlba_2.3.5     
+[41] ashr_2.2-54      magrittr_2.0.3   MASS_7.3-58.2    promises_1.2.0.1
+[45] ellipsis_0.3.2   htmltools_0.5.2  httpuv_1.6.5     wavethresh_4.7.2
+[49] utf8_1.2.2       stringi_1.7.6    truncnorm_1.0-8  SQUAREM_2021.1  
+[53] crayon_1.5.1    </code></pre>
+</div>
+</div>
 </div>
 
 
@@ -695,6 +691,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -727,6 +725,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
