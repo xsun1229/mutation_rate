@@ -13,7 +13,7 @@
 
 <meta name="date" content="2023-04-02" />
 
-<title>Comparing the expected mutation rate and ovserved mutation counts – random windows</title>
+<title>Comparing the # of expected SNVs and # of observed SNVs – random windows</title>
 
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -359,7 +359,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Comparing the expected mutation rate and ovserved mutation counts – random windows</h1>
+<h1 class="title toc-ignore">Comparing the # of expected SNVs and # of observed SNVs – random windows</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2023-04-02</h4>
 
@@ -477,16 +477,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreef8bb2e9ceac78556b5dd40146857465f3a74ac44targetblankf8bb2e9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/xsun1229/mutation_rate/tree/f8bb2e9ceac78556b5dd40146857465f3a74ac44" target="_blank">f8bb2e9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreecb2ea2dc1e78b9a3fed0a44805e038217b23efcatargetblankcb2ea2da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/xsun1229/mutation_rate/tree/cb2ea2dc1e78b9a3fed0a44805e038217b23efca" target="_blank">cb2ea2d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreef8bb2e9ceac78556b5dd40146857465f3a74ac44targetblankf8bb2e9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreecb2ea2dc1e78b9a3fed0a44805e038217b23efcatargetblankcb2ea2da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/xsun1229/mutation_rate/tree/f8bb2e9ceac78556b5dd40146857465f3a74ac44" target="_blank">f8bb2e9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/xsun1229/mutation_rate/tree/cb2ea2dc1e78b9a3fed0a44805e038217b23efca" target="_blank">cb2ea2d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -496,8 +496,12 @@ Ignored files:
     Ignored:    .Rhistory
 
 Unstaged changes:
+    Deleted:    analysis/gnomad_exp_obs.Rmd
     Modified:   analysis/gnomad_exp_obs_rare.Rmd
     Modified:   analysis/gnomad_exp_obs_rare_randomwindows.Rmd
+    Deleted:    analysis/gnomad_random_obsexp_AC.Rmd
+    Modified:   analysis/gnomad_random_obsexp_SNV.Rmd
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -536,6 +540,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/f8152807a926b6c2d6fdc01f153256a4f08353ff/analysis/gnomad_exp_obs_rare_randomwindows.Rmd" target="_blank">f815280</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/f8152807a926b6c2d6fdc01f153256a4f08353ff/docs/gnomad_exp_obs_rare_randomwindows.html" target="_blank">f815280</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -585,8 +623,6 @@ update
 <h1>CHR22</h1>
 <div id="considering-random-windows-1kb" class="section level2">
 <h2>Considering random windows – 1kb</h2>
-<div id="probability-of-being-polymorphic-do-p-1-exp-mu-conversion-of-mutation-rate-to-prob.-of-being-polymorphic" class="section level3">
-<h3>probability of being polymorphic – do p = 1-exp(-mu) conversion of mutation rate to prob. of being polymorphic</h3>
 <ul>
 <li>Considering 6 types collectively</li>
 </ul>
@@ -596,17 +632,17 @@ lm(formula = observed ~ expected + 0)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--158.477  -13.348    0.000    5.294  217.782 
+-163.012  -11.273    0.000    5.271  212.139 
 
 Coefficients:
          Estimate Std. Error t value Pr(&gt;|t|)    
-expected  0.94879    0.02361   40.18   &lt;2e-16 ***
+expected  1.02531    0.02537   40.41   &lt;2e-16 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 40.32 on 99 degrees of freedom
-Multiple R-squared:  0.9422,    Adjusted R-squared:  0.9416 
-F-statistic:  1615 on 1 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 39.57 on 99 degrees of freedom
+Multiple R-squared:  0.9428,    Adjusted R-squared:  0.9423 
+F-statistic:  1633 on 1 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img src="figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-3-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
@@ -632,6 +668,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/f8152807a926b6c2d6fdc01f153256a4f08353ff/docs/figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-3-1.png" target="_blank">f815280</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5c74646e725712b565c40b244989caf32c40c91c/docs/figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-3-1.png" target="_blank">5c74646</a>
 </td>
 <td>
@@ -654,17 +701,17 @@ lm(formula = observed ~ expected + 0)
 
 Residuals:
    Min     1Q Median     3Q    Max 
--9.693 -2.986 -0.637  0.000 39.966 
+-9.345 -3.315 -0.427  0.000 40.259 
 
 Coefficients:
          Estimate Std. Error t value Pr(&gt;|t|)    
-expected  1.00764    0.05218   19.31   &lt;2e-16 ***
+expected  0.98665    0.05207   18.95   &lt;2e-16 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
-Residual standard error: 6.211 on 99 degrees of freedom
-Multiple R-squared:  0.7902,    Adjusted R-squared:  0.7881 
-F-statistic: 372.9 on 1 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
+Residual standard error: 6.197 on 99 degrees of freedom
+Multiple R-squared:  0.7839,    Adjusted R-squared:  0.7817 
+F-statistic: 359.1 on 1 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img src="figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-4-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
@@ -690,126 +737,18 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/f8152807a926b6c2d6fdc01f153256a4f08353ff/docs/figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-4-1.png" target="_blank">f815280</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5c74646e725712b565c40b244989caf32c40c91c/docs/figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-4-1.png" target="_blank">5c74646</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="number-of-allele-count-add-up-the-mutation-rates" class="section level3">
-<h3>Number of allele count – add up the mutation rates</h3>
-<ul>
-<li>6 types collectively</li>
-</ul>
-<pre><code>
-Call:
-lm(formula = observed ~ expected + 0)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--1119.05  -216.10     0.00    93.85  2386.57 
-
-Coefficients:
-         Estimate Std. Error t value Pr(&gt;|t|)    
-expected   1.0131     0.0439   23.08   &lt;2e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 414.8 on 99 degrees of freedom
-Multiple R-squared:  0.8432,    Adjusted R-squared:  0.8416 
-F-statistic: 532.5 on 1 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p><img src="figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-5-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/5c74646e725712b565c40b244989caf32c40c91c/docs/figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-5-1.png" target="_blank">5c74646</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-04-02
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<ul>
-<li>A to T</li>
-</ul>
-<pre><code>
-Call:
-lm(formula = observed ~ expected + 0)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--79.53 -44.90 -27.80   0.00 271.27 
-
-Coefficients:
-         Estimate Std. Error t value Pr(&gt;|t|)    
-expected   1.1500     0.1083   10.62   &lt;2e-16 ***
----
-Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-
-Residual standard error: 59.64 on 99 degrees of freedom
-Multiple R-squared:  0.5326,    Adjusted R-squared:  0.5279 
-F-statistic: 112.8 on 1 and 99 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p><img src="figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-6-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/5c74646e725712b565c40b244989caf32c40c91c/docs/figure/gnomad_exp_obs_rare_randomwindows.Rmd/unnamed-chunk-6-1.png" target="_blank">5c74646</a>
 </td>
 <td>
 XSun
@@ -852,19 +791,18 @@ other attached packages:
 [1] data.table_1.14.2 workflowr_1.7.0  
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     highr_0.9        bslib_0.3.1      compiler_4.2.0  
- [5] pillar_1.7.0     later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
- [9] tools_4.2.0      getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    tibble_3.1.7     lifecycle_1.0.1  pkgconfig_2.0.3 
-[17] rlang_1.0.5      cli_3.3.0        rstudioapi_0.13  yaml_2.3.5      
-[21] xfun_0.30        fastmap_1.1.0    httr_1.4.3       stringr_1.4.0   
-[25] knitr_1.39       sass_0.4.1       fs_1.5.2         vctrs_0.4.1     
-[29] rprojroot_2.0.3  glue_1.6.2       R6_2.5.1         processx_3.5.3  
-[33] fansi_1.0.3      rmarkdown_2.14   callr_3.7.0      magrittr_2.0.3  
-[37] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.2 
-[41] ellipsis_0.3.2   httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   
-[45] crayon_1.5.1    </code></pre>
-</div>
+ [1] Rcpp_1.0.8.3      highr_0.9         bslib_0.3.1       compiler_4.2.0   
+ [5] pillar_1.7.0      later_1.3.0       git2r_0.30.1      jquerylib_0.1.4  
+ [9] R.methodsS3_1.8.1 R.utils_2.11.0    tools_4.2.0       getPass_0.2-2    
+[13] digest_0.6.29     jsonlite_1.8.0    evaluate_0.15     tibble_3.1.7     
+[17] lifecycle_1.0.1   pkgconfig_2.0.3   rlang_1.0.5       cli_3.3.0        
+[21] rstudioapi_0.13   yaml_2.3.5        xfun_0.30         fastmap_1.1.0    
+[25] httr_1.4.3        stringr_1.4.0     knitr_1.39        sass_0.4.1       
+[29] fs_1.5.2          vctrs_0.4.1       rprojroot_2.0.3   glue_1.6.2       
+[33] R6_2.5.1          processx_3.5.3    fansi_1.0.3       rmarkdown_2.14   
+[37] callr_3.7.0       magrittr_2.0.3    whisker_0.4       ps_1.7.0         
+[41] promises_1.2.0.1  htmltools_0.5.2   ellipsis_0.3.2    httpuv_1.6.5     
+[45] utf8_1.2.2        stringi_1.7.6     crayon_1.5.1      R.oo_1.24.0      </code></pre>
 </div>
 </div>
 </div>
