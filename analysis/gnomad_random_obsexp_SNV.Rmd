@@ -14,7 +14,7 @@ suppressMessages(library(smashr))
 
 # Introduction
 
-In this part, the chr22 was grouped into 100bp windows. We evaluate the random effects on these different windows.
+In this part, the chr22 was grouped into 100bp/1kb/10kb windows. We evaluate the random effects on these different windows.
 
 # Modelling the allele count -- 100bp
 

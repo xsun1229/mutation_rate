@@ -10,10 +10,19 @@ editor_options:
 
 # Mutation Rate Modeling
 
-- [Reproducing shengtong's](https://xsun1229.github.io/mutation_rate/reproducing_SC.html)
+Data calibration 
 
 - [Comparing the expected mutation rate and ovserved mutation counts -- entire chromosome](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare.html)
 
 - [Comparing the expected mutation rate and ovserved mutation counts -- random window](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare_randomwindows.html)
 
+
+Random effect modelling
+
 - [Random effect -- SNV](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_SNV.html)
+
+- [Cross validation for the Random effect](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_cv.html)
+
+Others
+
+- [Reproducing shengtong's](https://xsun1229.github.io/mutation_rate/reproducing_SC.html)
