@@ -7,6 +7,162 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(data.table)
+library(tidyr)
+library(dplyr)
+```
+
 # Introduction
 
-We group the 
+We grouped the chr22 into 100bp, 1kb, 10kb windows. In each window, we sampled 90% sites as training data, and the remaining 10% as the testing data.
+
+Then, we 
+
+1. computed the random effect (eff_rand) in this window using these training sites. 
+
+2. predicted the observed number of SNV (SNV_obs_pred) with eff_rand on the testing sites in each window.
+
+3. fit SNV_obs ~ SNV_obs_pred + 0 
+
+
+# 100bp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_100bp.rdata")
+
+eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs
+SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled
+
+print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0")
+plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data")
+fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0)
+abline(fit,col="red")
+summary(fit)
+```
+
+
+# 1kb
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_1kb.rdata")
+
+eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs
+SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled
+
+print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0")
+plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data")
+fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0)
+abline(fit,col="red")
+summary(fit)
+```
+
+
+# 10kb
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_10kb.rdata")
+
+eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs
+SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled
+
+print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0")
+plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data")
+fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0)
+abline(fit,col="red")
+summary(fit)
+```
+
+<!-- # 100bp -->
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5} -->
+<!-- merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_addwindowinfo_100bp.csv.gz") -->
+
+<!-- set.seed(1) -->
+<!-- merged_grouped <- merged %>% -->
+<!--   group_by(window) %>% -->
+<!--   mutate(sampled = ifelse(runif(n()) <= 0.9, "sampled", "not_sampled"))%>% -->
+<!--   group_by(window, sampled)%>% -->
+<!--   group_by(window, sampled) %>% -->
+<!--   summarise(start = min(POS), -->
+<!--             end = max(POS), -->
+<!--             SNV_exp = sum(p_rescale, na.rm = TRUE), -->
+<!--             SNV_obs = sum(!duplicated(POS[!is.na(AC)]))) -->
+
+<!-- merged_sampled <- filter(merged_grouped,sampled =="sampled") -->
+<!-- merged_unsampled <- filter(merged_grouped,sampled =="not_sampled") -->
+
+<!-- eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs -->
+<!-- SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled -->
+
+<!-- print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0") -->
+<!-- plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data") -->
+<!-- fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0) -->
+<!-- abline(fit,col="red") -->
+<!-- summary(fit) -->
+<!-- ``` -->
+
+
+
+<!-- # 1kb  -->
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5} -->
+<!-- merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_addwindowinfo_1kb.csv.gz") -->
+
+<!-- set.seed(1) -->
+<!-- merged_grouped <- merged %>% -->
+<!--   group_by(window) %>% -->
+<!--   mutate(sampled = ifelse(runif(n()) <= 0.9, "sampled", "not_sampled"))%>% -->
+<!--   group_by(window, sampled)%>% -->
+<!--   group_by(window, sampled) %>% -->
+<!--   summarise(start = min(POS), -->
+<!--             end = max(POS), -->
+<!--             SNV_exp = sum(p_rescale, na.rm = TRUE), -->
+<!--             SNV_obs = sum(!duplicated(POS[!is.na(AC)]))) -->
+
+<!-- merged_sampled <- filter(merged_grouped,sampled =="sampled") -->
+<!-- merged_unsampled <- filter(merged_grouped,sampled =="not_sampled") -->
+
+<!-- eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs -->
+<!-- SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled -->
+
+<!-- print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0") -->
+<!-- plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data") -->
+<!-- fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0) -->
+<!-- abline(fit,col="red") -->
+<!-- summary(fit) -->
+<!-- ``` -->
+
+
+
+<!-- # 10kb  -->
+
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5} -->
+<!-- merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_addwindowinfo_10kb.csv.gz") -->
+
+<!-- set.seed(1) -->
+<!-- merged_grouped <- merged %>% -->
+<!--   group_by(window) %>% -->
+<!--   mutate(sampled = ifelse(runif(n()) <= 0.9, "sampled", "not_sampled"))%>% -->
+<!--   group_by(window, sampled)%>% -->
+<!--   group_by(window, sampled) %>% -->
+<!--   summarise(start = min(POS), -->
+<!--             end = max(POS), -->
+<!--             SNV_exp = sum(p_rescale, na.rm = TRUE), -->
+<!--             SNV_obs = sum(!duplicated(POS[!is.na(AC)]))) -->
+
+<!-- merged_sampled <- filter(merged_grouped,sampled =="sampled") -->
+<!-- merged_unsampled <- filter(merged_grouped,sampled =="not_sampled") -->
+
+<!-- eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs -->
+<!-- SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled -->
+
+<!-- print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0") -->
+<!-- plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data") -->
+<!-- fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0) -->
+<!-- abline(fit,col="red") -->
+<!-- summary(fit) -->
+<!-- ``` -->
