@@ -1,5 +1,5 @@
 ---
-title: "Comparing the expected mutation rate and ovserved mutation counts"
+title: "Comparing the # of expected SNVs and # of observed SNVs -- entire chromosome "
 author: "XSun"
 date: "2023-04-02"
 output: workflowr::wflow_html
@@ -22,30 +22,20 @@ SNV with AF < 0.001, from gnomAD v3.1 whole genome
 ### probability of being polymorphic -- do p = 1-exp(-mu) conversion of mutation rate to prob. of being polymorphic.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_rare_chr22_rescal.csv")
-merged_ac <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ac_rare_chr22_rescal.csv")
-merged_ag <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ag_rare_chr22_rescal.csv")
-merged_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_at_rare_chr22_rescal.csv")
-merged_ca <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ca_rare_chr22_rescal.csv")
-merged_cg <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_cg_rare_chr22_rescal.csv")
-merged_ct <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_ct_rare_chr22_rescal.csv")
-
-mut_obs <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data/chr22.SNV.txt")
-colnames(mut_obs) <- c("CHROM","POS","ID","REF","ALT","QUAL","FILTER","AN","AC","AF")
-mut_obs <- mut_obs[mut_obs$AF<0.001,]
-obs_ac <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ac_rare_chr22_rescal.csv")
-obs_ag <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ag_rare_chr22_rescal.csv")
-obs_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_at_rare_chr22_rescal.csv")
-obs_ca <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ca_rare_chr22_rescal.csv")
-obs_cg <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_cg_rare_chr22_rescal.csv")
-obs_ct <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_ct_rare_chr22_rescal.csv")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22.csv.gz")
+merged_ac <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_ac.csv.gz")
+merged_ag <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_ag.csv.gz")
+merged_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_at.csv.gz")
+merged_ca <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_ca.csv.gz")
+merged_cg <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_cg.csv.gz")
+merged_ct <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_ct.csv.gz")
 ```
 
 - Considering the 6 mutation types collectively
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 print(head(merged))
-print(paste0("The observed number of positions that are polymorphic =", sum(!duplicated(mut_obs))))
+print(paste0("The observed number of positions that are polymorphic =", sum(!duplicated(merged[!is.na(merged$AC),]$POS))))
 print(paste0("The expected number of positions that are polymorphic = ", sum(merged$p_rescale,na.rm = T)))
 ```
 
@@ -53,30 +43,30 @@ print(paste0("The expected number of positions that are polymorphic = ", sum(mer
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
 print("A-C")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ac$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ac$p_rescale,na.rm = T)))
+print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(merged_ac[!is.na(merged_ac$AC),]$POS)) ))
+print(paste0("The expected number of positions that are polymorphic (after scaling) = ", sum(merged_ac$p_rescale,na.rm = T)))
 
 print("A-G")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ag$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ag$p_rescale,na.rm = T)))
+print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(merged_ag[!is.na(merged_ag$AC),]$POS)) ))
+print(paste0("The expected number of positions that are polymorphic (after scaling) = ", sum(merged_ag$p_rescale,na.rm = T)))
 
 print("A-T")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_at$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_at$p_rescale,na.rm = T)))
+print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(merged_at[!is.na(merged_at$AC),]$POS)) ))
+print(paste0("The expected number of positions that are polymorphic (after scaling) = ", sum(merged_at$p_rescale,na.rm = T)))
 
 print("C-A")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ca$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ca$p_rescale,na.rm = T)))
+print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(merged_ca[!is.na(merged_ca$AC),]$POS)) ))
+print(paste0("The expected number of positions that are polymorphic (after scaling) = ", sum(merged_ca$p_rescale,na.rm = T)))
 
 print("C-G")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_cg$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_cg$p_rescale,na.rm = T)))
+print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(merged_cg[!is.na(merged_cg$AC),]$POS)) ))
+print(paste0("The expected number of positions that are polymorphic (after scaling) = ", sum(merged_cg$p_rescale,na.rm = T)))
 
 print("C-T")
-print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(obs_ct$POS))))
-print(paste0("The expected number of positions that are polymorphic = ", sum(merged_ct$p_rescale,na.rm = T)))
+print(paste0("The observed number of positions that are polymorphic = ", sum(!duplicated(merged_ct[!is.na(merged_ct$AC),]$POS)) ))
+print(paste0("The expected number of positions that are polymorphic (after scaling) = ", sum(merged_ct$p_rescale,na.rm = T)))
 
-observed <- c(sum(!duplicated(obs_ac$POS)),sum(!duplicated(obs_ag$POS)),sum(!duplicated(obs_at$POS)),sum(!duplicated(obs_ca$POS)),sum(!duplicated(obs_cg$POS)),sum(!duplicated(obs_ct$POS)))
+observed <- c(sum(!duplicated(merged_ac[!is.na(merged_ac$AC),]$POS)),sum(!duplicated(merged_ag[!is.na(merged_ag$AC),]$POS)),sum(!duplicated(merged_at[!is.na(merged_at$AC),]$POS)),sum(!duplicated(merged_ca[!is.na(merged_ca$AC),]$POS)),sum(!duplicated(merged_cg[!is.na(merged_cg$AC),]$POS)),sum(!duplicated(merged_ct[!is.na(merged_ct$AC),]$POS)))
 expected <- c(sum(merged_ac$p_rescale,na.rm = T),sum(merged_ag$p_rescale,na.rm = T),sum(merged_at$p_rescale,na.rm = T),sum(merged_ca$p_rescale,na.rm = T),sum(merged_cg$p_rescale,na.rm = T),sum(merged_ct$p_rescale,na.rm = T))
 
 print("fitting: observed ~ expected + 0")
@@ -86,53 +76,4 @@ abline(fit)
 print(summary(fit))
 
 ```
-
-
-
-### Number of allele count -- add up the mutation rates
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-print(paste0("The observed allele count =", sum(mut_obs$AC,na.rm = T)))
-print(paste0("The expected allele coun = ", sum(merged$MR_rescale,na.rm = T)))
-```
-
-
-- Considering the 6 mutation types separately
-
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
-print("A-C")
-print(paste0("The observed allele count = ", sum(obs_ac$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ac$MR_rescale,na.rm = T)))
-
-print("A-G")
-print(paste0("The observed allele count = ", sum(obs_ag$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ag$MR_rescale,na.rm = T)))
-
-print("A-T")
-print(paste0("The observed allele count = ", sum(obs_at$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_at$MR_rescale,na.rm = T)))
-
-print("C-A")
-print(paste0("The observed allele count = ", sum(obs_ca$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ca$MR_rescale,na.rm = T)))
-
-print("C-G")
-print(paste0("The observed allele count = ", sum(obs_cg$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_cg$MR_rescale,na.rm = T)))
-
-print("C-T")
-print(paste0("The observed allele count = ", sum(obs_ct$AC,na.rm = T)))
-print(paste0("The expected allele count = ", sum(merged_ct$MR_rescale,na.rm = T)))
-
-observed <- c(sum(obs_at$AC,na.rm = T),sum(obs_ac$AC,na.rm = T),sum(obs_ag$AC,na.rm = T),sum(obs_ct$AC,na.rm = T),sum(obs_cg$AC,na.rm = T),sum(obs_ca$AC,na.rm = T))
-expected <- c(sum(merged_at$MR_rescale,na.rm = T),sum(merged_ac$MR_rescale,na.rm = T),sum(merged_ag$MR_rescale,na.rm = T),sum(merged_ct$MR_rescale,na.rm = T),sum(merged_cg$MR_rescale,na.rm = T),sum(merged_ca$MR_rescale,na.rm = T))
-
-print("fitting: observed ~ expexted + 0")
-fit <- lm(observed ~ expected + 0)
-plot(expected, observed)
-abline(fit)
-print(summary(fit))
-
-```
-
 

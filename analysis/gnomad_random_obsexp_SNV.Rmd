@@ -16,17 +16,16 @@ suppressMessages(library(smashr))
 
 In this part, the chr22 was grouped into 100bp windows. We evaluate the random effects on these different windows.
 
-# Modelling the allele count -- 1kb
+# Modelling the allele count -- 100bp
 
 ## All 6 mutation types in total
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_grouped_1kb_SNV.bed")
-colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.100bp.bed")
 
 print("random effect: SNV_obs/SNV_exp")
 
-eff_rand <- merged$AC_obs/merged$MR_exp
+eff_rand <- merged$SNV_obs/merged$SNV_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
 hist(eff_rand)
 
@@ -37,12 +36,11 @@ plot(eff_rand)
 ## A - C
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ac_1kb_SNV.bed")
-colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.100bp.ac.bed")
 
 print("random effect: SNV_obs/SNV_exp")
 
-eff_rand <- merged$AC_obs/merged$MR_exp
+eff_rand <- merged$SNV_obs/merged$SNV_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
 hist(eff_rand)
 
@@ -52,12 +50,11 @@ plot(eff_rand)
 ## A - T
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_at_1kb_SNV.bed")
-colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.100bp.at.bed")
 
 print("random effect: SNV_obs/SNV_exp")
 
-eff_rand <- merged$AC_obs/merged$MR_exp
+eff_rand <- merged$SNV_obs/merged$SNV_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
 hist(eff_rand)
 
@@ -68,12 +65,11 @@ plot(eff_rand)
 ## A - G
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ag_1kb_SNV.bed")
-colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.100bp.ag.bed")
 
 print("random effect: SNV_obs/SNV_exp")
 
-eff_rand <- merged$AC_obs/merged$MR_exp
+eff_rand <- merged$SNV_obs/merged$SNV_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
 hist(eff_rand)
 
@@ -83,12 +79,11 @@ plot(eff_rand)
 ## C - A
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ca_1kb_SNV.bed")
-colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.100bp.ca.bed")
 
 print("random effect: SNV_obs/SNV_exp")
 
-eff_rand <- merged$AC_obs/merged$MR_exp
+eff_rand <- merged$SNV_obs/merged$SNV_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
 hist(eff_rand)
 
@@ -98,12 +93,11 @@ plot(eff_rand)
 ## C - G
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ct_1kb_SNV.bed")
-colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.100bp.cg.bed")
 
 print("random effect: SNV_obs/SNV_exp")
 
-eff_rand <- merged$AC_obs/merged$MR_exp
+eff_rand <- merged$SNV_obs/merged$SNV_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
 hist(eff_rand)
 
@@ -114,12 +108,222 @@ plot(eff_rand)
 ## C - T
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/chr22_ct_1kb_SNV.bed")
-colnames(merged) <- c("chr","start","end", "MR_exp","AC_obs")
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.100bp.ct.bed")
 
 print("random effect: SNV_obs/SNV_exp")
 
-eff_rand <- merged$AC_obs/merged$MR_exp
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+
+
+# Modelling the allele count -- 1kb
+
+## All 6 mutation types in total
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+## A - C
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.ac.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+## A - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.at.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.ag.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+## C - A
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.ca.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+## C - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.cg.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.ct.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+
+# Modelling the allele count -- 10kb
+
+## All 6 mutation types in total
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+## A - C
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ac.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+## A - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.at.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ag.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+## C - A
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ca.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+## C - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.cg.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
+eff_rand <- eff_rand[!is.na(eff_rand)]
+hist(eff_rand)
+
+plot(eff_rand)
+```
+
+
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=20}
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ct.bed")
+
+print("random effect: SNV_obs/SNV_exp")
+
+eff_rand <- merged$SNV_obs/merged$SNV_exp
 eff_rand <- eff_rand[!is.na(eff_rand)]
 hist(eff_rand)
 

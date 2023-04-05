@@ -1,5 +1,5 @@
 ---
-title: "Comparing the expected mutation rate and ovserved mutation counts -- random windows"
+title: "Comparing the # of expected SNVs and # of observed SNVs -- random windows"
 author: "XSun"
 date: "2023-04-02"
 output: workflowr::wflow_html
@@ -18,18 +18,11 @@ SNV with AF < 0.001, from gnomAD v3.1 whole genome
 # CHR22
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_rare_chr22_rescal.csv")
-merged_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/exp_merged_at_rare_chr22_rescal.csv")
-
-mut_obs <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data/chr22.SNV.txt")
-colnames(mut_obs) <- c("CHROM","POS","ID","REF","ALT","QUAL","FILTER","AN","AC","AF")
-mut_obs <- mut_obs[mut_obs$AF<0.001,]
-obs_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/results/obs_at_rare_chr22_rescal.csv")
-
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22.csv.gz")
+merged_at <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_at.csv.gz")
 ```
-## Considering random windows -- 1kb
 
-### probability of being polymorphic -- do p = 1-exp(-mu) conversion of mutation rate to prob. of being polymorphic
+## Considering random windows -- 1kb
 
 - Considering 6 types collectively
 
@@ -59,10 +52,8 @@ for (i in 1:num_windows){
   
   dat_window_merged <- merged[merged$POS %in% c(windows[i,1]:windows[i,2]),]
   expected[i] <- sum(dat_window_merged$p_rescale,na.rm = T)
-  
-  dat_window_obs <- mut_obs[mut_obs$POS %in% c(windows[i,1]:windows[i,2]),]
-  observed[i] <- sum(!duplicated(dat_window_obs$POS))
-  
+  observed[i] <- sum(!duplicated(dat_window_merged[!is.na(dat_window_merged$AC),]$POS))
+
 }
 fit <- lm(observed ~ expected +0)
 summary(fit)
@@ -100,8 +91,7 @@ for (i in 1:num_windows){
   dat_window_merged_at <- merged_at[merged_at$POS %in% c(windows[i,1]:windows[i,2]),]
   expected[i] <- sum(dat_window_merged_at$p,na.rm = T)
   
-  dat_window_obs_at <- obs_at[obs_at$POS %in% c(windows[i,1]:windows[i,2]),]
-  observed[i] <- sum(!duplicated(dat_window_obs_at$POS))
+  observed[i] <- sum(!duplicated(dat_window_merged_at[!is.na(dat_window_merged_at$AC),]$POS))
   
 }
 fit <- lm(observed ~ expected +0)
@@ -110,85 +100,3 @@ plot(expected,observed)
 abline(fit)
 ```
 
-
-
-### Number of allele count -- add up the mutation rates
-
-- 6 types collectively
-
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
-
-pos_min <- min(merged$POS)
-pos_max <- max(merged$POS)
-
-window_size <- 1000
-num_windows <- 100
-
-max_start_pos <- pos_max - window_size + 1
-
-# randomly sample num_windows start positions
-set.seed(1)
-start_positions <- sample(1:max_start_pos, num_windows, replace = FALSE)
-windows <- matrix(nrow = num_windows, ncol = 2)
-
-for (i in 1:num_windows) {
-  start_pos <- start_positions[i]
-  end_pos <- start_pos + window_size - 1
-  windows[i,] <- c(start_pos, end_pos)
-}
-
-observed <- c()
-expected <- c()
-for (i in 1:num_windows){
-  
-  dat_window_merged <- merged[merged$POS %in% c(windows[i,1]:windows[i,2]),]
-  expected[i] <- sum(dat_window_merged$MR_rescale,na.rm = T)
-
-  observed[i] <- sum(dat_window_merged$AC,na.rm = T)
-  
-}
-fit <- lm(observed ~ expected +0)
-summary(fit)
-plot(expected,observed)
-abline(fit)
-```
-
-
-- A to T
-
-
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
-pos_min <- min(merged_at$POS)
-pos_max <- max(merged_at$POS)
-
-window_size <- 1000
-num_windows <- 100
-
-max_start_pos <- pos_max - window_size + 1
-
-# randomly sample num_windows start positions
-set.seed(1)
-start_positions <- sample(1:max_start_pos, num_windows, replace = FALSE)
-windows <- matrix(nrow = num_windows, ncol = 2)
-
-for (i in 1:num_windows) {
-  start_pos <- start_positions[i]
-  end_pos <- start_pos + window_size - 1
-  windows[i,] <- c(start_pos, end_pos)
-}
-
-observed <- c()
-expected <- c()
-for (i in 1:num_windows){
-  
-  dat_window_merged_at <- merged_at[merged_at$POS %in% c(windows[i,1]:windows[i,2]),]
-  expected[i] <- sum(dat_window_merged_at$MR_rescale,na.rm = T)
-  
-  observed[i] <- sum(dat_window_merged_at$AC,na.rm = T)
-  
-}
-fit <- lm(observed ~ expected +0)
-summary(fit)
-plot(expected,observed)
-abline(fit)
-```
