@@ -25,144 +25,830 @@ Then, we
 
 3. fit SNV_obs ~ SNV_obs_pred + 0 
 
-
 # 100bp
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+## All 6 mutation types
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_100bp.rdata")
 
-eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs
-SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
 
-print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0")
-plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data")
-fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0)
-abline(fit,col="red")
-summary(fit)
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
 ```
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ag_100bp.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+
+
+## A - C
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ac_100bp.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## A - T
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_at_100bp.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - A
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ca_100bp.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_cg_100bp.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ct_100bp.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+
+
 
 
 # 1kb
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+## All 6 mutation types
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_1kb.rdata")
 
-eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs
-SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
 
-print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0")
-plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data")
-fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0)
-abline(fit,col="red")
-summary(fit)
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
 ```
 
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ag_1kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+
+
+## A - C
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ac_1kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## A - T
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_at_1kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - A
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ca_1kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_cg_1kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ct_1kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
 
 # 10kb
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+## All 6 mutation types
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_10kb.rdata")
 
-eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs
-SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
 
-print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0")
-plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data")
-fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0)
-abline(fit,col="red")
-summary(fit)
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
 ```
 
-<!-- # 100bp -->
+## A - G
 
-<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5} -->
-<!-- merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_addwindowinfo_100bp.csv.gz") -->
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
-<!-- set.seed(1) -->
-<!-- merged_grouped <- merged %>% -->
-<!--   group_by(window) %>% -->
-<!--   mutate(sampled = ifelse(runif(n()) <= 0.9, "sampled", "not_sampled"))%>% -->
-<!--   group_by(window, sampled)%>% -->
-<!--   group_by(window, sampled) %>% -->
-<!--   summarise(start = min(POS), -->
-<!--             end = max(POS), -->
-<!--             SNV_exp = sum(p_rescale, na.rm = TRUE), -->
-<!--             SNV_obs = sum(!duplicated(POS[!is.na(AC)]))) -->
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ag_10kb.rdata")
 
-<!-- merged_sampled <- filter(merged_grouped,sampled =="sampled") -->
-<!-- merged_unsampled <- filter(merged_grouped,sampled =="not_sampled") -->
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
 
-<!-- eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs -->
-<!-- SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled -->
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
-<!-- print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0") -->
-<!-- plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data") -->
-<!-- fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0) -->
-<!-- abline(fit,col="red") -->
-<!-- summary(fit) -->
-<!-- ``` -->
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
 
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-<!-- # 1kb  -->
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
 
-<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5} -->
-<!-- merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_addwindowinfo_1kb.csv.gz") -->
-
-<!-- set.seed(1) -->
-<!-- merged_grouped <- merged %>% -->
-<!--   group_by(window) %>% -->
-<!--   mutate(sampled = ifelse(runif(n()) <= 0.9, "sampled", "not_sampled"))%>% -->
-<!--   group_by(window, sampled)%>% -->
-<!--   group_by(window, sampled) %>% -->
-<!--   summarise(start = min(POS), -->
-<!--             end = max(POS), -->
-<!--             SNV_exp = sum(p_rescale, na.rm = TRUE), -->
-<!--             SNV_obs = sum(!duplicated(POS[!is.na(AC)]))) -->
-
-<!-- merged_sampled <- filter(merged_grouped,sampled =="sampled") -->
-<!-- merged_unsampled <- filter(merged_grouped,sampled =="not_sampled") -->
-
-<!-- eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs -->
-<!-- SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled -->
-
-<!-- print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0") -->
-<!-- plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data") -->
-<!-- fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0) -->
-<!-- abline(fit,col="red") -->
-<!-- summary(fit) -->
-<!-- ``` -->
+```
 
 
+## A - C
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
-<!-- # 10kb  -->
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ac_10kb.rdata")
 
-<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5} -->
-<!-- merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/merged_expobs_rescale_chr22_addwindowinfo_10kb.csv.gz") -->
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
 
-<!-- set.seed(1) -->
-<!-- merged_grouped <- merged %>% -->
-<!--   group_by(window) %>% -->
-<!--   mutate(sampled = ifelse(runif(n()) <= 0.9, "sampled", "not_sampled"))%>% -->
-<!--   group_by(window, sampled)%>% -->
-<!--   group_by(window, sampled) %>% -->
-<!--   summarise(start = min(POS), -->
-<!--             end = max(POS), -->
-<!--             SNV_exp = sum(p_rescale, na.rm = TRUE), -->
-<!--             SNV_obs = sum(!duplicated(POS[!is.na(AC)]))) -->
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
-<!-- merged_sampled <- filter(merged_grouped,sampled =="sampled") -->
-<!-- merged_unsampled <- filter(merged_grouped,sampled =="not_sampled") -->
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-<!-- eff_rand_sampled <- merged_sampled$SNV_obs/merged_sampled$SNV_obs -->
-<!-- SNV_obs_pred_unsamples <- merged_unsampled$SNV_exp*eff_rand_sampled -->
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
 
-<!-- print("fit: observed_real_testing_data ~ observed_predicted_testing_data  + 0") -->
-<!-- plot(SNV_obs_pred_unsamples,merged_unsampled$SNV_obs, xlab= "observed_predicted_testing_data",ylab = " observed_real_testing_data") -->
-<!-- fit <- lm(merged_unsampled$SNV_obs ~ SNV_obs_pred_unsamples +0) -->
-<!-- abline(fit,col="red") -->
-<!-- summary(fit) -->
-<!-- ``` -->
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## A - T
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_at_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - A
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ca_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_cg_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ct_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
+
+combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
+     main = "Random Effect")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
+print(paste0("Random Effect: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
+     main = "Origin Roulette")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
+print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+
+```
