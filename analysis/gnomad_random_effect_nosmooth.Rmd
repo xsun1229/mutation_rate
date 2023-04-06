@@ -57,13 +57,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -97,13 +97,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -137,13 +137,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## A - T
@@ -175,13 +175,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - A
@@ -213,13 +213,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - G
@@ -251,13 +251,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - T
@@ -290,13 +290,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -335,13 +335,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -375,13 +375,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -415,13 +415,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## A - T
@@ -453,13 +453,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - A
@@ -491,13 +491,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - G
@@ -529,13 +529,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - T
@@ -568,13 +568,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -610,13 +610,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -650,13 +650,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 
@@ -690,13 +690,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## A - T
@@ -728,13 +728,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - A
@@ -766,13 +766,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - G
@@ -804,13 +804,13 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```
 ## C - T
@@ -843,12 +843,12 @@ print(paste0("Random Effect: the fitting pvalue is ",pval))
 # plot the second figure
 plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Origin Roulette")
+     main = "Roulette baseline")
 fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
 abline(fit2,col="red")
 adj.rsq <-summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Origin Roulette: the ajusted rsq is ",adj.rsq))
-print(paste0("Origin Roulette: the fitting pvalue is ",pval))
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 ```

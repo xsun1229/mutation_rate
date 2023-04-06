@@ -1,0 +1,323 @@
+---
+title: "Modelling the random effect with smash ---- 10kb window"
+author: "XSun"
+date: "2023-04-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(smashr))
+suppressMessages(library(data.table))
+```
+
+# 10kb
+
+## All 6 mutation types
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.bed")
+merged <- merged[!is.na(merged$SNV_exp),]
+merged <- merged[!merged$SNV_obs ==0,]
+
+
+### random effect estimation
+merged$randeff <- merged$SNV_obs/merged$SNV_exp
+merged$log_randeff <- log(merged$randeff)
+merged$mean_lgre <- smash.gaus(merged$log_randeff)
+merged$randeff_sm <- exp(merged$mean_lgre)
+
+### predict 
+merged$obs_randeff <- merged$SNV_exp*merged$randeff_sm
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(merged$obs_randeff,merged$SNV_obs, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(merged$SNV_obs ~ merged$obs_randeff + 0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(merged$SNV_exp, merged$SNV_obs, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(merged$SNV_obs ~ merged$SNV_exp +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ag.bed")
+merged <- merged[!is.na(merged$SNV_exp),]
+merged <- merged[!merged$SNV_obs ==0,]
+
+
+### random effect estimation
+merged$randeff <- merged$SNV_obs/merged$SNV_exp
+merged$log_randeff <- log(merged$randeff)
+merged$mean_lgre <- smash.gaus(merged$log_randeff)
+merged$randeff_sm <- exp(merged$mean_lgre)
+
+### predict 
+merged$obs_randeff <- merged$SNV_exp*merged$randeff_sm
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(merged$obs_randeff,merged$SNV_obs, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(merged$SNV_obs ~ merged$obs_randeff + 0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(merged$SNV_exp, merged$SNV_obs, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(merged$SNV_obs ~ merged$SNV_exp +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - C
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ac.bed")
+merged <- merged[!is.na(merged$SNV_exp),]
+merged <- merged[!merged$SNV_obs ==0,]
+
+
+### random effect estimation
+merged$randeff <- merged$SNV_obs/merged$SNV_exp
+merged$log_randeff <- log(merged$randeff)
+merged$mean_lgre <- smash.gaus(merged$log_randeff)
+merged$randeff_sm <- exp(merged$mean_lgre)
+
+### predict 
+merged$obs_randeff <- merged$SNV_exp*merged$randeff_sm
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(merged$obs_randeff,merged$SNV_obs, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(merged$SNV_obs ~ merged$obs_randeff + 0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(merged$SNV_exp, merged$SNV_obs, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(merged$SNV_obs ~ merged$SNV_exp +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+## A - T
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.at.bed")
+merged <- merged[!is.na(merged$SNV_exp),]
+merged <- merged[!merged$SNV_obs ==0,]
+
+
+### random effect estimation
+merged$randeff <- merged$SNV_obs/merged$SNV_exp
+merged$log_randeff <- log(merged$randeff)
+merged$mean_lgre <- smash.gaus(merged$log_randeff)
+merged$randeff_sm <- exp(merged$mean_lgre)
+
+### predict 
+merged$obs_randeff <- merged$SNV_exp*merged$randeff_sm
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(merged$obs_randeff,merged$SNV_obs, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(merged$SNV_obs ~ merged$obs_randeff + 0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(merged$SNV_exp, merged$SNV_obs, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(merged$SNV_obs ~ merged$SNV_exp +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+```
+## C - A
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ca.bed")
+merged <- merged[!is.na(merged$SNV_exp),]
+merged <- merged[!merged$SNV_obs ==0,]
+
+
+### random effect estimation
+merged$randeff <- merged$SNV_obs/merged$SNV_exp
+merged$log_randeff <- log(merged$randeff)
+merged$mean_lgre <- smash.gaus(merged$log_randeff)
+merged$randeff_sm <- exp(merged$mean_lgre)
+
+### predict 
+merged$obs_randeff <- merged$SNV_exp*merged$randeff_sm
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(merged$obs_randeff,merged$SNV_obs, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(merged$SNV_obs ~ merged$obs_randeff + 0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(merged$SNV_exp, merged$SNV_obs, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(merged$SNV_obs ~ merged$SNV_exp +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.cg.bed")
+merged <- merged[!is.na(merged$SNV_exp),]
+merged <- merged[!merged$SNV_obs ==0,]
+
+
+### random effect estimation
+merged$randeff <- merged$SNV_obs/merged$SNV_exp
+merged$log_randeff <- log(merged$randeff)
+merged$mean_lgre <- smash.gaus(merged$log_randeff)
+merged$randeff_sm <- exp(merged$mean_lgre)
+
+### predict 
+merged$obs_randeff <- merged$SNV_exp*merged$randeff_sm
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(merged$obs_randeff,merged$SNV_obs, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(merged$SNV_obs ~ merged$obs_randeff + 0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(merged$SNV_exp, merged$SNV_obs, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(merged$SNV_obs ~ merged$SNV_exp +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+merged <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.ct.bed")
+merged <- merged[!is.na(merged$SNV_exp),]
+merged <- merged[!merged$SNV_obs ==0,]
+
+
+### random effect estimation
+merged$randeff <- merged$SNV_obs/merged$SNV_exp
+merged$log_randeff <- log(merged$randeff)
+merged$mean_lgre <- smash.gaus(merged$log_randeff)
+merged$randeff_sm <- exp(merged$mean_lgre)
+
+### predict 
+merged$obs_randeff <- merged$SNV_exp*merged$randeff_sm
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(merged$obs_randeff,merged$SNV_obs, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(merged$SNV_obs ~ merged$obs_randeff + 0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(merged$SNV_exp, merged$SNV_obs, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(merged$SNV_obs ~ merged$SNV_exp +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```

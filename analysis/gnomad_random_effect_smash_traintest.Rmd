@@ -1,0 +1,35 @@
+---
+title: "Modelling the random effect with smash"
+author: "XSun"
+date: "2023-04-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+
+We grouped the chr22 into 100bp, 1kb, 10kb windows. In each window, we sampled 90% sites as training data, and the remaining 10% as the testing data. For comparison, the training and testing data here are the same with [that without smoothing](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_cv.html)
+
+We 
+
+1. computed the random effect (eff_rand) in this window using these training sites. 
+
+2. did log transform for eff_rand and got lg_eff_rand
+
+3. smoothed the lg_eff_rand across all windows using [smashr](https://github.com/stephenslab/smashr), got mean_lg_eff_rand
+
+4. eff_rand_sm <- exp(mean_lg_eff_rand)
+
+5. predicted the observed number of SNV with eff_rand_sm on the testing sites in each window.
+
+6. fit SNV_obs ~ SNV_obs_smash + 0 
+
+# Results
+
+[100bp](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_100bp.html)
+
+[1kb](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_1kb.html)
+
+[10kb](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_10kb.html)
+

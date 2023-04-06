@@ -1,0 +1,331 @@
+---
+title: "Modelling the random effect with smash ---- 10kb window"
+author: "XSun"
+date: "2023-04-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(smashr))
+suppressMessages(library(data.table))
+```
+
+# 10kb
+
+## All 6 mutation types
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+combine <- combine[!combine$SNV_obs_sam==0,]
+
+combine$randeff_sam <- combine$SNV_obs_sam/combine$SNV_exp_sam
+combine$log_randeff_sam <- log(combine$randeff_sam)
+combine$mean_lgre_sam <- smash.gaus(combine$log_randeff_sam)
+combine$randeff_sm_sam <- exp(combine$mean_lgre_sam)
+
+### predict 
+combine$obs_randeff_umsam <- combine$SNV_exp_unsam*combine$randeff_sm_sam
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ag_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+combine <- combine[!combine$SNV_obs_sam==0,]
+
+combine$randeff_sam <- combine$SNV_obs_sam/combine$SNV_exp_sam
+combine$log_randeff_sam <- log(combine$randeff_sam)
+combine$mean_lgre_sam <- smash.gaus(combine$log_randeff_sam)
+combine$randeff_sm_sam <- exp(combine$mean_lgre_sam)
+
+### predict 
+combine$obs_randeff_umsam <- combine$SNV_exp_unsam*combine$randeff_sm_sam
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - C
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ac_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+combine <- combine[!combine$SNV_obs_sam==0,]
+
+combine$randeff_sam <- combine$SNV_obs_sam/combine$SNV_exp_sam
+combine$log_randeff_sam <- log(combine$randeff_sam)
+combine$mean_lgre_sam <- smash.gaus(combine$log_randeff_sam)
+combine$randeff_sm_sam <- exp(combine$mean_lgre_sam)
+
+### predict 
+combine$obs_randeff_umsam <- combine$SNV_exp_unsam*combine$randeff_sm_sam
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+## A - T
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_at_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+combine <- combine[!combine$SNV_obs_sam==0,]
+
+combine$randeff_sam <- combine$SNV_obs_sam/combine$SNV_exp_sam
+combine$log_randeff_sam <- log(combine$randeff_sam)
+combine$mean_lgre_sam <- smash.gaus(combine$log_randeff_sam)
+combine$randeff_sm_sam <- exp(combine$mean_lgre_sam)
+
+### predict 
+combine$obs_randeff_umsam <- combine$SNV_exp_unsam*combine$randeff_sm_sam
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+## C - A
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ca_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+combine <- combine[!combine$SNV_obs_sam==0,]
+
+combine$randeff_sam <- combine$SNV_obs_sam/combine$SNV_exp_sam
+combine$log_randeff_sam <- log(combine$randeff_sam)
+combine$mean_lgre_sam <- smash.gaus(combine$log_randeff_sam)
+combine$randeff_sm_sam <- exp(combine$mean_lgre_sam)
+
+### predict 
+combine$obs_randeff_umsam <- combine$SNV_exp_unsam*combine$randeff_sm_sam
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_cg_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+combine <- combine[!combine$SNV_obs_sam==0,]
+
+combine$randeff_sam <- combine$SNV_obs_sam/combine$SNV_exp_sam
+combine$log_randeff_sam <- log(combine$randeff_sam)
+combine$mean_lgre_sam <- smash.gaus(combine$log_randeff_sam)
+combine$randeff_sm_sam <- exp(combine$mean_lgre_sam)
+
+### predict 
+combine$obs_randeff_umsam <- combine$SNV_exp_unsam*combine$randeff_sm_sam
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ct_10kb.rdata")
+
+combine <- merge(merged_sampled,merged_unsampled,by="window")
+colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam")
+
+combine <- combine[!combine$SNV_obs_sam==0,]
+
+combine$randeff_sam <- combine$SNV_obs_sam/combine$SNV_exp_sam
+combine$log_randeff_sam <- log(combine$randeff_sam)
+combine$mean_lgre_sam <- smash.gaus(combine$log_randeff_sam)
+combine$randeff_sm_sam <- exp(combine$mean_lgre_sam)
+
+### predict 
+combine$obs_randeff_umsam <- combine$SNV_exp_unsam*combine$randeff_sm_sam
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
