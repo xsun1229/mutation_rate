@@ -1,0 +1,890 @@
+---
+title: "Modelling the random effect with smash ---- first 90% base pairs in a window as training"
+author: "XSun"
+date: "2023-04-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+```
+
+
+# Introduction
+
+We grouped the chr22 into 100bp, 1kb, 10kb windows. In each window, we used the first 90% sites as training data, and the remaining 10% as the test_continuousing data. 
+
+We
+
+1. computed the random effect (eff_rand) in this window using these training sites. 
+
+2. did log transform for eff_rand and got lg_eff_rand
+
+3. smoothed the lg_eff_rand across all windows using [smashr](https://github.com/stephenslab/smashr), got mean_lg_eff_rand
+
+4. eff_rand_sm <- exp(mean_lg_eff_rand)
+
+5. predicted the observed number of SNV with eff_rand_sm on the test_continuousing sites in each window.
+
+6. fit SNV_obs ~ SNV_obs_smash + 0 
+
+For the windows with 0 SNVs: we replaced the 0s with a pseudocount of 0.5. 
+
+# 1kb
+
+## All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_1kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ag_1kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## A - C
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ac_1kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+## A - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_at_1kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+## C - A
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ca_1kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_cg_1kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ct_1kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+# 10kb
+
+## All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_10kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ag_10kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+## A - C
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ac_10kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## A - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_at_10kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+## C - A
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ca_10kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_cg_10kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_continuous_ct_10kb_pseudo05.rdata")
+
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
+
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+combine$Mb <- combine$start_sam / 1000000
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+combine <- combine[combine$Mb >25 &combine$Mb <30, ]
+ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
+  geom_point(size=0.1) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs in testing set/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+

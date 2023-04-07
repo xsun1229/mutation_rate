@@ -1,0 +1,27 @@
+---
+title: "Comparing random effects (SMASH estimated) for different mutation types"
+author: "XSun"
+date: "2023-04-07"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+
+An interesting question is whether the hot-spots of different mutation types tend to occur together. To make comparison: 
+
+1. we created plots with the Smash estimates of multiple mutation types together in few regions. 
+
+2. we made a scatter plot of the Smash estimates of the random effects between two mutation types across all windows. 
+
+# Comparing Smash estimates of multiple mutation types together in few regions.
+
+
+
+
+# Smash estimates of the random effects between two mutation types across all windows
+
+
+
+
