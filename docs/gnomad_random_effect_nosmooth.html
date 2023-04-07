@@ -15,6 +15,7 @@
 
 <title>Cross validation for the Random effect</title>
 
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -46,6 +47,8 @@ div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -368,7 +371,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -377,7 +382,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -386,17 +393,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-04-06
+<strong>Last updated:</strong> 2023-04-07
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>mutation_rate/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>mutation_rate/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -405,110 +422,155 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230228code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20230228)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230228code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230228)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20230228code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20230228code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20230228)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20230228)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree211b0cf0cd95e42926bff47f0bb89c109341e7b8targetblank211b0cfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/xsun1229/mutation_rate/tree/211b0cf0cd95e42926bff47f0bb89c109341e7b8" target="_blank">211b0cf</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1fbabea422bd9ba2a08e817aa8da2c541b671e56targetblank1fbabeaa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/mutation_rate/tree/1fbabea422bd9ba2a08e817aa8da2c541b671e56" target="_blank">1fbabea</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree211b0cf0cd95e42926bff47f0bb89c109341e7b8targetblank211b0cfa" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1fbabea422bd9ba2a08e817aa8da2c541b671e56targetblank1fbabeaa"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/xsun1229/mutation_rate/tree/211b0cf0cd95e42926bff47f0bb89c109341e7b8" target="_blank">211b0cf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/mutation_rate/tree/1fbabea422bd9ba2a08e817aa8da2c541b671e56" target="_blank">1fbabea</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
 
-Untracked files:
-    Untracked:  analysis/gnomad_random_effect_nosmooth.Rmd
-    Untracked:  analysis/gnomad_random_effect_smash.Rmd
-    Untracked:  analysis/gnomad_random_effect_smash_traintest.Rmd
-    Untracked:  analysis/gnomad_random_effect_smash_traintest_10kb.Rmd
-    Untracked:  analysis/gnomad_random_effect_smash_traintest_1kb.Rmd
-
 Unstaged changes:
-    Deleted:    analysis/gnomad_random_obsexp_cv.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/gnomad_random_effect_nosmooth.Rmd
+    Modified:   analysis/gnomad_random_effect_smash_traintest.Rmd
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -517,202 +579,943 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/gnomad_random_effect_nosmooth.Rmd</code>) and HTML
+(<code>docs/gnomad_random_effect_nosmooth.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/analysis/gnomad_random_effect_nosmooth.Rmd" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/gnomad_random_effect_nosmooth.html" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>We grouped the chr22 into 100bp, 1kb, 10kb windows. In each window, we sampled 90% sites as training data, and the remaining 10% as the testing data.</p>
+<p>We grouped the chr22 into 100bp, 1kb, 10kb windows. In each window,
+we sampled 90% sites as training data, and the remaining 10% as the
+testing data.</p>
 <p>Then, we</p>
 <ol style="list-style-type: decimal">
-<li><p>computed the random effect (eff_rand) in this window using these training sites.</p></li>
-<li><p>predicted the observed number of SNV (SNV_obs_pred) with eff_rand on the testing sites in each window.</p></li>
+<li><p>computed the random effect (eff_rand) in this window using these
+training sites.</p></li>
+<li><p>predicted the observed number of SNV (SNV_obs_pred) with eff_rand
+on the testing sites in each window.</p></li>
 <li><p>fit SNV_obs ~ SNV_obs_pred + 0</p></li>
 </ol>
 </div>
-<div id="bp" class="section level1">
-<h1>100bp</h1>
+<div id="kb" class="section level1">
+<h1>1kb</h1>
 <div id="all-6-mutation-types" class="section level2">
 <h2>All 6 mutation types</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.713754318623133&quot;</code></pre>
+<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.958311600790438&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
 <p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-2-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.682966956668225&quot;</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-2-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.907386020434936&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
 <div id="a---g" class="section level2">
 <h2>A - G</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.365285732602942&quot;</code></pre>
+<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.842486316778906&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
 <p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.398647709560598&quot;</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-3-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.808451855528587&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
 <div id="a---c" class="section level2">
 <h2>A - C</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.119097647442225&quot;</code></pre>
+<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.599526244778402&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
 <p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.154537268037089&quot;</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-4-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.566962362678074&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
 <div id="a---t" class="section level2">
 <h2>A - T</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.129629883361628&quot;</code></pre>
+<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.615539757686943&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
 <p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.150624765052271&quot;</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-5-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.52388900440928&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
 <div id="c---a" class="section level2">
 <h2>C - A</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.20292507922906&quot;</code></pre>
+<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.722229231324309&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
 <p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.238568165746786&quot;</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-6-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.663383862392601&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
 <div id="c---g" class="section level2">
 <h2>C - G</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.192824439600057&quot;</code></pre>
+<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.709378897760959&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
 <p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.2372202308571&quot;</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-7-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.686564197271931&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
 <div id="c---t" class="section level2">
 <h2>C - T</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.601721830290837&quot;</code></pre>
-<pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.615730756289915&quot;</code></pre>
-<pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
-</div>
-</div>
-<div id="kb" class="section level1">
-<h1>1kb</h1>
-<div id="all-6-mutation-types-1" class="section level2">
-<h2>All 6 mutation types</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.958311600790438&quot;</code></pre>
-<pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.907386020434936&quot;</code></pre>
-<pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
-</div>
-<div id="a---g-1" class="section level2">
-<h2>A - G</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.842486316778906&quot;</code></pre>
-<pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.808451855528587&quot;</code></pre>
-<pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
-</div>
-<div id="a---c-1" class="section level2">
-<h2>A - C</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.599526244778402&quot;</code></pre>
-<pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.566962362678074&quot;</code></pre>
-<pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
-</div>
-<div id="a---t-1" class="section level2">
-<h2>A - T</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.615539757686943&quot;</code></pre>
-<pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.52388900440928&quot;</code></pre>
-<pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
-</div>
-<div id="c---a-1" class="section level2">
-<h2>C - A</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.722229231324309&quot;</code></pre>
-<pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.663383862392601&quot;</code></pre>
-<pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
-</div>
-<div id="c---g-1" class="section level2">
-<h2>C - G</h2>
-<pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.709378897760959&quot;</code></pre>
-<pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.686564197271931&quot;</code></pre>
-<pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
-</div>
-<div id="c---t-1" class="section level2">
-<h2>C - T</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.923963295963625&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-8-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.892655996751046&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
 </div>
 <div id="kb-1" class="section level1">
 <h1>10kb</h1>
-<div id="all-6-mutation-types-2" class="section level2">
+<div id="all-6-mutation-types-1" class="section level2">
 <h2>All 6 mutation types</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.994947470116198&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-16-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-9-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.958040331844009&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
-<div id="a---g-2" class="section level2">
+<div id="a---g-1" class="section level2">
 <h2>A - G</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.980522114400075&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-10-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.94669233347037&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
-<div id="a---c-2" class="section level2">
+<div id="a---c-1" class="section level2">
 <h2>A - C</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.936214722648763&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-11-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.88492743330637&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
-<div id="a---t-2" class="section level2">
+<div id="a---t-1" class="section level2">
 <h2>A - T</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.936020068301961&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-19-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-12-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.816217668053169&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
-<div id="c---a-2" class="section level2">
+<div id="c---a-1" class="section level2">
 <h2>C - A</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.961227453327403&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-20-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-13-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-13-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.880852994523243&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
-<div id="c---g-2" class="section level2">
+<div id="c---g-1" class="section level2">
 <h2>C - G</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.958232866244815&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-21-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-14-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.921805723862636&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
 </div>
-<div id="c---t-2" class="section level2">
+<div id="c---t-1" class="section level2">
 <h2>C - T</h2>
 <pre><code>[1] &quot;Random Effect: the ajusted rsq is 0.991615157053644&quot;</code></pre>
 <pre><code>[1] &quot;Random Effect: the fitting pvalue is 0&quot;</code></pre>
-<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-22-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/04528bd235f1b3b295cf675cec3f0c4097e906d2/docs/figure/gnomad_random_effect_nosmooth.Rmd/unnamed-chunk-15-1.png" target="_blank">04528bd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[1] &quot;Roulette baseline: the ajusted rsq is 0.966644950599696&quot;</code></pre>
 <pre><code>[1] &quot;Roulette baseline: the fitting pvalue is 0&quot;</code></pre>
+<!-- # 100bp -->
+<!-- ## All 6 mutation types -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10} -->
+<!-- load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_100bp.rdata") -->
+<!-- combine <- merge(merged_sampled,merged_unsampled,by="window") -->
+<!-- colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam") -->
+<!-- eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam -->
+<!-- combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled -->
+<!-- # set up the 2x1 plot grid -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- # plot the first figure -->
+<!-- plot(combine$SNV_pred_random, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data",  -->
+<!--      main = "Random Effect") -->
+<!-- fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0) -->
+<!-- abline(fit1,col="red") -->
+<!-- adj.rsq <-summary(fit1)$adj.r.squared -->
+<!-- pval <- summary(fit1)$coefficients[,4] -->
+<!-- print(paste0("Random Effect: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Random Effect: the fitting pvalue is ",pval)) -->
+<!-- # plot the second figure -->
+<!-- plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data", -->
+<!--      main = "Roulette baseline") -->
+<!-- fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0) -->
+<!-- abline(fit2,col="red") -->
+<!-- adj.rsq <-summary(fit2)$adj.r.squared -->
+<!-- pval <- summary(fit2)$coefficients[,4] -->
+<!-- print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Roulette baseline: the fitting pvalue is ",pval)) -->
+<!-- ``` -->
+<!-- ## A - G -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10} -->
+<!-- load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ag_100bp.rdata") -->
+<!-- combine <- merge(merged_sampled,merged_unsampled,by="window") -->
+<!-- colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam") -->
+<!-- eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam -->
+<!-- combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled -->
+<!-- # set up the 2x1 plot grid -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- # plot the first figure -->
+<!-- plot(combine$SNV_pred_random, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data",  -->
+<!--      main = "Random Effect") -->
+<!-- fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0) -->
+<!-- abline(fit1,col="red") -->
+<!-- adj.rsq <-summary(fit1)$adj.r.squared -->
+<!-- pval <- summary(fit1)$coefficients[,4] -->
+<!-- print(paste0("Random Effect: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Random Effect: the fitting pvalue is ",pval)) -->
+<!-- # plot the second figure -->
+<!-- plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data", -->
+<!--      main = "Roulette baseline") -->
+<!-- fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0) -->
+<!-- abline(fit2,col="red") -->
+<!-- adj.rsq <-summary(fit2)$adj.r.squared -->
+<!-- pval <- summary(fit2)$coefficients[,4] -->
+<!-- print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Roulette baseline: the fitting pvalue is ",pval)) -->
+<!-- ``` -->
+<!-- ## A - C -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10} -->
+<!-- load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ac_100bp.rdata") -->
+<!-- combine <- merge(merged_sampled,merged_unsampled,by="window") -->
+<!-- colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam") -->
+<!-- eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam -->
+<!-- combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled -->
+<!-- # set up the 2x1 plot grid -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- # plot the first figure -->
+<!-- plot(combine$SNV_pred_random, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data",  -->
+<!--      main = "Random Effect") -->
+<!-- fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0) -->
+<!-- abline(fit1,col="red") -->
+<!-- adj.rsq <-summary(fit1)$adj.r.squared -->
+<!-- pval <- summary(fit1)$coefficients[,4] -->
+<!-- print(paste0("Random Effect: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Random Effect: the fitting pvalue is ",pval)) -->
+<!-- # plot the second figure -->
+<!-- plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data", -->
+<!--      main = "Roulette baseline") -->
+<!-- fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0) -->
+<!-- abline(fit2,col="red") -->
+<!-- adj.rsq <-summary(fit2)$adj.r.squared -->
+<!-- pval <- summary(fit2)$coefficients[,4] -->
+<!-- print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Roulette baseline: the fitting pvalue is ",pval)) -->
+<!-- ``` -->
+<!-- ## A - T -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10} -->
+<!-- load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_at_100bp.rdata") -->
+<!-- combine <- merge(merged_sampled,merged_unsampled,by="window") -->
+<!-- colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam") -->
+<!-- eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam -->
+<!-- combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled -->
+<!-- # set up the 2x1 plot grid -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- # plot the first figure -->
+<!-- plot(combine$SNV_pred_random, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data",  -->
+<!--      main = "Random Effect") -->
+<!-- fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0) -->
+<!-- abline(fit1,col="red") -->
+<!-- adj.rsq <-summary(fit1)$adj.r.squared -->
+<!-- pval <- summary(fit1)$coefficients[,4] -->
+<!-- print(paste0("Random Effect: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Random Effect: the fitting pvalue is ",pval)) -->
+<!-- # plot the second figure -->
+<!-- plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data", -->
+<!--      main = "Roulette baseline") -->
+<!-- fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0) -->
+<!-- abline(fit2,col="red") -->
+<!-- adj.rsq <-summary(fit2)$adj.r.squared -->
+<!-- pval <- summary(fit2)$coefficients[,4] -->
+<!-- print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Roulette baseline: the fitting pvalue is ",pval)) -->
+<!-- ``` -->
+<!-- ## C - A -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10} -->
+<!-- load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ca_100bp.rdata") -->
+<!-- combine <- merge(merged_sampled,merged_unsampled,by="window") -->
+<!-- colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam") -->
+<!-- eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam -->
+<!-- combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled -->
+<!-- # set up the 2x1 plot grid -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- # plot the first figure -->
+<!-- plot(combine$SNV_pred_random, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data",  -->
+<!--      main = "Random Effect") -->
+<!-- fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0) -->
+<!-- abline(fit1,col="red") -->
+<!-- adj.rsq <-summary(fit1)$adj.r.squared -->
+<!-- pval <- summary(fit1)$coefficients[,4] -->
+<!-- print(paste0("Random Effect: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Random Effect: the fitting pvalue is ",pval)) -->
+<!-- # plot the second figure -->
+<!-- plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data", -->
+<!--      main = "Roulette baseline") -->
+<!-- fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0) -->
+<!-- abline(fit2,col="red") -->
+<!-- adj.rsq <-summary(fit2)$adj.r.squared -->
+<!-- pval <- summary(fit2)$coefficients[,4] -->
+<!-- print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Roulette baseline: the fitting pvalue is ",pval)) -->
+<!-- ``` -->
+<!-- ## C - G -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10} -->
+<!-- load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_cg_100bp.rdata") -->
+<!-- combine <- merge(merged_sampled,merged_unsampled,by="window") -->
+<!-- colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam") -->
+<!-- eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam -->
+<!-- combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled -->
+<!-- # set up the 2x1 plot grid -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- # plot the first figure -->
+<!-- plot(combine$SNV_pred_random, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data",  -->
+<!--      main = "Random Effect") -->
+<!-- fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0) -->
+<!-- abline(fit1,col="red") -->
+<!-- adj.rsq <-summary(fit1)$adj.r.squared -->
+<!-- pval <- summary(fit1)$coefficients[,4] -->
+<!-- print(paste0("Random Effect: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Random Effect: the fitting pvalue is ",pval)) -->
+<!-- # plot the second figure -->
+<!-- plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data", -->
+<!--      main = "Roulette baseline") -->
+<!-- fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0) -->
+<!-- abline(fit2,col="red") -->
+<!-- adj.rsq <-summary(fit2)$adj.r.squared -->
+<!-- pval <- summary(fit2)$coefficients[,4] -->
+<!-- print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Roulette baseline: the fitting pvalue is ",pval)) -->
+<!-- ``` -->
+<!-- ## C - T -->
+<!-- ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10} -->
+<!-- load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/cv_ct_100bp.rdata") -->
+<!-- combine <- merge(merged_sampled,merged_unsampled,by="window") -->
+<!-- colnames(combine) <- c("window","sampled_sam","start_sam","end_sam","SNV_exp_sam","SNV_obs_sam","sampled_unsam","start_unsam","end_unsam","SNV_exp_unsam","SNV_obs_unsam") -->
+<!-- eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam -->
+<!-- combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled -->
+<!-- # set up the 2x1 plot grid -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- # plot the first figure -->
+<!-- plot(combine$SNV_pred_random, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data",  -->
+<!--      main = "Random Effect") -->
+<!-- fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0) -->
+<!-- abline(fit1,col="red") -->
+<!-- adj.rsq <-summary(fit1)$adj.r.squared -->
+<!-- pval <- summary(fit1)$coefficients[,4] -->
+<!-- print(paste0("Random Effect: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Random Effect: the fitting pvalue is ",pval)) -->
+<!-- # plot the second figure -->
+<!-- plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam,  -->
+<!--      xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data", -->
+<!--      main = "Roulette baseline") -->
+<!-- fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0) -->
+<!-- abline(fit2,col="red") -->
+<!-- adj.rsq <-summary(fit2)$adj.r.squared -->
+<!-- pval <- summary(fit2)$coefficients[,4] -->
+<!-- print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq)) -->
+<!-- print(paste0("Roulette baseline: the fitting pvalue is ",pval)) -->
+<!-- ``` -->
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
@@ -725,33 +1528,27 @@ Matrix products: default
 BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
 
 locale:
- [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
- [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
- [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
- [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
- [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+[1] C
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] dplyr_1.0.9       tidyr_1.2.0       data.table_1.14.2 workflowr_1.7.0  
+[1] dplyr_1.0.9       tidyr_1.2.0       data.table_1.14.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     highr_0.9        bslib_0.3.1      compiler_4.2.0  
- [5] pillar_1.7.0     later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
- [9] tools_4.2.0      getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    tibble_3.1.7     lifecycle_1.0.1  pkgconfig_2.0.3 
+ [1] Rcpp_1.0.8.3     highr_0.9        pillar_1.7.0     compiler_4.2.0  
+ [5] bslib_0.3.1      later_1.3.0      jquerylib_0.1.4  git2r_0.30.1    
+ [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    jsonlite_1.8.0  
+[13] evaluate_0.15    lifecycle_1.0.1  tibble_3.1.7     pkgconfig_2.0.3 
 [17] rlang_1.0.5      DBI_1.1.2        cli_3.3.0        rstudioapi_0.13 
-[21] yaml_2.3.5       xfun_0.30        fastmap_1.1.0    httr_1.4.3      
-[25] stringr_1.4.0    knitr_1.39       generics_0.1.2   sass_0.4.1      
-[29] fs_1.5.2         vctrs_0.4.1      tidyselect_1.1.2 rprojroot_2.0.3 
-[33] glue_1.6.2       R6_2.5.1         processx_3.5.3   fansi_1.0.3     
-[37] rmarkdown_2.14   purrr_0.3.4      callr_3.7.0      magrittr_2.0.3  
-[41] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.2 
-[45] ellipsis_0.3.2   assertthat_0.2.1 httpuv_1.6.5     utf8_1.2.2      
-[49] stringi_1.7.6    crayon_1.5.1    </code></pre>
+[21] yaml_2.3.5       xfun_0.30        fastmap_1.1.0    stringr_1.4.0   
+[25] knitr_1.39       generics_0.1.2   fs_1.5.2         vctrs_0.4.1     
+[29] sass_0.4.1       tidyselect_1.1.2 rprojroot_2.0.3  glue_1.6.2      
+[33] R6_2.5.1         fansi_1.0.3      rmarkdown_2.14   purrr_0.3.4     
+[37] magrittr_2.0.3   whisker_0.4      promises_1.2.0.1 ellipsis_0.3.2  
+[41] htmltools_0.5.2  assertthat_0.2.1 httpuv_1.6.5     utf8_1.2.2      
+[45] stringi_1.7.6    crayon_1.5.1    </code></pre>
 </div>
 </div>
 </div>
@@ -768,6 +1565,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
