@@ -25,6 +25,7 @@ We
 
 6. fit SNV_obs ~ SNV_obs_smash + 0 
 
+For the windows with 0 SNVs: we replaced the 0s with a pseudocount of 0.5. 
 
 # 1kb
 
