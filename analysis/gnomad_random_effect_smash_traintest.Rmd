@@ -11,7 +11,7 @@ editor_options:
 
 We grouped the chr22 into 100bp, 1kb, 10kb windows. In each window, we sampled 90% sites as training data, and the remaining 10% as the testing data. For comparison, the training and testing data here are the same with [that without smoothing](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_cv.html)
 
-We 
+We
 
 1. computed the random effect (eff_rand) in this window using these training sites. 
 
@@ -25,11 +25,707 @@ We
 
 6. fit SNV_obs ~ SNV_obs_smash + 0 
 
-# Results
+# 100bp
 
-[100bp](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_100bp.html)
+## All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
-[1kb](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_1kb.html)
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_100bp.rdata")
 
-[10kb](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_10kb.html)
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ag_100bp.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - C
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ac_100bp.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## A - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_at_100bp.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## C - A
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ca_100bp.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_cg_100bp.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ct_100bp.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+# 1kb
+
+## All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_1kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ag_1kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - C
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ac_1kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## A - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_at_1kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## C - A
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ca_1kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_cg_1kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ct_1kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+# 10kb
+
+## All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_10kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - G
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ag_10kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## A - C
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ac_10kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## A - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_at_10kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## C - A
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ca_10kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+## C - G
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_cg_10kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
+
+
+## C - T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ct_10kb.rdata")
+
+# set up the 2x1 plot grid
+par(mfrow=c(1,2))
+
+# plot the first figure
+plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
+     xlab = "prediced_smash", ylab = "observed", 
+     main = "smash")
+fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
+abline(fit1,col="red")
+adj.rsq <-summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
+print(paste0("SMASH: the fitting pvalue is ",pval))
+
+# plot the second figure
+plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
+     xlab = "predicted_Roulette", ylab = "observed",
+     main = "Roulette baseline")
+fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
+abline(fit2,col="red")
+adj.rsq <-summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
+print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+```
 

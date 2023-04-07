@@ -10,6 +10,8 @@ editor_options:
 
 # Mutation Rate Modeling
 
+gnomAD v3.1 whole genome
+
 Data calibration 
 
 - [Comparing the expected mutation rate and ovserved mutation counts -- entire chromosome](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare.html)
@@ -23,7 +25,7 @@ Random effect modelling
 
 - [Modelling the random effect without smoothing](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_nosmooth.html)
 
-- [Modelling the random effect with smoothing -- smash](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash.html)
+- [Modelling the random effect with smoothing -- smash](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest.html)
 
 Others
 
