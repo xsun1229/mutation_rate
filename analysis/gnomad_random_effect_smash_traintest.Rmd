@@ -7,6 +7,12 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+```
+
+
 # Introduction
 
 We grouped the chr22 into 100bp, 1kb, 10kb windows. In each window, we sampled 90% sites as training data, and the remaining 10% as the testing data. For comparison, the training and testing data here are the same with [that without smoothing](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_cv.html)
@@ -34,31 +40,40 @@ For the windows with 0 SNVs: we replaced the 0s with a pseudocount of 0.5.
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_1kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 ```
 
 
@@ -68,30 +83,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ag_1kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -102,30 +127,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ac_1kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -135,30 +170,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_at_1kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -168,30 +213,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ca_1kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -200,30 +255,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_cg_1kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -234,30 +299,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ct_1kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -269,30 +344,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_10kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -303,30 +388,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ag_10kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -337,31 +432,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ac_10kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 ```
 
 ## A - T
@@ -370,30 +474,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_at_10kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -403,30 +517,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ca_10kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -435,31 +559,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_cg_10kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 ```
 
 
@@ -469,30 +602,40 @@ print(paste0("Roulette baseline: the fitting pvalue is ",pval))
 
 load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_train_test_ct_10kb_pseudo05.rdata")
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$obs_randeff_umsam)
 
-# plot the first figure
-plot(combine$obs_randeff_umsam, combine$SNV_obs_unsam, 
-     xlab = "prediced_smash", ylab = "observed", 
-     main = "smash")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$obs_randeff_umsam +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(obs_randeff_umsam ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("SMASH: the ajusted rsq is ",adj.rsq))
-print(paste0("SMASH: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_Roulette", ylab = "observed",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+smash_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = obs_randeff_umsam)) +
+  geom_point() +
+  labs(title = "SMASH", x = "Observed", y = "Predicted_SMASH") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 ```
 

@@ -1,5 +1,5 @@
 ---
-title: "Cross validation for the Random effect"
+title: "Modelling the random effect without smoothing"
 author: "XSun"
 date: "2023-04-05"
 output: workflowr::wflow_html
@@ -11,7 +11,10 @@ editor_options:
 library(data.table)
 library(tidyr)
 library(dplyr)
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
 ```
+
 
 # Introduction
 
@@ -41,30 +44,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -81,30 +96,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -121,30 +148,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## A - T
@@ -159,30 +198,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## C - A
@@ -197,30 +248,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## C - G
@@ -235,30 +298,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## C - T
@@ -274,30 +349,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -316,30 +403,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -356,30 +455,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 
@@ -396,30 +507,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## A - T
@@ -434,30 +557,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## C - A
@@ -472,30 +607,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## C - G
@@ -510,30 +657,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 ## C - T
@@ -549,30 +708,42 @@ eff_rand_sampled <- combine$SNV_obs_sam/combine$SNV_exp_sam
 
 combine$SNV_pred_random <- combine$SNV_exp_unsam*eff_rand_sampled
 
-# set up the 2x1 plot grid
-par(mfrow=c(1,2))
+x_max <- max(combine$SNV_obs_unsam)
+y_max <- max(combine$SNV_exp_unsam, combine$SNV_pred_random)
 
-# plot the first figure
-plot(combine$SNV_pred_random, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_random_effect_testing_data", ylab = "observed_testing_data", 
-     main = "Random Effect")
-fit1 <- lm(combine$SNV_obs_unsam ~ combine$SNV_pred_random +0)
-abline(fit1,col="red")
-adj.rsq <-summary(fit1)$adj.r.squared
+fit1 <- lm(SNV_pred_random ~ SNV_obs_unsam  + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
 pval <- summary(fit1)$coefficients[,4]
-print(paste0("Random Effect: the ajusted rsq is ",adj.rsq))
-print(paste0("Random Effect: the fitting pvalue is ",pval))
 
-# plot the second figure
-plot(combine$SNV_exp_unsam, combine$SNV_obs_unsam, 
-     xlab = "predicted_by_Roulette_testing_data", ylab = "observed_testing_data",
-     main = "Roulette baseline")
-fit2 <- lm(combine$SNV_obs_unsam ~ combine$SNV_exp_unsam +0)
-abline(fit2,col="red")
-adj.rsq <-summary(fit2)$adj.r.squared
+random_plot <- ggplot(combine, aes(x = SNV_obs_unsam, y = SNV_pred_random)) +
+  geom_point() +
+  labs(title = "Random Effect", x = "Observed", y = "Predicted_random") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +  
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+fit2 <- lm(SNV_exp_unsam ~ SNV_obs_unsam + 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
 pval <- summary(fit2)$coefficients[,4]
-print(paste0("Roulette baseline: the ajusted rsq is ",adj.rsq))
-print(paste0("Roulette baseline: the fitting pvalue is ",pval))
+
+roulette_plot <- ggplot(combine, aes(x =SNV_obs_unsam , y = SNV_exp_unsam)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Observed", y = "Predicted_Roulette") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) + 
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+grid.arrange(random_plot, roulette_plot, ncol = 2)
 
 ```
 
