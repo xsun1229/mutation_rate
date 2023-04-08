@@ -40,6 +40,7 @@ Results analysis
 
 - [Comparing random effects for different mutation types](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types.html)
 
+- [Debug](https://xsun1229.github.io/mutation_rate/debug.html)
 
 
 ## Others
