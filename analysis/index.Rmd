@@ -12,16 +12,20 @@ editor_options:
 
 gnomAD v3.1 whole genome
 
-Data calibration 
+## Data calibration 
 
 - [Comparing the expected mutation rate and ovserved mutation counts -- entire chromosome](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare.html)
 
 - [Comparing the expected mutation rate and ovserved mutation counts -- random window](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare_randomwindows.html)
 
 
-Random effect modelling
+## Random effect modelling
 
-- [Random effect -- SNV](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_SNV.html)
+Overview
+
+- [Random effect distribution ](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_SNV.html)
+
+Cross Validation
 
 - [Modelling the random effect without smoothing](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_nosmooth.html)
 
@@ -29,8 +33,15 @@ Random effect modelling
 
 - [Modelling the random effect with smoothing -- smash, use the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_continuous.html)
 
+
+Results analysis
+
+- [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows.html)
+
 - [Comparing random effects for different mutation types](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types.html)
 
-Others
+
+
+## Others
 
 - [Reproducing shengtong's](https://xsun1229.github.io/mutation_rate/reproducing_SC.html)

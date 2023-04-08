@@ -75,23 +75,6 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
-
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
@@ -137,23 +120,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
@@ -198,23 +165,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
@@ -259,23 +210,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
@@ -320,23 +255,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ## C - G
@@ -379,23 +298,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
@@ -440,23 +343,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
@@ -502,23 +389,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
@@ -564,23 +435,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
@@ -626,23 +481,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ## A - T
@@ -686,23 +525,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ## C - A
@@ -746,23 +569,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
@@ -806,23 +613,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
@@ -867,23 +658,7 @@ roulette_plot <- ggplot(combine, aes(x = SNV_exp_unsam, y = SNV_obs_unsam)) +
 
 grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
-combine$Mb <- combine$start_sam / 1000000
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 
-combine <- combine[combine$Mb >25 &combine$Mb <30, ]
-ggplot(combine, aes(x = Mb, y = SNV_obs_unsam)) +
-  geom_point(size=0.1) +
-  scale_x_continuous(name = "Genomic position (Mb)") +
-  ylab("# of SNVs in testing set/window -- SMASH") +
-  geom_line(aes(x = Mb, y = obs_randeff_umsam), data = combine, color = "red",size=0.2) +
-  theme_bw() +
-  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 

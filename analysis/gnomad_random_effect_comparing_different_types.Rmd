@@ -20,6 +20,10 @@ An interesting question is whether the hot-spots of different mutation types ten
 
 
 
+
+
+
+
 # Smash estimates of the random effects between two mutation types across all windows
 
 
