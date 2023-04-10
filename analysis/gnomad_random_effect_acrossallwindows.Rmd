@@ -163,6 +163,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
 ## A - G 
@@ -275,7 +345,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
-print("1Mb region")
+print("1Mb region ---- 31-32Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
@@ -312,6 +382,77 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
 ```
 
 ## A - C
@@ -461,6 +602,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 print("1Mb region -- 15~16Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -612,6 +823,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
 ## C - A
@@ -761,6 +1042,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 print("1Mb region -- 15~16Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -912,6 +1263,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
 ## C - T
@@ -1061,6 +1482,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 print("1Mb region -- 15~16Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1219,6 +1710,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
 ## A - G 
@@ -1367,6 +1928,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 print("1Mb region -- 15~16Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1518,6 +2149,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
 ## A - T
@@ -1667,6 +2368,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 print("1Mb region -- 15~16Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1818,6 +2589,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
 ## C - G
@@ -1968,6 +2809,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
 
 print("1Mb region -- 15~16Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
 ## C - T
@@ -2117,6 +3028,76 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 print("1Mb region -- 15~16Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >25 &data$Mb <26, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 25~26Mb")
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22.5 &data$Mb <23.5, ]
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22.5~23.5Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
