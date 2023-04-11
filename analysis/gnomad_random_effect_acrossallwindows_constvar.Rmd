@@ -161,7 +161,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -310,7 +310,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -460,7 +460,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -610,7 +610,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -760,7 +760,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -910,7 +910,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1060,7 +1060,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1217,7 +1217,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1366,7 +1366,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1516,7 +1516,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1666,7 +1666,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1816,7 +1816,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -1966,7 +1966,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
@@ -2116,7 +2116,7 @@ p4 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
-print("1Mb region -- 15~16Mb")
+print("1Mb region -- 25~26Mb")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 ```
 
