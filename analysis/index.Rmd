@@ -25,7 +25,9 @@ Overview
 
 - [Random effect distribution ](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_SNV.html)
 
-Cross Validation
+### Different variance
+
+Cross Validation 
 
 - [Modelling the random effect without smoothing](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_nosmooth.html)
 
@@ -34,13 +36,26 @@ Cross Validation
 - [Modelling the random effect with smoothing -- smash, use the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_continuous.html)
 
 
-Results analysis
+Results analysis  
 
 - [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows.html)
 
 - [Comparing random effects for different mutation types](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types.html)
 
 - [Debug](https://xsun1229.github.io/mutation_rate/debug.html)
+
+
+### Constant variance
+
+Cross Validation
+
+[Modelling the random effect with smoothing -- smash, use the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_continuous_constvar.html)
+
+Results analysis
+
+- [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows_constvar.html)
+
+- [Comparing random effects for different mutation types](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types_constvar.html)
 
 
 ## Others
