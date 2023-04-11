@@ -130,7 +130,7 @@ grid.arrange(p1, p2,p3, p4,ncol=1)
 
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -279,7 +279,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -429,7 +429,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -579,7 +579,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -729,7 +729,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -879,7 +879,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -1029,7 +1029,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -1186,7 +1186,7 @@ grid.arrange(p1, p2,p3, p4,ncol=1)
 
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -1335,7 +1335,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -1485,7 +1485,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -1635,7 +1635,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -1785,7 +1785,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -1935,7 +1935,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -2085,7 +2085,7 @@ print("1Mb region")
 grid.arrange(p1, p2,p3, p4,ncol=1)
 
 data <- data_save
-data <- data[data$Mb >15 &data$Mb <16, ]
+data <- data[data$Mb >25 &data$Mb <26, ]
 p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
