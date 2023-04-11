@@ -1,0 +1,146 @@
+---
+title: "Checking how variance influences smoothing"
+author: "XSun"
+date: "2023-04-11"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+suppressMessages(library(data.table))
+suppressMessages(library(smashr))
+```
+
+# Introduction
+
+Here, we do more investigations to check how variance influences smoothing. 
+
+The variances are $\sigma_{i}^{2}$ from: 
+
+$y_{i} = x_{i} + \varepsilon _{i}$, $\varepsilon _{i} \sim  N(0, \sigma _{i}^{2})$
+
+In earlier setting, $\sigma_{i}^{2}$ are different for each window. But in the constant variance setting, the $\sigma_{i}^{2}$ are the same across all chromosome. $\sigma_{i}^{2}$ is computed by sd_estimate_gasser_etal(data$log_randeff) from smashr.
+
+# 1kb
+
+## All 6 mutation types
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.1kb.bed", fill = T)
+data <- data[complete.cases(data$SNV_exp),]
+data$SNV_obs[data$SNV_obs ==0] <- 0.5
+
+data$Mb <- data$start / 1000000
+
+data$randeff <- data$SNV_obs/data$SNV_exp
+data$log_randeff <- log(data$randeff)
+
+smooth <- smash.gaus(data$log_randeff,joint = T)
+data$var <- smooth$var.res
+data$randeff_sm_diff_var <- smooth$mu.res
+  
+const_var <- sd_estimate_gasser_etal(data$log_randeff)
+print(paste0("the current constant variance is ", const_var ))
+
+ggplot(data, aes(x = Mb, y = var)) +
+  geom_point(size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Variance") +
+  geom_line(aes(x = data$Mb, y = const_var), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect) using default setting:")
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm_diff_var), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect) using constant variance:")
+data$lgre_const <- smash.gaus(data$log_randeff,sigma = const_var)
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = lgre_const), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+print(paste0("If we set the variance larger, as current constant variance *3 = ",const_var*3, "we have"))
+data$lgre_const_2 <- smash.gaus(data$log_randeff,sigma = const_var*3)
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y =lgre_const_2), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+
+
+# 10kb
+
+## All 6 mutation types
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22.expobs.SNV.10kb.bed", fill = T)
+data <- data[complete.cases(data$SNV_exp),]
+data$SNV_obs[data$SNV_obs ==0] <- 0.5
+
+data$Mb <- data$start / 1000000
+
+data$randeff <- data$SNV_obs/data$SNV_exp
+data$log_randeff <- log(data$randeff)
+
+smooth <- smash.gaus(data$log_randeff,joint = T)
+data$var <- smooth$var.res
+data$randeff_sm_diff_var <- smooth$mu.res
+  
+const_var <- sd_estimate_gasser_etal(data$log_randeff)
+print(paste0("the current constant variance is ", const_var ))
+
+ggplot(data, aes(x = Mb, y = var)) +
+  geom_point(size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Variance") +
+  geom_line(aes(x = data$Mb, y = const_var), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect) using default setting:")
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm_diff_var), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect) using constant variance:")
+data$lgre_const <- smash.gaus(data$log_randeff,sigma = const_var)
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = lgre_const), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+print(paste0("If we set the variance larger, as current constant variance *3 = ",const_var*3, "we have"))
+data$lgre_const_2 <- smash.gaus(data$log_randeff,sigma = const_var*3)
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y =lgre_const_2), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+

@@ -44,13 +44,13 @@ dat_ct$mb <- dat_ct$start/1000000
 
 
 print("9Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <40, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <40, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <40, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <40, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <40, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <40, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <40, ]
+dat_all <- dat_all[dat_all$mb >21 &dat_all$mb <30, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <30, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <30, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <30, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <30, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <30, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <30, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -71,13 +71,13 @@ p
 
 
 print("5Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <36, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <36, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <36, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <36, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <36, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <36, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <36, ]
+dat_all <- dat_all[dat_all$mb >21 &dat_all$mb <26, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <26, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <26, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <26, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <26, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <26, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <26, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -98,13 +98,13 @@ p
 
 
 print("1Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <32, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <32, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <32, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <32, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <32, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <32, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <32, ]
+dat_all <- dat_all[dat_all$mb >22 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22 &dat_ct$mb <23, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -124,13 +124,13 @@ p <- ggplot(dat, aes(x = mb, y = randeff_sm, color = group)) +
 p
 
 print("0.5Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <31.5, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <31.5, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <31.5, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <31.5, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <31.5, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <31.5, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <31.5, ]
+dat_all <- dat_all[dat_all$mb >22.5 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22.5 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22.5 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22.5 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22.5 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22.5 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22.5 &dat_ct$mb <23, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -173,13 +173,13 @@ dat_ct$mb <- dat_ct$start/1000000
 
 
 print("9Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <40, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <40, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <40, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <40, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <40, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <40, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <40, ]
+dat_all <- dat_all[dat_all$mb >21 &dat_all$mb <30, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <30, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <30, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <30, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <30, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <30, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <30, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -200,13 +200,13 @@ p
 
 
 print("5Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <36, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <36, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <36, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <36, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <36, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <36, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <36, ]
+dat_all <- dat_all[dat_all$mb >21 &dat_all$mb <26, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <26, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <26, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <26, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <26, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <26, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <26, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -227,13 +227,13 @@ p
 
 
 print("1Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <32, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <32, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <32, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <32, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <32, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <32, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <32, ]
+dat_all <- dat_all[dat_all$mb >22 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22 &dat_ct$mb <23, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -253,13 +253,13 @@ p <- ggplot(dat, aes(x = mb, y = randeff_sm, color = group)) +
 p
 
 print("0.5Mb")
-dat_all <- dat_all[dat_all$mb >31 &dat_all$mb <31.5, ]
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <31.5, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <31.5, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <31.5, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <31.5, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <31.5, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <31.5, ]
+dat_all <- dat_all[dat_all$mb >22.5 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22.5 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22.5 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22.5 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22.5 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22.5 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22.5 &dat_ct$mb <23, ]
 
 
 dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -304,12 +304,12 @@ dat_ct$mb <- dat_ct$start/1000000
 
 
 print("9Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <40, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <40, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <40, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <40, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <40, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <40, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <30, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <30, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <30, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <30, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <30, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <30, ]
 
 
 dat_list <- list(dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -330,12 +330,12 @@ p
 
 
 print("5Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <36, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <36, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <36, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <36, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <36, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <36, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <26, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <26, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <26, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <26, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <26, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <26, ]
 
 
 dat_list <- list( dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -356,37 +356,39 @@ p
 
 
 print("1Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <32, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <32, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <32, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <32, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <32, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <32, ]
+dat_all <- dat_all[dat_all$mb >22 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22 &dat_ct$mb <23, ]
 
 
-dat_list <- list(dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
+dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
 dat <- do.call(rbind, dat_list)
 group <- rep(1:length(dat_list), sapply(dat_list, nrow))
 dat$group <- factor(group)
 
-colors <- c("blue", "green", "purple", "orange", "pink", "brown")
+colors <- c("red", "blue", "green", "purple", "orange", "pink", "brown")
 
 p <- ggplot(dat, aes(x = mb, y = randeff_sm, color = group)) + 
   geom_line(alpha=0.5) +
   labs(x = "Gemonic position", y = "Random Effect -- SMASH", title = "Comparison for different mutation types" ) + 
-  scale_color_manual(values = colors,labels = c("A-C", "A-T", "A-G", "C-A", "C-T", "C-G")) +
+  scale_color_manual(values = colors,labels = c("All", "A-C", "A-T", "A-G", "C-A", "C-T", "C-G")) +
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
 
 p
 
 print("0.5Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <31.5, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <31.5, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <31.5, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <31.5, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <31.5, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <31.5, ]
+dat_all <- dat_all[dat_all$mb >22.5 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22.5 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22.5 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22.5 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22.5 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22.5 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22.5 &dat_ct$mb <23, ]
 
 
 dat_list <- list(dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -428,12 +430,12 @@ dat_ct$mb <- dat_ct$start/1000000
 
 
 print("9Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <40, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <40, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <40, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <40, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <40, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <40, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <30, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <30, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <30, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <30, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <30, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <30, ]
 
 
 dat_list <- list(dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -454,12 +456,12 @@ p
 
 
 print("5Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <36, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <36, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <36, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <36, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <36, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <36, ]
+dat_ac <- dat_ac[dat_ac$mb >21 &dat_ac$mb <26, ]
+dat_at <- dat_at[dat_at$mb >21 &dat_at$mb <26, ]
+dat_ag <- dat_ag[dat_ag$mb >21 &dat_ag$mb <26, ]
+dat_ca <- dat_ca[dat_ca$mb >21 &dat_ca$mb <26, ]
+dat_cg <- dat_cg[dat_cg$mb >21 &dat_cg$mb <26, ]
+dat_ct <- dat_ct[dat_ct$mb >21 &dat_ct$mb <26, ]
 
 
 dat_list <- list( dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -480,37 +482,39 @@ p
 
 
 print("1Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <32, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <32, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <32, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <32, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <32, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <32, ]
+dat_all <- dat_all[dat_all$mb >22 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22 &dat_ct$mb <23, ]
 
 
-dat_list <- list(dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
+dat_list <- list(dat_all, dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
 dat <- do.call(rbind, dat_list)
 group <- rep(1:length(dat_list), sapply(dat_list, nrow))
 dat$group <- factor(group)
 
-colors <- c("blue", "green", "purple", "orange", "pink", "brown")
+colors <- c("red", "blue", "green", "purple", "orange", "pink", "brown")
 
 p <- ggplot(dat, aes(x = mb, y = randeff_sm, color = group)) + 
   geom_line(alpha=0.5) +
   labs(x = "Gemonic position", y = "Random Effect -- SMASH", title = "Comparison for different mutation types" ) + 
-  scale_color_manual(values = colors,labels = c("A-C", "A-T", "A-G", "C-A", "C-T", "C-G")) +
+  scale_color_manual(values = colors,labels = c("All", "A-C", "A-T", "A-G", "C-A", "C-T", "C-G")) +
   theme_bw() + 
   theme(plot.title = element_text(hjust = 0.5))
 
 p
 
 print("0.5Mb")
-dat_ac <- dat_ac[dat_ac$mb >31 &dat_ac$mb <31.5, ]
-dat_at <- dat_at[dat_at$mb >31 &dat_at$mb <31.5, ]
-dat_ag <- dat_ag[dat_ag$mb >31 &dat_ag$mb <31.5, ]
-dat_ca <- dat_ca[dat_ca$mb >31 &dat_ca$mb <31.5, ]
-dat_cg <- dat_cg[dat_cg$mb >31 &dat_cg$mb <31.5, ]
-dat_ct <- dat_ct[dat_ct$mb >31 &dat_ct$mb <31.5, ]
+dat_all <- dat_all[dat_all$mb >22.5 &dat_all$mb <23, ]
+dat_ac <- dat_ac[dat_ac$mb >22.5 &dat_ac$mb <23, ]
+dat_at <- dat_at[dat_at$mb >22.5 &dat_at$mb <23, ]
+dat_ag <- dat_ag[dat_ag$mb >22.5 &dat_ag$mb <23, ]
+dat_ca <- dat_ca[dat_ca$mb >22.5 &dat_ca$mb <23, ]
+dat_cg <- dat_cg[dat_cg$mb >22.5 &dat_cg$mb <23, ]
+dat_ct <- dat_ct[dat_ct$mb >22.5 &dat_ct$mb <23, ]
 
 
 dat_list <- list(dat_ac, dat_at, dat_ag, dat_ca, dat_ct, dat_cg)
@@ -535,7 +539,7 @@ p
 
 ## 1kb
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=15, fig.width=25}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=25, fig.width=40}
 
 dat_ac <- get(load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_ac_constvar.rdata"))
 dat_at <- get(load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_at_constvar.rdata"))
@@ -554,7 +558,7 @@ pval <- summary(fit1)$coefficients[,4]
 p1 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - AtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -567,7 +571,7 @@ pval <- summary(fit1)$coefficients[,4]
 p2 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - AtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -580,7 +584,7 @@ pval <- summary(fit1)$coefficients[,4]
 p3 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - CtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -593,7 +597,7 @@ pval <- summary(fit1)$coefficients[,4]
 p4 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -607,7 +611,7 @@ pval <- summary(fit1)$coefficients[,4]
 p5 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -621,7 +625,7 @@ pval <- summary(fit1)$coefficients[,4]
 p6 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - AtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -634,7 +638,7 @@ pval <- summary(fit1)$coefficients[,4]
 p7 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - CtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -649,7 +653,7 @@ pval <- summary(fit1)$coefficients[,4]
 p8 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -663,7 +667,7 @@ pval <- summary(fit1)$coefficients[,4]
 p9 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -677,7 +681,7 @@ pval <- summary(fit1)$coefficients[,4]
 p10 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoT" , y = "Random Effects - CtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -691,7 +695,7 @@ pval <- summary(fit1)$coefficients[,4]
 p11 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoT" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -704,7 +708,7 @@ pval <- summary(fit1)$coefficients[,4]
 p12 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoT" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -717,7 +721,7 @@ pval <- summary(fit1)$coefficients[,4]
 p13 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - CtoG" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -731,7 +735,7 @@ pval <- summary(fit1)$coefficients[,4]
 p14 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - CtoG" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -745,7 +749,7 @@ pval <- summary(fit1)$coefficients[,4]
 p15 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - Ctot" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -756,7 +760,7 @@ grid.arrange(p1, p2,p3,p4, p5,p6,p7, p8,p9,p10, p11,p12,p13,p14, p15,ncol=5)
 
 ## 10kb
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=15, fig.width=25}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=25, fig.width=40}
 
 dat_ac <- get(load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_ac_constvar.rdata"))
 dat_at <- get(load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_at_constvar.rdata"))
@@ -775,7 +779,7 @@ pval <- summary(fit1)$coefficients[,4]
 p1 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - AtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -788,7 +792,7 @@ pval <- summary(fit1)$coefficients[,4]
 p2 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - AtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -801,7 +805,7 @@ pval <- summary(fit1)$coefficients[,4]
 p3 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - CtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -814,7 +818,7 @@ pval <- summary(fit1)$coefficients[,4]
 p4 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -828,7 +832,7 @@ pval <- summary(fit1)$coefficients[,4]
 p5 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoC" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -842,7 +846,7 @@ pval <- summary(fit1)$coefficients[,4]
 p6 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - AtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -855,7 +859,7 @@ pval <- summary(fit1)$coefficients[,4]
 p7 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - CtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -870,7 +874,7 @@ pval <- summary(fit1)$coefficients[,4]
 p8 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -884,7 +888,7 @@ pval <- summary(fit1)$coefficients[,4]
 p9 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoG" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -898,7 +902,7 @@ pval <- summary(fit1)$coefficients[,4]
 p10 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoT" , y = "Random Effects - CtoG") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -912,7 +916,7 @@ pval <- summary(fit1)$coefficients[,4]
 p11 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoT" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -925,7 +929,7 @@ pval <- summary(fit1)$coefficients[,4]
 p12 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - AtoT" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -938,7 +942,7 @@ pval <- summary(fit1)$coefficients[,4]
 p13 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - CtoG" , y = "Random Effects - CtoT") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -952,7 +956,7 @@ pval <- summary(fit1)$coefficients[,4]
 p14 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - CtoG" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
@@ -966,7 +970,7 @@ pval <- summary(fit1)$coefficients[,4]
 p15 <- ggplot(dat, aes(x = dat1, y = dat2)) +
   geom_point(size=0.2) +
   labs(x ="Random Effects - Ctot" , y = "Random Effects - CtoA") +
-  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(pval, 4)), vjust = 1, hjust = 1)+
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +annotate("text", x = max(dat$dat1), y = max(dat$dat2), label = paste0("fitting p-value: ", round(adj.rsq, 4)), vjust = 1, hjust = 1,size=5)+
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5))
 
