@@ -292,7 +292,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -303,8 +303,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -317,9 +317,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>mutation_rate/</code> <span
@@ -342,36 +342,33 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreeeb285e624fdfb7ef8d9e7289ed82010974c5dd6ctargetblankeb285e6a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee52169f470e5cf77a5a565bab653420ef45eb790targetblanke52169fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/eb285e624fdfb7ef8d9e7289ed82010974c5dd6c" target="_blank">eb285e6</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/e52169f470e5cf77a5a565bab653420ef45eb790" target="_blank">e52169f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreeeb285e624fdfb7ef8d9e7289ed82010974c5dd6ctargetblankeb285e6a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee52169f470e5cf77a5a565bab653420ef45eb790targetblanke52169fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -381,7 +378,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/eb285e624fdfb7ef8d9e7289ed82010974c5dd6c" target="_blank">eb285e6</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/e52169f470e5cf77a5a565bab653420ef45eb790" target="_blank">e52169f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -397,17 +394,6 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
-
-Untracked files:
-    Untracked:  analysis/gnomad_random_effect_acrossallwindows.Rmd
-    Untracked:  analysis/gnomad_random_effect_acrossallwindows_constvar.Rmd
-    Untracked:  analysis/gnomad_random_effect_comparing_different_types_constvar.Rmd
-    Untracked:  analysis/gnomad_random_effect_smash_traintest_continuous_constvar.Rmd
-
-Unstaged changes:
-    Deleted:    225235.pdf
-    Deleted:    2526.pdf
-    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -452,6 +438,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/e52169f470e5cf77a5a565bab653420ef45eb790/analysis/index.Rmd" target="_blank">e52169f</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-11
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/1ca3de331e5928ea062a6b5d37b7ea453be707e4/analysis/index.Rmd" target="_blank">1ca3de3</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-11
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/1ca3de331e5928ea062a6b5d37b7ea453be707e4/docs/index.html" target="_blank">1ca3de3</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-04-11
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1072,6 +1109,9 @@ windows</a></p></li>
 <li><p><a
 href="https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types_constvar.html">Comparing
 random effects for different mutation types</a></p></li>
+<li><p><a
+href="https://xsun1229.github.io/mutation_rate/var_smoothing.html">Checking
+how variance influences smoothing</a></p></li>
 </ul>
 </div>
 </div>
