@@ -1,0 +1,1185 @@
+---
+title: "Estimating variance numerically"
+author: "XSun"
+date: "2023-04-13"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+```
+
+# Introduction
+
+Estimating the variance of the local random effects numerically: we can directly sample log ^ui many
+times, and compute the variance. Specifically, we obtain the samples by:
+
+- Sample from $Pois(y_{i})$, then divided by $T_i$. This is our sample of $\hat{\mu _{i}}$.
+
+- Compute $log(\hat{\mu _{i}})$
+
+After we obtain these samples, we can compute the variance of the sampled $log(\hat{\mu _{i}})$. We will need to
+do this numerical computation for each window.
+
+# 1kb
+
+## All mutation types
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+## A - G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ag.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+## A - C
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ac.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+
+
+## A - T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_at.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+
+## C - A
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ca.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+
+## C - G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_cg.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+## C - T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ct.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+# 10kb
+
+## All mutation types
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+## A - G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ag.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+## A - C
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ac.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+
+
+## A - T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_at.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+
+## C - A
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ca.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+
+## C - G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_cg.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```
+
+## C - T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=10, fig.width=10}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ct.rdata")
+
+data$Mb <- data$start/1000000
+data_save <- data
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("whole chromosome")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+data <- data_save
+data <- data[data$Mb >22 &data$Mb <23, ]
+
+p1 <- ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- SMASH") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+p2 <- ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = randeff_sm), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "Random Effect") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p3 <- ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+p4 <- ggplot(data, aes(x = SNV_exp, y = obs_randeff)) +
+  geom_point(size=0.2) +
+  labs(x ="Roulette estimates" , y = "SMASH estimates") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("1Mb region -- 22~23Mb")
+# Combine all three plots into a grid with two rows and one column
+grid.arrange(p1, p2,p3, p4,ncol=1)
+
+```

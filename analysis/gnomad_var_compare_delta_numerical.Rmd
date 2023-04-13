@@ -1,0 +1,299 @@
+---
+title: "Comparing variance estimated by Delta method and numerical method"
+author: "XSun"
+date: "2023-04-13"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(data.table))
+suppressMessages(library(ggplot2))
+```
+
+
+# Introduction
+
+We compare the variance estimated by delta method and numerical method here. In numerical method, we sampled 1000 times.
+
+estimating the variance of the local random effects numerically: we can directly sample log ^ui many
+times, and compute the variance. Specifically, we obtain the samples by:
+
+- Sample from $Pois(y_{i})$, then divided by $T_i$. This is our sample of $\hat{\mu _{i}}$.
+
+- Compute $log(\hat{\mu _{i}})$
+
+After we obtain these samples, we can compute the variance of the sampled $log(\hat{\mu _{i}})$. We will need to
+do this numerical computation for each window.
+
+
+# 1kb
+
+## All mutation types
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## A-G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ag.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## A-C
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ac.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## A-T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_at.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## C-A
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ca.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## C-G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_cg.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## C-T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_1kb_pseudo05_wholewindow_numerical_var_1000_ct.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+# 10kb
+
+## All mutation types
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## A-G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ag.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## A-C
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ac.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## A-T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_at.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## C-A
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ca.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## C-G
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_cg.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
+
+## C-T
+
+```{r echo=F, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/smash_10kb_pseudo05_wholewindow_numerical_var_1000_ct.rdata")
+
+g <- function(x) log(x)
+g_prime <- function(x) 1/x
+data$randeff_var <- data$SNV_obs/(data$SNV_exp^2)
+data$var_log_re_delta <- (g_prime(data$randeff)^2) * data$randeff_var
+
+ggplot(data, aes(x = var_log_re_delta, y = var_log_randeff_sample)) +
+  geom_point() +
+  labs(x = "Variance estimated by Delta method", y = "Variance estimated by numerical method") +
+  theme_bw() 
+
+
+```
