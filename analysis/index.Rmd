@@ -61,7 +61,7 @@ Results analysis
 
 ### Estimating variance manually 
 
-- [Comparing variance estimated by Delta method and numerical method](https://xsun1229.github.io/mutation_rate/https://xsun1229.github.io/mutation_rate/gnomad_var_compare_delta_numerical.html)
+- [Comparing variance estimated by Delta method and numerical method](https://xsun1229.github.io/mutation_rate/gnomad_var_compare_delta_numerical.html)
 
 - [Estimating variance using Delta Method](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_var_delta_method.html)
 
