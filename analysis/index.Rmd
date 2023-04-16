@@ -57,7 +57,7 @@ Results analysis
 
 - [Comparing random effects for different mutation types](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types_constvar.html)
 
-- [Checking how variance influences smoothing](https://xsun1229.github.io/mutation_rate/var_smoothing.html)
+
 
 ### Estimating variance manually 
 
@@ -66,6 +66,11 @@ Results analysis
 - [Estimating variance using Delta Method](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_var_delta_method.html)
 
 - [Estimating variance numerically](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_var_numerically.html)
+
+
+### How variance influences smoothing
+
+- [Checking how variance influences smoothing](https://xsun1229.github.io/mutation_rate/var_smoothing.html)
 
 ## Others
 
