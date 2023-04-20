@@ -19,7 +19,7 @@ gnomAD v3.1 whole genome
 - [Comparing the expected mutation rate and ovserved mutation counts -- random window](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare_randomwindows.html)
 
 
-## Random effect modelling
+## Gaussian Model
 
 Overview
 
@@ -71,6 +71,19 @@ Results analysis
 ### How variance influences smoothing
 
 - [Checking how variance influences smoothing](https://xsun1229.github.io/mutation_rate/var_smoothing.html)
+
+
+## Poisson Model 
+
+Cross Validation 
+
+- [Modelling the random effect with smoothing -- smash, use the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_continuous_pois.html)
+
+
+Results analysis
+
+- [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows_constvar_pois.html)
+
 
 ## Others
 
