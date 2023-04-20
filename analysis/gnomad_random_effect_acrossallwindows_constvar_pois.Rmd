@@ -7,9 +7,360 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Introduction
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+suppressMessages(library(data.table))
+```
 
-```{r}
+
+# 1kb
+
+## All 6 mutation types
+
+### Whole chr22
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+maxiter <- 30
+print(paste0("iteration = ", maxiter))
+
+file_fit <- paste0("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22_pois_fit_iter",maxiter,"_1kb_wholewindow.rdata")
+load(file_fit)
+print(paste0("current variance is ",fit$fitted_g$sigma2))
+
+file_dat <- paste0("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22_pois_datcombine_iter",maxiter,"_1kb_wholewindow.rdata")
+load(file_dat)
+
+data <- as.data.frame(cbind(dat,fit$fitted_g$sigma2))
+colnames(data)[ncol(data)] <- "var"
+data$Mb <- data$start / 1000000
+
+data$log_randeff <- log(data$SNV_obs/data$SNV_exp)
+data_save <- data
+
+# ggplot(data, aes(x = Mb, y = var)) +
+#   geom_point(size=0.2) +
+#   labs(x = "Genomic position(MB)", y = "Variance") +
+#   theme_bw() +
+#   theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect)")
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
 
 ```
 
+
+### Hot spots (22.5Mb - 23.5Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >22.5 & data$Mb <23.5,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+
+
+
+### Cold spots (21Mb - 22Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >21 & data$Mb <22,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+### Cold spots (18Mb - 19Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >18 & data$Mb <19,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+### typical regions (25Mb - 26Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >25 & data$Mb <26,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+### typical regions (31Mb - 32Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >31 & data$Mb <32,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+# 10kb
+
+## All 6 mutation types
+
+### Whole chr22
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+maxiter <- 30
+print(paste0("iteration = ", maxiter))
+
+file_fit <- paste0("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22_pois_fit_iter",maxiter,"_10kb_wholewindow.rdata")
+load(file_fit)
+print(paste0("current variance is ",fit$fitted_g$sigma2))
+
+file_dat <- paste0("/project/xinhe/xsun/mutation_rate/1.exp_obs_gnomad/data_processed/chr22/chr22_pois_datcombine_iter",maxiter,"_10kb_wholewindow.rdata")
+load(file_dat)
+
+data <- as.data.frame(cbind(dat,fit$fitted_g$sigma2))
+colnames(data)[ncol(data)] <- "var"
+data$Mb <- data$start / 1000000
+
+data$log_randeff <- log(data$SNV_obs/data$SNV_exp)
+data_save <- data
+
+# ggplot(data, aes(x = Mb, y = var)) +
+#   geom_point(size=0.2) +
+#   labs(x = "Genomic position(MB)", y = "Variance") +
+#   theme_bw() +
+#   theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect)")
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+### Hot spots (22.5Mb - 23.5Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >22.5 & data$Mb <23.5,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+
+
+
+### Cold spots (21Mb - 22Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >21 & data$Mb <22,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+### Cold spots (18Mb - 19Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >18 & data$Mb <19,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+### typical regions (25Mb - 26Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >25 & data$Mb <26,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+### typical regions (31Mb - 32Mb)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data_cut <- data[data$Mb >31 & data$Mb <32,]
+
+print("the log(random effect)")
+ggplot(data_cut, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggplot(data_cut, aes(x = Mb, y = SNV_obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of SNVs/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
