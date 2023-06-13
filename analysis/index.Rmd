@@ -8,9 +8,9 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Mutation Rate Modeling
+Mutation Rate Modeling
 
-gnomAD v3.1 whole genome
+# gnomAD v3.1 whole genome
 
 ## Data calibration 
 
@@ -85,6 +85,18 @@ Results analysis
 - [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows_constvar_pois.html)
 
 
-## Others
+# De novo mutation data (Shengtong's collection)
+
+## Data calibration 
+
+- [Comparing the expected mutation rate and ovserved mutation counts -- entire chromosome chr1](https://xsun1229.github.io/mutation_rate/denovo_exp_obs_chr1.html)
+
+- [Comparing the expected mutation rate and ovserved mutation counts -- random window](https://xsun1229.github.io/mutation_rate/denovo_exp_obs_rare_randomwindows_chr1.html)
+
+
+
+
+
+# Others
 
 - [Reproducing shengtong's](https://xsun1229.github.io/mutation_rate/reproducing_SC.html)

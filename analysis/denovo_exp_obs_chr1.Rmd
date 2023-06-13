@@ -1,0 +1,95 @@
+---
+title: "Comparing the # of expected SNVs and # of observed SNVs -- entire chromosome 1"
+author: "XSun"
+date: "2023-06-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(data.table)
+```
+
+Data: Shengtong's collection in  /project2/xinhe/Shengtong/mutation_rate/mutation.rate/Simons_WGS/controls
+
+## Considerting the entire chromosome (Before calibration)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+merged <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/alltypes.10000.chr1.bed")
+merged_ac <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/atoc.10000.chr1.bed")
+merged_ag <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/atog.10000.chr1.bed")
+merged_at <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/atot.10000.chr1.bed")
+merged_ca <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/ctoa.10000.chr1.bed")
+merged_cg <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/ctog.10000.chr1.bed")
+merged_ct <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/ctot.10000.chr1.bed")
+```
+
+
+- Considering the 6 mutation types collectively
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+print(head(merged))
+print(paste0("The observed mutation counts =", sum(merged$V4)))
+print(paste0("The expected mutation counts = ", sum(merged$V5)))
+
+print("summary for the observed mutation counts")
+print(table(merged$V4))
+```
+
+- Considering the 6 mutation types separately
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+print("A-C")
+print(paste0("The observed mutation counts = ", sum(merged_ac$V4)))
+print(paste0("The expected mutation counts (before scaling) = ", sum(merged_ac$V5)))
+print("summary for the observed mutation counts")
+print(table(merged_ac$V4))
+
+print("A-G")
+print(paste0("The observed mutation counts = ", sum(merged_ag$V4)))
+print(paste0("The expected mutation counts (before scaling) = ", sum(merged_ag$V5)))
+print("summary for the observed mutation counts")
+print(table(merged_ag$V4))
+
+
+print("A-T")
+print(paste0("The observed mutation counts = ", sum(merged_at$V4)))
+print(paste0("The expected mutation counts (before scaling) = ", sum(merged_at$V5)))
+print("summary for the observed mutation counts")
+print(table(merged_at$V4))
+
+
+print("C-A")
+print(paste0("The observed mutation counts = ", sum(merged_ca$V4)))
+print(paste0("The expected mutation counts (before scaling) = ", sum(merged_ca$V5)))
+print("summary for the observed mutation counts")
+print(table(merged_ca$V4))
+
+
+
+print("C-G")
+print(paste0("The observed mutation counts = ", sum(merged_cg$V4)))
+print(paste0("The expected mutation counts (before scaling) = ", sum(merged_cg$V5)))
+print("summary for the observed mutation counts")
+print(table(merged_cg$V4))
+
+
+
+print("C-T")
+print(paste0("The observed mutation counts = ", sum(merged_ct$V4)))
+print(paste0("The expected mutation counts (before scaling) = ", sum(merged_ct$V5)))
+print("summary for the observed mutation counts")
+print(table(merged_ct$V4))
+
+
+observed <- c(sum(merged_ac$V4),sum(merged_ag$V4),sum(merged_at$V4),sum(merged_ca$V4),sum(merged_cg$V4),sum(merged_ct$V4))
+expected <- c(sum(merged_ac$V5),sum(merged_ag$V5),sum(merged_at$V5),sum(merged_ca$V5),sum(merged_cg$V5),sum(merged_ct$V5))
+
+print("fitting: observed ~ expected + 0")
+fit <- lm(observed ~ expected + 0)
+plot(expected, observed)
+abline(fit)
+print(summary(fit))
+
+```

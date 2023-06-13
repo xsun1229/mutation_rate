@@ -1,0 +1,99 @@
+---
+title: "Comparing the # of expected SNVs and # of observed SNVs -- random windows"
+author: "XSun"
+date: "2023-06-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(data.table)
+```
+
+
+# Before calibration
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+merged <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/alltypes.10000.chr1.bed")
+merged_at <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/atot.10000.chr1.bed")
+```
+
+## Considering random windows -- 10kb
+
+- Considering 6 types collectively
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+pos_min <- min(merged$V2)
+pos_max <- max(merged$V2)
+
+window_size <- 10000
+num_windows <- 1000
+
+max_start_pos <- pos_max - window_size + 1
+
+# randomly sample num_windows start positions
+set.seed(1)
+start_positions <- sample(1:max_start_pos, num_windows, replace = FALSE)
+windows <- matrix(nrow = num_windows, ncol = 2)
+
+for (i in 1:num_windows) {
+  start_pos <- start_positions[i]
+  end_pos <- start_pos + window_size - 1
+  windows[i,] <- c(start_pos, end_pos)
+}
+
+observed <- c()
+expected <- c()
+for (i in 1:num_windows){
+  
+  dat_window_merged <- merged[merged$POS %in% c(windows[i,1]:windows[i,2]),]
+  expected[i] <- sum(dat_window_merged$p_rescale,na.rm = T)
+  observed[i] <- sum(!duplicated(dat_window_merged[!is.na(dat_window_merged$AC),]$POS))
+
+}
+#fit <- lm(observed ~ expected +0)
+#summary(fit)
+plot(expected,observed)
+#abline(fit)
+```
+
+
+- A to T
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+pos_min <- min(merged_at$V2)
+pos_max <- max(merged_at$V2)
+
+window_size <- 10000
+num_windows <- 1000
+
+max_start_pos <- pos_max - window_size + 1
+
+# randomly sample num_windows start positions
+set.seed(1)
+start_positions <- sample(1:max_start_pos, num_windows, replace = FALSE)
+windows <- matrix(nrow = num_windows, ncol = 2)
+
+for (i in 1:num_windows) {
+  start_pos <- start_positions[i]
+  end_pos <- start_pos + window_size - 1
+  windows[i,] <- c(start_pos, end_pos)
+}
+
+observed <- c()
+expected <- c()
+for (i in 1:num_windows){
+  
+  dat_window_merged_at <- merged_at[merged_at$POS %in% c(windows[i,1]:windows[i,2]),]
+  expected[i] <- sum(dat_window_merged_at$p,na.rm = T)
+  
+  observed[i] <- sum(!duplicated(dat_window_merged_at[!is.na(dat_window_merged_at$AC),]$POS))
+  
+}
+#fit <- lm(observed ~ expected +0)
+#summary(fit)
+plot(expected,observed)
+#abline(fit)
+```
+
