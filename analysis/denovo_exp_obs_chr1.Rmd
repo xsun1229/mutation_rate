@@ -13,7 +13,7 @@ library(data.table)
 
 Data: Shengtong's collection in  /project2/xinhe/Shengtong/mutation_rate/mutation.rate/Simons_WGS/controls
 
-## Considerting the entire chromosome (Before calibration)
+## Considerting the entire chromosome (Before calibration, 10kb)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 merged <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/alltypes.10000.chr1.bed")
