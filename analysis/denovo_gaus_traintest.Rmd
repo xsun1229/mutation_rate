@@ -1,0 +1,63 @@
+---
+title: "denovo_gaus_traintest"
+author: "XSun"
+date: "2023-07-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+```
+
+# Introduction
+
+We grouped the chr1 and chr22 into 10kb windows. In each window, we used the first 90% sites as training data, and the remaining 10% as the testing data. 
+
+# chr1 
+
+## All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+file <- paste0("/project/xinhe/xsun/mutation_rate/3.de_novo/results/per_chr/chr1/gaus_10kb_pseudo0005_traintest.rdata")
+load(file)
+
+x_max <- max(combine$exp_test, combine$obs_randeff_test)
+y_max <- max(combine$obs_test)
+
+fit1 <- lm(obs_test ~ obs_randeff_test + 0, data = combine)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(combine, aes(x = obs_randeff_test, y = obs_test)) +
+  geom_point() +
+  labs(title = "Poisson", x ="Predicted_Poisson" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(obs_test ~ exp_test+ 0, data = combine)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(combine, aes(x = exp_test, y = obs_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+```
+
+

@@ -1,7 +1,7 @@
 ---
-title: "Comparing the # of expected SNVs and # of observed SNVs -- entire chromosome 1"
+title: "Comparing the # of expected SNVs and # of observed SNVs -- chromosome 22"
 author: "XSun"
-date: "2023-06-12"
+date: "2023-06-30"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
@@ -16,13 +16,13 @@ Data: Shengtong's collection in  /project2/xinhe/Shengtong/mutation_rate/mutatio
 ## Considerting the entire chromosome (Before calibration, 10kb)
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
-merged <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/alltypes.10000.chr1.bed")
-merged_ac <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/atoc.10000.chr1.bed")
-merged_ag <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/atog.10000.chr1.bed")
-merged_at <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/atot.10000.chr1.bed")
-merged_ca <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/ctoa.10000.chr1.bed")
-merged_cg <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/ctog.10000.chr1.bed")
-merged_ct <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr1/ctot.10000.chr1.bed")
+merged <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr22/alltypes.10000.chr22.bed")
+merged_ac <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr22/atoc.10000.chr22.bed")
+merged_ag <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr22/atog.10000.chr22.bed")
+merged_at <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr22/atot.10000.chr22.bed")
+merged_ca <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr22/ctoa.10000.chr22.bed")
+merged_cg <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr22/ctog.10000.chr22.bed")
+merged_ct <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/chr22/ctot.10000.chr22.bed")
 ```
 
 

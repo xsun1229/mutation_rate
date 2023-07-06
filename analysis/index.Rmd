@@ -89,12 +89,28 @@ Results analysis
 
 ## Data calibration 
 
-- [Comparing the expected mutation rate and ovserved mutation counts -- entire chromosome chr1](https://xsun1229.github.io/mutation_rate/denovo_exp_obs_chr1.html)
+- [Calibrating Simon's de novo data with Roulette](https://xsun1229.github.io/mutation_rate/denovo_rl_simno_calibration.html)
 
-- [Comparing the expected mutation rate and ovserved mutation counts -- random window](https://xsun1229.github.io/mutation_rate/denovo_exp_obs_rare_randomwindows_chr1.html)
+## Poisson Model
+
+Cross Validation 
+
+- [Using the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/denovo_pois_traintest.html)
+
+Results analysis
+
+- [Plots - Observed & Estimated across all windows](https://xsun1229.github.io/mutation_rate/denovo_pois_allwindows.html)
 
 
+## Gaussian Model
 
+Cross Validation 
+
+- [Using the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/denovo_gaus_traintest.html)
+
+Results analysis
+
+- [Plots - Observed & Estimated across all windows](https://xsun1229.github.io/mutation_rate/denovo_gaus_allwindows.html)
 
 
 # Others

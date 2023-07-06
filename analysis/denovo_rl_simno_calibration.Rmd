@@ -1,0 +1,155 @@
+---
+title: "Calibrating Simon's de novo data with Roulette"
+author: "XSun"
+date: "2023-07-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(data.table)
+library(ggplot2)
+```
+
+
+# Introduction
+
+1. liftover: convert the Roulette estimates from hg38 to hg19
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+print("Roulette estimates after liftover")
+mut <- readRDS("/project/xinhe/xsun/mutation_rate/3.de_novo/data/rl_hg19/22_mutrat_hg19_rescale_1to10.RDS")
+mut[1:10,1:5]
+```
+
+2. Simon's de novo mutation
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+print("all 6 mutation types")
+simon <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/simon_per_chr/chr22/alltypes.chr22.bed")
+colnames(simon) <-c("chr","start","end","exp_simon","obs_simon")
+simon[1:10,]
+```
+
+3. Group the observed data (Simon's) and Roulette estimates by window 
+
+# Rescaling
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+print("replace simon's exp with Roulette est, group the window by 10kb")
+combine <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr22/rl_simon_combine_chr22_10000.txt")
+colnames(combine) <- c("chr","start","end","exp_roulette","obs_simon")
+combine[1:10,]
+
+print("observed de novo mutations per window")
+table(combine$obs_simon)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+folder_dat_all <- "/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed_earlier/"
+
+window <- 10000
+observed <- c()
+expected <- c()
+for (i in 1:22) {
+  
+  folder_chr <- paste0(folder_dat_all,"chr",i,"/")
+  file <- paste0(folder_chr,"rl_simon_combine_chr",i,"_",window,".txt")
+  combine <- fread(file)
+  colnames(combine) <- c("chr","start","end","exp_roulette","obs_simon")
+  
+  observed[i] <- sum(combine$obs_simon)
+  expected[i] <- sum(combine$exp_roulette)
+  
+}
+
+
+print("fitting: observed ~ expected + 0")
+fit <- lm(observed ~ expected + 0)
+print(summary(fit))
+
+data <- data.frame(expected = expected, observed = observed)
+print(data)
+
+# Create the plot
+ggplot(data, aes(x = expected, y = observed)) +
+  geom_point() +
+  geom_abline(slope = fit$coefficients[1], intercept = 0, color = "red") +
+  xlab("Expected_Roulette") +
+  ylab("Observed_Simon") 
+
+print(paste0("the scalling factor is ",round(fit$coefficients[1],digits = 5)))
+print(paste0("obs = ",round(fit$coefficients[1],digits = 5),"* exp"))
+```
+
+
+# Random effect distribution (after rescaling)
+
+## Window size: 10kb
+
+### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr1/rl_simon_combine_chr1_10000.txt")
+colnames(data) <- c("chr","start","end","exp","obs")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr22/rl_simon_combine_chr22_10000.txt")
+colnames(data) <- c("chr","start","end","exp","obs")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+

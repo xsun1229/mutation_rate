@@ -1,0 +1,120 @@
+---
+title: "Plots - Observed & Estimated (Poisson Model)"
+author: "XSun"
+date: "2023-07-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+suppressMessages(library(data.table))
+```
+
+
+# 10kb
+
+## chr1 
+
+### all 6 mutation types
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+maxiter <- 30
+print(paste0("iteration = ", maxiter))
+
+file_fit <- paste0("/project/xinhe/xsun/mutation_rate/3.de_novo/results/per_chr/chr1/pois_fit_iter30_10000_whochr.rdata")
+load(file_fit)
+print(paste0("current variance is ",fit$fitted_g$sigma2))
+
+file_dat <- paste0("/project/xinhe/xsun/mutation_rate/3.de_novo/results/per_chr/chr1/pois_datcombine_iter30_10000_whochr.rdata")
+load(file_dat)
+
+data <- as.data.frame(cbind(combine,fit$fitted_g$sigma2))
+colnames(data)[ncol(data)] <- "var"
+data$Mb <- data$start / 1000000
+
+data$log_randeff <- log(data$obs/data$exp)
+data$obs_randeff <- data$exp*data$randeff_sm
+data_save <- data
+
+# ggplot(data, aes(x = Mb, y = var)) +
+#   geom_point(size=0.2) +
+#   labs(x = "Genomic position(MB)", y = "Variance") +
+#   theme_bw() +
+#   theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect)")
+print("red line: smoothed log random effects")
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("red line: smoothed observed mutation count")
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of de novo muts/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
+
+
+## chr22 
+
+### all 6 mutation types
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+maxiter <- 30
+print(paste0("iteration = ", maxiter))
+
+file_fit <- paste0("/project/xinhe/xsun/mutation_rate/3.de_novo/results/per_chr/chr22/pois_fit_iter30_10000_whochr.rdata")
+load(file_fit)
+print(paste0("current variance is ",fit$fitted_g$sigma2))
+
+file_dat <- paste0("/project/xinhe/xsun/mutation_rate/3.de_novo/results/per_chr/chr22/pois_datcombine_iter30_10000_whochr.rdata")
+load(file_dat)
+
+data <- as.data.frame(cbind(combine,fit$fitted_g$sigma2))
+colnames(data)[ncol(data)] <- "var"
+data$Mb <- data$start / 1000000
+
+data$log_randeff <- log(data$obs/data$exp)
+data$obs_randeff <- data$exp*data$randeff_sm
+data_save <- data
+
+# ggplot(data, aes(x = Mb, y = var)) +
+#   geom_point(size=0.2) +
+#   labs(x = "Genomic position(MB)", y = "Variance") +
+#   theme_bw() +
+#   theme(plot.title = element_text(hjust = 0.5))
+
+print("the log(random effect)")
+print("red line: smoothed log random effects")
+ggplot(data, aes(x = Mb, y = log_randeff)) +
+  geom_point(size=0.2) +
+  geom_line(aes(x = Mb, y = mean_lgre), color = "red",size=0.2) +
+  labs(x = "Genomic position(MB)", y = "log(Random Effect)") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+print("red line: smoothed observed mutation count")
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of de novo muts/window -- poisson") +
+  geom_line(aes(x = Mb, y = obs_randeff), data = data, color = "red",size=0.2) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+```
