@@ -1,0 +1,132 @@
+---
+title: "Cross validation for Poisson model ---- first 90% base pairs in a window as training"
+author: "XSun"
+date: "2023-07-07"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+suppressMessages(library(ggplot2))
+suppressMessages(library(gridExtra))
+```
+
+
+# Introduction
+
+We grouped the chr1 and chr22 into different windows. In each window, we used the first 90% sites as training data, and the remaining 10% as the testing data. 
+
+# 10kb 
+
+## chr1 
+
+
+### All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+file <- paste0("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr1/rl_simon_traintest_10000.rdata")
+load(file)
+
+colnames(merged_train)[2] <- "exp" 
+colnames(merged_test)[2] <- "exp" 
+
+x_max <- max(merged_train$exp, merged_test$exp)
+y_max <- max(merged_train$obs, merged_test$obs)
+
+
+merged_train$randeff <- merged_train$obs/merged_train$exp
+merged_test$obs_randeff <- merged_test$exp*merged_train$randeff
+
+fit1 <- lm(obs ~ obs_randeff + 0, data = merged_test)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(merged_test, aes(x = obs_randeff, y = obs)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(obs ~ exp + 0, data = merged_test)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(merged_test, aes(x = exp, y = obs)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+```
+
+
+
+
+
+## chr22 
+
+
+### All 6 mutation types
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+file <- paste0("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr22/rl_simon_traintest_10000.rdata")
+load(file)
+
+colnames(merged_train)[2] <- "exp" 
+colnames(merged_test)[2] <- "exp" 
+
+x_max <- max(merged_train$exp, merged_test$exp)
+y_max <- max(merged_train$obs, merged_test$obs)
+
+
+merged_train$randeff <- merged_train$obs/merged_train$exp
+merged_test$obs_randeff <- merged_test$exp*merged_train$randeff
+
+fit1 <- lm(obs ~ obs_randeff + 0, data = merged_test)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+smash_plot <- ggplot(merged_test, aes(x = obs_randeff, y = obs)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(obs ~ exp + 0, data = merged_test)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+roulette_plot <- ggplot(merged_test, aes(x = exp, y = obs)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = x_max, y = y_max, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 2)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(smash_plot, roulette_plot, ncol = 2)
+
+```
+
+

@@ -91,6 +91,9 @@ Results analysis
 
 - [Calibrating Simon's de novo data with Roulette](https://xsun1229.github.io/mutation_rate/denovo_rl_simno_calibration.html)
 
+- [Cross Validation without smoothing](https://xsun1229.github.io/mutation_rate/denovo_cv_wo_smoothing.html)
+
+
 ## Poisson Model
 
 Cross Validation 
