@@ -166,6 +166,8 @@ colnames(data) <- c("chr","start","end","exp","obs")
 data$Mb <- data$start/1000000
 data$randeff <- data$obs / data$exp
 
+table(data$obs)
+
 ggplot(data, aes(x = Mb, y = obs)) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
