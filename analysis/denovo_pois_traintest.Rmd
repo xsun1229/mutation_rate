@@ -14,12 +14,14 @@ suppressMessages(library(gridExtra))
 
 # Introduction
 
-We grouped the chr1 and chr22 into 10kb windows. In each window, we used the first 90% sites as training data, and the remaining 10% as the testing data. 
+We grouped the chr1 and chr22 into different windows. In each window, we used the first 90% sites as training data, and the remaining 10% as the testing data. 
 
-# chr1 
+## 10kb
+
+## chr1 
 
 
-## All 6 mutation types
+### All 6 mutation types
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
 maxiter <- 30
@@ -68,9 +70,9 @@ grid.arrange(smash_plot, roulette_plot, ncol = 2)
 
 
 
-# chr22 
+## chr22 
 
-## All 6 mutation types
+### All 6 mutation types
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
 
 maxiter <- 30

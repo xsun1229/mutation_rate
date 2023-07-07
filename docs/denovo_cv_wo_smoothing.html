@@ -432,10 +432,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -528,15 +528,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1eba9fb01f5a568d6dc497e66024dd215cb99b00targetblank1eba9fba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree7ca1639bdef96be48bdeae4dc095af03c1d4d1c1targetblank7ca1639a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/1eba9fb01f5a568d6dc497e66024dd215cb99b00" target="_blank">1eba9fb</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/7ca1639bdef96be48bdeae4dc095af03c1d4d1c1" target="_blank">7ca1639</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1eba9fb01f5a568d6dc497e66024dd215cb99b00targetblank1eba9fba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree7ca1639bdef96be48bdeae4dc095af03c1d4d1c1targetblank7ca1639a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -546,7 +546,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/1eba9fb01f5a568d6dc497e66024dd215cb99b00" target="_blank">1eba9fb</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/7ca1639bdef96be48bdeae4dc095af03c1d4d1c1" target="_blank">7ca1639</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -563,11 +563,10 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
 
-Untracked files:
-    Untracked:  analysis/denovo_cv_wo_smoothing.Rmd
-
 Unstaged changes:
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/denovo_cv_wo_smoothing.Rmd
+    Modified:   analysis/denovo_pois_traintest.Rmd
+    Modified:   analysis/denovo_rl_simno_calibration.Rmd
 
 </code></pre>
 <p>
@@ -582,10 +581,75 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/denovo_cv_wo_smoothing.Rmd</code>) and HTML
+(<code>docs/denovo_cv_wo_smoothing.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/7ca1639bdef96be48bdeae4dc095af03c1d4d1c1/analysis/denovo_cv_wo_smoothing.Rmd" target="_blank">7ca1639</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-07
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/7ca1639bdef96be48bdeae4dc095af03c1d4d1c1/docs/denovo_cv_wo_smoothing.html" target="_blank">7ca1639</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-07
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -603,6 +667,43 @@ the testing data.</p>
 <div id="all-6-mutation-types" class="section level3">
 <h3>All 6 mutation types</h3>
 <p><img src="figure/denovo_cv_wo_smoothing.Rmd/unnamed-chunk-2-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/7ca1639bdef96be48bdeae4dc095af03c1d4d1c1/docs/figure/denovo_cv_wo_smoothing.Rmd/unnamed-chunk-2-1.png" target="_blank">7ca1639</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="chr22" class="section level2">
@@ -610,6 +711,53 @@ the testing data.</p>
 <div id="all-6-mutation-types-1" class="section level3">
 <h3>All 6 mutation types</h3>
 <p><img src="figure/denovo_cv_wo_smoothing.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/7ca1639bdef96be48bdeae4dc095af03c1d4d1c1/docs/figure/denovo_cv_wo_smoothing.Rmd/unnamed-chunk-3-1.png" target="_blank">7ca1639</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="kb-1" class="section level2">
+<h2>50kb</h2>
+</div>
+<div id="chr22-1" class="section level2">
+<h2>chr22</h2>
+<div id="all-6-mutation-types-2" class="section level3">
+<h3>All 6 mutation types</h3>
+<p><img src="figure/denovo_cv_wo_smoothing.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -648,9 +796,9 @@ loaded via a namespace (and not attached):
 [37] farver_2.1.0     fs_1.5.2         digest_0.6.29    stringi_1.7.6   
 [41] dplyr_1.0.9      grid_4.2.0       rprojroot_2.0.3  cli_3.3.0       
 [45] tools_4.2.0      magrittr_2.0.3   sass_0.4.1       tibble_3.1.7    
-[49] crayon_1.5.1     pkgconfig_2.0.3  ellipsis_0.3.2   Matrix_1.5-3    
-[53] assertthat_0.2.1 rmarkdown_2.14   rstudioapi_0.13  R6_2.5.1        
-[57] nlme_3.1-157     git2r_0.30.1     compiler_4.2.0  </code></pre>
+[49] crayon_1.5.1     whisker_0.4      pkgconfig_2.0.3  ellipsis_0.3.2  
+[53] Matrix_1.5-3     assertthat_0.2.1 rmarkdown_2.14   rstudioapi_0.13 
+[57] R6_2.5.1         nlme_3.1-157     git2r_0.30.1     compiler_4.2.0  </code></pre>
 </div>
 </div>
 </div>
