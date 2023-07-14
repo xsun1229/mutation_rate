@@ -1,0 +1,87 @@
+---
+title: "gnomad"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+
+
+# gnomAD v3.1 whole genome
+
+## Data calibration 
+
+- [Comparing the expected mutation rate and ovserved mutation counts -- entire chromosome](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare.html)
+
+- [Comparing the expected mutation rate and ovserved mutation counts -- random window](https://xsun1229.github.io/mutation_rate/gnomad_exp_obs_rare_randomwindows.html)
+
+
+## Gaussian Model
+
+Overview
+
+- [Random effect distribution ](https://xsun1229.github.io/mutation_rate/gnomad_random_obsexp_SNV.html)
+
+### Different variance
+
+Cross Validation 
+
+- [Modelling the random effect without smoothing](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_nosmooth.html)
+
+- [Modelling the random effect with smoothing -- smash, randomly sample 90% training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest.html)
+
+- [Modelling the random effect with smoothing -- smash, use the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_continuous.html)
+
+
+Results analysis  
+
+- [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows.html)
+
+- [Comparing random effects for different mutation types](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types.html)
+
+- [Debug](https://xsun1229.github.io/mutation_rate/debug.html)
+
+
+### Constant variance
+
+Cross Validation
+
+[Modelling the random effect with smoothing -- smash, use the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_continuous_constvar.html)
+
+Results analysis
+
+- [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows_constvar.html)
+
+- [Comparing random effects for different mutation types](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_comparing_different_types_constvar.html)
+
+
+
+### Estimating variance manually 
+
+- [Comparing variance estimated by Delta method and numerical method](https://xsun1229.github.io/mutation_rate/gnomad_var_compare_delta_numerical.html)
+
+- [Estimating variance using Delta Method](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_var_delta_method.html)
+
+- [Estimating variance numerically](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_var_numerically.html)
+
+
+### How variance influences smoothing
+
+- [Checking how variance influences smoothing](https://xsun1229.github.io/mutation_rate/var_smoothing.html)
+
+
+## Poisson Model 
+
+Cross Validation 
+
+- [Modelling the random effect with smoothing -- smash, use the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_smash_traintest_continuous_pois.html)
+
+
+Results analysis
+
+- [Plots - Observed SNV & Estimated SNV (SMASH) across all windows](https://xsun1229.github.io/mutation_rate/gnomad_random_effect_acrossallwindows_constvar_pois.html)
+
+
+
