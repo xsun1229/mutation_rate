@@ -9,19 +9,41 @@ editor_options:
 ---
 
 
+Data Overview
+
+- SSC de novo mutations from An et al. Science 2018 contains 7,608 samples in 1,902 autism spectrum disorder (ASD) families, identifying 255,106 de novo mutations in total, 233,954 of them are de novo SNVs.
+
+- SSC de novo mutations from Trost et al. Cell 2022 contains 9,205 samples, identifying 326,669 de novo SNVs (these variants were not used in their TADA analysis).
+
+- Trost et al. Cell 2022 also provides a collection of 167,760 de novo mutations from MSSNG, SPARK, and ASC. 145,237 of them are de novo SNV (these variants were used in their TADA analysis). 
+
+| data set    | trios | cases | control | # of de novo mutations |
+|-------------|-------|-------|---------|------------------------|
+| ASC         | 6430  | 5556  | 8809    | 15772  [source](https://www.sciencedirect.com/science/article/pii/S0092867419313984)|
+| MSSNG       | 3586  | -     | -       | 126788                 |
+| SPARK pilot | 465   | -     | -       | 615    [source](https://www.nature.com/articles/s41525-019-0093-8)                |
+| SPARK WES 1 | 6577  | -     | -       | 19825  [source](https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub)|
+| SPARK WES 2 | 2167  | -     | -       | 4760   [source](https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub)|
+
+The MSSNG contains 5,100 individuals with ASD and 6,212 non-ASD parents and siblings (total n = 11,312).
+
+
 # 1. An et al. Science 2018
 
 
 ## Data calibration 
 
-- [Calibrating with Roulette](https://xsun1229.github.io/mutation_rate/denovo_rl_an_calibration.html)
+- [Calibrating with Roulette -- SSC](https://xsun1229.github.io/mutation_rate/denovo_rl_an_calibration.html)
 
 
 # 2. Trost et al. Cell 2022 
 
 ## Data calibration 
 
-- [Calibrating with Roulette](https://xsun1229.github.io/mutation_rate/denovo_rl_trost_calibration.html)
+- [Calibrating with Roulette --  MSSNG, SPARK, and ASC](https://xsun1229.github.io/mutation_rate/denovo_rl_trost_calibration.html)
+
+
+- [Calibrating with Roulette --  SSC](https://xsun1229.github.io/mutation_rate/denovo_rl_ssc_trost_calibration.html)
 
 
 

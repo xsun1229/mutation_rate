@@ -292,7 +292,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -303,8 +303,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -313,13 +313,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-07-15
+<strong>Last updated:</strong> 2023-07-17
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>mutation_rate/</code> <span
@@ -342,33 +342,36 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree9549cecbdac7e75350413ee403e3693f892fe278targetblank9549ceca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree466602076abd39c4f742ce41c796dcc59a53838atargetblank4666020a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/9549cecbdac7e75350413ee403e3693f892fe278" target="_blank">9549cec</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/466602076abd39c4f742ce41c796dcc59a53838a" target="_blank">4666020</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree9549cecbdac7e75350413ee403e3693f892fe278targetblank9549ceca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree466602076abd39c4f742ce41c796dcc59a53838atargetblank4666020a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -378,7 +381,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/9549cecbdac7e75350413ee403e3693f892fe278" target="_blank">9549cec</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/466602076abd39c4f742ce41c796dcc59a53838a" target="_blank">4666020</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -395,8 +398,11 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
 
+Untracked files:
+    Untracked:  analysis/denovo_rl_ssc_trost_calibration.Rmd
+
 Unstaged changes:
-    Modified:   analysis/denovo_rl_trost_calibration.Rmd
+    Modified:   analysis/denovo.Rmd
 
 </code></pre>
 <p>
@@ -443,6 +449,23 @@ Message
 <tbody>
 <tr>
 <td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/fef7b304fe132cb9af11436462c1b0bf4ff68b91/docs/denovo.html" target="_blank">fef7b30</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-15
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
 Rmd
 </td>
 <td>
@@ -482,6 +505,80 @@ update
 </div>
 </div>
 </div>
+<p>Data Overview</p>
+<ul>
+<li><p>SSC de novo mutations from An et al. Science 2018 contains 7,608
+samples in 1,902 autism spectrum disorder (ASD) families, identifying
+255,106 de novo mutations in total, 233,954 of them are de novo
+SNVs.</p></li>
+<li><p>SSC de novo mutations from Trost et al. Cell 2022 contains 9,205
+samples, identifying 326,669 de novo SNVs (these variants were not used
+in their TADA analysis).</p></li>
+<li><p>Trost et al. Cell 2022 also provides a collection of 167,760 de
+novo mutations from MSSNG, SPARK, and ASC. 145,237 of them are de novo
+SNV (these variants were used in their TADA analysis).</p></li>
+</ul>
+<table>
+<colgroup>
+<col width="21%" />
+<col width="11%" />
+<col width="11%" />
+<col width="15%" />
+<col width="40%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>data set</th>
+<th>trios</th>
+<th>cases</th>
+<th>control</th>
+<th># of de novo mutations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ASC</td>
+<td>6430</td>
+<td>5556</td>
+<td>8809</td>
+<td>15772 <a
+href="https://www.sciencedirect.com/science/article/pii/S0092867419313984">source</a></td>
+</tr>
+<tr class="even">
+<td>MSSNG</td>
+<td>3586</td>
+<td>-</td>
+<td>-</td>
+<td>126788</td>
+</tr>
+<tr class="odd">
+<td>SPARK pilot</td>
+<td>465</td>
+<td>-</td>
+<td>-</td>
+<td>615 <a
+href="https://www.nature.com/articles/s41525-019-0093-8">source</a></td>
+</tr>
+<tr class="even">
+<td>SPARK WES 1</td>
+<td>6577</td>
+<td>-</td>
+<td>-</td>
+<td>19825 <a
+href="https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub">source</a></td>
+</tr>
+<tr class="odd">
+<td>SPARK WES 2</td>
+<td>2167</td>
+<td>-</td>
+<td>-</td>
+<td>4760 <a
+href="https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub">source</a></td>
+</tr>
+</tbody>
+</table>
+<p>The MSSNG contains 5,100 individuals with ASD and 6,212 non-ASD
+parents and siblings (total n = 11,312).</p>
 <div id="an-et-al.-science-2018" class="section level1">
 <h1>1. An et al. Science 2018</h1>
 <div id="data-calibration" class="section level2">
@@ -489,7 +586,7 @@ update
 <ul>
 <li><a
 href="https://xsun1229.github.io/mutation_rate/denovo_rl_an_calibration.html">Calibrating
-with Roulette</a></li>
+with Roulette – SSC</a></li>
 </ul>
 </div>
 </div>
@@ -498,9 +595,12 @@ with Roulette</a></li>
 <div id="data-calibration-1" class="section level2">
 <h2>Data calibration</h2>
 <ul>
-<li><a
+<li><p><a
 href="https://xsun1229.github.io/mutation_rate/denovo_rl_trost_calibration.html">Calibrating
-with Roulette</a></li>
+with Roulette – MSSNG, SPARK, and ASC</a></p></li>
+<li><p><a
+href="https://xsun1229.github.io/mutation_rate/denovo_rl_ssc_trost_calibration.html">Calibrating
+with Roulette – SSC</a></p></li>
 </ul>
 </div>
 </div>
