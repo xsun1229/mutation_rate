@@ -1,0 +1,818 @@
+---
+title: "De novo data overview"
+author: "XSun"
+date: "2023-07-17"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(data.table)
+library(ggplot2)
+```
+
+# Overview
+
+We collected several lists of de nove mutations from different paper
+
+
+| data set    | Sample Size          | cases | control | # of de novo mutations | Source                 | Notes                                                                                                                               |
+|-------------|----------------------|-------|---------|------------------------|------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| SSC         | 7608                 | 1902  | 5706    | 255,106(233,954 SNVs)  | An et al Science 2018  |                                                                                                                                     |
+| SSC         | 9205                 |       |         | 350,028(326,669 SNVs)  | Trost et al Cell 2022  | were not used in their TADA analysis (large amount of sample overlap between the SSC and ASC datasets)                              |
+| SSC         | 2064                 |       |         | 114,841                | Shengtong's collection | do not have base pair level data                                                                                                    |
+|             |                      |       |         |                        |                        |                                                                                                                                     |
+| ASC         | 6430 trios           | 5556  | 8809    | 15,772                 | Trost et al Cell 2022  | were not used in their TADA analysis,collected from https://www.sciencedirect.com/science/article/pii/S0092867419313984             |
+| MSSNG       | 3586 trios (n=11312) | 5100  | 6212    | 126,788                | Trost et al Cell 2022  | detected from MSSNG                                                                                                                 |
+| SPARK pilot | 465 trios            | -     | -       | 615                    | Trost et al Cell 2022  | were not used in their TADA analysis,collected from https://www.nature.com/articles/s41525-019-0093-8                               |
+| SPARK WES 1 | 6577 trios           | -     | -       | 19825                  | Trost et al Cell 2022  | were not used in their TADA analysis,collected from  https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub |
+| SPARK WES 2 | 2167 trios           | -     | -       | 4760                   | Trost et al Cell 2022  | were not used in their TADA analysis,collected from  https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub |
+
+
+# SSC from Science 2018
+
+## Summary
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+print("all 6 mutation types")
+an <- fread("/project/xinhe/xsun/mutation_rate/data/an_denovo/processed/alltype.bed")
+colnames(an) <-c("chr","pos","ref","alt")
+an[1:10,]
+```
+
+| mutation types | # of mutations        |
+|----------------|-----------------------|
+| a->c t->g      | 7938 + 7927 = 15865   |
+| a->g t->c      | 30829 + 30365 = 61194 |
+| a->t t->a      | 7434 + 7717 = 15151   |
+| c->a g->t      | 11027 + 11276 = 22303 |
+| c->g g->c      | 10952 + 10833 = 21785 |
+| c->t g->a      | 48750 + 48906 = 97656 |
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+data <- data.frame(
+  category = c("a->c", "a->g", "a->t", "c->a", "c->g", "c->t"),
+  percentage = c(6.78,26.16, 6.48, 9.53, 9.31,41.74)
+)
+data$angle <- cumsum(data$percentage) - (0.5 * data$percentage)
+ggplot(data, aes(x = "", y = percentage, fill = category)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  theme_void() +
+  theme(legend.position = "bottom") +
+  # Adjust the position of the labels
+  geom_label(
+    aes(label = paste0(category, "\n", percentage, "%")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5,
+    show.legend = FALSE
+  )
+```
+
+## Rescaling
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/4.de_novo_an/results/scaling_factor.rdata")
+
+
+print("fitting: observed (SSC_science 2018) ~ expected (Roulette) + 0")
+fit <- lm(denovo_per_chr ~ rl_per_chr + 0)
+print(summary(fit))
+
+data <- data.frame(expected = rl_per_chr, observed = denovo_per_chr)
+print(data)
+
+# Create the plot
+ggplot(data, aes(x = expected, y = observed)) +
+  geom_point() +
+  geom_abline(slope = fit$coefficients[1], intercept = 0, color = "red") +
+  xlab("Expected_Roulette") +
+  ylab("Observed_SSC_science 2018") 
+
+print(paste0("the scalling factor is ",round(fit$coefficients[1],digits = 5)))
+print(paste0("obs = ",round(fit$coefficients[1],digits = 5),"* exp"))
+```
+
+
+## Number of de novo mutation per window
+
+### Window size: 10kb
+
+#### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/4.de_novo_an/data/per_chr_processed/chr1/rl_an_combine_chr1_10000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/4.de_novo_an/data/per_chr_processed/chr22/rl_an_combine_chr22_10000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+### Window size: 50kb
+
+#### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/4.de_novo_an/data/per_chr_processed/chr1/rl_an_combine_chr1_50000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/4.de_novo_an/data/per_chr_processed/chr22/rl_an_combine_chr22_50000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+
+
+
+
+
+# SSC from Cell 2022
+
+## Summary
+
+
+| mutation types | # of de nove SNVs (total =  326,669)        |
+|----------------|-----------------------|
+| a->c t->g      | 12253 + 12166 = 22419   |
+| a->g t->c      | 44124 + 43634 = 87758 |
+| a->t t->a      | 11257 + 11605 = 22862   |
+| c->a g->t      | 15885 + 16206 = 32091 |
+| c->g g->c      | 15834 + 15781 = 31615 |
+| c->t g->a      | 68209 + 68512 = 136721 |
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+data <- data.frame(
+  category = c("a->c", "a->g", "a->t", "c->a", "c->g", "c->t"),
+  percentage = c(7.48,26.86,7.00, 9.82, 9.68,41.85)
+)
+data$angle <- cumsum(data$percentage) - (0.5 * data$percentage)
+ggplot(data, aes(x = "", y = percentage, fill = category)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  theme_void() +
+  theme(legend.position = "bottom") +
+  # Adjust the position of the labels
+  geom_label(
+    aes(label = paste0(category, "\n", percentage, "%")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5,
+    show.legend = FALSE
+  )
+```
+
+
+## Rescaling 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/results/scaling_factor.rdata")
+
+
+print("fitting: observed (SSC) ~ expected (Roulette) + 0")
+fit <- lm(denovo_per_chr ~ rl_per_chr + 0)
+print(summary(fit))
+
+data <- data.frame(expected = rl_per_chr, observed = denovo_per_chr)
+print(data)
+
+# Create the plot
+ggplot(data, aes(x = expected, y = observed)) +
+  geom_point() +
+  geom_abline(slope = fit$coefficients[1], intercept = 0, color = "red") +
+  xlab("Expected_Roulette") +
+  ylab("Observed")
+
+print(paste0("the scalling factor is ",round(fit$coefficients[1],digits = 5)))
+print(paste0("obs = ",round(fit$coefficients[1],digits = 5),"* exp"))
+```
+
+
+## Number of de novo mutation per window
+
+### Window size: 10kb
+
+#### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_10000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/rl_ssc_trost_combine_chr22_10000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+### Window size: 50kb
+
+#### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_50000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/rl_ssc_trost_combine_chr22_50000.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+
+# SSC from Shengtong's collection
+
+Roulette estimates are converted from hg38 to hg19
+
+[summary](https://han16.github.io/mutation-rate-modeling/simons-control-wgs.html)
+
+## Rescaling
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+
+print("replace simon's exp with Roulette est, group the window by 10kb")
+combine <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr22/rl_simon_combine_chr22_10000.txt")
+colnames(combine) <- c("chr","start","end","exp_roulette","obs_simon")
+combine[1:10,]
+
+print("observed de novo mutations per window")
+table(combine$obs_simon)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+folder_dat_all <- "/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed_earlier/"
+
+window <- 10000
+observed <- c()
+expected <- c()
+for (i in 1:22) {
+  
+  folder_chr <- paste0(folder_dat_all,"chr",i,"/")
+  file <- paste0(folder_chr,"rl_simon_combine_chr",i,"_",window,".txt")
+  combine <- fread(file)
+  colnames(combine) <- c("chr","start","end","exp_roulette","obs_simon")
+  
+  observed[i] <- sum(combine$obs_simon)
+  expected[i] <- sum(combine$exp_roulette)
+  
+}
+
+
+print("fitting: observed ~ expected + 0")
+fit <- lm(observed ~ expected + 0)
+print(summary(fit))
+
+data <- data.frame(expected = expected, observed = observed)
+print(data)
+
+# Create the plot
+ggplot(data, aes(x = expected, y = observed)) +
+  geom_point() +
+  geom_abline(slope = fit$coefficients[1], intercept = 0, color = "red") +
+  xlab("Expected_Roulette") +
+  ylab("Observed_Simon") 
+
+print(paste0("the scalling factor is ",round(fit$coefficients[1],digits = 5)))
+print(paste0("obs = ",round(fit$coefficients[1],digits = 5),"* exp"))
+```
+
+
+## Number of de novo mutation per window
+
+### Window size: 10kb
+
+#### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr1/rl_simon_combine_chr1_10000.txt")
+colnames(data) <- c("chr","start","end","exp","obs")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr22/rl_simon_combine_chr22_10000.txt")
+colnames(data) <- c("chr","start","end","exp","obs")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+### Window size: 50kb
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/3.de_novo/data/per_chr_processed/chr22/rl_simon_combine_chr22_50000.txt")
+colnames(data) <- c("chr","start","end","exp","obs")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+
+
+# MSSNG from Cell 2022
+
+## Summary 
+
+| mutation types | # of de nove SNVs (total = 107377)        |
+|----------------|-----------------------|
+| a->c t->g      | 4014 + 4120 = 8134   |
+| a->g t->c      | 14229 + 14094 = 28323 |
+| a->t t->a      | 3515 + 3636 = 7141   |
+| c->a g->t      | 5030 + 4843 = 9873 |
+| c->g g->c      | 4830 + 5038 = 9868 |
+| c->t g->a      | 21747 + 22281 = 44028 |
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+data <- data.frame(
+  category = c("a->c", "a->g", "a->t", "c->a", "c->g", "c->t"),
+  percentage = c(7.58,26.37,6.66, 9.20, 9.19,41.01)
+)
+data$angle <- cumsum(data$percentage) - (0.5 * data$percentage)
+ggplot(data, aes(x = "", y = percentage, fill = category)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  theme_void() +
+  theme(legend.position = "bottom") +
+  # Adjust the position of the labels
+  geom_label(
+    aes(label = paste0(category, "\n", percentage, "%")),
+    position = position_stack(vjust = 0.5),
+    size = 3.5,
+    show.legend = FALSE
+  )
+```
+
+
+## Rescaling 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/results/scaling_factor_mssng.rdata")
+
+
+print("fitting: observed (MSSNG) ~ expected (Roulette) + 0")
+fit <- lm(denovo_per_chr ~ rl_per_chr + 0)
+print(summary(fit))
+
+data <- data.frame(expected = rl_per_chr, observed = denovo_per_chr)
+print(data)
+
+# Create the plot
+ggplot(data, aes(x = expected, y = observed)) +
+  geom_point() +
+  geom_abline(slope = fit$coefficients[1], intercept = 0, color = "red") +
+  xlab("Expected_Roulette") +
+  ylab("Observed_MSSNG")
+
+print(paste0("the scalling factor is ",round(fit$coefficients[1],digits = 5)))
+print(paste0("obs = ",round(fit$coefficients[1],digits = 5),"* exp"))
+```
+
+
+## Number of de novo mutation per window
+
+### Window size: 10kb
+
+#### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/rl_trost_combine_chr1_10000_mssng.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/rl_trost_combine_chr22_10000_mssng.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+### Window size: 50kb
+
+#### chr1
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/rl_trost_combine_chr1_50000_mssng.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+#### chr22
+
+All 6 mutation types, random effect: obs/exp
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=10}
+
+data <- fread("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/rl_trost_combine_chr22_50000_mssng.txt")
+colnames(data) <- c("chr","start","end","obs","exp")
+data$Mb <- data$start/1000000
+data$randeff <- data$obs / data$exp
+
+print("the number of observed de novo mutations per window")
+table(data$obs)
+
+ggplot(data, aes(x = Mb, y = obs)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("# of observed de novo mutations") +
+  ggtitle("Distribution of observed de novo mutations") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+ggplot(data, aes(x = Mb, y = randeff)) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
