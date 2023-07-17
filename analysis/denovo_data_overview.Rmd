@@ -23,11 +23,11 @@ We collected several lists of de nove mutations from different paper
 | SSC         | 9205                 |       |         | 350,028(326,669 SNVs)  | Trost et al Cell 2022  | were not used in their TADA analysis (large amount of sample overlap between the SSC and ASC datasets)                              |
 | SSC         | 2064                 |       |         | 114,841                | Shengtong's collection | do not have base pair level data                                                                                                    |
 |             |                      |       |         |                        |                        |                                                                                                                                     |
-| ASC         | 6430 trios           | 5556  | 8809    | 15,772                 | Trost et al Cell 2022  | were not used in their TADA analysis,collected from https://www.sciencedirect.com/science/article/pii/S0092867419313984             |
+| ASC         | 6430 trios           | 5556  | 8809    | 15,772                 | Trost et al Cell 2022  | were used in their TADA analysis,collected from https://www.sciencedirect.com/science/article/pii/S0092867419313984             |
 | MSSNG       | 3586 trios (n=11312) | 5100  | 6212    | 126,788                | Trost et al Cell 2022  | detected from MSSNG                                                                                                                 |
-| SPARK pilot | 465 trios            | -     | -       | 615                    | Trost et al Cell 2022  | were not used in their TADA analysis,collected from https://www.nature.com/articles/s41525-019-0093-8                               |
-| SPARK WES 1 | 6577 trios           | -     | -       | 19825                  | Trost et al Cell 2022  | were not used in their TADA analysis,collected from  https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub |
-| SPARK WES 2 | 2167 trios           | -     | -       | 4760                   | Trost et al Cell 2022  | were not used in their TADA analysis,collected from  https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub |
+| SPARK pilot | 465 trios            | -     | -       | 615                    | Trost et al Cell 2022  | were used in their TADA analysis,collected from https://www.nature.com/articles/s41525-019-0093-8                               |
+| SPARK WES 1 | 6577 trios           | -     | -       | 19825                  | Trost et al Cell 2022  | were used in their TADA analysis,collected from  https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub |
+| SPARK WES 2 | 2167 trios           | -     | -       | 4760                   | Trost et al Cell 2022  | were used in their TADA analysis,collected from  https://www.sciencedirect.com/science/article/pii/S0896627318300187?via%3Dihub |
 
 
 # SSC from Science 2018
