@@ -13,7 +13,7 @@
 
 <meta name="date" content="2023-07-18" />
 
-<title>Cross Validation for non-spatial random effect</title>
+<title>Cross Validation for spatial random effect – without smoothing</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -362,8 +362,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Cross Validation for non-spatial random
-effect</h1>
+<h1 class="title toc-ignore">Cross Validation for spatial random effect
+– without smoothing</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2023-07-18</h4>
 
@@ -432,10 +432,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown file has staged changes. To know which version of the
+R Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -564,14 +564,17 @@ Ignored files:
     Ignored:    .Rhistory
 
 Untracked files:
-    Untracked:  analysis/denovo_spatial_crossvalidation_wosmothing.Rmd
+    Untracked:  analysis/denovo_delete.Rmd
 
 Unstaged changes:
     Modified:   analysis/denovo.Rmd
-    Modified:   analysis/denovo_nonspatial_crossvalidation.Rmd
+    Modified:   analysis/denovo_spatial_crossvalidation_wosmothing.Rmd
+    Deleted:    denovo_delete.Rmd
 
 Staged changes:
     Modified:   analysis/denovo.Rmd
+    Modified:   analysis/denovo_nonspatial_crossvalidation.Rmd
+    New:        analysis/denovo_spatial_crossvalidation_wosmothing.Rmd
     New:        analysis/denovo_spatial_randeff.Rmd
 
 </code></pre>
@@ -587,75 +590,10 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/denovo_nonspatial_crossvalidation.Rmd</code>) and HTML
-(<code>docs/denovo_nonspatial_crossvalidation.html</code>) files. If
-you’ve configured a remote Git repository (see
-<code>?wflow_git_remote</code>), click on the hyperlinks in the table
-below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/analysis/denovo_nonspatial_crossvalidation.Rmd" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/denovo_nonspatial_crossvalidation.html" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
@@ -664,9 +602,8 @@ update
 <h1>Introduction</h1>
 <p>We divided the whole genome into 100kb windows, used the first 90% as
 training set and the remaining 10% as testing set. Then we estimated
-<span class="math inline">\(\alpha\)</span> and <span
-class="math inline">\(E(\theta_i|\alpha,\mu_i,y_i)\)</span> on the
-training set for each window. Then we predicted <span
+<span class="math inline">\(\theta_i\)</span> for each window on the
+training sets and predicted <span
 class="math inline">\(\hat{y}_{i}=\theta_{i} \cdot \mu_{i}\)</span> for
 the testing set.</p>
 </div>
@@ -676,326 +613,22 @@ the testing set.</p>
 <h2>SSC (Cell 2022)</h2>
 <div id="chr1-windowsize-100kb" class="section level3">
 <h3>chr1, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 0.121427517250506&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
-Past versions of unnamed-chunk-3-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-2-2.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="chr22-windowsize-100kb" class="section level3">
 <h3>chr22, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 16.8044129299632&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
-Past versions of unnamed-chunk-4-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="mssng-cell-2022" class="section level2">
 <h2>MSSNG (Cell 2022)</h2>
 <div id="chr1-windowsize-100kb-1" class="section level3">
 <h3>chr1, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 0.530710540140943&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
-Past versions of unnamed-chunk-5-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="chr22-windowsize-100kb-1" class="section level3">
 <h3>chr22, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 0.506364049706207&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
-Past versions of unnamed-chunk-6-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1019,23 +652,24 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] gridExtra_2.3     data.table_1.14.2 ggplot2_3.3.5    
+[1] gridExtra_2.3     ggplot2_3.3.5     data.table_1.14.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     highr_0.9        pillar_1.7.0     compiler_4.2.0  
- [5] bslib_0.3.1      later_1.3.0      jquerylib_0.1.4  git2r_0.30.1    
- [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    gtable_0.3.0    
-[13] jsonlite_1.8.0   evaluate_0.15    lifecycle_1.0.1  tibble_3.1.7    
-[17] pkgconfig_2.0.3  rlang_1.0.5      DBI_1.1.2        cli_3.3.0       
-[21] rstudioapi_0.13  yaml_2.3.5       xfun_0.30        fastmap_1.1.0   
-[25] withr_2.5.0      dplyr_1.0.9      stringr_1.4.0    knitr_1.39      
-[29] generics_0.1.2   fs_1.5.2         vctrs_0.4.1      sass_0.4.1      
-[33] tidyselect_1.1.2 rprojroot_2.0.3  grid_4.2.0       glue_1.6.2      
-[37] R6_2.5.1         fansi_1.0.3      rmarkdown_2.14   farver_2.1.0    
-[41] purrr_0.3.4      magrittr_2.0.3   whisker_0.4      scales_1.2.0    
-[45] promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.2  assertthat_0.2.1
-[49] colorspace_2.0-3 httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2      
-[53] stringi_1.7.6    munsell_0.5.0    crayon_1.5.1    </code></pre>
+ [1] tidyselect_1.1.2 xfun_0.30        bslib_0.3.1      purrr_0.3.4     
+ [5] lattice_0.20-45  splines_4.2.0    colorspace_2.0-3 vctrs_0.4.1     
+ [9] generics_0.1.2   htmltools_0.5.2  yaml_2.3.5       mgcv_1.8-40     
+[13] utf8_1.2.2       rlang_1.0.5      jquerylib_0.1.4  later_1.3.0     
+[17] pillar_1.7.0     glue_1.6.2       withr_2.5.0      DBI_1.1.2       
+[21] lifecycle_1.0.1  stringr_1.4.0    munsell_0.5.0    gtable_0.3.0    
+[25] workflowr_1.7.0  evaluate_0.15    labeling_0.4.2   knitr_1.39      
+[29] fastmap_1.1.0    httpuv_1.6.5     fansi_1.0.3      highr_0.9       
+[33] Rcpp_1.0.8.3     promises_1.2.0.1 scales_1.2.0     jsonlite_1.8.0  
+[37] farver_2.1.0     fs_1.5.2         digest_0.6.29    stringi_1.7.6   
+[41] dplyr_1.0.9      grid_4.2.0       rprojroot_2.0.3  cli_3.3.0       
+[45] tools_4.2.0      magrittr_2.0.3   sass_0.4.1       tibble_3.1.7    
+[49] crayon_1.5.1     pkgconfig_2.0.3  Matrix_1.5-3     ellipsis_0.3.2  
+[53] assertthat_0.2.1 rmarkdown_2.14   rstudioapi_0.13  R6_2.5.1        
+[57] nlme_3.1-157     git2r_0.30.1     compiler_4.2.0  </code></pre>
 </div>
 </div>
 </div>

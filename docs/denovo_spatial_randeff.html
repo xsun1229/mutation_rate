@@ -13,7 +13,7 @@
 
 <meta name="date" content="2023-07-18" />
 
-<title>Cross Validation for non-spatial random effect</title>
+<title>Spatial random effect distribution</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -362,8 +362,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Cross Validation for non-spatial random
-effect</h1>
+<h1 class="title toc-ignore">Spatial random effect distribution</h1>
 <h4 class="author">XSun</h4>
 <h4 class="date">2023-07-18</h4>
 
@@ -432,10 +431,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -564,15 +563,10 @@ Ignored files:
     Ignored:    .Rhistory
 
 Untracked files:
-    Untracked:  analysis/denovo_spatial_crossvalidation_wosmothing.Rmd
+    Untracked:  analysis/denovo_spatial_randeff.Rmd
 
 Unstaged changes:
     Modified:   analysis/denovo.Rmd
-    Modified:   analysis/denovo_nonspatial_crossvalidation.Rmd
-
-Staged changes:
-    Modified:   analysis/denovo.Rmd
-    New:        analysis/denovo_spatial_randeff.Rmd
 
 </code></pre>
 <p>
@@ -587,415 +581,120 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/denovo_nonspatial_crossvalidation.Rmd</code>) and HTML
-(<code>docs/denovo_nonspatial_crossvalidation.html</code>) files. If
-you’ve configured a remote Git repository (see
-<code>?wflow_git_remote</code>), click on the hyperlinks in the table
-below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/analysis/denovo_nonspatial_crossvalidation.Rmd" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/denovo_nonspatial_crossvalidation.html" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>We divided the whole genome into 100kb windows, used the first 90% as
-training set and the remaining 10% as testing set. Then we estimated
-<span class="math inline">\(\alpha\)</span> and <span
-class="math inline">\(E(\theta_i|\alpha,\mu_i,y_i)\)</span> on the
-training set for each window. Then we predicted <span
-class="math inline">\(\hat{y}_{i}=\theta_{i} \cdot \mu_{i}\)</span> for
-the testing set.</p>
+<p>We consider spatial random effect here:</p>
+<p>For each window <span class="math inline">\(i\)</span>, the random
+effect <span class="math inline">\(\theta_i\)</span> is:</p>
+<p><span class="math display">\[ \theta_i = y_i / \mu_i\]</span> where
+<span class="math inline">\(y_i\)</span> is the number of observed SNV
+in each window, <span class="math inline">\(\mu_i\)</span> is the sum of
+Roulette estimation (after calibration) in this window</p>
 </div>
-<div id="cv" class="section level1">
-<h1>CV</h1>
-<div id="ssc-cell-2022" class="section level2">
-<h2>SSC (Cell 2022)</h2>
-<div id="chr1-windowsize-100kb" class="section level3">
-<h3>chr1, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 0.121427517250506&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
+<div id="ssc-cell-2022" class="section level1">
+<h1>SSC (Cell 2022)</h1>
+<div id="window-size-10kb" class="section level2">
+<h2>Window size: 10kb</h2>
+<div id="chr1" class="section level3">
+<h3>chr1</h3>
+<p>All 6 mutation types, random effect: obs/exp</p>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15 
+8130 7792 4351 1658  584  189   95   39   31   23   14   15   14    7    8    4 
+  16   17   18   19   20   21   22   28   32   35   69 
+   8    6    4    3    6    2    4    1    2    1    1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-2-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-2-2.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="chr22" class="section level3">
+<h3>chr22</h3>
+<p>All 6 mutation types, random effect: obs/exp</p>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   10   11   13   21 
+1244 1209  711  332  145   37   29    9    2    1    1    1    1    1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-3-2.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
-Past versions of unnamed-chunk-3-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
+<div id="window-size-50kb" class="section level2">
+<h2>Window size: 50kb</h2>
+<div id="chr1-1" class="section level3">
+<h3>chr1</h3>
+<p>All 6 mutation types, random effect: obs/exp</p>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  20 
+ 63 152 315 502 698 726 607 545 366 231 132  87  54  35  20   5   8   4   4   1 
+ 21  22  23  24  25  26  28  29  30  32  33  34  35  38  39  40  41  42  43  44 
+  2   5   2   1   5   2   1   1   2   2   1   2   1   2   3   1   4   1   1   1 
+ 45  46  47  50  51  52  53  54  55  56  57  65  66  77  79 
+  4   1   1   2   2   1   1   1   1   1   2   1   1   1   1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-4-2.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="chr22-1" class="section level3">
+<h3>chr22</h3>
+<p>All 6 mutation types, random effect: obs/exp</p>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 19 20 23 28 
+22 31 43 65 89 95 95 77 78 52 40 21 17 13  3  3  7  4  1  1  1  1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-5-2.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
-<div id="chr22-windowsize-100kb" class="section level3">
-<h3>chr22, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 16.8044129299632&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
+<div id="mssng-cell-2022" class="section level1">
+<h1>MSSNG (Cell 2022)</h1>
+<div id="window-size-10kb-1" class="section level2">
+<h2>Window size: 10kb</h2>
+<div id="chr1-2" class="section level3">
+<h3>chr1</h3>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+    0     1     2     3     4     5     6     7     8     9    10    15    19 
+16639  3893  1525   480   132    41    15     7     4     3     1     1     1 
+   20    30    39 
+    2     1     1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-6-2.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="chr22-2" class="section level3">
+<h3>chr22</h3>
+<p>All 6 mutation types, random effect: obs/exp</p>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   12 
+2658  620  279  110   32   12    7    2    1    1    1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-7-2.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
-Past versions of unnamed-chunk-4-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
+<div id="window-size-50kb-1" class="section level2">
+<h2>Window size: 50kb</h2>
+<div id="chr1-3" class="section level3">
+<h3>chr1</h3>
+<p>All 6 mutation types, random effect: obs/exp</p>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   16 
+2040  431  467  441  388  298  203  115   87   41   23    5    5    5    3    3 
+  21   24   25   32   44 
+   1    1    1    1    1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-8-2.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-</div>
-</div>
-<div id="mssng-cell-2022" class="section level2">
-<h2>MSSNG (Cell 2022)</h2>
-<div id="chr1-windowsize-100kb-1" class="section level3">
-<h3>chr1, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 0.530710540140943&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
-Past versions of unnamed-chunk-5-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="chr22-windowsize-100kb-1" class="section level3">
-<h3>chr22, windowsize =100kb</h3>
-<pre><code>[1] &quot;alpha on training set = 0.506364049706207&quot;</code></pre>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-1.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
-Past versions of unnamed-chunk-6-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-6-2.png" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<div id="chr22-3" class="section level3">
+<h3>chr22</h3>
+<p>All 6 mutation types, random effect: obs/exp</p>
+<pre><code>[1] &quot;the number of observed de novo mutations per window&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   7   8   9  10  11  12  13  15 
+333  56  75  60  68  49  51  27  18   7   4   4   1   5   1 </code></pre>
+<p><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_randeff.Rmd/unnamed-chunk-9-2.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1019,7 +718,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] gridExtra_2.3     data.table_1.14.2 ggplot2_3.3.5    
+[1] ggplot2_3.3.5     data.table_1.14.2
 
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.8.3     highr_0.9        pillar_1.7.0     compiler_4.2.0  
@@ -1032,10 +731,10 @@ loaded via a namespace (and not attached):
 [29] generics_0.1.2   fs_1.5.2         vctrs_0.4.1      sass_0.4.1      
 [33] tidyselect_1.1.2 rprojroot_2.0.3  grid_4.2.0       glue_1.6.2      
 [37] R6_2.5.1         fansi_1.0.3      rmarkdown_2.14   farver_2.1.0    
-[41] purrr_0.3.4      magrittr_2.0.3   whisker_0.4      scales_1.2.0    
-[45] promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.2  assertthat_0.2.1
-[49] colorspace_2.0-3 httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2      
-[53] stringi_1.7.6    munsell_0.5.0    crayon_1.5.1    </code></pre>
+[41] purrr_0.3.4      magrittr_2.0.3   scales_1.2.0     promises_1.2.0.1
+[45] ellipsis_0.3.2   htmltools_0.5.2  assertthat_0.2.1 colorspace_2.0-3
+[49] httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2       stringi_1.7.6   
+[53] munsell_0.5.0    crayon_1.5.1    </code></pre>
 </div>
 </div>
 </div>

@@ -20,3 +20,14 @@ editor_options:
 
 # Spatial random effect 
 
+[Random effect distribution](https://xsun1229.github.io/mutation_rate/denovo_spatial_randeff.html)
+
+[Cross Validation -- without smoothing](https://xsun1229.github.io/mutation_rate/denovo_spatial_crossvalidation_wosmothing.html)
+
+
+
+
+
+# others
+
+[deleted](https://xsun1229.github.io/mutation_rate/denovo_delete.html)
