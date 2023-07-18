@@ -8,49 +8,15 @@ editor_options:
   chunk_output_type: console
 ---
 
-
 # Data Overview
 
 [link](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html)
 
+# Non-spatial random effect
 
-# non-spatial random effect 
+[Estimation of $\theta$ (random effect) with a single $\alpha$ across all windows](https://xsun1229.github.io/mutation_rate/denovo_nonspatial_estimation.html)
 
-[link](https://xsun1229.github.io/mutation_rate/denovo_nonspatial.html)
+[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo_nonspatial_crossvalidation.html)
 
-
-
-# spatial random effect 
-
-
-## Simons Simplex Collection (Shengtong's collection)
-
-### Data calibration 
-
-- [Calibrating Simon's de novo data with Roulette](https://xsun1229.github.io/mutation_rate/denovo_rl_simno_calibration.html)
-
-- [Cross Validation without smoothing](https://xsun1229.github.io/mutation_rate/denovo_cv_wo_smoothing.html)
-
-
-### Poisson Model
-
-Cross Validation 
-
-- [Using the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/denovo_pois_traintest.html)
-
-Results analysis
-
-- [Plots - Observed & Estimated across all windows](https://xsun1229.github.io/mutation_rate/denovo_pois_allwindows.html)
-
-
-### Gaussian Model
-
-Cross Validation 
-
-- [Using the first 90% base pairs as training set](https://xsun1229.github.io/mutation_rate/denovo_gaus_traintest.html)
-
-Results analysis
-
-- [Plots - Observed & Estimated across all windows](https://xsun1229.github.io/mutation_rate/denovo_gaus_allwindows.html)
-
+# Spatial random effect 
 
