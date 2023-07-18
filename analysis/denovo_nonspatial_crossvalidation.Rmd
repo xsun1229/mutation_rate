@@ -34,11 +34,87 @@ est.alpha <- function(dat) {
   res$par # MLE of alpha
 }
 
+est.alpha_n <- function(dat) {
+  mu_pos <- dat$exp > 0
+  y_pos <- dat$obs > 0
+  dat.mu_pos <- dat[(!y_pos)&mu_pos,]
+  dat.y_pos <- dat[y_pos,]
+  loglik <- function(alpha) {
+    loglik.mu_pos <- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
+    loglik.y_pos <- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
+    -sum(loglik.mu_pos) - sum(loglik.y_pos)
+  }
+  res <- optim(par=1, lower = 1, upper = 2,fn=loglik, method="Brent") # May need to try different initiations and methods
+  res$par # MLE of alpha
+}
+
 ```
 
 # CV
 
 ## SSC (Cell 2022)
+
+### chr1, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/cv_combine_chr1_50kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+#print("fitting: exp_rl ~ obs + 0")
+#print(summary(fit2))
+```
 
 ### chr1, windowsize =100kb
 
@@ -101,6 +177,132 @@ grid.arrange(p1, p2, nrow = 1)
 #print("fitting: exp_rl ~ obs + 0")
 #print(summary(fit2))
 ```
+
+
+### chr1, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/cv_combine_chr1_200kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha_n(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+#print("fitting: exp_rl ~ obs + 0")
+#print(summary(fit2))
+```
+
+### chr22, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/cv_combine_chr22_50kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+#print("fitting: exp_rl ~ obs + 0")
+#print(summary(fit2))
+```
+
 
 ### chr22, windowsize =100kb
 
@@ -165,7 +367,136 @@ grid.arrange(p1, p2, nrow = 1)
 ```
 
 
+
+### chr22, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/cv_combine_chr22_200kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+#print("fitting: exp_rl ~ obs + 0")
+#print(summary(fit2))
+```
+
 ## MSSNG (Cell 2022)
+
+### chr1, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/cv_combine_chr1_50kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+##print("fitting: exp_rl ~ obs + 0")
+##print(summary(fit2))
+```
+
+
+
+
 ### chr1, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
@@ -230,11 +561,202 @@ grid.arrange(p1, p2, nrow = 1)
 
 
 
+
+### chr1, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/cv_combine_chr1_200kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+##print("fitting: exp_rl ~ obs + 0")
+##print(summary(fit2))
+```
+
+### chr22, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/cv_combine_chr22_50kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+#print("fitting: exp_rl ~ obs + 0")
+#print(summary(fit2))
+```
+
+
+
 ### chr22, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/cv_combine_chr22_100kb_trainprop9.txt",header = T)
+
+dat_train <- dat[,c("mr_rescale_train","count_train")]
+colnames(dat_train) <- c("exp","obs")
+
+alpha <- est.alpha(dat_train)
+print(sprintf("alpha on training set = %s", alpha))
+  
+theta <- (dat_train$obs + alpha) / (dat_train$exp + alpha)
+p1 <- ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta on training set",
+       x = "Theta",
+       y = "Frequency") 
+  
+
+p2 <- ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta) on training set",
+       x = "log(theta)",
+       y = "Frequency")
+grid.arrange(p1, p2, nrow = 1)
+
+
+y_test_pred <- theta * dat$mr_rescale_test 
+data_plot <-  as.data.frame(cbind(y_test_pred,dat$mr_rescale_test,dat$count_test))
+colnames(data_plot) <- c("exp_randeff","exp_rl","obs")
+
+fit1 <- lm(data_plot$exp_randeff ~ data_plot$obs + 0 )
+
+p1 <- ggplot(data = data_plot, aes(x = obs, y = exp_randeff)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("predicted with random effects") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit1)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+
+#print("fitting: exp_randeff ~ obs + 0")
+#print(summary(fit1))
+
+
+fit2 <- lm(data_plot$exp_rl ~ data_plot$obs + 0 )
+p2 <- ggplot(data = data_plot, aes(x = obs, y = exp_rl)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept = 0, color = "red") +
+  xlab("observed de novo SNVs") +
+  ylab("Roulette baseline") +
+  geom_text(aes(label = paste0("adjusted rsq =", round(summary(fit2)$adj.r.squared, digits = 4))),
+            x = Inf, y = Inf, hjust = 1, vjust = 1, size = 5, color = "red")
+
+grid.arrange(p1, p2, nrow = 1)
+
+#print("fitting: exp_rl ~ obs + 0")
+#print(summary(fit2))
+```
+
+
+
+### chr22, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/cv_combine_chr22_200kb_trainprop9.txt",header = T)
 
 dat_train <- dat[,c("mr_rescale_train","count_train")]
 colnames(dat_train) <- c("exp","obs")

@@ -21,6 +21,75 @@ We divided the whole genome into 100kb windows, used the first 90% as training s
 
 ## SSC (Cell 2022)
 
+### chr1, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/cv_combine_chr1_50kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+
 ### chr1, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
@@ -82,6 +151,139 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 ```
+
+
+
+
+
+
+
+### chr1, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/cv_combine_chr1_200kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
+### chr22, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/cv_combine_chr22_50kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
 
 
 
@@ -155,7 +357,136 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
+
+### chr22, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/cv_combine_chr22_200kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+
+
+
+
+```
+
+
+
+
+
+
+
 ## MSSNG (Cell 2022) 
+
+### chr1, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/cv_combine_chr1_50kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+
 
 ### chr1, windowsize =100kb
 
@@ -220,11 +551,203 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
+
+### chr1, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/cv_combine_chr1_200kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+
+
+
+
+```
+
+
+
+### chr22, windowsize =50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/cv_combine_chr22_50kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+
+
+
+
+```
+
+
+
 ### chr22, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/cv_combine_chr22_100kb_trainprop9.txt",header = T)
+
+dat$Mb <- dat$start/1000000
+dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+ggplot(dat, aes(x = Mb, y = randeff_train )) +
+  geom_point(size=0.2) +
+  scale_x_continuous(name = "Genomic position (Mb)") +
+  ylab("Random effects") +
+  ggtitle("Distribution of random effects on training set") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+dat$obs_pred_randeff <- dat$mr_rescale_test*dat$randeff_train
+
+
+x_max <- max(dat$obs_pred_randeff, dat$mr_rescale_test,na.rm = T)
+y_max <- max(dat$count_test)
+
+fit1 <- lm(count_test ~ obs_pred_randeff + 0, data = dat)
+adj.rsq <- summary(fit1)$adj.r.squared
+pval <- summary(fit1)$coefficients[,4]
+
+p1 <- ggplot(dat, aes(x = obs_pred_randeff, y = count_test)) +
+  geom_point() +
+  labs(title = "Adding random effects", x ="Predicted_random effects" , y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme_bw() +
+  annotate("text", x = Inf , y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+fit2 <- lm(count_test ~ mr_rescale_test + 0, data = dat)
+adj.rsq <- summary(fit2)$adj.r.squared
+pval <- summary(fit2)$coefficients[,4]
+
+p2 <- ggplot(dat, aes(x = mr_rescale_test, y = count_test)) +
+  geom_point() +
+  labs(title = "Roulette Baseline", x = "Predicted_Roulette", y = "Observed") +
+  geom_smooth(method = lm, formula = y ~ x + 0, color = "red") +
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_bw() +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adjusted R-Squared: ", round(adj.rsq, 4)), vjust = 1, hjust = 1)+
+  ylim(0, y_max) +
+  xlim(0, x_max) +
+  theme(plot.title = element_text(hjust = 0.5))
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+
+
+
+
+```
+
+
+### chr22, windowsize =200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/cv_combine_chr22_200kb_trainprop9.txt",header = T)
 
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
