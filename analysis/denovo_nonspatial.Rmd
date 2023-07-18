@@ -60,9 +60,11 @@ So the posterior mean of $ \theta_i $ is:
 
 $$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
 
-# SSC (Cell 2022)
+# Estimation of $\theta$ with a single $\alpha$ across all windows
 
-## chr1, windowsize =10000
+## SSC (Cell 2022)
+
+### chr1, windowsize =10000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -94,7 +96,7 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 
 
-## chr1, windowsize =50000
+### chr1, windowsize =50000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -125,7 +127,7 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 
 
-## chr22, windowsize =10000
+### chr22, windowsize =10000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -151,7 +153,7 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 ```
 
-## chr22, windowsize =50000
+### chr22, windowsize =50000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -186,9 +188,9 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 
 
-# MSSNG (Cell 2022)
+## MSSNG (Cell 2022)
 
-## chr1, windowsize =10000
+### chr1, windowsize =10000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -220,7 +222,7 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 
 
-## chr1, windowsize =50000
+### chr1, windowsize =50000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -251,7 +253,7 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 
 
-## chr22, windowsize =10000
+### chr22, windowsize =10000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -277,7 +279,7 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 ```
 
-## chr22, windowsize =50000
+### chr22, windowsize =50000
 
 ```{r echo=F, message=FALSE, warning=FALSE}
 
@@ -309,3 +311,7 @@ ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
 
 
 
+
+
+
+# Cross validation 
