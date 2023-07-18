@@ -292,7 +292,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -303,8 +303,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -317,9 +317,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>mutation_rate/</code> <span
@@ -342,36 +342,33 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree181afe03f847963fdfb806d6b8105b651ba69dfdtargetblank181afe0a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree5da11129ac6ff061b109ae6d9117594bb71b7039targetblank5da1112a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/181afe03f847963fdfb806d6b8105b651ba69dfd" target="_blank">181afe0</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/5da11129ac6ff061b109ae6d9117594bb71b7039" target="_blank">5da1112</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree181afe03f847963fdfb806d6b8105b651ba69dfdtargetblank181afe0a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree5da11129ac6ff061b109ae6d9117594bb71b7039targetblank5da1112a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -381,7 +378,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/181afe03f847963fdfb806d6b8105b651ba69dfd" target="_blank">181afe0</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/5da11129ac6ff061b109ae6d9117594bb71b7039" target="_blank">5da1112</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -397,29 +394,6 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
-
-Untracked files:
-    Untracked:  analysis/denovo_nonspatial_crossvalidation.Rmd
-    Untracked:  analysis/denovo_nonspatial_estimation.Rmd
-    Untracked:  analysis/earlier/
-
-Unstaged changes:
-    Deleted:    analysis/delete_var_smmothing.Rmd
-    Modified:   analysis/denovo.Rmd
-    Deleted:    analysis/denovo_cv_wo_smoothing.Rmd
-    Deleted:    analysis/denovo_exp_obs_chr22.Rmd
-    Deleted:    analysis/denovo_exp_obs_rare_randomwindows_chr1.Rmd
-    Deleted:    analysis/denovo_gaus_allwindows.Rmd
-    Deleted:    analysis/denovo_gaus_traintest.Rmd
-    Deleted:    analysis/denovo_nonspatial.Rmd
-    Deleted:    analysis/denovo_pois_allwindows.Rmd
-    Deleted:    analysis/denovo_pois_traintest.Rmd
-    Deleted:    analysis/denovo_rl_an_calibration.Rmd
-    Deleted:    analysis/denovo_rl_simno_calibration.Rmd
-    Deleted:    analysis/denovo_rl_ssc_trost_calibration.Rmd
-    Deleted:    analysis/denovo_rl_trost_calibration.Rmd
-    Deleted:    analysis/reproducing_SC.Rmd
-    Modified:   denovo_delete.Rmd
 
 </code></pre>
 <p>
@@ -464,6 +438,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/analysis/denovo.Rmd" target="_blank">5da1112</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/analysis/denovo.Rmd" target="_blank">60fb5dd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/denovo.html" target="_blank">60fb5dd</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -646,17 +671,30 @@ update
 <p><a
 href="https://xsun1229.github.io/mutation_rate/denovo_data_overview.html">link</a></p>
 </div>
-<div
-id="estimation-of-theta-random-effect-with-a-single-alpha-across-all-windows"
-class="section level1">
-<h1>Estimation of <span class="math inline">\(\theta\)</span> (random
-effect) with a single <span class="math inline">\(\alpha\)</span> across
-all windows</h1>
+<div id="non-spatial-random-effect" class="section level1">
+<h1>Non-spatial random effect</h1>
 <p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_nonspatial_estimation.html">link</a></p>
+href="https://xsun1229.github.io/mutation_rate/denovo_nonspatial_estimation.html">Estimation
+of <span class="math inline">\(\theta\)</span> (random effect) with a
+single <span class="math inline">\(\alpha\)</span> across all
+windows</a></p>
+<p><a
+href="https://xsun1229.github.io/mutation_rate/denovo_nonspatial_crossvalidation.html">Cross
+Validation</a></p>
 </div>
 <div id="spatial-random-effect" class="section level1">
-<h1>spatial random effect</h1>
+<h1>Spatial random effect</h1>
+<p><a
+href="https://xsun1229.github.io/mutation_rate/denovo_spatial_randeff.html">Random
+effect distribution</a></p>
+<p><a
+href="https://xsun1229.github.io/mutation_rate/denovo_spatial_crossvalidation_wosmothing.html">Cross
+Validation – without smoothing</a></p>
+</div>
+<div id="others" class="section level1">
+<h1>others</h1>
+<p><a
+href="https://xsun1229.github.io/mutation_rate/denovo_delete.html">deleted</a></p>
 </div>
 
 
