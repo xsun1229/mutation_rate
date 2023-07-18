@@ -16,14 +16,14 @@ editor_options:
 
 # non-spatial random effect 
 
-
+[link](https://xsun1229.github.io/mutation_rate/denovo_nonspatial.html)
 
 
 
 # spatial random effect 
 
 
-##Simons Simplex Collection (Shengtong's collection)
+## Simons Simplex Collection (Shengtong's collection)
 
 ### Data calibration 
 

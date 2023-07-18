@@ -1,0 +1,311 @@
+---
+title: "Non-spatial random effect"
+author: "XSun"
+date: "2023-07-17"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+
+```{r echo=F, message=FALSE, warning=FALSE}
+library(ggplot2)
+```
+
+We divide the whole genome into bins, in each window $i$, we have:
+
+$$ y_i \sim  pois(\mu_i*\theta _i) $$ where $y_i$ is the observed de novo mutation counts. $\mu_i$ is expected mutation counts, $\theta_i$ is the non-spatial random effect in this window.
+
+We can use gamma distribution to model $\theta_i$ :
+
+$$\theta_i \sim Gamma(\alpha, \beta)$$ Since the $\mu_i$ is calibrated (the total mutation rate is given), we just have single overdispersion parameter
+
+so, the simple non-spatial random effect model is
+
+$$\theta_i \sim Gamma(\alpha, \alpha)$$
+So the likelihood is :
+
+$$\begin{aligned}
+Pr(y_{i} |\mu_{i},\alpha) &= \int_0^{+\infty}
+Pr(y_{i}|\mu_{i},\theta_{i})Pr(\theta_{i}|\alpha)\,d\theta_{i} \\
+\end{aligned}$$
+
+which can be optimized by MLE with “BFGS” method.
+
+```{r echo=T, message=FALSE, warning=FALSE}
+
+# Input is a dataframe of observed rates and expected rates
+est.alpha <- function(dat) {
+  mu_pos <- dat$exp > 0
+  y_pos <- dat$obs > 0
+  dat.mu_pos <- dat[(!y_pos)&mu_pos,]
+  dat.y_pos <- dat[y_pos,]
+  loglik <- function(alpha) {
+    loglik.mu_pos <- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
+    loglik.y_pos <- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
+    -sum(loglik.mu_pos) - sum(loglik.y_pos)
+  }
+  res <- optim(par=1, fn=loglik, method="BFGS") # May need to try different initiations and methods
+  res$par # MLE of alpha
+}
+
+```
+
+
+The posterior distribution of $ \theta_i $ is :
+
+$$ \theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$
+So the posterior mean of $ \theta_i $ is: 
+
+$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
+
+# SSC (Cell 2022)
+
+## chr1, windowsize =10000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_10000.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+
+
+
+
+
+
+## chr1, windowsize =50000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_50000.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+
+
+
+
+
+## chr22, windowsize =10000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/rl_ssc_trost_combine_chr22_10000.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+## chr22, windowsize =50000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr22/rl_ssc_trost_combine_chr22_50000.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+
+
+
+
+
+
+
+
+
+# MSSNG (Cell 2022)
+
+## chr1, windowsize =10000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/rl_trost_combine_chr1_10000_mssng.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+
+
+
+
+
+
+## chr1, windowsize =50000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/rl_trost_combine_chr1_50000_mssng.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+
+
+
+
+
+## chr22, windowsize =10000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/rl_trost_combine_chr22_10000_mssng.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+## chr22, windowsize =50000
+
+```{r echo=F, message=FALSE, warning=FALSE}
+
+dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr22/rl_trost_combine_chr22_50000_mssng.txt",fill = T)
+dat <- dat[complete.cases(dat$V5),]
+  
+colnames(dat) <- c("chr","start","end","obs","exp")
+alpha <- est.alpha(dat)
+print(sprintf("alpha = %s", alpha))
+  
+theta <- (dat$obs + alpha) / (dat$exp + alpha)
+ggplot(data = data.frame(theta), aes(x = theta)) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of Theta",
+       x = "Theta",
+       y = "Frequency")
+
+ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
+  labs(title = "Histogram of log(theta)",
+       x = "log(theta)",
+       y = "Frequency")
+
+```
+
+
+
+
+
+
+
