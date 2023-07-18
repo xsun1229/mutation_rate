@@ -77,13 +77,13 @@ print(sprintf("alpha = %s", alpha))
   
 theta <- (dat$obs + alpha) / (dat$exp + alpha)
 ggplot(data = data.frame(theta), aes(x = theta)) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of Theta",
        x = "Theta",
        y = "Frequency")
 
 ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of log(theta)",
        x = "log(theta)",
        y = "Frequency")
@@ -109,13 +109,13 @@ print(sprintf("alpha = %s", alpha))
   
 theta <- (dat$obs + alpha) / (dat$exp + alpha)
 ggplot(data = data.frame(theta), aes(x = theta)) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of Theta",
        x = "Theta",
        y = "Frequency")
 
 ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of log(theta)",
        x = "log(theta)",
        y = "Frequency")
@@ -203,13 +203,13 @@ print(sprintf("alpha = %s", alpha))
   
 theta <- (dat$obs + alpha) / (dat$exp + alpha)
 ggplot(data = data.frame(theta), aes(x = theta)) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of Theta",
        x = "Theta",
        y = "Frequency")
 
 ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of log(theta)",
        x = "log(theta)",
        y = "Frequency")
@@ -235,13 +235,13 @@ print(sprintf("alpha = %s", alpha))
   
 theta <- (dat$obs + alpha) / (dat$exp + alpha)
 ggplot(data = data.frame(theta), aes(x = theta)) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of Theta",
        x = "Theta",
        y = "Frequency")
 
 ggplot(data = data.frame(log(theta)), aes(x = log(theta))) +
-  geom_histogram(binwidth = 0.5, color = "black", fill = "steelblue") +
+  geom_histogram(bins =50, color = "black", fill = "steelblue") +
   labs(title = "Histogram of log(theta)",
        x = "log(theta)",
        y = "Frequency")
