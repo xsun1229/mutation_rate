@@ -50,11 +50,26 @@ est.alpha_n <- function(dat) {
 
 ```
 
-# CV
+# CV summary
 
-## SSC (Cell 2022)
+| data set | chr | window size | alpha   | adjusted rsq -- random  | adjusted rsq -- roulette |
+|----------|-----|-------------|---------|-------------------------|--------------------------|
+| SSC      | 1   | 50kb        | 1.0786  | 0.2169                  | 0.2567                   |
+|          |     | 100kb       | 0.1214  | 0.1843                  | 0.3267                   |
+|          |     | 200kb       | 2.0000  | 0.2754                  | 0.4225                   |
+|          | 22  | 50kb        | 31.9072 | 0.2945                  | 0.2893                   |
+|          |     | 100kb       | 16.8044 | 0.5097                  | 0.5110                   |
+|          |     | 200kb       | 77.4343 | 0.6881                  | 0.6873                   |
+| MSSNG    | 1   | 50kb        | 0.4752  | 0.1976                  | 0.1528                   |
+|          |     | 100kb       | 0.5307  | 0.0909                  | 0.0875                   |
+|          |     | 200kb       | 0.5987  | 0.2897                  | 0.2370                   |
+|          | 22  | 50kb        | 0.4633  | 0.1738                  | 0.1544                   |
+|          |     | 100kb       | 0.5064  | 0.2593                  | 0.2522                   |
+|          |     | 200kb       | 0.5260  | 0.4494                  | 0.3936                   |
 
-### chr1, windowsize =50kb
+# SSC (Cell 2022)
+
+## chr1, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -116,7 +131,7 @@ grid.arrange(p1, p2, nrow = 1)
 #print(summary(fit2))
 ```
 
-### chr1, windowsize =100kb
+## chr1, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -179,7 +194,7 @@ grid.arrange(p1, p2, nrow = 1)
 ```
 
 
-### chr1, windowsize =200kb
+## chr1, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -241,7 +256,7 @@ grid.arrange(p1, p2, nrow = 1)
 #print(summary(fit2))
 ```
 
-### chr22, windowsize =50kb
+## chr22, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -304,7 +319,7 @@ grid.arrange(p1, p2, nrow = 1)
 ```
 
 
-### chr22, windowsize =100kb
+## chr22, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -368,7 +383,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 
 
-### chr22, windowsize =200kb
+## chr22, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -430,9 +445,9 @@ grid.arrange(p1, p2, nrow = 1)
 #print(summary(fit2))
 ```
 
-## MSSNG (Cell 2022)
+# MSSNG (Cell 2022)
 
-### chr1, windowsize =50kb
+## chr1, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -497,7 +512,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 
 
-### chr1, windowsize =100kb
+## chr1, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -562,7 +577,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 
 
-### chr1, windowsize =200kb
+## chr1, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -624,7 +639,7 @@ grid.arrange(p1, p2, nrow = 1)
 ##print(summary(fit2))
 ```
 
-### chr22, windowsize =50kb
+## chr22, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -688,7 +703,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 
 
-### chr22, windowsize =100kb
+## chr22, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -752,7 +767,7 @@ grid.arrange(p1, p2, nrow = 1)
 
 
 
-### chr22, windowsize =200kb
+## chr22, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 

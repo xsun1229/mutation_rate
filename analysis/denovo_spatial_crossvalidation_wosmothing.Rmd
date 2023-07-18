@@ -17,11 +17,29 @@ library(gridExtra)
 We divided the whole genome into 100kb windows, used the first 90% as training set and the remaining 10% as testing set. Then we estimated $\theta_i$ for each window on the training sets and predicted $\hat{y}_{i}=\theta_{i} \cdot \mu_{i}$ for the testing set.
 
 
-# CV
+# CV summary
 
-## SSC (Cell 2022)
 
-### chr1, windowsize =50kb
+
+
+| data set | chr | window size | adjusted rsq -- random  | adjusted rsq -- roulette |
+|----------|-----|-------------|-------------------------|--------------------------|
+| SSC      | 1   | 50kb        | 0.2641                  | 0.2567                   |
+|          |     | 100kb       | 0.2474                  | 0.3267                   |
+|          |     | 200kb       | 0.0908                  | 0.4225                   |
+|          | 22  | 50kb        | 0.2721                  | 0.2893                   |
+|          |     | 100kb       | 0.4742                  | 0.5110                   |
+|          |     | 200kb       | 0.6481                  | 0.6873                   |
+| MSSNG    | 1   | 50kb        | 0.1859                  | 0.1528                   |
+|          |     | 100kb       | 0.0874                  | 0.0875                   |
+|          |     | 200kb       | 0.2859                  | 0.2370                   |
+|          | 22  | 50kb        | 0.1677                  | 0.1544                   |
+|          |     | 100kb       | 0.2526                  | 0.2522                   |
+|          |     | 200kb       | 0.4455                  | 0.3936                   |
+
+# SSC (Cell 2022)
+
+## chr1, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -30,6 +48,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/pe
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data")
+print(table(dat$count_test))
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -90,7 +111,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr1, windowsize =100kb
+## chr1, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -99,6 +120,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/pe
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data")
+print(table(dat$count_test))
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -158,7 +182,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr1, windowsize =200kb
+## chr1, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -167,6 +191,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/pe
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data")
+print(table(dat$count_test))
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -226,7 +253,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr22, windowsize =50kb
+## chr22, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -235,6 +262,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/pe
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -290,7 +320,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr22, windowsize =100kb
+## chr22, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -299,6 +329,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/pe
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -358,7 +391,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr22, windowsize =200kb
+## chr22, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -367,6 +400,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/pe
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -426,9 +462,9 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-## MSSNG (Cell 2022) 
+# MSSNG (Cell 2022) 
 
-### chr1, windowsize =50kb
+## chr1, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -437,6 +473,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_ch
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -488,7 +527,8 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr1, windowsize =100kb
+
+## chr1, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -497,6 +537,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_ch
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -552,7 +595,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr1, windowsize =200kb
+## chr1, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -561,6 +604,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_ch
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -616,7 +662,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr22, windowsize =50kb
+## chr22, windowsize =50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -625,6 +671,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_ch
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -680,7 +729,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-### chr22, windowsize =100kb
+## chr22, windowsize =100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -689,6 +738,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_ch
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
 
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
+
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +
   scale_x_continuous(name = "Genomic position (Mb)") +
@@ -743,7 +795,7 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
-### chr22, windowsize =200kb
+## chr22, windowsize =200kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -751,6 +803,9 @@ dat <- read.table("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_ch
 
 dat$Mb <- dat$start/1000000
 dat$randeff_train <- dat$count_train/dat$mr_rescale_train
+
+print("number of de nove mutation in testing data") 
+print(table(dat$count_test)) 
 
 ggplot(dat, aes(x = Mb, y = randeff_train )) +
   geom_point(size=0.2) +

@@ -528,15 +528,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree7dea57f951efe954f9d8b8fdc13b1bc58799cd91targetblank7dea57fa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree2f508b6ab9fd37e19005ac9c69406b1f22649d04targetblank2f508b6a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/7dea57f951efe954f9d8b8fdc13b1bc58799cd91" target="_blank">7dea57f</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/2f508b6ab9fd37e19005ac9c69406b1f22649d04" target="_blank">2f508b6</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree7dea57f951efe954f9d8b8fdc13b1bc58799cd91targetblank7dea57fa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree2f508b6ab9fd37e19005ac9c69406b1f22649d04targetblank2f508b6a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -546,7 +546,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/7dea57f951efe954f9d8b8fdc13b1bc58799cd91" target="_blank">7dea57f</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/2f508b6ab9fd37e19005ac9c69406b1f22649d04" target="_blank">2f508b6</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -618,6 +618,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/analysis/denovo_spatial_crossvalidation_wosmothing.Rmd" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/denovo_spatial_crossvalidation_wosmothing.html" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/analysis/denovo_spatial_crossvalidation_wosmothing.Rmd" target="_blank">5da1112</a>
 </td>
 <td>
@@ -663,12 +697,121 @@ training sets and predicted <span
 class="math inline">\(\hat{y}_{i}=\theta_{i} \cdot \mu_{i}\)</span> for
 the testing set.</p>
 </div>
-<div id="cv" class="section level1">
-<h1>CV</h1>
-<div id="ssc-cell-2022" class="section level2">
-<h2>SSC (Cell 2022)</h2>
-<div id="chr1-windowsize-50kb" class="section level3">
-<h3>chr1, windowsize =50kb</h3>
+<div id="cv-summary" class="section level1">
+<h1>CV summary</h1>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="6%" />
+<col width="16%" />
+<col width="31%" />
+<col width="32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>data set</th>
+<th>chr</th>
+<th>window size</th>
+<th>adjusted rsq – random</th>
+<th>adjusted rsq – roulette</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SSC</td>
+<td>1</td>
+<td>50kb</td>
+<td>0.2641</td>
+<td>0.2567</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>100kb</td>
+<td>0.2474</td>
+<td>0.3267</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>200kb</td>
+<td>0.0908</td>
+<td>0.4225</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>22</td>
+<td>50kb</td>
+<td>0.2721</td>
+<td>0.2893</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>100kb</td>
+<td>0.4742</td>
+<td>0.5110</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>200kb</td>
+<td>0.6481</td>
+<td>0.6873</td>
+</tr>
+<tr class="odd">
+<td>MSSNG</td>
+<td>1</td>
+<td>50kb</td>
+<td>0.1859</td>
+<td>0.1528</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>100kb</td>
+<td>0.0874</td>
+<td>0.0875</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>200kb</td>
+<td>0.2859</td>
+<td>0.2370</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>22</td>
+<td>50kb</td>
+<td>0.1677</td>
+<td>0.1544</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td>100kb</td>
+<td>0.2526</td>
+<td>0.2522</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td>200kb</td>
+<td>0.4455</td>
+<td>0.3936</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ssc-cell-2022" class="section level1">
+<h1>SSC (Cell 2022)</h1>
+<div id="chr1-windowsize-50kb" class="section level2">
+<h2>chr1, windowsize =50kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   10   15   17 
+2640 1391  450   83   23   12    6    1    2    3    4    1    1 </code></pre>
 <p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
@@ -692,6 +835,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-2-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-2-1.png" target="_blank">5da1112</a>
@@ -732,6 +886,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-2-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-2-2.png" target="_blank">5da1112</a>
 </td>
 <td>
@@ -746,8 +911,12 @@ XSun
 </div>
 </div>
 </div>
-<div id="chr1-windowsize-100kb" class="section level3">
-<h3>chr1, windowsize =100kb</h3>
+<div id="chr1-windowsize-100kb" class="section level2">
+<h2>chr1, windowsize =100kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   7   8  10  11  12  17  21  22 
+808 784 443 154  61  22  17   5   4   3   4   2   1   1   2 </code></pre>
 <p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
@@ -771,6 +940,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-3-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-3-1.png" target="_blank">5da1112</a>
@@ -811,6 +991,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-3-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-3-2.png" target="_blank">5da1112</a>
 </td>
 <td>
@@ -825,8 +1016,12 @@ XSun
 </div>
 </div>
 </div>
-<div id="chr1-windowsize-200kb" class="section level3">
-<h3>chr1, windowsize =200kb</h3>
+<div id="chr1-windowsize-200kb" class="section level2">
+<h2>chr1, windowsize =200kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   7   8   9  10  11  13  14  15  16  17  19  23  46 
+160 256 297 213 122  54  23  10   3   4   2   1   2   1   1   1   2   2   1   1 </code></pre>
 <p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
@@ -850,6 +1045,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-4-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-4-1.png" target="_blank">5da1112</a>
@@ -890,6 +1096,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-4-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-4-2.png" target="_blank">5da1112</a>
 </td>
 <td>
@@ -904,8 +1121,12 @@ XSun
 </div>
 </div>
 </div>
-<div id="chr22-windowsize-50kb" class="section level3">
-<h3>chr22, windowsize =50kb</h3>
+<div id="chr22-windowsize-50kb" class="section level2">
+<h2>chr22, windowsize =50kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   7  11 
+452 217  61  18   7   2   2   1 </code></pre>
 <p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
@@ -929,6 +1150,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-5-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-5-1.png" target="_blank">5da1112</a>
@@ -969,6 +1201,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-5-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-5-2.png" target="_blank">5da1112</a>
 </td>
 <td>
@@ -983,40 +1226,672 @@ XSun
 </div>
 </div>
 </div>
-<div id="chr22-windowsize-100kb" class="section level3">
-<h3>chr22, windowsize =100kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="chr22-windowsize-100kb" class="section level2">
+<h2>chr22, windowsize =100kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   9 
+139 110  83  36   8   2   2   1 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-6-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="chr22-windowsize-200kb" class="section level3">
-<h3>chr22, windowsize =200kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-7-2.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-6-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
-<div id="mssng-cell-2022" class="section level2">
-<h2>MSSNG (Cell 2022)</h2>
-<div id="chr1-windowsize-50kb-1" class="section level3">
-<h3>chr1, windowsize =50kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-8-2.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="chr1-windowsize-100kb-1" class="section level3">
-<h3>chr1, windowsize =100kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-9-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="chr22-windowsize-200kb" class="section level2">
+<h2>chr22, windowsize =200kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+ 0  1  2  3  4  5  6  7  9 11 
+29 40 43 37 21 11  6  2  1  1 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-7-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="chr1-windowsize-200kb-1" class="section level3">
-<h3>chr1, windowsize =200kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-10-2.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="chr22-windowsize-50kb-1" class="section level3">
-<h3>chr22, windowsize =50kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-11-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-11-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-7-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
+Past versions of unnamed-chunk-7-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-7-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="chr22-windowsize-100kb-1" class="section level3">
-<h3>chr22, windowsize =100kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-12-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-12-2.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="chr22-windowsize-200kb-1" class="section level3">
-<h3>chr22, windowsize =200kb</h3>
-<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-13-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-13-2.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="mssng-cell-2022" class="section level1">
+<h1>MSSNG (Cell 2022)</h1>
+<div id="chr1-windowsize-50kb-1" class="section level2">
+<h2>chr1, windowsize =50kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    9 
+3642  639  190   55   21    7    3    2    2 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-8-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-8-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
+Past versions of unnamed-chunk-8-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-8-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="chr1-windowsize-100kb-1" class="section level2">
+<h2>chr1, windowsize =100kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+   0    1    2    3    4    5    6    7    8    9   18   37   73 
+1559  400  186   71   35   15    4    5    2    2    1    1    1 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-9-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-9-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-2">
+Past versions of unnamed-chunk-9-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-9-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="chr1-windowsize-200kb-1" class="section level2">
+<h2>chr1, windowsize =200kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   7   8   9  10  11  19  39 
+642 168 142  76  52  26  18   6   2   4   2   2   1   1 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-10-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-10-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-2">
+Past versions of unnamed-chunk-10-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-10-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="chr22-windowsize-50kb-1" class="section level2">
+<h2>chr22, windowsize =50kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   8  10 
+593 104  44   9   5   1   2   1   1 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-11-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-11-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-11-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-2">
+Past versions of unnamed-chunk-11-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-11-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="chr22-windowsize-100kb-1" class="section level2">
+<h2>chr22, windowsize =100kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+  0   1   2   3   4   5   6   9  10 
+247  67  33  19   7   3   3   1   1 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-12-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-12-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-12-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-2">
+Past versions of unnamed-chunk-12-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-12-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="chr22-windowsize-200kb-1" class="section level2">
+<h2>chr22, windowsize =200kb</h2>
+<pre><code>[1] &quot;number of de nove mutation in testing data&quot;</code></pre>
+<pre><code>
+ 0  1  2  3  4  5  6  7  8  9 
+97 24 20 22 15  6  3  1  2  1 </code></pre>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-13-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-13-1.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-13-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-2">
+Past versions of unnamed-chunk-13-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_spatial_crossvalidation_wosmothing.Rmd/unnamed-chunk-13-2.png" target="_blank">2f508b6</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1058,7 +1933,6 @@ loaded via a namespace (and not attached):
 [49] crayon_1.5.1     whisker_0.4      pkgconfig_2.0.3  Matrix_1.5-3    
 [53] ellipsis_0.3.2   assertthat_0.2.1 rmarkdown_2.14   rstudioapi_0.13 
 [57] R6_2.5.1         nlme_3.1-157     git2r_0.30.1     compiler_4.2.0  </code></pre>
-</div>
 </div>
 </div>
 </div>
