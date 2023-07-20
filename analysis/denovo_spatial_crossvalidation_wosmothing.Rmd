@@ -24,9 +24,9 @@ We divided the whole genome into 100kb windows, used the first 90% as training s
 
 | data set | chr | window size | adjusted rsq -- random  | adjusted rsq -- roulette |
 |----------|-----|-------------|-------------------------|--------------------------|
-| SSC      | 1   | 50kb        | 0.2641                  | 0.2567                   |
-|          |     | 100kb       | 0.2474                  | 0.3267                   |
-|          |     | 200kb       | 0.0908                  | 0.4225                   |
+| SSC      | 1   | 50kb        | 0.2641                  | 0.3517                   |
+|          |     | 100kb       | 0.2474                  | 0.4612                   |
+|          |     | 200kb       | 0.0908                  | 0.6339                   |
 |          | 22  | 50kb        | 0.2721                  | 0.2893                   |
 |          |     | 100kb       | 0.4742                  | 0.5110                   |
 |          |     | 200kb       | 0.6481                  | 0.6873                   |
