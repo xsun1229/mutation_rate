@@ -14,7 +14,7 @@ library(gridExtra)
 
 # Introduction
 
-We divided the whole genome into 100kb windows, used the first 90% as training set and the remaining 10% as testing set. Then we estimated $\theta_i$ for each window on the training sets and predicted $\hat{y}_{i}=\theta_{i} \cdot \mu_{i}$ for the testing set.
+We divided the whole genome into 50/100/200kb windows, used the first 90% as training set and the remaining 10% as testing set. Then we estimated $\theta_i$ for each window on the training sets and predicted $\hat{y}_{i}=\theta_{i} \cdot \mu_{i}$ for the testing set.
 
 
 # CV summary

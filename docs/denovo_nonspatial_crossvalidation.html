@@ -394,7 +394,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-07-20
+<strong>Last updated:</strong> 2023-07-21
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -528,15 +528,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree66e46ab4c71939f71e9d671446de022a741313e0targetblank66e46aba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree6148463b269a8b3cacdf647e3bcb8526079c4980targetblank6148463a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/66e46ab4c71939f71e9d671446de022a741313e0" target="_blank">66e46ab</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/6148463b269a8b3cacdf647e3bcb8526079c4980" target="_blank">6148463</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree66e46ab4c71939f71e9d671446de022a741313e0targetblank66e46aba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree6148463b269a8b3cacdf647e3bcb8526079c4980targetblank6148463a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -546,7 +546,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/66e46ab4c71939f71e9d671446de022a741313e0" target="_blank">66e46ab</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/6148463b269a8b3cacdf647e3bcb8526079c4980" target="_blank">6148463</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -565,6 +565,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/denovo_nonspatial_crossvalidation.Rmd
+    Modified:   analysis/denovo_nonspatial_estimation.Rmd
 
 </code></pre>
 <p>
@@ -611,6 +612,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b71f5f0a88468d1803523bd3993f46a93d808b5c/analysis/denovo_nonspatial_crossvalidation.Rmd" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/b71f5f0a88468d1803523bd3993f46a93d808b5c/docs/denovo_nonspatial_crossvalidation.html" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -756,9 +791,9 @@ update
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>We divided the whole genome into 100kb windows, used the first 90% as
-training set and the remaining 10% as testing set. Then we estimated
-<span class="math inline">\(\alpha\)</span> and <span
+<p>We divided the whole genome into 50/100/200kb windows, used the first
+90% as training set and the remaining 10% as testing set. Then we
+estimated <span class="math inline">\(\alpha\)</span> and <span
 class="math inline">\(E(\theta_i|\alpha,\mu_i,y_i)\)</span> on the
 training set for each window. Then we predicted <span
 class="math inline">\(\hat{y}_{i}=\theta_{i} \cdot \mu_{i}\)</span> for
@@ -790,7 +825,7 @@ the testing set.</p>
 <td>SSC</td>
 <td>1</td>
 <td>50kb</td>
-<td>1.0786</td>
+<td>12.0090</td>
 <td>0.3517</td>
 <td>0.3517</td>
 </tr>
@@ -798,7 +833,7 @@ the testing set.</p>
 <td></td>
 <td></td>
 <td>100kb</td>
-<td>0.1214</td>
+<td>16.6949</td>
 <td>0.4549</td>
 <td>0.4612</td>
 </tr>
@@ -807,8 +842,8 @@ the testing set.</p>
 <td></td>
 <td>200kb</td>
 <td>2.0000</td>
-<td>0.2754</td>
-<td>0.4225</td>
+<td>0.4134</td>
+<td>0.6339</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -915,6 +950,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b71f5f0a88468d1803523bd3993f46a93d808b5c/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-1.png" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-1.png" target="_blank">2f508b6</a>
 </td>
 <td>
@@ -962,6 +1008,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b71f5f0a88468d1803523bd3993f46a93d808b5c/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-2.png" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-3-2.png" target="_blank">2f508b6</a>
@@ -1017,6 +1074,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b71f5f0a88468d1803523bd3993f46a93d808b5c/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-1.png" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-1.png" target="_blank">2f508b6</a>
 </td>
 <td>
@@ -1064,6 +1132,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b71f5f0a88468d1803523bd3993f46a93d808b5c/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-2.png" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-4-2.png" target="_blank">2f508b6</a>
@@ -1119,6 +1198,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b71f5f0a88468d1803523bd3993f46a93d808b5c/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-1.png" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-1.png" target="_blank">2f508b6</a>
 </td>
 <td>
@@ -1166,6 +1256,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/b71f5f0a88468d1803523bd3993f46a93d808b5c/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-2.png" target="_blank">b71f5f0</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/2f508b6ab9fd37e19005ac9c69406b1f22649d04/docs/figure/denovo_nonspatial_crossvalidation.Rmd/unnamed-chunk-5-2.png" target="_blank">2f508b6</a>

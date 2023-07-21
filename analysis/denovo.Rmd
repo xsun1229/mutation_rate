@@ -25,7 +25,9 @@ editor_options:
 [Cross Validation -- without smoothing](https://xsun1229.github.io/mutation_rate/denovo_spatial_crossvalidation_wosmothing.html)
 
 
+# Simulation 
 
+[link](https://xsun1229.github.io/mutation_rate/denovo_simulation.html)
 
 
 # others
