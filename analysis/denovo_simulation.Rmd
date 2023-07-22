@@ -74,46 +74,46 @@ ggplot(plot_data, aes(x = mb)) +
 
 
 
-<!-- ## chr1,30kb -->
+## chr1,30kb
 
-<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-<!-- load(paste0(folder,"simulation_chr1_30kb.rdata")) -->
+load(paste0(folder,"simulation_chr1_30kb.rdata"))
 
-<!-- dat$Mb <- dat$start/1000000 -->
+dat$Mb <- dat$start/1000000
 
-<!-- mean_values <- apply(smoothed_matrix, 1, mean) -->
-<!-- standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x))) -->
+mean_values <- apply(smoothed_matrix, 1, mean)
+standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
 
-<!-- # Create a data frame for plotting -->
-<!-- plot_data <- data.frame( -->
-<!--   x = 1:length(theta), -->
-<!--   mean_value = mean_values, -->
-<!--   lower_bound = mean_values - standard_errors, -->
-<!--   upper_bound = mean_values + standard_errors, -->
-<!--   theta = theta, -->
-<!--   mb = dat$Mb -->
-<!-- ) -->
-
-
-<!-- ggplot(plot_data, aes(x = mb)) + -->
-<!--   geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) + -->
-<!--   geom_line(aes(y = mean_value), color = "black") + -->
-<!--   geom_line(aes(y = theta), color = "red", alpha = 0.5) + -->
-<!--   labs(x = "Genomic Positions (Mb)", y = "theta") + -->
-<!--   theme_minimal() + -->
-<!--   annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") + -->
-<!--   annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") + -->
-<!--   theme( -->
-<!--     text = element_text(size = 12),  # Change this value to adjust the size of all text -->
-<!--     axis.title = element_text(size = 14),  # Change this value to adjust axis label size -->
-<!--     axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size -->
-<!--     plot.title = element_text(size = 16)   # Change this value to adjust the plot title size -->
-<!--   ) -->
+# Create a data frame for plotting
+plot_data <- data.frame(
+  x = 1:length(theta),
+  mean_value = mean_values,
+  lower_bound = mean_values - standard_errors,
+  upper_bound = mean_values + standard_errors,
+  theta = theta,
+  mb = dat$Mb
+)
 
 
+ggplot(plot_data, aes(x = mb)) +
+  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
+  geom_line(aes(y = mean_value), color = "black") +
+  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
+  labs(x = "Genomic Positions (Mb)", y = "theta") +
+  theme_minimal() +
+  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
+  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
+  theme(
+    text = element_text(size = 12),  # Change this value to adjust the size of all text
+    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
+    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
+    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
+  )
 
-<!-- ``` -->
+
+
+```
 
 
 
