@@ -1,390 +1,745 @@
 ---
 title: "Simulation"
 author: "XSun"
-date: "2023-07-19"
+date: "2023-07-28"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
 ---
 
-```{r echo=F, message=FALSE, warning=FALSE}
+```{r echo=F,message=FALSE}
 library(ggplot2)
-library(data.table)
-library(gridExtra)
 ```
 
 # Introduction
 
-We cut the genome into bins with different sizes (10kb, 30kb, 50kb,100kb) and computed the overdispersion $\alpha$. Then we computed the non-spatial random effects $\theta_i$ from the $\alpha$, and simulated the observed $y_i$ with $y_i \sim Pois(\mu_i*\theta_i)$, where $\mu_i$ is the Roulette exprected mutation rates.
+1.  We set random effects $\tilde{\theta_i}$ for each window $i$, the mean value of $\tilde{\theta_i}$ is 1.
 
-The simulation was performed 1000 times. 
+Below is a random example for the random effects
 
-For each simulation, we have $y_{i_{simulated}}$, we set $y_{i_{simulated}} = 0.05$ for all 0s, then computed  $\theta_{i_{simulated}}$ for each window. After that, we smoothed the $log(\theta_{i_{simulated}})$ with smash.gaus and computed the mean value of the smoothed data for all 1000 times simulation. 
+```{r echo=F,message=FALSE, fig.width=12, fig.height=5}
+generate_random_genome_vector <- function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg) {
+  # Generate random segment lengths
+  segment_lengths <- sample(num_windows_per_seg_min:num_windows_per_seg_max, num_seg, replace = TRUE)
+  
+  # Calculate the total length covered by segments
+  total_segment_length <- sum(segment_lengths)
+  
+  # Check if the total segment length is greater than the genome length
+  # If so, reduce the last segment length to fit within the genome
+  if (total_segment_length > num_windows_all) {
+    segment_lengths[num_seg] <- segment_lengths[num_seg] - (total_segment_length - num_windows_all)
+  }
+  
+  # Calculate the number of zeros needed
+  num_zeros <- num_windows_all - total_segment_length
+  
+  # Randomly select positions for segment starts
+  segment_starts <- sample(1:num_zeros, num_seg, replace = FALSE)
+  
+  # Create the vector
+  randeff <- numeric(num_windows_all)
+  
+  # Assign random values to segments
+  for (i in 1:num_seg) {
+    start_pos <- segment_starts[i]
+    end_pos <- start_pos + segment_lengths[i] - 1
+    randeff[start_pos:end_pos] <- runif(1, 0, randeff_max)
+  }
+  
+  # Adjust values to meet the mean of 1
+  mean_adjustment <- 1 - mean(randeff)
+  randeff <- randeff + mean_adjustment
+  
+  # Clip values between 0 and randeff_max
+  randeff[randeff < 0] <- 0
+  randeff[randeff > randeff_max] <- randeff_max
+  
+  # Return the resulting genome vector
+  return(randeff)
+}
 
+num_windows_all <- 1000
+num_windows_per_seg_min <- 10
+num_windows_per_seg_max <- 100  
+randeff_max <- 5
+num_seg <- 10
 
-# SSC (Cell 2022)
+randeff <-generate_random_genome_vector(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg)
 
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-folder <- "/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/results/"
-```
-
-
-## chr1,10kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load(paste0(folder,"simulation_chr1_10kb.rdata"))
-
-dat$Mb <- dat$start/1000000
-
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
-
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
-
-
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
-
-
-
-```
-
-
-
-
-
-## chr1,30kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load(paste0(folder,"simulation_chr1_30kb.rdata"))
-
-dat$Mb <- dat$start/1000000
-
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
-
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
-
-
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
-
-
+plot(randeff, type="l")
 
 ```
 
+2. We sample the $\tilde{y_i}$ from
+
+$$\tilde{y_i} \sim pois(\tilde{\theta_i}*\mu_i)$$
+where $\mu_i$ is the expected mutations for each window $i$ from Roulette. 
+
+3. We fit the $\tilde{y_i}$ and $\mu_i$ using smashgen and plot the $\tilde{\theta_i}$ and smoothed $\tilde{\theta}_i{_{smoothed}}$
 
 
+# smashgen, SSC (Cell 2022, chr1)
 
-
-
-## chr1,50kb
+## 1kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load(paste0(folder,"simulation_chr1_50kb.rdata"))
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff2.rdata")
 
-dat$Mb <- dat$start/1000000
+print("maximum random effect = 2")
 
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
 
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
+```
 
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff5.rdata")
 
+print("maximum random effect = 5")
 
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff10.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff15.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+## 10kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxiter50_maxrandeff2.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxiter50_maxrandeff5.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxiter50_maxrandeff10.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxiter50_maxrandeff15.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+## 30kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxiter50_maxrandeff2.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxiter50_maxrandeff5.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxiter50_maxrandeff10.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxiter50_maxrandeff15.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxiter50_maxrandeff2.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxiter50_maxrandeff5.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxiter50_maxrandeff10.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxiter50_maxrandeff15.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxiter50_maxrandeff2.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxiter50_maxrandeff5.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxiter50_maxrandeff10.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxiter50_maxrandeff15.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
 
 ```
 
 
+# smash.poiss, SSC (Cell 2022, chr1)
 
-## chr1,100kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load(paste0(folder,"simulation_chr1_100kb.rdata"))
-
-dat$Mb <- dat$start/1000000
-
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
-
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
-
-
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
-
-
-```
-
-
-
-
-
-
-# MSSNG (Cell 2022)
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-folder <- "/project/xinhe/xsun/mutation_rate/5.de_novo_trost/results/"
-```
-
-## chr1,10kb
+## 1kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load(paste0(folder,"simulation_chr1_10kb.rdata"))
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxrandeff2_smash.rdata")
 
-dat$Mb <- dat$start/1000000
+print("maximum random effect = 2")
 
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
-
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
-
-
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
-
-
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
 
 ```
-
-
-
-
-
-## chr1,30kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load(paste0(folder,"simulation_chr1_30kb.rdata"))
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxrandeff5_smash.rdata")
 
-dat$Mb <- dat$start/1000000
+print("maximum random effect = 5")
 
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
-
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
-
-
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
-
-
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
 
 ```
-
-
-
-
-## chr1,50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load(paste0(folder,"simulation_chr1_50kb.rdata"))
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxrandeff10_smash.rdata")
 
-dat$Mb <- dat$start/1000000
+print("maximum random effect = 10")
 
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
-
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
-
-
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
-
-
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
 
 ```
-
-
-
-## chr1,100kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load(paste0(folder,"simulation_chr1_100kb.rdata"))
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxrandeff15_smash.rdata")
 
-dat$Mb <- dat$start/1000000
+print("maximum random effect = 15")
 
-mean_values <- apply(smoothed_matrix, 1, mean)
-standard_errors <- apply(smoothed_matrix, 2, function(x) sd(x) / sqrt(length(x)))
-
-# Create a data frame for plotting
-plot_data <- data.frame(
-  x = 1:length(theta),
-  mean_value = mean_values,
-  lower_bound = mean_values - standard_errors,
-  upper_bound = mean_values + standard_errors,
-  theta = theta,
-  mb = dat$Mb
-)
-
-
-ggplot(plot_data, aes(x = mb)) +
-  geom_ribbon(aes(ymin = lower_bound, ymax = upper_bound), fill = "gray70", alpha = 0.5) +
-  geom_line(aes(y = mean_value), color = "black") +
-  geom_line(aes(y = theta), color = "red", alpha = 0.5) +
-  labs(x = "Genomic Positions (Mb)", y = "theta") +
-  theme_minimal() +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 1, label = "true theta (from non-spatial estimation)", color = "red") +
-  annotate("text", x = Inf, y = Inf, hjust = 1, vjust = 2, label = "mean value of smoothed theta(from simulation)", color = "black") +
-  theme(
-    text = element_text(size = 12),  # Change this value to adjust the size of all text
-    axis.title = element_text(size = 14),  # Change this value to adjust axis label size
-    axis.text = element_text(size = 12),   # Change this value to adjust axis tick label size
-    plot.title = element_text(size = 16)   # Change this value to adjust the plot title size
-  )
-
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
 
 ```
 
+## 10kb
 
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff2_smash.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff5_smash.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff10_smash.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff15_smash.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+## 30kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff2_smash.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff5_smash.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff10_smash.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff15_smash.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff2_smash.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff5_smash.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff10_smash.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff15_smash.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff2_smash.rdata")
+
+print("maximum random effect = 2")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff5_smash.rdata")
+
+print("maximum random effect = 5")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff10_smash.rdata")
+
+print("maximum random effect = 10")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff15_smash.rdata")
+
+print("maximum random effect = 15")
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
+  theme_minimal()
+
+```
