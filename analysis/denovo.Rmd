@@ -27,7 +27,7 @@ editor_options:
 
 # Simulation 
 
-[link](https://xsun1229.github.io/mutation_rate/denovo_simulation.html)
+[link](https://xsun1229.github.io/mutation_rate/denovo_simulation2.html)
 
 
 # others
