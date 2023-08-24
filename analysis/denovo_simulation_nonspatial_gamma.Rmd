@@ -1,0 +1,442 @@
+---
+title: "Simulation -- non-spitial, gamma distribution"
+author: "XSun"
+date: "2023-08-24"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=F,message=FALSE}
+library(ggplot2)
+library(gridExtra)
+library(data.table)
+```
+
+# Introduction
+
+1.  We set fold change $\tilde{\theta_i}$ from uniform distribution for each window $i$, the mean value of $\tilde{\theta_i}$ is 1.
+
+The window sizes for the local fold changes range from hundreds kb to 1mb.
+ 
+2.  We sample the $\tilde{y_i}$ from 
+
+$$\tilde{y_i} \sim pois(\tilde{\theta_i}*\mu_i)$$
+where $\mu_i$ is the expected mutations for each window $i$ from Roulette. 
+
+3. We can use gamma distribution to model $\theta_i$ :
+
+$$\theta_i \sim Gamma(\alpha, \beta)$$ Since the $\mu_i$ is calibrated (the total mutation rate is given), we just have single overdispersion parameter
+
+so, the simple non-spatial random effect model is
+
+$$\theta_i \sim Gamma(\alpha, \alpha)$$ So the likelihood is :
+
+$$\begin{aligned}
+Pr(y_{i} |\mu_{i},\alpha) &= \int_0^{+\infty}
+Pr(y_{i}|\mu_{i},\theta_{i})Pr(\theta_{i}|\alpha)\,d\theta_{i} \\
+\end{aligned}$$
+
+which can be optimized by MLE with "BFGS" method.
+
+```{r echo=T, message=FALSE, warning=FALSE}
+
+# Input is a dataframe of observed rates and expected rates
+est.alpha <- function(dat) {
+  mu_pos <- dat$exp > 0
+  y_pos <- dat$obs > 0
+  dat.mu_pos <- dat[(!y_pos)&mu_pos,]
+  dat.y_pos <- dat[y_pos,]
+  loglik <- function(alpha) {
+    loglik.mu_pos <- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
+    loglik.y_pos <- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
+    -sum(loglik.mu_pos) - sum(loglik.y_pos)
+  }
+  res <- optim(par=1, fn=loglik, method="BFGS") # May need to try different initiations and methods
+  res$par # MLE of alpha
+}
+
+```
+
+The posterior distribution of $ \theta_i $ is :
+
+$$ \theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
+So the posterior mean of $ \theta_i $ is:
+
+$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
+# Simulation
+
+## 1kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxrandeff3_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxrandeff5_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+
+
+
+
+
+
+## 10kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff3_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff5_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+
+
+
+
+
+## 30kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff3_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff5_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+
+
+
+
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff3_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff5_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+
+
+
+
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff3_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff5_nonspatial_gamma.rdata")
+
+print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
+print(sprintf("alpha = %s", alpha))
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+
+
+

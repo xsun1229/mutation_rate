@@ -27,9 +27,9 @@ editor_options:
 
 # Simulation 
 
-[link](https://xsun1229.github.io/mutation_rate/denovo_simulation2.html)
+[smashgen](https://xsun1229.github.io/mutation_rate/denovo_simulation3.html)
 
-[link_new](https://xsun1229.github.io/mutation_rate/denovo_simulation3.html)
+[gamma distribution](https://xsun1229.github.io/mutation_rate/denovo_simulation_nonspatial_gamma.html)
 
 # others
 

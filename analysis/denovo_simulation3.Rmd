@@ -1,5 +1,5 @@
 ---
-title: "Simulation"
+title: "Simulation -- smashgen"
 author: "XSun"
 date: "2023-08-04"
 output: workflowr::wflow_html
@@ -15,9 +15,9 @@ library(data.table)
 
 # Introduction
 
-1.  We set fold change $\tilde{\theta_i}$ for each window $i$, the mean value of $\tilde{\theta_i}$ is 1.
+1.  We set fold change $\tilde{\theta_i}$ from uniform distribution for each window $i$, the mean value of $\tilde{\theta_i}$ is 1.
 
-We sample the fold change from uniform distribution. The window sizes for the local fold changes range from hundreds kb to 1mb (sampled from unifrom distribution). fold change varies from 0 to 5,  mean(fold change) == 1
+The window sizes for the local fold changes range from hundreds kb to 1mb.
 
 Below is an example for the fold change
 
