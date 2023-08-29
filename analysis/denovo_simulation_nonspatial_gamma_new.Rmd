@@ -1,0 +1,726 @@
+---
+title: "Simulation -- modeling the non-spatial random effects with gamma distribution"
+author: "XSun"
+date: "2023-08-28"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+
+```{r echo=F,message=FALSE}
+library(ggplot2)
+library(gridExtra)
+library(data.table)
+```
+
+# Introduction
+
+We divide the genome into windows. The window sizes for the local fold changes range from hundreds kb to 1mb.
+
+We are modeling the non-spatial random effects $\theta_i$ with gamma distribution:
+
+$$\theta_i \sim Gamma(\alpha, \beta)$$ 
+
+Since the observed mutation rate from Roulette $\mu_i$ is calibrated (the total mutation rate is given), we just have single overdispersion parameter
+
+so, the simple non-spatial random effect model is
+
+$$\theta_i \sim Gamma(\alpha, \alpha)$$ 
+
+So the likelihood is :
+
+$$\begin{aligned}
+Pr(y_{i} |\mu_{i},\alpha) &= \int_0^{+\infty}
+Pr(y_{i}|\mu_{i},\theta_{i})Pr(\theta_{i}|\alpha)\,d\theta_{i} \\
+\end{aligned}$$
+
+which can be optimized by MLE with different methods and different initial values.
+
+```{r echo=T, message=FALSE, warning=FALSE}
+
+# Input is a dataframe of observed rates and expected rates
+est.alpha <- function(dat) {
+  mu_pos <- dat$exp > 0
+  y_pos <- dat$obs > 0
+  dat.mu_pos <- dat[(!y_pos)&mu_pos,]
+  dat.y_pos <- dat[y_pos,]
+  loglik <- function(alpha) {
+    loglik.mu_pos <- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
+    loglik.y_pos <- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
+    -sum(loglik.mu_pos) - sum(loglik.y_pos)
+  }
+  res <- optim(par=1, fn=loglik, method="BFGS") # May need to try different initiations and methods
+  res$par # MLE of alpha
+}
+
+```
+
+
+The posterior distribution of $ \theta_i $ is :
+
+$$ \theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
+So the posterior mean of $ \theta_i $ is:
+
+$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
+
+
+# Checking if the algorithm recovers the correct alpha 
+
+We first check if the algorithm recovers the correct alpha. Use Gamma prior to sample $\theta_i$ in the simulation. Alpha was varied from 5 to 50. Initial Alpha was set to 1,3,5. We used "L-BFGS-B","BFGS" and "CG" to optimize the likelihood function.
+
+## 10kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_alpha_init1.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p1 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 1") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_alpha_init3.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p2 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 3") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+  
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_alpha_init5.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p3 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 5") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+grid.arrange(p1, p2,p3,ncol = 3)
+
+```
+
+
+
+## 30kb
+
+
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_alpha_init1.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p1 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 1") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_alpha_init3.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p2 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 3") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+  
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_alpha_init5.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p3 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 5") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+grid.arrange(p1, p2,p3,ncol = 3)
+
+```
+
+## 50kb
+
+
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_alpha_init1.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p1 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 1") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_alpha_init3.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p2 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 3") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+  
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_alpha_init5.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p3 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 5") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+grid.arrange(p1, p2,p3,ncol = 3)
+
+```
+
+
+
+## 100kb
+
+
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_alpha_init1.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p1 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 1") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_alpha_init3.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p2 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 3") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+  
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_alpha_init5.rdata")
+
+data <- data.frame(
+  alpha_true_all = alpha_true_all,
+  alpha_lb_all = alpha_lb_all,
+  alpha_cg_all = alpha_cg_all,
+  alpha_bf_all = alpha_bf_all
+)
+
+# Create the plot
+p3 <- ggplot(data, aes(x = alpha_true_all)) +
+  geom_line(aes(y = alpha_lb_all, color = "L-BFGS-B")) +
+  geom_line(aes(y = alpha_cg_all, color = "CG")) +
+  geom_line(aes(y = alpha_bf_all, color = "BFGS")) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") + 
+  labs(x = "True Alpha", y = "Alpha estimated by different methods", title = "initial alpha = 5") +
+  scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue")) +
+  theme_minimal()
+grid.arrange(p1, p2,p3,ncol = 3)
+
+```
+
+
+
+# Simulation
+
+From the results above, the results are sensitive to the initial alpha and methods. It seems "L-BFGS-B" is the most stable method and 5 is a good initial alpha. 
+
+So we used "L-BFGS-B" and initial alpha =1/3/5 to do the simulation
+
+Random effects were assigned to 10% of the windows, with non-zero values
+
+## 10kb
+
+### max maximum fold change = 3
+
+The initial alpha doesn't influence estimated alpha
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff3_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 5
+
+The initial alpha doesn't influence estimated alpha
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff5_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+
+### max maximum fold change = 10
+
+"L-BFGS-B" doesn't work when maximum fold change = 10, init alpha = 1/3/5
+
+
+## 30kb
+
+### max maximum fold change = 3
+
+The initial alpha doesn't influence estimated alpha
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff3_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 5
+
+The initial alpha doesn't influence estimated alpha
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff5_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+
+### max maximum fold change = 10
+
+"L-BFGS-B" doesn't work when maximum fold change = 10, init alpha = 1/3/5
+
+
+## 50kb
+
+### max maximum fold change = 3
+
+The initial alpha doesn't influence estimated alpha
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff3_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 5
+
+The initial alpha doesn't influence estimated alpha
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff5_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 10
+
+"L-BFGS-B" doesn't work when maximum fold change = 10, init alpha = 1/3/5
+
+
+## 100kb
+
+### max maximum fold change = 3
+
+The initial alpha doesn't influence estimated alpha a lot
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff3_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 5
+
+The initial alpha doesn't influence estimated alpha a lot
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff5_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 10
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff10_init1_nonspatial_gamma_more_lb.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "smoothed random effect") +
+  theme_minimal()
+```
+
