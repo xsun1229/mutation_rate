@@ -7,8 +7,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Introduction
-
 ```{r echo=F,message=FALSE}
 library(ggplot2)
 library(gridExtra)
@@ -68,7 +66,7 @@ $$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
 
 # Checking if the algorithm recovers the correct alpha 
 
-We first check if the algorithm recovers the correct alpha. Use Gamma prior to sample $\theta_i$ in the simulation. Alpha was varied from 5 to 50. Initial Alpha was set to 1,3,5. We used "L-BFGS-B","BFGS" and "CG" to optimize the likelihood function.
+We first check if the algorithm recovers the correct alpha. Use Gamma prior to sample $\theta_i$ in the simulation. Alpha was varied from 5 to 50. Initial Alpha was set to 1,3,5. We used "L-BFGS-B","BFGS","Simplex (Nelder-Mead)" and "CG" to optimize the likelihood function.
 
 ## 10kb
 
@@ -84,7 +82,7 @@ p1 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 1") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 
@@ -97,7 +95,7 @@ p2 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 3") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
   
@@ -111,7 +109,7 @@ p3 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 5") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 grid.arrange(p1, p2,p3,ncol = 3)
@@ -135,7 +133,7 @@ p1 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 1") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 
@@ -149,7 +147,7 @@ p2 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 3") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
   
@@ -163,7 +161,7 @@ p3 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 5") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 grid.arrange(p1, p2,p3,ncol = 3)
@@ -186,7 +184,7 @@ p1 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 1") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 
@@ -200,7 +198,7 @@ p2 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 3") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
   
@@ -215,7 +213,7 @@ p3 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 5") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 grid.arrange(p1, p2,p3,ncol = 3)
@@ -239,7 +237,7 @@ p1 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 1") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 
@@ -253,7 +251,7 @@ p2 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 3") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
   
@@ -267,7 +265,7 @@ p3 <- ggplot(data, aes(x = alpha_true_all)) +
   geom_point(aes(y = alpha_bf_all, color = "BFGS")) +
   geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated by different methods") +
+  labs(x = "True Alpha", y = "Alpha estimated by different methods",title = "initial alpha = 5") +
   scale_color_manual(values = c("L-BFGS-B" = "red", "CG" = "green", "BFGS" = "blue","Simplex(Nelder-Mead)" = "orange")) +
   theme_minimal()
 grid.arrange(p1, p2,p3,ncol = 3)
@@ -278,11 +276,9 @@ grid.arrange(p1, p2,p3,ncol = 3)
 
 # Simulation
 
-From the results above, the results are sensitive to the initial alpha and methods. It seems "L-BFGS-B" is the most stable method and 5 is a good initial alpha.
+We used Simplex method (Nelder-Mead) to do the simulation
 
-So we used "L-BFGS-B" and initial alpha =1/3/5 to do the simulation
-
-Random effects were assigned to 10% of the windows, with non-zero values
+Random effects were assigned to 5% of the windows, with non-zero values
 
 ## 10kb
 
