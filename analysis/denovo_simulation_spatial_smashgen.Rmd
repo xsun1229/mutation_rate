@@ -21,7 +21,7 @@ The window sizes for the local fold changes range from hundreds kb to 1mb.
 
 Below is an example for the fold change
 
-```{r echo=T, eval=T ,message=FALSE, fig.width=12, fig.height=5}
+```{r collapse=TRUE, eval=T ,message=FALSE, fig.width=12, fig.height=5}
 generate_random_genome_vector <- function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg) {
   # Generate random segment lengths
   
@@ -93,104 +93,6 @@ sample_poisson_for_each_lambda <- function(lambda_vector) {
 
 
 # smashgen, SSC (Cell 2022, chr1)
-
-## 1kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff3_round2.rdata")
-
-print("maximum fold change = 3")
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
-  theme_minimal()
-
-num_windows_all <- 20000
-dat_rl <- fread("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_1000.txt")
-colnames(dat_rl) <- c("chr", "start", "end","obs","exp")
-dat_rl <- dat_rl[1:num_windows_all,]
-
-data <- cbind(data,dat_rl)
-
-fit1 <- lm(randeff_smooth ~ randeff_simulated + 0, data=data)
-adj_rsq1 <- summary(fit1)$adj.r.squared
-p1 <- ggplot(data, aes(x = randeff_simulated, y = randeff_smooth)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
-  theme_minimal()
-
-fit2 <- lm(y_sample/exp ~ randeff_simulated + 0, data=data)
-adj_rsq2 <- summary(fit2)$adj.r.squared
-p2 <- ggplot(data, aes(x = randeff_simulated, y = y_sample/exp)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "fold change (#y_sample/#exp)") +
-  theme_minimal()
-grid.arrange(p1, p2, ncol = 2)
-
-```
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff5_round2.rdata")
-
-print("maximum fold change = 5")
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
-  theme_minimal()
-
-num_windows_all <- 20000
-dat_rl <- fread("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_1000.txt")
-colnames(dat_rl) <- c("chr", "start", "end","obs","exp")
-dat_rl <- dat_rl[1:num_windows_all,]
-
-data <- cbind(data,dat_rl)
-
-fit1 <- lm(randeff_smooth ~ randeff_simulated + 0, data=data)
-adj_rsq1 <- summary(fit1)$adj.r.squared
-p1 <- ggplot(data, aes(x = randeff_simulated, y = randeff_smooth)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
-  theme_minimal()
-
-fit2 <- lm(y_sample/exp ~ randeff_simulated + 0, data=data)
-adj_rsq2 <- summary(fit2)$adj.r.squared
-p2 <- ggplot(data, aes(x = randeff_simulated, y = y_sample/exp)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "fold change (#y_sample/#exp)") +
-  theme_minimal()
-grid.arrange(p1, p2, ncol = 2)
-```
-
 
 
 ## 10kb
@@ -596,64 +498,6 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 # Checking if smashgen works on non-spatial data, SSC (Cell 2022, chr1)
-
-## 1kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff3_nonspatial.rdata")
-
-print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
-  theme_minimal()
-
-fit <- lm(randeff_smooth ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_smooth)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
-  theme_minimal()
-```
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_1kb_maxiter50_maxrandeff5_nonspatial.rdata")
-
-print(paste0("maximum fold change =" ,max(data$randeff_simulated)))
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_smooth), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb)")) +
-  theme_minimal()
-
-fit <- lm(randeff_smooth ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_smooth)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
-  theme_minimal()
-```
-
-
 
 ## 10kb
 
