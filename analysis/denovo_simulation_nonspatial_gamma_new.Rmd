@@ -315,7 +315,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -352,7 +352,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -390,7 +390,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -431,7 +431,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -468,7 +468,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -506,7 +506,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -547,7 +547,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -585,7 +585,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -622,7 +622,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -663,7 +663,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -701,7 +701,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
@@ -738,7 +738,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
             x = Inf, y = -Inf, hjust = 1, vjust = 0,
             color = "blue") +
   labs(x = "true random effect theta_i",
-       y = "smoothed random effect") +
+       y = "estimated random effect") +
   theme_minimal()
 ```
 
