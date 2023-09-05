@@ -15,6 +15,7 @@ library(data.table)
 
 # Introduction
 
+
 We divide the genome into windows. The window sizes for the local fold changes range from hundreds kb to 1mb.
 
 We are modeling the non-spatial random effects $\theta_i$ with gamma distribution:
