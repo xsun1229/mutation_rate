@@ -1,0 +1,203 @@
+---
+title: "Simulation -- combining spatial and non-spatial models"
+author: "XSun"
+date: "2023-09-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+```{r echo=F,message=FALSE}
+library(ggplot2)
+library(gridExtra)
+library(data.table)
+library(smashrgen)
+```
+
+# Introduction
+
+In this part, we combined the spatial and non-spatial models.
+
+1. Simulating the random effects
+
+```{r echo=FALSE, eval=T ,message=FALSE, fig.width=12, fig.height=5}
+generate_random_genome_vector_both_spatial_nonspatial <- function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,num_seg_nonspatial) {
+  # Generate random segment lengths
+  
+  set.seed(1)
+  #spatial
+  segment_lengths <- ceiling(runif(num_seg_spatial, min = num_windows_per_seg_min, max = num_windows_per_seg_max))
+  segment_lengths <- c(segment_lengths,rep(1,num_seg_nonspatial))
+  segment_lengths <- sample(segment_lengths)
+  
+  # Calculate the total length covered by segments
+  total_segment_length <- sum(segment_lengths)
+  
+  # Check if the total segment length is greater than the genome length
+  # If so, reduce the last segment length to fit within the genome
+  if (total_segment_length > num_windows_all) {
+    segment_lengths[num_seg] <- segment_lengths[num_seg] - (total_segment_length - num_windows_all)
+  }
+  
+  # Calculate the number of zeros needed
+  num_zeros <- num_windows_all - total_segment_length
+  
+  # Randomly select positions for segment starts
+  segment_starts <- sample(1:num_zeros, num_seg_nonspatial + num_seg_spatial, replace = FALSE)
+  
+  # Create the vector
+  randeff <- numeric(num_windows_all)
+  
+  # Assign random values to segments
+  for (i in 1:(num_seg_nonspatial+num_seg_spatial)) {
+    start_pos <- segment_starts[i]
+    end_pos <- start_pos + segment_lengths[i] - 1
+    randeff[start_pos:end_pos] <- runif(1, 0, randeff_max)
+  }
+  
+  # Adjust values to meet the mean of 1
+  mean_adjustment <- 1 - mean(randeff)
+  randeff <- randeff + mean_adjustment
+  
+  # Clip values between 0 and randeff_max
+  randeff[randeff < 0] <- 0
+  randeff[randeff > randeff_max] <- randeff_max
+  
+  # Return the resulting genome vector
+  return(randeff)
+}
+
+
+num_windows_all <- 2000
+num_windows_per_seg_min <- 4
+num_windows_per_seg_max <- 20  
+randeff_max <- 5
+num_seg_nonspatial <- 50
+num_seg_spatial <- 10
+
+set.seed(1)
+randeff <-generate_random_genome_vector_both_spatial_nonspatial(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,num_seg_nonspatial)
+
+plot(randeff, type="l", ylab = "simulated random effects")
+
+```
+
+2. Estimating the random effect $\hat\theta_i^{NS}$ with non-spatial model
+
+3. Using $\hat\theta_i^{NS} * \mu_i$ as $\mu_{i_{new}}$ in spatial model, using smashgen to smooth the random effect $\hat\theta_i^{S}$
+
+4. The final estimated random effect $\hat\theta_i = \hat\theta_i^{S} * \hat\theta_i^{NS}$
+
+# Simulation
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_chr1_50kb_maxiter50_maxrandeff3.rdata")
+
+print("maximum random effects = 3")
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  #geom_line(aes(y = randeff_estimated_nonspatial), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "#of DNM/window && true random effects",) +
+  theme_minimal()
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_estimated_nonspatial), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "random effects",
+       title = "estimated by non-spatial model") +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_estimated_nonspatial ~ randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_estimated_nonspatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS",
+       title = "non-spatial model") +
+  theme_minimal()
+
+print("then we used dat$exp*theta_est_NS as new dat$exp, and used smashgen to smooth the estimation")
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = "smoothed random effects",
+       title = "estimated by spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  #geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+fit2 <- lm(randeff_final ~ randeff_simulated + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+```
+
+It's weird that the smoothed random effects are constant. So we did more analysis to figure out what happened. 
+
+If we smooth the random effects using origin roulette expected mutation rate, we have: 
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_debug.rdata")
+
+randeff_smooth_org <- fit_org$posterior$mean_smooth
+
+data$randeff_smooth_org <- randeff_smooth_org
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth_org), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "random effects",) +
+  theme_minimal()
+
+```
+
+we have reasonable smoothed results, the only difference is that the earlier expected rate was computed from  $\hat\theta_i^{NS} * \mu_i$, (where $\mu_i$ is the roulette expected mutation rate) and the current expected rate is $\mu_i$,
+
+so we compare the $\mu_i$ and $\hat\theta_i^{NS} * \mu_i$: 
+
+```{r echo=T, message=FALSE, warning=FALSE, fig.width=5, fig.height=5}
+
+ggplot(data, aes(x = exp_nonspatial, y = exp_rl)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  labs(x = "exp_nonspatial (theta_i_NS * mu_i)",
+       y = "exp_rl (mu_i)") +
+  theme_minimal()
+
+```

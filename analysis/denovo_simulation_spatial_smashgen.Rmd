@@ -98,7 +98,6 @@ sample_poisson_for_each_lambda <- function(lambda_vector) {
 ## 10kb
 
 
-
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxiter50_maxrandeff3_round2.rdata")

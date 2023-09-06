@@ -27,9 +27,11 @@ editor_options:
 
 # Simulation 
 
-[smashgen](https://xsun1229.github.io/mutation_rate/denovo_simulation_spatial_smashgen.html)
+[spatial random effects](https://xsun1229.github.io/mutation_rate/denovo_simulation_spatial_smashgen.html)
 
-[gamma distribution](https://xsun1229.github.io/mutation_rate/denovo_simulation_nonspatial_gamma_new.html)
+[non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo_simulation_nonspatial_gamma_new.html)
+
+[Combining spatial and non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo_simulation_snons.html)
 
 # others
 
