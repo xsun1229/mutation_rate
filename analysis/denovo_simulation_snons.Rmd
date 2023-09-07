@@ -93,9 +93,9 @@ plot(randeff, type="l", ylab = "simulated random effects")
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_chr1_50kb_maxiter50_maxrandeff3.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_chr1_50kb_maxiter50_maxrandeff10.rdata")
 
-print("maximum random effects = 3")
+print("maximum random effects = 10")
 
 ggplot(data, aes(x = seq_along(y_sample))) +
   geom_point(aes(y = y_sample), color = "grey") +
@@ -173,10 +173,6 @@ If we smooth the random effects using origin roulette expected mutation rate, we
 
 load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_debug.rdata")
 
-randeff_smooth_org <- fit_org$posterior$mean_smooth
-
-data$randeff_smooth_org <- randeff_smooth_org
-
 ggplot(data, aes(x = seq_along(y_sample))) +
   geom_line(aes(y = randeff_simulated), color = "blue") +
   geom_line(aes(y = randeff_smooth_org), color = "red",alpha=0.5) +
@@ -187,7 +183,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
 
 ```
 
-we have reasonable smoothed results, the only difference is that the earlier expected rate was computed from  $\hat\theta_i^{NS} * \mu_i$, (where $\mu_i$ is the roulette expected mutation rate) and the current expected rate is $\mu_i$,
+the smoothing looks ok, the only difference is that the earlier expected rate was computed from  $\hat\theta_i^{NS} * \mu_i$, (where $\mu_i$ is the roulette expected mutation rate) and the current expected rate is $\mu_i$,
 
 so we compare the $\mu_i$ and $\hat\theta_i^{NS} * \mu_i$: 
 
@@ -198,6 +194,21 @@ ggplot(data, aes(x = exp_nonspatial, y = exp_rl)) +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   labs(x = "exp_nonspatial (theta_i_NS * mu_i)",
        y = "exp_rl (mu_i)") +
+  theme_minimal()
+
+```
+
+Aggregate all estimated random effect in one plot:
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_smooth_org), color = "red",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "random effects",) +
   theme_minimal()
 
 ```
