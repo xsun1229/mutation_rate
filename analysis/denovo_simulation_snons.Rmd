@@ -10,7 +10,6 @@ editor_options:
 library(ggplot2)
 library(gridExtra)
 library(data.table)
-library(smashrgen)
 ```
 
 # Introduction
@@ -20,62 +19,67 @@ In this part, we combined the spatial and non-spatial models.
 1. Simulating the random effects
 
 ```{r echo=FALSE, eval=T ,message=FALSE, fig.width=12, fig.height=5}
-generate_random_genome_vector_both_spatial_nonspatial <- function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,num_seg_nonspatial) {
-  # Generate random segment lengths
-  
-  set.seed(1)
-  #spatial
-  segment_lengths <- ceiling(runif(num_seg_spatial, min = num_windows_per_seg_min, max = num_windows_per_seg_max))
-  segment_lengths <- c(segment_lengths,rep(1,num_seg_nonspatial))
-  segment_lengths <- sample(segment_lengths)
-  
-  # Calculate the total length covered by segments
-  total_segment_length <- sum(segment_lengths)
-  
-  # Check if the total segment length is greater than the genome length
-  # If so, reduce the last segment length to fit within the genome
-  if (total_segment_length > num_windows_all) {
-    segment_lengths[num_seg] <- segment_lengths[num_seg] - (total_segment_length - num_windows_all)
-  }
-  
-  # Calculate the number of zeros needed
-  num_zeros <- num_windows_all - total_segment_length
-  
-  # Randomly select positions for segment starts
-  segment_starts <- sample(1:num_zeros, num_seg_nonspatial + num_seg_spatial, replace = FALSE)
+generate_randeff_nonspatial_gammaprior_spatial <-  function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,num_seg_nonspatial,alpha) {
   
   # Create the vector
   randeff <- numeric(num_windows_all)
   
+  #spatial
+  segment_lengths_spatial <- ceiling(runif(num_seg_spatial, min = num_windows_per_seg_min, max = num_windows_per_seg_max))
+  
+  # Calculate the total length covered by spatial random effects
+  total_segment_length <- sum(segment_lengths_spatial) 
+  
+  # Calculate the number of zeros needed
+  num_zeros <- num_windows_all - total_segment_length
+  
+  # Randomly select positions for spatial segment starts 
+  segment_starts_spatial <- sample(1:num_zeros, num_seg_spatial, replace = FALSE)
+  segment_ends_spatial <- segment_starts_spatial + segment_lengths_spatial - 1
+  
   # Assign random values to segments
-  for (i in 1:(num_seg_nonspatial+num_seg_spatial)) {
-    start_pos <- segment_starts[i]
-    end_pos <- start_pos + segment_lengths[i] - 1
+  for (i in 1:(num_seg_spatial)) {
+    start_pos <- segment_starts_spatial[i]
+    end_pos <- start_pos + segment_lengths_spatial[i] - 1
     randeff[start_pos:end_pos] <- runif(1, 0, randeff_max)
   }
+  
+  
+  ## non-spatial
+  concatenated_ranges_spatial <- numeric(0)
+  for (i in 1:length(segment_starts_spatial)) {
+    concatenated_ranges_spatial <- c(concatenated_ranges_spatial, segment_starts_spatial[i]:segment_ends_spatial[i])
+  }
+  
+  # Randomly select positions for segment starts -- non-spatial
+  segment_starts_nonspatial <- sample(setdiff(1:num_windows_all,concatenated_ranges_spatial), num_seg_nonspatial, replace = FALSE)
+  randeff_nonspatial <- rgamma(n = num_seg_nonspatial, shape = alpha, rate = alpha)
+  
+  randeff[segment_starts_nonspatial] <- randeff_nonspatial
   
   # Adjust values to meet the mean of 1
   mean_adjustment <- 1 - mean(randeff)
   randeff <- randeff + mean_adjustment
-  
   # Clip values between 0 and randeff_max
   randeff[randeff < 0] <- 0
   randeff[randeff > randeff_max] <- randeff_max
   
-  # Return the resulting genome vector
+  
   return(randeff)
 }
+
 
 
 num_windows_all <- 2000
 num_windows_per_seg_min <- 4
 num_windows_per_seg_max <- 20  
 randeff_max <- 5
-num_seg_nonspatial <- 50
-num_seg_spatial <- 10
+num_seg_nonspatial <- 100
+num_seg_spatial <- 20
+alpha <- 5
 
 set.seed(1)
-randeff <-generate_random_genome_vector_both_spatial_nonspatial(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,num_seg_nonspatial)
+randeff <-generate_randeff_nonspatial_gammaprior_spatial(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,num_seg_nonspatial,alpha)
 
 plot(randeff, type="l", ylab = "simulated random effects")
 
@@ -165,7 +169,13 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
 
 ```
 
+
+# More investigation
+
+
 It's weird that the smoothed random effects are constant. So we did more analysis to figure out what happened. 
+
+## Spatial model alone
 
 If we smooth the random effects using origin roulette expected mutation rate, we have: 
 
@@ -198,17 +208,95 @@ ggplot(data, aes(x = exp_nonspatial, y = exp_rl)) +
 
 ```
 
-Aggregate all estimated random effect in one plot:
+<!-- Aggregate all estimated random effect in one plot: -->
+
+<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+
+
+<!-- ggplot(data, aes(x = seq_along(y_sample))) + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
+<!--   geom_line(aes(y = randeff_smooth_org), color = "red",alpha=0.5) + -->
+<!--   geom_line(aes(y = randeff_smooth_spatial), color = "yellow") + -->
+<!--   labs(x = "Window index", -->
+<!--        y = "random effects",) + -->
+<!--   theme_minimal() -->
+
+<!-- ``` -->
+
+
+## Varying the strenth of non-spatial model
+
+For the non-spatial model, we very the gamma prior alpha from 5 to 50 to check if the results look ok. The model behavior depends on the alpha parameter in the Gamma prior. As alpha increases (stronger prior), the non-spatial model basically shrinks the NS random effects to 1, then the model should reduce to spatial models
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_debug_truealpha_5.rdata")
+
+print("true alpha = 5")
 
 ggplot(data, aes(x = seq_along(y_sample))) +
   geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_smooth_org), color = "red",alpha=0.5) +
+  geom_line(aes(y = randeff_estimated_nonspatial), color = "red",alpha=0.5) +
   geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
   labs(x = "Window index",
        y = "random effects",) +
+  theme_minimal()
+
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_debug_truealpha_10.rdata")
+
+print("true alpha = 10")
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_estimated_nonspatial), color = "red",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "random effects",) +
+  theme_minimal()
+
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_debug_truealpha_30.rdata")
+
+print("true alpha = 30")
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_estimated_nonspatial), color = "red",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "random effects",) +
+  theme_minimal()
+
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_debug_truealpha_50.rdata")
+
+print("true alpha = 50")
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_estimated_nonspatial), color = "red",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "random effects",) +
+  theme_minimal()
+
+```
+
+## Varying the strenth of spatial model
+
+We used larger hot-spots, but making the max.effects weaker. because of the weaker max. effects, the non-spatial model is unlikely to find all random effects, then the spatial model may do better.
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_debug_stronger_spatial.rdata")
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_estimated_nonspatial), color = "red",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "yellow") +
+  labs(x = "Window index",
+       y = "random effects") +
   theme_minimal()
 
 ```
