@@ -332,8 +332,6 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
        title = "spatial model") +
   theme_minimal()
 
-print("then we used dat$exp*theta_est_S as new dat$exp, and used non-spatial model to estimate the random effects")
-
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
