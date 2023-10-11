@@ -280,97 +280,68 @@ grid.arrange(p1, p2,p3,ncol = 3)
 
 
 
-# Checking if the algorithm recover the alpha -- sample hot spots from gamma distribution
-
-## 10kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=5, fig.height=5}
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_alpha_init1_hotspot.rdata")
-
-# Create the plot
-ggplot(data, aes(x = alpha_true_all)) +
-  geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated",title = "initial alpha = 1") +
-  scale_color_manual(values = c("Simplex(Nelder-Mead)" = "orange")) +
-  theme_minimal()
-```
 
 
 
+# Simulation -- the hot spots were sampled from uniform distribution
 
-
-## 30kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=5, fig.height=5}
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_alpha_init1_hotspot.rdata")
-
-# Create the plot
-ggplot(data, aes(x = alpha_true_all)) +
-  geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated",title = "initial alpha = 1") +
-  scale_color_manual(values = c("Simplex(Nelder-Mead)" = "orange")) +
-  theme_minimal()
-```
-
-## 50kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=5, fig.height=5}
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_alpha_init1_hotspot.rdata")
-
-# Create the plot
-ggplot(data, aes(x = alpha_true_all)) +
-  geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated",title = "initial alpha = 1") +
-  scale_color_manual(values = c("Simplex(Nelder-Mead)" = "orange")) +
-  theme_minimal()
-```
-
-## 100kb
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=5, fig.height=5}
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_alpha_init1_hotspot.rdata")
-
-# Create the plot
-ggplot(data, aes(x = alpha_true_all)) +
-  geom_point(aes(y = alpha_simplex_all, color = "Simplex(Nelder-Mead)")) +
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  labs(x = "True Alpha", y = "Alpha estimated",title = "initial alpha = 1") +
-  scale_color_manual(values = c("Simplex(Nelder-Mead)" = "orange")) +
-  theme_minimal()
-```
-
-
-
-
-
-
-
-
-
-# Simulation  -- the hot spots were sampled with a gamma prior
+We used Simplex method (Nelder-Mead) to do the simulation
 
 1. Selecting 5% of the windows to be hotspots
 
-2. Sampling the values for these hotspots from $gamma(\alpha,\alpha)$, the alpha was set to 5,10,30,50.
+2. Sampling the values for these hotspots from uniform distribution
 
-3. Setting  the value of other windows as 0. 
+3. Settingthe value of other windows as 0. 
 
-4. Estimating alpha for all of the windows 
 
 
 ## 10kb
 
-### gamma prior (alpha = 5)
-
+### max maximum fold change = 3
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior5_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "estimated random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 5
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -401,17 +372,14 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 ```
 
 
-
-
-
-### gamma prior (alpha = 10)
-
+### max maximum fold change = 10
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior10_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -440,101 +408,56 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
        y = "estimated random effect") +
   theme_minimal()
 ```
-
-
-
-
-
-### gamma prior (alpha = 30)
-
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior30_init1_nonspatial_gamma_simp.rdata")
-
-print(sprintf("the estimated alpha = %s", alpha))
-
-ggplot(data, aes(x = x)) +
-  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
-  labs(x = "Window index",
-       y = paste0("random effects")) +
-  theme_minimal()
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
-  theme_minimal()
-
-fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "estimated random effect") +
-  theme_minimal()
-```
-
-
-
-### gamma prior (alpha = 50)
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior50_init1_nonspatial_gamma_simp.rdata")
-
-print(sprintf("the estimated alpha = %s", alpha))
-
-ggplot(data, aes(x = x)) +
-  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
-  labs(x = "Window index",
-       y = paste0("random effects")) +
-  theme_minimal()
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
-  theme_minimal()
-
-fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "estimated random effect") +
-  theme_minimal()
-```
-
-
-
-
 
 
 ## 30kb
 
-### gamma prior (alpha =5)
+### max maximum fold change = 3
 
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior5_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
+
+ggplot(data, aes(x = x)) +
+  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
+  labs(x = "Window index",
+       y = paste0("random effects")) +
+  theme_minimal()
+
+ggplot(data, aes(x = x)) +
+  geom_point(aes(y = y_sample), color = "grey") +
+  geom_line(aes(y = randeff_simulated), color = "blue") +
+  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
+  labs(x = "Window index",
+       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
+  theme_minimal()
+
+fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
+adj_rsq <- summary(fit)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "estimated random effect") +
+  theme_minimal()
+```
+
+### max maximum fold change = 5
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata")
+
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -565,16 +488,14 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 ```
 
 
-
-
-### gamma prior (alpha = 10)
-
+### max maximum fold change = 10
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior10_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -603,100 +524,19 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
        y = "estimated random effect") +
   theme_minimal()
 ```
-
-
-
-
-
-### gamma prior (alpha = 30)
-
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior30_init1_nonspatial_gamma_simp.rdata")
-
-print(sprintf("the estimated alpha = %s", alpha))
-
-ggplot(data, aes(x = x)) +
-  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
-  labs(x = "Window index",
-       y = paste0("random effects")) +
-  theme_minimal()
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
-  theme_minimal()
-
-fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "estimated random effect") +
-  theme_minimal()
-```
-
-
-
-### gamma prior (alpha = 50)
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior50_init1_nonspatial_gamma_simp.rdata")
-
-print(sprintf("the estimated alpha = %s", alpha))
-
-ggplot(data, aes(x = x)) +
-  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
-  labs(x = "Window index",
-       y = paste0("random effects")) +
-  theme_minimal()
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
-  theme_minimal()
-
-fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "estimated random effect") +
-  theme_minimal()
-```
-
-
-
-
 
 
 ## 50kb
-### gamma prior (alpha = 5)
+
+### max maximum fold change = 3
 
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior5_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -726,18 +566,15 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
   theme_minimal()
 ```
 
-
-
-
-
-### gamma prior (alpha = 10)
+### max maximum fold change = 5
 
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior10_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -767,18 +604,14 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
   theme_minimal()
 ```
 
-
-
-
-
-### gamma prior (alpha = 30)
-
+### max maximum fold change = 10
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior30_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -807,59 +640,19 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
        y = "estimated random effect") +
   theme_minimal()
 ```
-
-
-
-### gamma prior (alpha = 50)
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior50_init1_nonspatial_gamma_simp.rdata")
-
-print(sprintf("the estimated alpha = %s", alpha))
-
-ggplot(data, aes(x = x)) +
-  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
-  labs(x = "Window index",
-       y = paste0("random effects")) +
-  theme_minimal()
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
-  theme_minimal()
-
-fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "estimated random effect") +
-  theme_minimal()
-```
-
-
-
-
 
 
 ## 100kb
-### gamma prior (alpha = 5)
+
+### max maximum fold change = 3
 
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior5_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -889,17 +682,15 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
   theme_minimal()
 ```
 
-
-
-
-### gamma prior (alpha = 10)
+### max maximum fold change = 5
 
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior10_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -929,56 +720,14 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
   theme_minimal()
 ```
 
-
-
-
-
-### gamma prior (alpha = 30)
-
+### max maximum fold change = 10
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior30_init1_nonspatial_gamma_simp.rdata")
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata")
 
-print(sprintf("the estimated alpha = %s", alpha))
-
-ggplot(data, aes(x = x)) +
-  geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.7) +
-  labs(x = "Window index",
-       y = paste0("random effects")) +
-  theme_minimal()
-
-ggplot(data, aes(x = x)) +
-  geom_point(aes(y = y_sample), color = "grey") +
-  geom_line(aes(y = randeff_simulated), color = "blue") +
-  geom_line(aes(y = randeff_est), color = "red",alpha=0.5) +
-  labs(x = "Window index",
-       y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) +
-  theme_minimal()
-
-fit <- lm(randeff_est ~ randeff_simulated + 0, data=data)
-adj_rsq <- summary(fit)$adj.r.squared
-ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
-  geom_point(color = "black") +
-  geom_abline(intercept = 0, slope = 1, color = "red") +
-  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-            x = Inf, y = -Inf, hjust = 1, vjust = 0,
-            color = "blue") +
-  labs(x = "true random effect theta_i",
-       y = "estimated random effect") +
-  theme_minimal()
-```
-
-
-
-### gamma prior (alpha = 50)
-
-```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior50_init1_nonspatial_gamma_simp.rdata")
-
-print(sprintf("the estimated alpha = %s", alpha))
+print("init alpha (in MLE)= 1")
+print(sprintf("alpha = %s", alpha))
 
 ggplot(data, aes(x = x)) +
   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) +
@@ -1012,63 +761,27 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 
 
 
+<!-- # Simulation  -- the hot spots were sampled with a gamma prior -->
 
+<!-- 1. Selecting 5% of the windows to be hotspots -->
 
+<!-- 2. Sampling the values for these hotspots from $gamma(\alpha,\alpha)$, the alpha was set to 5,10,30,50. -->
 
+<!-- 3. Setting  the value of other windows as 0.  -->
 
-<!-- # Simulation -- the hot spots were sampled from uniform distribution -->
+<!-- 4. Estimating alpha for all of the windows  -->
 
-<!-- We used Simplex method (Nelder-Mead) to do the simulation -->
-
-<!-- Random effects were assigned to 5% of the windows, with non-zero values -->
 
 <!-- ## 10kb -->
 
-<!-- ### max maximum fold change = 3 -->
+<!-- ### gamma prior (alpha = 5) -->
+
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior5_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
-
-<!-- ggplot(data, aes(x = x)) + -->
-<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
-<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
-<!--   labs(x = "Window index", -->
-<!--        y = paste0("random effects")) + -->
-<!--   theme_minimal() -->
-
-<!-- ggplot(data, aes(x = x)) + -->
-<!--   geom_point(aes(y = y_sample), color = "grey") + -->
-<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
-<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
-<!--   labs(x = "Window index", -->
-<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
-<!--   theme_minimal() -->
-
-<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
-<!-- adj_rsq <- summary(fit)$adj.r.squared -->
-<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
-<!--   geom_point(color = "black") + -->
-<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
-<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
-<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
-<!--             color = "blue") + -->
-<!--   labs(x = "true random effect theta_i", -->
-<!--        y = "estimated random effect") + -->
-<!--   theme_minimal() -->
-<!-- ``` -->
-
-<!-- ### max maximum fold change = 5 -->
-
-<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
-
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata") -->
-
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1099,14 +812,17 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!-- ``` -->
 
 
-<!-- ### max maximum fold change = 10 -->
+
+
+
+<!-- ### gamma prior (alpha = 10) -->
+
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior10_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1135,56 +851,101 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--        y = "estimated random effect") + -->
 <!--   theme_minimal() -->
 <!-- ``` -->
+
+
+
+
+
+<!-- ### gamma prior (alpha = 30) -->
+
+
+<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior30_init1_nonspatial_gamma_simp.rdata") -->
+
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_point(aes(y = y_sample), color = "grey") + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
+<!-- adj_rsq <- summary(fit)$adj.r.squared -->
+<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
+<!--   geom_point(color = "black") + -->
+<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
+<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
+<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
+<!--             color = "blue") + -->
+<!--   labs(x = "true random effect theta_i", -->
+<!--        y = "estimated random effect") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+
+<!-- ### gamma prior (alpha = 50) -->
+
+<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_10kb_gammaprior50_init1_nonspatial_gamma_simp.rdata") -->
+
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_point(aes(y = y_sample), color = "grey") + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
+<!-- adj_rsq <- summary(fit)$adj.r.squared -->
+<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
+<!--   geom_point(color = "black") + -->
+<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
+<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
+<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
+<!--             color = "blue") + -->
+<!--   labs(x = "true random effect theta_i", -->
+<!--        y = "estimated random effect") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+
+
 
 
 <!-- ## 30kb -->
 
-<!-- ### max maximum fold change = 3 -->
+<!-- ### gamma prior (alpha =5) -->
 
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior5_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
-
-<!-- ggplot(data, aes(x = x)) + -->
-<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
-<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
-<!--   labs(x = "Window index", -->
-<!--        y = paste0("random effects")) + -->
-<!--   theme_minimal() -->
-
-<!-- ggplot(data, aes(x = x)) + -->
-<!--   geom_point(aes(y = y_sample), color = "grey") + -->
-<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
-<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
-<!--   labs(x = "Window index", -->
-<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
-<!--   theme_minimal() -->
-
-<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
-<!-- adj_rsq <- summary(fit)$adj.r.squared -->
-<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
-<!--   geom_point(color = "black") + -->
-<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
-<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
-<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
-<!--             color = "blue") + -->
-<!--   labs(x = "true random effect theta_i", -->
-<!--        y = "estimated random effect") + -->
-<!--   theme_minimal() -->
-<!-- ``` -->
-
-<!-- ### max maximum fold change = 5 -->
-
-<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
-
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata") -->
-
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1215,14 +976,16 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!-- ``` -->
 
 
-<!-- ### max maximum fold change = 10 -->
+
+
+<!-- ### gamma prior (alpha = 10) -->
+
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior10_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1251,19 +1014,100 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--        y = "estimated random effect") + -->
 <!--   theme_minimal() -->
 <!-- ``` -->
+
+
+
+
+
+<!-- ### gamma prior (alpha = 30) -->
+
+
+<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior30_init1_nonspatial_gamma_simp.rdata") -->
+
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_point(aes(y = y_sample), color = "grey") + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
+<!-- adj_rsq <- summary(fit)$adj.r.squared -->
+<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
+<!--   geom_point(color = "black") + -->
+<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
+<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
+<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
+<!--             color = "blue") + -->
+<!--   labs(x = "true random effect theta_i", -->
+<!--        y = "estimated random effect") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+
+<!-- ### gamma prior (alpha = 50) -->
+
+<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_30kb_gammaprior50_init1_nonspatial_gamma_simp.rdata") -->
+
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_point(aes(y = y_sample), color = "grey") + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
+<!-- adj_rsq <- summary(fit)$adj.r.squared -->
+<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
+<!--   geom_point(color = "black") + -->
+<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
+<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
+<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
+<!--             color = "blue") + -->
+<!--   labs(x = "true random effect theta_i", -->
+<!--        y = "estimated random effect") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+
+
 
 
 <!-- ## 50kb -->
-
-<!-- ### max maximum fold change = 3 -->
+<!-- ### gamma prior (alpha = 5) -->
 
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior5_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1293,15 +1137,18 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--   theme_minimal() -->
 <!-- ``` -->
 
-<!-- ### max maximum fold change = 5 -->
+
+
+
+
+<!-- ### gamma prior (alpha = 10) -->
 
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior10_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1331,14 +1178,18 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--   theme_minimal() -->
 <!-- ``` -->
 
-<!-- ### max maximum fold change = 10 -->
+
+
+
+
+<!-- ### gamma prior (alpha = 30) -->
+
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior30_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1367,19 +1218,59 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--        y = "estimated random effect") + -->
 <!--   theme_minimal() -->
 <!-- ``` -->
+
+
+
+<!-- ### gamma prior (alpha = 50) -->
+
+<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_50kb_gammaprior50_init1_nonspatial_gamma_simp.rdata") -->
+
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_point(aes(y = y_sample), color = "grey") + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
+<!-- adj_rsq <- summary(fit)$adj.r.squared -->
+<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
+<!--   geom_point(color = "black") + -->
+<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
+<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
+<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
+<!--             color = "blue") + -->
+<!--   labs(x = "true random effect theta_i", -->
+<!--        y = "estimated random effect") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+
+
 
 
 <!-- ## 100kb -->
-
-<!-- ### max maximum fold change = 3 -->
+<!-- ### gamma prior (alpha = 5) -->
 
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff3_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior5_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1409,15 +1300,17 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--   theme_minimal() -->
 <!-- ``` -->
 
-<!-- ### max maximum fold change = 5 -->
+
+
+
+<!-- ### gamma prior (alpha = 10) -->
 
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff5_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior10_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1447,14 +1340,18 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--   theme_minimal() -->
 <!-- ``` -->
 
-<!-- ### max maximum fold change = 10 -->
+
+
+
+
+<!-- ### gamma prior (alpha = 30) -->
+
 
 <!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
 
-<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_maxrandeff10_init1_nonspatial_gamma_more_simp.rdata") -->
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior30_init1_nonspatial_gamma_simp.rdata") -->
 
-<!-- print("init alpha (in MLE)= 1") -->
-<!-- print(sprintf("alpha = %s", alpha)) -->
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
 
 <!-- ggplot(data, aes(x = x)) + -->
 <!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
@@ -1483,4 +1380,49 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
 <!--        y = "estimated random effect") + -->
 <!--   theme_minimal() -->
 <!-- ``` -->
+
+
+
+<!-- ### gamma prior (alpha = 50) -->
+
+<!-- ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5} -->
+
+<!-- load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_chr1_100kb_gammaprior50_init1_nonspatial_gamma_simp.rdata") -->
+
+<!-- print(sprintf("the estimated alpha = %s", alpha)) -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue",alpha=0.5) + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.7) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- ggplot(data, aes(x = x)) + -->
+<!--   geom_point(aes(y = y_sample), color = "grey") + -->
+<!--   geom_line(aes(y = randeff_simulated), color = "blue") + -->
+<!--   geom_line(aes(y = randeff_est), color = "red",alpha=0.5) + -->
+<!--   labs(x = "Window index", -->
+<!--        y = paste0("# of DNM/window (windowsize =",windowsize/1000,"kb) & random effects")) + -->
+<!--   theme_minimal() -->
+
+<!-- fit <- lm(randeff_est ~ randeff_simulated + 0, data=data) -->
+<!-- adj_rsq <- summary(fit)$adj.r.squared -->
+<!-- ggplot(data, aes(x = randeff_simulated, y = randeff_est)) + -->
+<!--   geom_point(color = "black") + -->
+<!--   geom_abline(intercept = 0, slope = 1, color = "red") + -->
+<!--   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))), -->
+<!--             x = Inf, y = -Inf, hjust = 1, vjust = 0, -->
+<!--             color = "blue") + -->
+<!--   labs(x = "true random effect theta_i", -->
+<!--        y = "estimated random effect") + -->
+<!--   theme_minimal() -->
+<!-- ``` -->
+
+
+
+
+
+
+
 
