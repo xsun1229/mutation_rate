@@ -1,0 +1,840 @@
+---
+title: "Spatial & Non-spatial for real data"
+author: "XSun"
+date: "2023-10-12"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=F,message=FALSE}
+library(ggplot2)
+library(gridExtra)
+library(data.table)
+```
+
+We fit the spatial model first then the non-spatial model.
+
+
+# SSC -- fitting using the whole window
+
+## 10kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_10kb_ssc.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+## 30kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_30kb_ssc.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_50kb_ssc.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_100kb_ssc.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+# SSC -- cross validation
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/cv_sns_chr1_50kb_ssc.rdata")
+
+ggplot(dat, aes(x = start/1000)) +
+  geom_line(aes(y = dat$count_train/dat$mr_rescale_train), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+fit1 <- lm(mr_rescale_test ~ count_test + 0, data=dat)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = mr_rescale_test)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_pred_test_snons ~ count_test + 0, data=dat)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = exp_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Ours") +
+  theme_minimal()
+
+```
+
+
+
+
+
+
+
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/cv_sns_chr1_100kb_ssc.rdata")
+
+ggplot(dat, aes(x = start/1000)) +
+  geom_line(aes(y = dat$count_train/dat$mr_rescale_train), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+fit1 <- lm(mr_rescale_test ~ count_test + 0, data=dat)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = mr_rescale_test)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_pred_test_snons ~ count_test + 0, data=dat)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = exp_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Ours") +
+  theme_minimal()
+
+```
+
+## 200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/cv_sns_chr1_200kb_ssc.rdata")
+
+ggplot(dat, aes(x = start/1000)) +
+  geom_line(aes(y = dat$count_train/dat$mr_rescale_train), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+fit1 <- lm(mr_rescale_test ~ count_test + 0, data=dat)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = mr_rescale_test)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_pred_test_snons ~ count_test + 0, data=dat)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = exp_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Ours") +
+  theme_minimal()
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+# mssng -- fitting using the whole window
+
+## 10kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_10kb_mssng.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+## 30kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_30kb_mssng.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_50kb_mssng.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_100kb_mssng.rdata")
+
+ggplot(data, aes(x = pos)) +
+  geom_line(aes(y = randeff), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+
+fit1 <- lm(randeff_spatial ~ randeff + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial model") +
+  theme_minimal()
+
+print("the final estimated random effects = random effects_NS * random effects_S ")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+ggplot(data, aes(x = seq_along(obs))) +
+  #geom_point(aes(y = obs), color = "grey") +
+  geom_line(aes(y = randeff), color = "blue") +
+  geom_line(aes(y = randeff_final), color = "red",alpha=0.5) +
+  #geom_line(aes(y = randeff_smooth_spatial), color = "green") +
+  labs(x = "Window index",
+       y = "true random effects and final estimated random effects",
+       title = "random effects_NS * random effects_S ") +
+  theme_minimal()
+
+
+fit2 <- lm(randeff_final ~ randeff + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = randeff, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - NS * S",
+       title = "non-spatial & spatial model") +
+  theme_minimal()
+
+
+
+```
+
+
+
+
+
+
+# mssng -- cross validation
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/cv_sns_chr1_50kb_mssng.rdata")
+
+ggplot(dat, aes(x = start/1000)) +
+  geom_line(aes(y = dat$count_train/dat$mr_rescale_train), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+fit1 <- lm(mr_rescale_test ~ count_test + 0, data=dat)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = mr_rescale_test)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_pred_test_snons ~ count_test + 0, data=dat)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = exp_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Ours") +
+  theme_minimal()
+
+```
+
+
+
+
+
+
+
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/cv_sns_chr1_100kb_mssng.rdata")
+
+ggplot(dat, aes(x = start/1000)) +
+  geom_line(aes(y = dat$count_train/dat$mr_rescale_train), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+fit1 <- lm(mr_rescale_test ~ count_test + 0, data=dat)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = mr_rescale_test)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_pred_test_snons ~ count_test + 0, data=dat)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = exp_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Ours") +
+  theme_minimal()
+
+```
+
+## 200kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/cv_sns_chr1_200kb_mssng.rdata")
+
+ggplot(dat, aes(x = start/1000)) +
+  geom_line(aes(y = dat$count_train/dat$mr_rescale_train), color = "blue",alpha=0.5) +
+  geom_line(aes(y = randeff_smooth_spatial), color = "red") +
+  geom_line(aes(y = randeff_nonspatial), color = "green",alpha=0.5) +
+  labs(x = "Mb",
+       y = "random effects",) +
+  theme_minimal()
+
+fit1 <- lm(mr_rescale_test ~ count_test + 0, data=dat)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = mr_rescale_test)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_pred_test_snons ~ count_test + 0, data=dat)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(dat, aes(x = count_test, y = exp_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Ours") +
+  theme_minimal()
+
+```
+
+
+
+
+
+
+
+
+
+
+
