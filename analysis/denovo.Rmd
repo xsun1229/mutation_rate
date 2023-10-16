@@ -33,6 +33,12 @@ editor_options:
 
 [Combining spatial and non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo_simulation_snons.html)
 
+
+# Combining spatial and non-spatial model -- realdata
+
+[link](https://xsun1229.github.io/mutation_rate/denovo_realdata_snons.html)
+
+
 # others
 
 [deleted](https://xsun1229.github.io/mutation_rate/denovo_delete.html)
