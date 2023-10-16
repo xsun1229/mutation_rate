@@ -394,7 +394,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-10-15
+<strong>Last updated:</strong> 2023-10-16
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -432,10 +432,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -528,15 +528,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree5d7dd7ef78c1b970bb0114e442663b5e12fbb6e8targetblank5d7dd7ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreea0b72a97953054e2d765576a8efe6b08987c7379targetblanka0b72a9a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/5d7dd7ef78c1b970bb0114e442663b5e12fbb6e8" target="_blank">5d7dd7e</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/a0b72a97953054e2d765576a8efe6b08987c7379" target="_blank">a0b72a9</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree5d7dd7ef78c1b970bb0114e442663b5e12fbb6e8targetblank5d7dd7ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreea0b72a97953054e2d765576a8efe6b08987c7379targetblanka0b72a9a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -546,7 +546,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/5d7dd7ef78c1b970bb0114e442663b5e12fbb6e8" target="_blank">5d7dd7e</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/a0b72a97953054e2d765576a8efe6b08987c7379" target="_blank">a0b72a9</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -563,8 +563,8 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
 
-Untracked files:
-    Untracked:  analysis/denovo_realdata_snons.Rmd
+Unstaged changes:
+    Modified:   analysis/denovo_realdata_snons.Rmd
 
 </code></pre>
 <p>
@@ -579,10 +579,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/denovo_realdata_snons.Rmd</code>)
+and HTML (<code>docs/denovo_realdata_snons.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/analysis/denovo_realdata_snons.Rmd" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/denovo_realdata_snons.html" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -590,86 +654,2132 @@ There are no past versions. Publish this analysis with
 <p>We fit the spatial model first then the non-spatial model.</p>
 <div id="ssc-fitting-using-the-whole-window" class="section level1">
 <h1>SSC – fitting using the whole window</h1>
-<div id="kb" class="section level2">
-<h2>10kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="chr1" class="section level2">
+<h2>chr1</h2>
+<div id="kb" class="section level3">
+<h3>10kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="kb-1" class="section level2">
-<h2>30kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="kb-2" class="section level2">
-<h2>50kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-2">
+Past versions of unnamed-chunk-2-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="kb-3" class="section level2">
-<h2>100kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-3">
+Past versions of unnamed-chunk-2-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
 <pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-4">
+Past versions of unnamed-chunk-2-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-2-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="kb-1" class="section level3">
+<h3>30kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
+Past versions of unnamed-chunk-3-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-3">
+Past versions of unnamed-chunk-3-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-4">
+Past versions of unnamed-chunk-3-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-3-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="kb-2" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
+Past versions of unnamed-chunk-4-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-3">
+Past versions of unnamed-chunk-4-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-4">
+Past versions of unnamed-chunk-4-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-4-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="kb-3" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
+Past versions of unnamed-chunk-5-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-3">
+Past versions of unnamed-chunk-5-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-4">
+Past versions of unnamed-chunk-5-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-5-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="chr22" class="section level2">
+<h2>chr22</h2>
+<div id="kb-4" class="section level3">
+<h3>10kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-3">
+Past versions of unnamed-chunk-6-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-5" class="section level3">
+<h3>30kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
+Past versions of unnamed-chunk-7-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-3">
+Past versions of unnamed-chunk-7-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-6" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
+Past versions of unnamed-chunk-8-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-3">
+Past versions of unnamed-chunk-8-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-7" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-2">
+Past versions of unnamed-chunk-9-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-3">
+Past versions of unnamed-chunk-9-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-4">
+Past versions of unnamed-chunk-9-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="ssc-cross-validation" class="section level1">
 <h1>SSC – cross validation</h1>
-<div id="kb-4" class="section level2">
-<h2>50kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-6-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="chr1-1" class="section level2">
+<h2>chr1</h2>
+<div id="kb-8" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="kb-5" class="section level2">
-<h2>100kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-7-3.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="kb-6" class="section level2">
-<h2>200kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-8-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-2">
+Past versions of unnamed-chunk-10-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-3">
+Past versions of unnamed-chunk-10-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-4">
+Past versions of unnamed-chunk-10-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-9" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-2">
+Past versions of unnamed-chunk-11-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-3">
+Past versions of unnamed-chunk-11-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-4">
+Past versions of unnamed-chunk-11-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-10" class="section level3">
+<h3>200kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-2">
+Past versions of unnamed-chunk-12-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-3">
+Past versions of unnamed-chunk-12-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-4">
+Past versions of unnamed-chunk-12-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-4.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="chr22-1" class="section level2">
+<h2>chr22</h2>
+<div id="kb-11" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-2">
+Past versions of unnamed-chunk-13-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-3">
+Past versions of unnamed-chunk-13-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-12" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-2">
+Past versions of unnamed-chunk-14-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-3">
+Past versions of unnamed-chunk-14-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-13" class="section level3">
+<h3>200kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-1.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-2">
+Past versions of unnamed-chunk-15-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-2.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-3">
+Past versions of unnamed-chunk-15-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/10396a96a5623dd0902cec28c0dd83943d7f2229/docs/figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-3.png" target="_blank">10396a9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2023-10-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 </div>
 <div id="mssng-fitting-using-the-whole-window" class="section level1">
-<h1>mssng – fitting using the whole window</h1>
-<div id="kb-7" class="section level2">
-<h2>10kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<h1>MSSNG – fitting using the whole window</h1>
+<div id="chr1-2" class="section level2">
+<h2>chr1</h2>
+<div id="kb-14" class="section level3">
+<h3>10kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-16-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-16-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-16-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
 <pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-9-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-16-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="kb-8" class="section level2">
-<h2>30kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="kb-15" class="section level3">
+<h3>30kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-17-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-17-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-17-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
 <pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-10-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-17-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="kb-9" class="section level2">
-<h2>50kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="kb-16" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-18-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-18-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-18-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
 <pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-11-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-18-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="kb-10" class="section level2">
-<h2>100kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="kb-17" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-19-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-19-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-19-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
 <pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-12-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-19-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="chr22-2" class="section level2">
+<h2>chr22</h2>
+<div id="kb-18" class="section level3">
+<h3>10kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-20-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-20-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-20-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-20-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-19" class="section level3">
+<h3>30kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-21-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-21-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-21-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-21-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-20" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-22-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-22-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-22-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-22-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-21" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-23-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-23-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;non-spatial only&quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-23-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;sptial &amp; non-spatial &quot;</code></pre>
+<pre><code>[1] &quot;the final estimated random effects = random effects_NS * random effects_S &quot;</code></pre>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-23-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 </div>
 <div id="mssng-cross-validation" class="section level1">
-<h1>mssng – cross validation</h1>
-<div id="kb-11" class="section level2">
-<h2>50kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-13-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<h1>MSSNG – cross validation</h1>
+<div id="chr1-3" class="section level2">
+<h2>chr1</h2>
+<div id="kb-22" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-24-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-24-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-24-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-24-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-24-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="kb-12" class="section level2">
-<h2>100kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-14-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="kb-23" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-25-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-25-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-25-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-25-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-25-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="kb-13" class="section level2">
-<h2>200kb</h2>
-<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-15-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<div id="kb-24" class="section level3">
+<h3>200kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-26-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-26-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-26-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-26-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-26-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="chr22-3" class="section level2">
+<h2>chr22</h2>
+<div id="kb-25" class="section level3">
+<h3>50kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-27-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-27-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-27-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-27-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-27-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-26" class="section level3">
+<h3>100kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-28-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-28-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-28-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-28-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-28-5.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-27" class="section level3">
+<h3>200kb</h3>
+<p><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-29-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-29-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-29-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-29-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_realdata_snons.Rmd/unnamed-chunk-29-5.png" width="1152" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -698,18 +2808,19 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.8.3     highr_0.9        pillar_1.7.0     compiler_4.2.0  
  [5] bslib_0.3.1      later_1.3.0      jquerylib_0.1.4  git2r_0.30.1    
- [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    lifecycle_1.0.1  tibble_3.1.7     gtable_0.3.0    
+ [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    gtable_0.3.0    
+[13] jsonlite_1.8.0   evaluate_0.15    lifecycle_1.0.1  tibble_3.1.7    
 [17] pkgconfig_2.0.3  rlang_1.0.5      DBI_1.1.2        cli_3.6.1       
 [21] rstudioapi_0.13  yaml_2.3.5       xfun_0.30        fastmap_1.1.0   
 [25] withr_2.5.0      dplyr_1.0.9      stringr_1.4.0    knitr_1.39      
 [29] generics_0.1.2   fs_1.5.2         vctrs_0.4.1      sass_0.4.1      
 [33] tidyselect_1.1.2 rprojroot_2.0.3  grid_4.2.0       glue_1.6.2      
 [37] R6_2.5.1         fansi_1.0.3      rmarkdown_2.14   farver_2.1.0    
-[41] purrr_0.3.4      magrittr_2.0.3   scales_1.2.0     promises_1.2.0.1
-[45] ellipsis_0.3.2   htmltools_0.5.2  assertthat_0.2.1 colorspace_2.0-3
-[49] httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2       stringi_1.7.6   
-[53] munsell_0.5.0    crayon_1.5.1    </code></pre>
+[41] purrr_0.3.4      magrittr_2.0.3   whisker_0.4      scales_1.2.0    
+[45] promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.2  assertthat_0.2.1
+[49] colorspace_2.0-3 httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2      
+[53] stringi_1.7.6    munsell_0.5.0    crayon_1.5.1    </code></pre>
+</div>
 </div>
 </div>
 </div>
