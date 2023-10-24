@@ -24,12 +24,11 @@ We fit the spatial model first then the non-spatial model.
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_10kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -43,9 +42,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -57,7 +56,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -73,6 +72,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -88,8 +88,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -106,12 +104,11 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_30kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -125,9 +122,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -139,7 +136,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -155,6 +152,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -170,8 +168,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -189,12 +185,11 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_50kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -208,9 +203,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -222,7 +217,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -238,6 +233,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -256,8 +252,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 
 
 
-
-
 ```
 
 
@@ -272,12 +266,11 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_100kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -291,9 +284,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -305,7 +298,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -321,6 +314,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -356,12 +350,11 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_10kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -375,9 +368,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -389,7 +382,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -405,6 +398,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -420,8 +414,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -438,12 +430,11 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_30kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -457,9 +448,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -471,7 +462,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -487,6 +478,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -502,8 +494,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -521,12 +511,11 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_50kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -540,9 +529,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -554,7 +543,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -570,6 +559,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -585,8 +575,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -604,12 +592,11 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_100kb_ssc.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
@@ -623,9 +610,9 @@ ggplot(data, aes(x =  pos)) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -637,7 +624,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -653,6 +640,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -672,8 +660,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 
 
 ```
-
-
 
 
 
@@ -1187,35 +1173,34 @@ ggplot(data, aes(x = count_test, y = exp_pred_test_snons)) +
 
 # MSSNG -- fitting using the whole window
 
-## chr1 
+## chr1
 
 ### 10kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_10kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1227,7 +1212,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1243,6 +1228,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1258,8 +1244,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -1276,28 +1260,27 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_30kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1309,7 +1292,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1325,6 +1308,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1340,8 +1324,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -1359,28 +1341,27 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_50kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1392,7 +1373,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1408,6 +1389,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1423,8 +1405,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -1442,28 +1422,27 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr1_100kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1475,7 +1454,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1491,6 +1470,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1519,35 +1499,34 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 
 
 
-## chr22 
+## chr22
 
 ### 10kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_10kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1559,7 +1538,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1575,6 +1554,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1590,8 +1570,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -1608,28 +1586,27 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_30kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1641,7 +1618,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1657,6 +1634,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1672,8 +1650,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -1691,28 +1667,27 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_50kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1724,7 +1699,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1740,6 +1715,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1755,8 +1731,6 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
        y = "random effect - - NS * S",
        title = "sptial & non-spatial") +
   theme_minimal()
-
-
 
 
 
@@ -1774,28 +1748,27 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/8.denovo_sns/results/sns_chr22_100kb_mssng.rdata")
-data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
-
+data$randeff_final <- data$randeff_spatial_only * data$randeff_nonspatial_residual
 
 ggplot(data, aes(x =  pos)) +
   geom_line(aes(y = randeff, color = "realdata"), alpha = 0.5) +
-  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
   geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff + 0, data=data)
+fit1 <- lm( randeff_spatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
-ggplot(data, aes(x = randeff, y = randeff_spatial)) +
+ggplot(data, aes(x = randeff, y = randeff_spatial_only)) +
   geom_point(color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red") +
   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
@@ -1807,7 +1780,7 @@ ggplot(data, aes(x = randeff, y = randeff_spatial)) +
   theme_minimal()
 
 print("non-spatial only")
-
+print(sprintf("alpha = %s",alpha_nonspatial_only))
 fit1 <- lm( randeff_nonspatial_only ~randeff + 0, data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
@@ -1823,6 +1796,7 @@ ggplot(data, aes(x = randeff, y = randeff_nonspatial_only)) +
 
 
 print("sptial & non-spatial ")
+print(sprintf("alpha_non-spatial = %s",alpha_residual))
 print("the final estimated random effects = random effects_NS * random effects_S ")
 
 
@@ -1851,11 +1825,9 @@ ggplot(data, aes(x = randeff, y = randeff_final)) +
 
 
 
-
-
 # MSSNG -- cross validation
 
-## chr1 
+## chr1
 ### 50kb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
@@ -1869,9 +1841,9 @@ ggplot(data, aes(x = start/1000000)) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
@@ -1949,9 +1921,9 @@ ggplot(data, aes(x = start/1000000)) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
@@ -2030,9 +2002,9 @@ ggplot(data, aes(x = start/1000000)) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
@@ -2120,9 +2092,9 @@ ggplot(data, aes(x = start/1000000)) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
@@ -2200,9 +2172,9 @@ ggplot(data, aes(x = start/1000000)) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
@@ -2281,9 +2253,9 @@ ggplot(data, aes(x = start/1000000)) +
   geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
   labs(x = "Mb",
        y = "random effects") +
-  scale_color_manual(name = "Group", 
-                     values = c("realdata" = "blue", "Spatial-only" = "red", 
-                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+  scale_color_manual(name = "Group",
+                     values = c("realdata" = "blue", "Spatial-only" = "red",
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"),
                      labels = c("obs/exp from real data", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
   theme_minimal()
 
