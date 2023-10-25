@@ -34,7 +34,7 @@ For other positions, there is no random effects, so $\theta_i = constant$, we se
 4. The final estimated random effect $\hat\theta_i = \hat\theta_i^{S} * \hat\theta_i^{NS}$
 
 
-# Window size: 50kb
+# Window size: 50kb randeff ~ unif[1,maxrdeff]
 
 ## maxrdeff_sp = 5, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb
 
@@ -259,6 +259,452 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs2_maxns5_minspwds20_maxspwds40.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+print("spatial only")
+
+fit1 <- lm( randeff_spatial ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial only") +
+  theme_minimal()
+
+print("non-spatial only")
+
+fit1 <- lm( randeff_nonspatial_only ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - non-spatial",
+       title = "non-spatial only") +
+  theme_minimal()
+
+print("sptial & non-spatial ")
+
+fit1 <- lm( randeff_final ~ randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - sptial & non-spatiall",
+       title = "sptial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+
+
+
+## maxrdeff_sp = 2.5, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs2.5_maxns5_minspwds4_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+print("spatial only")
+
+fit1 <- lm( randeff_spatial ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial only") +
+  theme_minimal()
+
+print("non-spatial only")
+
+fit1 <- lm( randeff_nonspatial_only ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - non-spatial",
+       title = "non-spatial only") +
+  theme_minimal()
+
+print("sptial & non-spatial ")
+
+fit1 <- lm( randeff_final ~ randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - sptial & non-spatiall",
+       title = "sptial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+
+
+## maxrdeff_sp = 2.5, maxrdeff_nsp = 5, spatial window = 500kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs2.5_maxns5_minspwds10_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+print("spatial only")
+
+fit1 <- lm( randeff_spatial ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial only") +
+  theme_minimal()
+
+print("non-spatial only")
+
+fit1 <- lm( randeff_nonspatial_only ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - non-spatial",
+       title = "non-spatial only") +
+  theme_minimal()
+
+print("sptial & non-spatial ")
+
+fit1 <- lm( randeff_final ~ randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - sptial & non-spatiall",
+       title = "sptial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+
+
+## maxrdeff_sp = 2.5, maxrdeff_nsp = 5, spatial window = 1mb ~ 2mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs2.5_maxns5_minspwds20_maxspwds40.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+print("spatial only")
+
+fit1 <- lm( randeff_spatial ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial only") +
+  theme_minimal()
+
+print("non-spatial only")
+
+fit1 <- lm( randeff_nonspatial_only ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - non-spatial",
+       title = "non-spatial only") +
+  theme_minimal()
+
+print("sptial & non-spatial ")
+
+fit1 <- lm( randeff_final ~ randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - sptial & non-spatiall",
+       title = "sptial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs3_maxns5_minspwds4_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+print("spatial only")
+
+fit1 <- lm( randeff_spatial ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial only") +
+  theme_minimal()
+
+print("non-spatial only")
+
+fit1 <- lm( randeff_nonspatial_only ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - non-spatial",
+       title = "non-spatial only") +
+  theme_minimal()
+
+print("sptial & non-spatial ")
+
+fit1 <- lm( randeff_final ~ randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - sptial & non-spatiall",
+       title = "sptial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 500kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs3_maxns5_minspwds10_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+print("spatial only")
+
+fit1 <- lm( randeff_spatial ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - Spatial",
+       title = "spatial only") +
+  theme_minimal()
+
+print("non-spatial only")
+
+fit1 <- lm( randeff_nonspatial_only ~randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - non-spatial",
+       title = "non-spatial only") +
+  theme_minimal()
+
+print("sptial & non-spatial ")
+
+fit1 <- lm( randeff_final ~ randeff_simulated + 0, data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "true random effect theta_i",
+       y = "random effect - sptial & non-spatiall",
+       title = "sptial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 1mb ~ 2mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs3_maxns5_minspwds20_maxspwds40.rdata")
 
 data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
 
