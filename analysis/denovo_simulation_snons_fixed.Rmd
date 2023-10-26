@@ -552,6 +552,91 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
 
 
 
+## maxrdeff_sp = 2.5, maxrdeff_nsp = 1, spatial window = 200kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs2.5_maxns1_minspwds4_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  #geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+```
+
+
+
+
+
+## maxrdeff_sp = 2.5, maxrdeff_nsp = 1, spatial window = 500kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs2.5_maxns1_minspwds10_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  #geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+```
+
+
+
+
+
+## maxrdeff_sp = 2.5, maxrdeff_nsp = 1, spatial window = 1mb ~ 2mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs2.5_maxns1_minspwds20_maxspwds40.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  #geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+```
+
+
+
+
+
+
 ## maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
@@ -769,6 +854,91 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
 
 
 ```
+
+
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 1, spatial window = 200kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs3_maxns1_minspwds4_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  #geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+```
+
+
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 1, spatial window = 500kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs3_maxns1_minspwds10_maxspwds20.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  #geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+```
+
+
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 1, spatial window = 1mb ~ 2mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_snons_50kb_maxs3_maxns1_minspwds20_maxspwds40.rdata")
+
+data$randeff_final <- data$randeff_spatial * data$randeff_nonspatial
+
+
+ggplot(data, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial, color = "Spatial-only")) +
+  #geom_line(aes(y = randeff_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+```
+
 
 
 
