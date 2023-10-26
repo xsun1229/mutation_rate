@@ -120,7 +120,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
   theme_minimal()
 
 
-fit1 <- lm(randeff_estimated_nonspatial ~ randeff_simulated + 0, data=data)
+fit1 <- lm(randeff_estimated_nonspatial ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_estimated_nonspatial)) +
   geom_point(color = "black") +
@@ -154,7 +154,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
        title = "random effects_NS * random effects_S ") +
   theme_minimal()
 
-fit2 <- lm(randeff_final ~ randeff_simulated + 0, data=data)
+fit2 <- lm(randeff_final ~ randeff_simulated , data=data)
 adj_rsq2 <- summary(fit2)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
   geom_point(color = "black") +
@@ -319,7 +319,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
   theme_minimal()
 
 
-fit1 <- lm(randeff_spatial ~ randeff_simulated + 0, data=data)
+fit1 <- lm(randeff_spatial ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
   geom_point(color = "black") +
@@ -348,7 +348,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
 
 
 
-fit2 <- lm(randeff_final ~ randeff_simulated + 0, data=data)
+fit2 <- lm(randeff_final ~ randeff_simulated , data=data)
 adj_rsq2 <- summary(fit2)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
   geom_point(color = "black") +
@@ -381,7 +381,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
                      labels = c("Simulated", "Spatial-only", "Fitting the non-spatial model with \n the residual of spatial model")) +
   theme_minimal()
 
-fit1 <- lm(randeff_spatial ~ randeff_simulated + 0, data=data)
+fit1 <- lm(randeff_spatial ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
   geom_point(color = "black") +
@@ -410,7 +410,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
 
 
 
-fit2 <- lm(randeff_final ~ randeff_simulated + 0, data=data)
+fit2 <- lm(randeff_final ~ randeff_simulated , data=data)
 adj_rsq2 <- summary(fit2)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
   geom_point(color = "black") +
@@ -449,7 +449,7 @@ ggplot(data, aes(x = seq_along(y_sample))) +
 
 print("spatial only")
 
-fit1 <- lm( randeff_spatial ~randeff_simulated + 0, data=data)
+fit1 <- lm( randeff_spatial ~randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
   geom_point(color = "black") +
@@ -464,7 +464,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_spatial)) +
 
 print("non-spatial only")
 
-fit1 <- lm( randeff_nonspatial_only ~randeff_simulated + 0, data=data)
+fit1 <- lm( randeff_nonspatial_only ~randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   geom_point(color = "black") +
@@ -479,7 +479,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
 
 print("sptial & non-spatial ")
 
-fit1 <- lm( randeff_final ~ randeff_simulated + 0, data=data)
+fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
   geom_point(color = "black") +
