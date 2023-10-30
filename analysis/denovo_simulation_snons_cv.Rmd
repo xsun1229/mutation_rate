@@ -1,0 +1,346 @@
+---
+title: "Cross validation for simulation -- combining spatial and non-spatial models"
+author: "XSun"
+date: "2023-10-30"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r echo=F,message=FALSE}
+library(ggplot2)
+library(gridExtra)
+library(data.table)
+```
+
+# 50kb
+
+## maxrdeff_sp = 5, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_cv_sns_chr1_50kb_maxs5_maxns5_minspwds4_maxspwds20.rdata")
+
+ggplot(data, aes(x = window)) +
+  geom_line(aes(y = randeff_simulated, color = "simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_snons, color = "spatial&non-spatial"), alpha = 0.6) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
+  labs(x = "Mb",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "Spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+
+fit1 <- lm(test_sum ~ y_sample_test , data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = test_sum)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+data$exp_pred_spatial_only <- data$test_sum*data$randeff_spatial_only
+fit2 <- lm(exp_pred_spatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_spatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "spatial only") +
+  theme_minimal()
+
+
+data$exp_pred_nonpatial_only <- data$test_sum*data$randeff_nonspatial_only
+print(sprintf("alpha = %s", max(data$alpha_nonspatial_only)))
+fit2 <- lm(exp_pred_nonpatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_nonpatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "non-spatial only") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_y_pred_test_snons ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_y_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Spatial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_cv_sns_chr1_50kb_maxs3_maxns5_minspwds4_maxspwds20.rdata")
+
+ggplot(data, aes(x = window)) +
+  geom_line(aes(y = randeff_simulated, color = "simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_snons, color = "spatial&non-spatial"), alpha = 0.6) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
+  labs(x = "Mb",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "Spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+
+fit1 <- lm(test_sum ~ y_sample_test , data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = test_sum)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+data$exp_pred_spatial_only <- data$test_sum*data$randeff_spatial_only
+fit2 <- lm(exp_pred_spatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_spatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "spatial only") +
+  theme_minimal()
+
+
+data$exp_pred_nonpatial_only <- data$test_sum*data$randeff_nonspatial_only
+print(sprintf("alpha = %s", max(data$alpha_nonspatial_only)))
+fit2 <- lm(exp_pred_nonpatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_nonpatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "non-spatial only") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_y_pred_test_snons ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_y_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Spatial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 500kb ~ 1mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_cv_sns_chr1_50kb_maxs3_maxns5_minspwds10_maxspwds20.rdata")
+
+ggplot(data, aes(x = window)) +
+  geom_line(aes(y = randeff_simulated, color = "simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_snons, color = "spatial&non-spatial"), alpha = 0.6) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
+  labs(x = "Mb",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "Spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+
+fit1 <- lm(test_sum ~ y_sample_test , data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = test_sum)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+data$exp_pred_spatial_only <- data$test_sum*data$randeff_spatial_only
+fit2 <- lm(exp_pred_spatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_spatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "spatial only") +
+  theme_minimal()
+
+
+data$exp_pred_nonpatial_only <- data$test_sum*data$randeff_nonspatial_only
+print(sprintf("alpha = %s", max(data$alpha_nonspatial_only)))
+fit2 <- lm(exp_pred_nonpatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_nonpatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "non-spatial only") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_y_pred_test_snons ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_y_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Spatial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+## maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 1mb ~ 2mb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/7.denovo_simulation/results/simu_cv_sns_chr1_50kb_maxs3_maxns5_minspwds20_maxspwds40.rdata")
+
+ggplot(data, aes(x = window)) +
+  geom_line(aes(y = randeff_simulated, color = "simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_spatial_only, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_snons, color = "spatial&non-spatial"), alpha = 0.6) +
+  geom_line(aes(y = randeff_nonspatial_only, color = "Non-spatial only"), alpha = 0.4) +
+  labs(x = "Mb",
+       y = "random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "Spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+
+
+fit1 <- lm(test_sum ~ y_sample_test , data=data)
+adj_rsq1 <- summary(fit1)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = test_sum)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq1, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set  (RL)",
+       title = "Roulette") +
+  theme_minimal()
+
+data$exp_pred_spatial_only <- data$test_sum*data$randeff_spatial_only
+fit2 <- lm(exp_pred_spatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_spatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "spatial only") +
+  theme_minimal()
+
+
+data$exp_pred_nonpatial_only <- data$test_sum*data$randeff_nonspatial_only
+print(sprintf("alpha = %s", max(data$alpha_nonspatial_only)))
+fit2 <- lm(exp_pred_nonpatial_only ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_pred_nonpatial_only)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set ",
+       title = "non-spatial only") +
+  theme_minimal()
+
+
+fit2 <- lm(exp_y_pred_test_snons ~ y_sample_test + 0, data=data)
+adj_rsq2 <- summary(fit2)$adj.r.squared
+ggplot(data, aes(x = y_sample_test, y = exp_y_pred_test_snons)) +
+  geom_point(color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red") +
+  geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq2, 3))),
+            x = Inf, y = -Inf, hjust = 1, vjust = 0,
+            color = "blue") +
+  labs(x = "Observed",
+       y = "predicted count on testing set (ours)",
+       title = "Spatial & non-spatial") +
+  theme_minimal()
+
+
+```
+
+
+
+
+

@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="XSun" />
 
+<meta name="date" content="2023-10-30" />
 
-<title>De novo mutations</title>
+<title>Cross validation for simulation – combining spatial and non-spatial models</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -234,6 +239,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -241,6 +309,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -284,7 +362,10 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">De novo mutations</h1>
+<h1 class="title toc-ignore">Cross validation for simulation – combining
+spatial and non-spatial models</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2023-10-30</h4>
 
 </div>
 
@@ -317,7 +398,7 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 1
 </p>
@@ -351,12 +432,96 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230228code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230228)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230228code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230228)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -402,9 +567,6 @@ Untracked files:
     Untracked:  analysis/denovo_simulation_snons_cv.Rmd
     Untracked:  analysis/denovo_simulation_snons_fixed_gaprm.Rmd
 
-Unstaged changes:
-    Modified:   analysis/denovo.Rmd
-
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not
@@ -418,640 +580,85 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/denovo.Rmd</code>) and HTML
-(<code>docs/denovo.html</code>) files. If you’ve configured a remote Git
-repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
-in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/35dba0bca165eef894f7c4d53d0b6318a5a71bfb/analysis/denovo.Rmd" target="_blank">35dba0b</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-10-24
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/35dba0bca165eef894f7c4d53d0b6318a5a71bfb/docs/denovo.html" target="_blank">35dba0b</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-10-24
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/532dcdb42fc62b1c86b2d5d3022f599aeed76141/analysis/denovo.Rmd" target="_blank">532dcdb</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-10-16
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/532dcdb42fc62b1c86b2d5d3022f599aeed76141/docs/denovo.html" target="_blank">532dcdb</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-10-16
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/ba3b0ad39bb20f0d71ce3ec44153ac0e38410662/docs/denovo.html" target="_blank">ba3b0ad</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-09-06
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/368353737af46d739cbad9bf2e47366eb2b8b7f5/analysis/denovo.Rmd" target="_blank">3683537</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-09-06
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/69432c48ff002c9c5e20ba6b30508edac16ddd6f/analysis/denovo.Rmd" target="_blank">69432c4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-09-05
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/69432c48ff002c9c5e20ba6b30508edac16ddd6f/docs/denovo.html" target="_blank">69432c4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-09-05
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/b04766b318c9834bf88fc5725bdbfb2e92f01b24/analysis/denovo.Rmd" target="_blank">b04766b</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-09-05
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/b04766b318c9834bf88fc5725bdbfb2e92f01b24/docs/denovo.html" target="_blank">b04766b</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-09-05
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/4c00854b20ed1c9fe1157958aec98d9d0debaf36/analysis/denovo.Rmd" target="_blank">4c00854</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-08-24
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/4c00854b20ed1c9fe1157958aec98d9d0debaf36/docs/denovo.html" target="_blank">4c00854</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-08-24
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/57687c8b0c1c4c966dc2a856952de4dac3555810/docs/denovo.html" target="_blank">57687c8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-08-06
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/a45dc616713f33f9e98ddb297c6d6e0b353fb8f0/analysis/denovo.Rmd" target="_blank">a45dc61</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-08-06
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/3a2f39d94366421eb35d0929d0942bcd2dd2250c/analysis/denovo.Rmd" target="_blank">3a2f39d</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-30
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/3a2f39d94366421eb35d0929d0942bcd2dd2250c/docs/denovo.html" target="_blank">3a2f39d</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-30
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/bce1d66d820a6474153b6bd733604c7cb78f26e7/analysis/denovo.Rmd" target="_blank">bce1d66</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-21
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/bce1d66d820a6474153b6bd733604c7cb78f26e7/docs/denovo.html" target="_blank">bce1d66</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-21
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/7dea57f951efe954f9d8b8fdc13b1bc58799cd91/docs/denovo.html" target="_blank">7dea57f</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/5da11129ac6ff061b109ae6d9117594bb71b7039/analysis/denovo.Rmd" target="_blank">5da1112</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/60fb5dd80094f1336d880b320519c3d5f5d2d477/analysis/denovo.Rmd" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/60fb5dd80094f1336d880b320519c3d5f5d2d477/docs/denovo.html" target="_blank">60fb5dd</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-18
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/ab30f2454c4cbaa39a6c42720fb028cf7c54bf09/docs/denovo.html" target="_blank">ab30f24</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-17
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/a93ffaee96b0db4517858ee1da616926e625ed0d/analysis/denovo.Rmd" target="_blank">a93ffae</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-17
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/a93ffaee96b0db4517858ee1da616926e625ed0d/docs/denovo.html" target="_blank">a93ffae</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-17
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/80aaab7919ef41cec73b3c82f0d203475d333484/analysis/denovo.Rmd" target="_blank">80aaab7</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-17
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/80aaab7919ef41cec73b3c82f0d203475d333484/docs/denovo.html" target="_blank">80aaab7</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-17
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/76c70a7998b32d0ca1da1a17db5e8639e2dced1c/analysis/denovo.Rmd" target="_blank">76c70a7</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-17
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/76c70a7998b32d0ca1da1a17db5e8639e2dced1c/docs/denovo.html" target="_blank">76c70a7</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-17
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/fef7b304fe132cb9af11436462c1b0bf4ff68b91/docs/denovo.html" target="_blank">fef7b30</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-15
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/9549cecbdac7e75350413ee403e3693f892fe278/analysis/denovo.Rmd" target="_blank">9549cec</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-14
-</td>
-<td>
-update
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/9549cecbdac7e75350413ee403e3693f892fe278/docs/denovo.html" target="_blank">9549cec</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2023-07-14
-</td>
-<td>
-update
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="data-overview" class="section level1">
-<h1>Data Overview</h1>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_data_overview.html">link</a></p>
+<div id="kb" class="section level1">
+<h1>50kb</h1>
+<div id="maxrdeff_sp-5-maxrdeff_nsp-5-spatial-window-200kb-1mb"
+class="section level2">
+<h2>maxrdeff_sp = 5, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb</h2>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-2-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-2-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;alpha = 4.5125&quot;</code></pre>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-2-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-2-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="non-spatial-random-effect" class="section level1">
-<h1>Non-spatial random effect</h1>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_nonspatial_estimation.html">Estimation
-of <span class="math inline">\(\theta\)</span> (random effect) with a
-single <span class="math inline">\(\alpha\)</span> across all
-windows</a></p>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_nonspatial_crossvalidation.html">Cross
-Validation</a></p>
+<div id="maxrdeff_sp-3-maxrdeff_nsp-5-spatial-window-200kb-1mb"
+class="section level2">
+<h2>maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 200kb ~ 1mb</h2>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-3-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;alpha = 4.3&quot;</code></pre>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-3-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-3-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="spatial-random-effect" class="section level1">
-<h1>Spatial random effect</h1>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_spatial_randeff.html">Random
-effect distribution</a></p>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_spatial_crossvalidation_wosmothing.html">Cross
-Validation – without smoothing</a></p>
+<div id="maxrdeff_sp-3-maxrdeff_nsp-5-spatial-window-500kb-1mb"
+class="section level2">
+<h2>maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 500kb ~ 1mb</h2>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-4-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;alpha = 8.25000000000001&quot;</code></pre>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-4-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-4-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="simulation" class="section level1">
-<h1>Simulation</h1>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_simulation_spatial_smashgen.html">spatial
-random effects</a></p>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_simulation_nonspatial_gamma_new.html">non-spatial
-random effects</a></p>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_simulation_snons.html">Combining
-spatial and non-spatial random effects</a></p>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_simulation_snons_fixed_gamrm.html">Combining
-spatial and non-spatial random effects – fixed</a></p>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_simulation_snons_cv.html">Cross
-Validation</a></p>
+<div id="maxrdeff_sp-3-maxrdeff_nsp-5-spatial-window-1mb-2mb"
+class="section level2">
+<h2>maxrdeff_sp = 3, maxrdeff_nsp = 5, spatial window = 1mb ~ 2mb</h2>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-5-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;alpha = 9.43750000000001&quot;</code></pre>
+<p><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-5-4.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo_simulation_snons_cv.Rmd/unnamed-chunk-5-5.png" width="1152" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] data.table_1.14.2 gridExtra_2.3     ggplot2_3.3.5    
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.8.3     highr_0.9        pillar_1.7.0     compiler_4.2.0  
+ [5] bslib_0.3.1      later_1.3.0      jquerylib_0.1.4  git2r_0.30.1    
+ [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    jsonlite_1.8.0  
+[13] evaluate_0.15    lifecycle_1.0.1  tibble_3.1.7     gtable_0.3.0    
+[17] pkgconfig_2.0.3  rlang_1.0.5      DBI_1.1.2        cli_3.6.1       
+[21] rstudioapi_0.13  yaml_2.3.5       xfun_0.30        fastmap_1.1.0   
+[25] withr_2.5.0      dplyr_1.0.9      stringr_1.4.0    knitr_1.39      
+[29] generics_0.1.2   fs_1.5.2         vctrs_0.4.1      sass_0.4.1      
+[33] tidyselect_1.1.2 rprojroot_2.0.3  grid_4.2.0       glue_1.6.2      
+[37] R6_2.5.1         fansi_1.0.3      rmarkdown_2.14   farver_2.1.0    
+[41] purrr_0.3.4      magrittr_2.0.3   scales_1.2.0     promises_1.2.0.1
+[45] ellipsis_0.3.2   htmltools_0.5.2  assertthat_0.2.1 colorspace_2.0-3
+[49] httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2       stringi_1.7.6   
+[53] munsell_0.5.0    crayon_1.5.1    </code></pre>
 </div>
-<div id="combining-spatial-and-non-spatial-model-realdata"
-class="section level1">
-<h1>Combining spatial and non-spatial model – realdata</h1>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_realdata_snons.html">link</a></p>
 </div>
-<div id="others" class="section level1">
-<h1>others</h1>
-<p><a
-href="https://xsun1229.github.io/mutation_rate/denovo_delete.html">deleted</a></p>
 </div>
 
 
@@ -1070,6 +677,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -1102,6 +711,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
