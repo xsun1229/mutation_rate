@@ -89,7 +89,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -159,7 +159,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -233,7 +233,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -307,7 +307,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -382,7 +382,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -456,7 +456,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -530,7 +530,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -690,7 +690,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -764,7 +764,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -838,7 +838,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
@@ -997,7 +997,7 @@ ggplot(data, aes(x = randeff_simulated, y = randeff_nonspatial_only)) +
   theme_minimal()
 
 print("sptial & non-spatial ")
-
+print(sprintf("alpha = %s",max(data$alpha_residual)))
 fit1 <- lm( randeff_final ~ randeff_simulated , data=data)
 adj_rsq1 <- summary(fit1)$adj.r.squared
 ggplot(data, aes(x = randeff_simulated, y = randeff_final)) +
