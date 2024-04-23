@@ -12,11 +12,13 @@ output:
 
 ## Simulation setup
 
-1.  We set fold change $\tilde{\theta_i}$ from uniform distribution for each window $i$, the mean value of $\tilde{\theta_i}$ is 1.
+1. The window sizes for the local random effects range from hundreds kb to 1mb.
 
-The window sizes for the local fold changes range from hundreds kb to 1mb.
+2. The random effects $\tilde{\theta}_i$ for the hotspots were sampled from uniform distribution $$\tilde{\theta}_i \sim \text{U}[0,\text{maxeff}]$$, The prior $\text{maxeff} \in \{3,5\}$. For others, random effects $\tilde{\theta}_i$ were set to 1.
 
-Below is an example for the fold change
+3. Then the random effects across all windows were ajusted, making the $\text{mean}(\tilde{\theta}_i)=1$.
+
+Below is an example for the random effect
 
 ```{r collapse=TRUE, eval=T ,message=FALSE, fig.width=12, fig.height=5}
 generate_random_genome_vector <- function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg) {
@@ -71,23 +73,17 @@ num_seg <- 10
 set.seed(2)
 randeff <-generate_random_genome_vector(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg)
 
-plot(randeff, type="l", ylab = "fold change")
+plot(randeff, type="l", ylab = "random effect")
 
 ```
 
 
-2. We sample the $\tilde{y_i}$ from 
+4. We sampled the $\tilde{y_i}$ from 
 
-$$\tilde{y_i} \sim pois(\tilde{\theta_i}*\mu_i)$$
+$$\tilde{y_i} \sim \text{pois}(\tilde{\theta_i}\mu_i)$$
 where $\mu_i$ is the expected mutations for each window $i$ from Roulette. 
 
-```{r echo=T, eval=T ,message=FALSE, fig.width=12, fig.height=5}
-sample_poisson_for_each_lambda <- function(lambda_vector) {
-  return(rpois(length(lambda_vector), lambda_vector))
-}
-```
-
-3. We fit the $\tilde{y_i}$ and $\mu_i$ using smashgen and plot the $\tilde{\theta_i}$ and smoothed $\tilde{\theta}_i{_{smoothed}}$
+5. The $\tilde{y_i}$ and $\mu_i$ were used as inputs for  smashgen and the $\hat{\theta_i}$ was the output.
 
 ## Functions used
 
@@ -95,12 +91,11 @@ sample_poisson_for_each_lambda <- function(lambda_vector) {
 library(ggplot2)
 plot_randeff <- function(data) {
   
-  
   ggplot(data, aes(x = x)) +
     geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
     geom_line(aes(y = randeff_est, color = "Estimated"), alpha = 0.7) +
     labs(x = "Window index",
-         y = "Fold changes",
+         y = "random effects",
          color = "Type") +
     scale_color_manual(values = c("Simulated" = "blue", "Estimated" = "red")) +
     theme_minimal()
@@ -118,8 +113,8 @@ scatter_plot_randeff <- function(data) {
     geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
               x = Inf, y = -Inf, hjust = 1, vjust = 0,
               color = "blue") +
-    labs(x = "True fold change theta_i",
-         y = "Estimated fold change") +
+    labs(x = "True random effect theta_i",
+         y = "Estimated random effect") +
     theme_minimal()
 }
 
@@ -142,7 +137,7 @@ The estimated mutation rates are from Roulette chr1
 
 ## 10kb
 
-### maximum fold change = 3
+### maximum random effect = 3
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -153,7 +148,7 @@ scatter_plot_randeff(data)
 
 ```
 
-### maximum fold change = 5
+### maximum random effect = 5
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -169,7 +164,7 @@ scatter_plot_randeff(data)
 
 ## 30kb
 
-### maximum fold change = 3
+### maximum random effect = 3
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -180,7 +175,7 @@ scatter_plot_randeff(data)
 
 ```
 
-### maximum fold change = 5
+### maximum random effect = 5
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -193,11 +188,9 @@ scatter_plot_randeff(data)
 
 
 
-
-
 ## 50kb
 
-### maximum fold change = 3
+### maximum random effect = 3
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -208,7 +201,7 @@ scatter_plot_randeff(data)
 
 ```
 
-### maximum fold change = 5
+### maximum random effect = 5
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -223,7 +216,7 @@ scatter_plot_randeff(data)
 
 ## 100kb
 
-### maximum fold change = 3
+### maximum random effect = 3
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 
@@ -234,7 +227,7 @@ scatter_plot_randeff(data)
 
 ```
 
-### maximum fold change = 5
+### maximum random effect = 5
 
 ```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
 

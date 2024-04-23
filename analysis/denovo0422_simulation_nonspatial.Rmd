@@ -12,7 +12,7 @@ output:
 
 ## Modeling the non-spatial random effects with gamma distribution
 
-We divide the genome into windows. The window sizes for the local fold changes range from hundreds kb to 1mb.
+We divide the genome into windows. The window sizes for the local random effects range from hundreds kb to 1mb.
 
 We are modeling the non-spatial random effects $\theta_i$ with gamma distribution:
 
@@ -20,7 +20,7 @@ $$\theta_i \sim Gamma(\alpha, \beta)$$
 
 Since the observed mutation rate from Roulette $\mu_i$ is calibrated (the total mutation rate is given), we just have single overdispersion parameter
 
-so, the simple non-spatial random effect model is
+so, the simple non-spatial random effect model follows
 
 $$\theta_i \sim Gamma(\alpha, \alpha)$$ 
 
@@ -53,22 +53,29 @@ est.alpha <- function(dat) {
 ```
 
 
-The posterior distribution of $ \theta_{i} $ is :
+The posterior distribution of $\tilde{\theta_{i}}$ is :
 
-$$ \theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
-So the posterior mean of $ \theta_{i} $ is:
+$$\theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
+So the posterior mean of $\theta_{i}$ is:
 
-$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
+$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha}$$
 
 ## Simulation setups
 
-1. Use Gamma prior to sample $\theta_i$ in the simulation: $$ \theta_{i} \sim Gamma(\alpha,\alpha)$$  for all windows. The prior $\alpha \in \{5,10,30,50\}$
+1. Use Gamma prior to sample $\theta_i$ in the simulation: $$\tilde{\theta_{i}} \sim Gamma(\alpha,\alpha)$$  for all windows. The prior $\alpha \in \{5,10,30,50\}$
 
-2. Sampling the observed mutation count $y_i$ From Poisson Distribution $y_i \sim pois(u_i * \theta_i)$, $u_i$ is the Roulette estimated mutation rate
+```{r}
+randeff_simulated <- rgamma(n = 3000, shape = 3, rate =3)
+plot(randeff_simulated)
+print(sprintf("mean value of randeff_simulated = %s",mean(randeff_simulated)))
+```
 
-3. Estimating $\alpha_{est}$ using MLE Simplex (Nelder-Mead) method (see the details above)
 
-4. Computing the estimated $\tilde{\theta_i}$ from $$\dfrac{y_i+\alpha_{est}}{\mu_i+\alpha_{est}} $$
+2. Sampling the observed mutation count $y_i$ From Poisson Distribution $y_i \sim \text{pois}(\mu_i\tilde{\theta_i)}$, $\mu_i$ is the Roulette estimated mutation rate
+
+3. Estimating $\hat{\alpha}$ using MLE Simplex (Nelder-Mead) method (see the details above)
+
+4. Computing the estimated $\hat{\theta_i}$ from $$\dfrac{y_i+\hat{\alpha}}{\mu_i+\hat{\alpha}} $$
 
 
 ## Functions used
@@ -82,7 +89,7 @@ plot_randeff <- function(data) {
     geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
     geom_line(aes(y = randeff_est, color = "Estimated"), alpha = 0.7) +
     labs(x = "Window index",
-         y = "Fold changes",
+         y = "random effects",
          color = "Type") +
     scale_color_manual(values = c("Simulated" = "blue", "Estimated" = "red")) +
     theme_minimal()
@@ -100,8 +107,8 @@ scatter_plot_randeff <- function(data) {
     geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
               x = Inf, y = -Inf, hjust = 1, vjust = 0,
               color = "blue") +
-    labs(x = "True fold change theta_i",
-         y = "Estimated fold change") +
+    labs(x = "True random effect theta_i",
+         y = "Estimated random effect") +
     theme_minimal()
 }
 

@@ -348,10 +348,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -360,15 +360,15 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreedd97c02c793341e597cb4571df84401a74a24024targetblankdd97c02a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613targetblanke1d2ae3a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/dd97c02c793341e597cb4571df84401a74a24024" target="_blank">dd97c02</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613" target="_blank">e1d2ae3</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreedd97c02c793341e597cb4571df84401a74a24024targetblankdd97c02a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613targetblanke1d2ae3a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -378,7 +378,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/dd97c02c793341e597cb4571df84401a74a24024" target="_blank">dd97c02</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613" target="_blank">e1d2ae3</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -395,15 +395,11 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
 
-Untracked files:
-    Untracked:  analysis/denovo0422_simulation_nonspatial.Rmd
-    Untracked:  analysis/denovo0422_simulation_spatial.Rmd
-    Untracked:  analysis/denovo0422_simulation_spatial_nonspatial.Rmd
-    Untracked:  analysis/denovo_0422.Rmd
-
 Unstaged changes:
-    Modified:   analysis/denovo_simulation_nonspatial_gamma_new.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/denovo0422_simulation_nonspatial.Rmd
+    Modified:   analysis/denovo0422_simulation_spatial.Rmd
+    Modified:   analysis/denovo0422_simulation_spatial_nonspatial.Rmd
+    Modified:   analysis/denovo_0422.Rmd
 
 </code></pre>
 <p>
@@ -418,10 +414,74 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/denovo_0422.Rmd</code>) and HTML
+(<code>docs/denovo_0422.html</code>) files. If you’ve configured a
+remote Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/analysis/denovo_0422.Rmd" target="_blank">7c2db32</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/denovo_0422.html" target="_blank">7c2db32</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -430,6 +490,31 @@ There are no past versions. Publish this analysis with
 <h1>Data Overview</h1>
 <p><a
 href="https://xsun1229.github.io/mutation_rate/denovo_data_overview.html">link</a></p>
+</div>
+<div id="models" class="section level1">
+<h1>Models</h1>
+<p>We partitioned the whole genome into disjoint windows (10kb, 30kb,
+50kb, 100kb).</p>
+<p>We denoted the mutation count (summing over all mutation types) in
+window <span class="math inline">\(i\)</span> as <span
+class="math inline">\(y_i\)</span>, which follows a Poisson
+distribution</p>
+<p><span class="math display">\[y_i \sim
+\text{pois}(\mu_i\theta_i)\]</span> <span
+class="math inline">\(\mu_i\)</span> the expected mutation count from
+Roulette. <span class="math inline">\(\theta_i\)</span> represents
+additional local variation, is a “random effect” measuring the departure
+from the expected rate.</p>
+<p>The parameter <span class="math inline">\(\theta_i\)</span> can
+result from both: - Non-spatial effects <span
+class="math inline">\(\theta_i^{NS}\)</span> - Spatial effects <span
+class="math inline">\(\theta_i^{S}\)</span></p>
+<p>Besides, we donate <span class="math inline">\(r_i\)</span> = <span
+class="math inline">\(y_i\)</span>/<span
+class="math inline">\(\mu_i\)</span> (fold change) as the ratio of
+observed vs. expected mutations</p>
+<p>The window sizes for the local random effects range from hundreds kb
+to 1mb</p>
 </div>
 <div id="simulation" class="section level1">
 <h1>Simulation</h1>

@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree7c2db3216a3b70eb447694f3e7c4afc10e663834targetblank7c2db32a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613targetblanke1d2ae3a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/7c2db3216a3b70eb447694f3e7c4afc10e663834" target="_blank">7c2db32</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613" target="_blank">e1d2ae3</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree7c2db3216a3b70eb447694f3e7c4afc10e663834targetblank7c2db32a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613targetblanke1d2ae3a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/7c2db3216a3b70eb447694f3e7c4afc10e663834" target="_blank">7c2db32</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613" target="_blank">e1d2ae3</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -573,7 +573,10 @@ Ignored files:
     Ignored:    .Rhistory
 
 Unstaged changes:
+    Modified:   analysis/denovo0422_simulation_nonspatial.Rmd
+    Modified:   analysis/denovo0422_simulation_spatial.Rmd
     Modified:   analysis/denovo0422_simulation_spatial_nonspatial.Rmd
+    Modified:   analysis/denovo_0422.Rmd
 
 </code></pre>
 <p>
@@ -625,6 +628,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613/analysis/denovo0422_simulation_spatial_nonspatial.Rmd" target="_blank">e1d2ae3</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613/docs/denovo0422_simulation_spatial_nonspatial.html" target="_blank">e1d2ae3</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/analysis/denovo0422_simulation_spatial_nonspatial.Rmd" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -666,22 +703,23 @@ update
 <div id="simulation-setup" class="section level2">
 <h2>Simulation setup</h2>
 <p>We combined the spatial and non-spatial models here</p>
-<p><span class="math inline">\(y_i = pois(u_i * \theta_i)\)</span></p>
+<p><span class="math inline">\(y_i =
+\text{pois}(u_i\theta_i)\)</span></p>
 <p>where <span class="math inline">\(u_i\)</span> is expected rate from
 calibrated roulette. <span class="math inline">\(y_i\)</span> is the
 observed mutation rate. <span class="math inline">\(\theta_i\)</span> is
 the random effect.</p>
 <ol style="list-style-type: decimal">
-<li>Simulating the random effects(fold changes)</li>
+<li>Simulating the random effects</li>
 </ol>
-<p>We simulated spatial fold changes as we did in <a
+<p>We simulated spatial random effects as we did in <a
 href="https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial.html">spatial-only
-model</a> We simulated spatial fold changes as we did in <a
+model</a> We simulated spatial random effects as we did in <a
 href="https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html">non-spatial-only
 model</a></p>
-<p>Then we summed up the spatial and non-spatial fold changes, and
-normalized them, making <span class="math inline">\(mean(\tilde\theta_i)
-=1\)</span></p>
+<p>Then we summed up the spatial and non-spatial random effects, and
+normalized them, making <span
+class="math inline">\(\text{mean}(\tilde\theta_i) =1\)</span></p>
 <pre class="r"><code>generate_randeff_nonspatial_gammaprior_spatial &lt;-  function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,alpha) {
   
   # Create the vector
@@ -729,7 +767,7 @@ normalized them, making <span class="math inline">\(mean(\tilde\theta_i)
 set.seed(2)
 randeff &lt;- generate_randeff_nonspatial_gammaprior_spatial(num_windows_all = 3000,num_windows_per_seg_min = 20,num_windows_per_seg_max = 50,randeff_max = 3,num_seg_spatial = 10,alpha = 5)
 
-plot(randeff,type = &quot;l&quot;,ylab = &quot;simulated fold change&quot;)</code></pre>
+plot(randeff,type = &quot;l&quot;,ylab = &quot;simulated random effect&quot;)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_nonspatial.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
@@ -804,7 +842,7 @@ plot_randeff_sp_nsp_joint &lt;- function(dat) {
   geom_line(aes(y = randeff_est_nsf_sp_final, color = &quot;spatial&amp;non-spatial&quot;), alpha = 0.5) +
   geom_line(aes(y = randeff_est_nsp_only, color = &quot;Non-spatial only&quot;), alpha = 0.6) +
   labs(x = &quot;Window index&quot;,
-       y = &quot;estimated fold changes&quot;) +
+       y = &quot;estimated random effects&quot;) +
   scale_color_manual(name = &quot;Group&quot;, 
                      values = c(&quot;Simulated&quot; = &quot;blue&quot;, &quot;Spatial-only&quot; = &quot;red&quot;, 
                                 &quot;spatial&amp;non-spatial&quot; = &quot;brown&quot;, &quot;Non-spatial only&quot; = &quot;green&quot;), 
@@ -819,7 +857,7 @@ plot_randeff_sp_after_nsp &lt;- function(dat) {
   geom_line(aes(y = randeff_est_nsf_sp, color = &quot;spatial after nonspatial fitted&quot;)) +
   geom_line(aes(y = randeff_est_nsp_only, color = &quot;Non-spatial only&quot;), alpha = 0.6) +
   labs(x = &quot;Window index&quot;,
-       y = &quot;estimated fold changes&quot;) +
+       y = &quot;estimated random effects&quot;) +
   scale_color_manual(name = &quot;Group&quot;, 
                      values = c(&quot;Simulated&quot; = &quot;blue&quot;,
                                 &quot;spatial after nonspatial fitted&quot; = &quot;red&quot;, &quot;Non-spatial only&quot; = &quot;green&quot;), 
@@ -834,7 +872,7 @@ plot_randeff_nsp_after_sp &lt;- function(dat) {
   geom_line(aes(y = randeff_est_sf_ns, color = &quot;nonspatial after spacial fitted&quot;),alpha= 0.5) +
   geom_line(aes(y = randeff_est_sp_only, color = &quot;spatial only&quot;), alpha = 0.6) +
   labs(x = &quot;Window index&quot;,
-       y = &quot;estimated fold changes&quot;) +
+       y = &quot;estimated random effects&quot;) +
   scale_color_manual(name = &quot;Group&quot;, 
                      values = c(&quot;Simulated&quot; = &quot;blue&quot;,
                                 &quot;nonspatial after spacial fitted&quot; = &quot;red&quot;, &quot;spatial only&quot; = &quot;green&quot;), 
@@ -861,8 +899,8 @@ plot_model &lt;- function(data, estimate_column, title, alpha_est = NULL) {
     geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;) +
     geom_text(aes(label = paste(&quot;Adj R-sq =&quot;, round(adj_rsq, 3))),
               x = Inf, y = -Inf, hjust = 1, vjust = 0, color = &quot;blue&quot;) +
-    labs(x = &quot;true fold change theta_i&quot;,
-         y = paste(&quot;estimated fold change -&quot;, title),
+    labs(x = &quot;true random effect theta_i&quot;,
+         y = paste(&quot;estimated random effect -&quot;, title),
          title = title) +
     theme_minimal()
   
@@ -877,8 +915,8 @@ class="section level2">
 <h2>Deciding spatial model first or non-spatial model first</h2>
 <div id="spatial-window-200kb-1mb" class="section level3">
 <h3>spatial window = 200kb ~ 1mb</h3>
-<p>If we estimate the fold change using non-spatial model first and then
-fit the spatial model, we lost the signal for non-spatial model</p>
+<p>If we estimate the random effect using non-spatial model first and
+then fit the spatial model, we lost the signal for non-spatial model</p>
 <pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial/simu_sp_nsp_chr1_50kb_maxiter50_maxrandeffsp3_alphansp_5_minseg4_maxseg20.rdata&quot;)
 
 plot_randeff_sp_after_nsp(dat)</code></pre>
@@ -966,8 +1004,8 @@ XSun
 </div>
 <div id="spatial-window-1mb-2mb" class="section level3">
 <h3>spatial window = 1mb ~ 2mb</h3>
-<p>If we estimate the fold change using non-spatial model first and then
-fit the spatial model, we lost the signal for non-spatial model</p>
+<p>If we estimate the random effect using non-spatial model first and
+then fit the spatial model, we lost the signal for non-spatial model</p>
 <pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial/simu_sp_nsp_chr1_50kb_maxiter50_maxrandeffsp3_alphansp_5_minseg20_maxseg40.rdata&quot;)
 
 plot_randeff_sp_after_nsp(dat)</code></pre>

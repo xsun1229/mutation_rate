@@ -12,6 +12,23 @@ editor_options:
 
 [link](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html)
 
+# Models
+
+We partitioned the whole genome into disjoint windows (10kb, 30kb, 50kb, 100kb). 
+
+We denoted the mutation count (summing over all mutation types) in window $i$ as $y_i$, which follows a Poisson distribution 
+
+$$y_i \sim \text{pois}(\mu_i\theta_i)$$
+$\mu_i$ the expected mutation count from Roulette.
+$\theta_i$ represents additional local variation, is a "random effect"  measuring the departure from the expected rate.
+
+The parameter $\theta_i$ can result from both:
+- Non-spatial effects $\theta_i^{NS}$
+- Spatial effects $\theta_i^{S}$
+
+Besides, we donate $r_i$ = $y_i$/$\mu_i$ (fold change) as the ratio of observed vs. expected mutations
+
+The window sizes for the local random effects range from hundreds kb to 1mb
 
 # Simulation
 

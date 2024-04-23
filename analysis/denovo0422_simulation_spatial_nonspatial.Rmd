@@ -14,16 +14,16 @@ output:
 
 We combined the spatial and non-spatial models here
 
-$y_i = pois(u_i * \theta_i)$
+$y_i = \text{pois}(u_i\theta_i)$
 
 where $u_i$ is expected rate from calibrated roulette. $y_i$ is the observed mutation rate. $\theta_i$ is the random effect.
 
-1. Simulating the random effects(fold changes)
+1. Simulating the random effects
 
-We simulated spatial fold changes as we did in [spatial-only model](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial.html) 
-We simulated spatial fold changes as we did in [non-spatial-only model](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
+We simulated spatial random effects as we did in [spatial-only model](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial.html) 
+We simulated spatial random effects as we did in [non-spatial-only model](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
 
-Then we summed up the spatial and non-spatial fold changes, and normalized them, making $mean(\tilde\theta_i) =1$
+Then we summed up the spatial and non-spatial random effects, and normalized them, making $\text{mean}(\tilde\theta_i) =1$
 
 ```{r}
 
@@ -74,7 +74,7 @@ generate_randeff_nonspatial_gammaprior_spatial <-  function(num_windows_all, num
 set.seed(2)
 randeff <- generate_randeff_nonspatial_gammaprior_spatial(num_windows_all = 3000,num_windows_per_seg_min = 20,num_windows_per_seg_max = 50,randeff_max = 3,num_seg_spatial = 10,alpha = 5)
 
-plot(randeff,type = "l",ylab = "simulated fold change")
+plot(randeff,type = "l",ylab = "simulated random effect")
 ```
 
 2. Then, we estimated $\hat\theta_i$ under different settings
@@ -103,7 +103,7 @@ plot_randeff_sp_nsp_joint <- function(dat) {
   geom_line(aes(y = randeff_est_nsf_sp_final, color = "spatial&non-spatial"), alpha = 0.5) +
   geom_line(aes(y = randeff_est_nsp_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Window index",
-       y = "estimated fold changes") +
+       y = "estimated random effects") +
   scale_color_manual(name = "Group", 
                      values = c("Simulated" = "blue", "Spatial-only" = "red", 
                                 "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
@@ -118,7 +118,7 @@ plot_randeff_sp_after_nsp <- function(dat) {
   geom_line(aes(y = randeff_est_nsf_sp, color = "spatial after nonspatial fitted")) +
   geom_line(aes(y = randeff_est_nsp_only, color = "Non-spatial only"), alpha = 0.6) +
   labs(x = "Window index",
-       y = "estimated fold changes") +
+       y = "estimated random effects") +
   scale_color_manual(name = "Group", 
                      values = c("Simulated" = "blue",
                                 "spatial after nonspatial fitted" = "red", "Non-spatial only" = "green"), 
@@ -133,7 +133,7 @@ plot_randeff_nsp_after_sp <- function(dat) {
   geom_line(aes(y = randeff_est_sf_ns, color = "nonspatial after spacial fitted"),alpha= 0.5) +
   geom_line(aes(y = randeff_est_sp_only, color = "spatial only"), alpha = 0.6) +
   labs(x = "Window index",
-       y = "estimated fold changes") +
+       y = "estimated random effects") +
   scale_color_manual(name = "Group", 
                      values = c("Simulated" = "blue",
                                 "nonspatial after spacial fitted" = "red", "spatial only" = "green"), 
@@ -160,8 +160,8 @@ plot_model <- function(data, estimate_column, title, alpha_est = NULL) {
     geom_abline(intercept = 0, slope = 1, color = "red") +
     geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
               x = Inf, y = -Inf, hjust = 1, vjust = 0, color = "blue") +
-    labs(x = "true fold change theta_i",
-         y = paste("estimated fold change -", title),
+    labs(x = "true random effect theta_i",
+         y = paste("estimated random effect -", title),
          title = title) +
     theme_minimal()
   
@@ -176,7 +176,7 @@ plot_model <- function(data, estimate_column, title, alpha_est = NULL) {
 
 ### spatial window = 200kb ~ 1mb
 
-If we estimate the fold change using non-spatial model first and then fit the spatial model, we lost the signal for non-spatial model 
+If we estimate the random effect using non-spatial model first and then fit the spatial model, we lost the signal for non-spatial model 
 
 ```{r fig.width=12, fig.height=5}
 
@@ -198,7 +198,7 @@ plot_randeff_nsp_after_sp(dat)
 
 ### spatial window = 1mb ~ 2mb
 
-If we estimate the fold change using non-spatial model first and then fit the spatial model, we lost the signal for non-spatial model 
+If we estimate the random effect using non-spatial model first and then fit the spatial model, we lost the signal for non-spatial model 
 
 ```{r fig.width=12, fig.height=5}
 
