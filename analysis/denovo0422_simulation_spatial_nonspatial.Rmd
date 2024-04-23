@@ -309,7 +309,7 @@ plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spa
 ```
 
 
-## max_spacial_randeff=3, alpha = 5, spatial window = 200kb ~ 1mb
+## max_spacial_randeff=3, alpha = 20, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=12, fig.height=5}
 
@@ -324,7 +324,7 @@ plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spa
 ```
 
 
-## max_spacial_randeff=5, alpha = 5, spatial window = 200kb ~ 1mb
+## max_spacial_randeff=5, alpha = 20, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=12, fig.height=5}
 
@@ -338,7 +338,7 @@ plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spa
 
 ```
 
-## max_spacial_randeff=3, alpha = 5, spatial window = 500kb ~ 1mb
+## max_spacial_randeff=3, alpha = 20, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=12, fig.height=5}
 
@@ -353,7 +353,7 @@ plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spa
 ```
 
 
-## max_spacial_randeff=5, alpha = 5, spatial window = 500kb ~ 1mb
+## max_spacial_randeff=5, alpha = 20, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=12, fig.height=5}
 
@@ -367,7 +367,7 @@ plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spa
 
 ```
 
-## max_spacial_randeff=3, alpha = 5, spatial window = 1mb ~ 2mb
+## max_spacial_randeff=3, alpha = 20, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=12, fig.height=5}
 
@@ -382,7 +382,7 @@ plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spa
 ```
 
 
-## max_spacial_randeff=5, alpha = 5, spatial window = 1mb ~ 2mb
+## max_spacial_randeff=5, alpha = 20, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=12, fig.height=5}
 
