@@ -1,0 +1,23 @@
+---
+title: "De novo mutations (04/22/2024)"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+
+# Data Overview
+
+[link](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html)
+
+
+# Simulation
+
+[non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
+
+[spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial.html)
+
+[spatial and non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_nonspatial.html)
+

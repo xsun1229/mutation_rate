@@ -56,10 +56,10 @@ est.alpha <- function(dat) {
 ```
 
 
-The posterior distribution of $ \theta_i $ is :
+The posterior distribution of $ \theta_{i} $ is :
 
 $$ \theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
-So the posterior mean of $ \theta_i $ is:
+So the posterior mean of $ \theta_{i} $ is:
 
 $$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
 

@@ -1,0 +1,353 @@
+---
+title: "Simulation for non-spatial random effects"
+author: "XSun"
+date: "2024-04-22"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+## Modeling the non-spatial random effects with gamma distribution
+
+We divide the genome into windows. The window sizes for the local fold changes range from hundreds kb to 1mb.
+
+We are modeling the non-spatial random effects $\theta_i$ with gamma distribution:
+
+$$\theta_i \sim Gamma(\alpha, \beta)$$ 
+
+Since the observed mutation rate from Roulette $\mu_i$ is calibrated (the total mutation rate is given), we just have single overdispersion parameter
+
+so, the simple non-spatial random effect model is
+
+$$\theta_i \sim Gamma(\alpha, \alpha)$$ 
+
+So the likelihood is :
+
+$$\begin{aligned}
+Pr(y_{i} |\mu_{i},\alpha) &= \int_0^{+\infty}
+Pr(y_{i}|\mu_{i},\theta_{i})Pr(\theta_{i}|\alpha)\,d\theta_{i} \\
+\end{aligned}$$
+
+which can be optimized by MLE with different methods and different initial values.
+
+```{r echo=T, message=FALSE, warning=FALSE}
+
+# Input is a dataframe of observed rates and expected rates
+est.alpha <- function(dat) {
+  mu_pos <- dat$exp > 0
+  y_pos <- dat$obs > 0
+  dat.mu_pos <- dat[(!y_pos)&mu_pos,]
+  dat.y_pos <- dat[y_pos,]
+  loglik <- function(alpha) {
+    loglik.mu_pos <- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
+    loglik.y_pos <- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
+    -sum(loglik.mu_pos) - sum(loglik.y_pos)
+  }
+  res <- optim(par=1, fn=loglik, method="BFGS") # May need to try different initiations and methods
+  res$par # MLE of alpha
+}
+
+```
+
+
+The posterior distribution of $ \theta_{i} $ is :
+
+$$ \theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
+So the posterior mean of $ \theta_{i} $ is:
+
+$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha} $$
+
+## Simulation setups
+
+1. Use Gamma prior to sample $\theta_i$ in the simulation: $$ \theta_{i} \sim Gamma(\alpha,\alpha)$$  for all windows. The prior $\alpha \in \{5,10,30,50\}$
+
+2. Sampling the observed mutation count $y_i$ From Poisson Distribution $y_i \sim pois(u_i * \theta_i)$, $u_i$ is the Roulette estimated mutation rate
+
+3. Estimating $\alpha_{est}$ using MLE Simplex (Nelder-Mead) method (see the details above)
+
+4. Computing the estimated $\tilde{\theta_i}$ from $$\dfrac{y_i+\alpha_{est}}{\mu_i+\alpha_{est}} $$
+
+
+## Functions used
+
+```{r} 
+library(ggplot2)
+plot_randeff <- function(data) {
+  
+  
+  ggplot(data, aes(x = x)) +
+    geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+    geom_line(aes(y = randeff_est, color = "Estimated"), alpha = 0.7) +
+    labs(x = "Window index",
+         y = "Fold changes",
+         color = "Type") +
+    scale_color_manual(values = c("Simulated" = "blue", "Estimated" = "red")) +
+    theme_minimal()
+}
+
+scatter_plot_randeff <- function(data) {
+  # Fit the linear model
+  fit <- lm(randeff_est ~ randeff_simulated, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+  
+  # Generate the plot
+  ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+    geom_point(color = "black") +
+    geom_abline(intercept = 0, slope = 1, color = "red") +
+    geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+              x = Inf, y = -Inf, hjust = 1, vjust = 0,
+              color = "blue") +
+    labs(x = "True fold change theta_i",
+         y = "Estimated fold change") +
+    theme_minimal()
+}
+
+plot_dnm <- function(data, windowsize) {
+   ggplot(data, aes(x = x)) +
+    geom_point(aes(y = y_sample), color = "grey") +
+    geom_line(aes(y = randeff_simulated), color = "blue") +
+    geom_line(aes(y = randeff_est), color = "red", alpha = 0.5) +
+    labs(x = "Window index",
+         y = paste0("% of DNM/window (windowsize = ", as.numeric(windowsize) / 1000, "kb)")) +
+    theme_minimal()
+}
+
+```
+
+
+# Results
+
+The estimated mutation rates are from Roulette chr1 
+
+## 10 kb
+
+### Gamma prior $\alpha=5$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_10kb_gammaprior5.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=10$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_10kb_gammaprior10.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=30$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_10kb_gammaprior30.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=50$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_10kb_gammaprior50.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+## 30 kb
+
+### Gamma prior $\alpha=5$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_30kb_gammaprior5.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=10$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_30kb_gammaprior10.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=30$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_30kb_gammaprior30.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=50$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_30kb_gammaprior50.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+## 50 kb
+
+### Gamma prior $\alpha=5$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_50kb_gammaprior5.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=10$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_50kb_gammaprior10.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=30$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_50kb_gammaprior30.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=50$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_50kb_gammaprior50.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+## 100 kb
+
+### Gamma prior $\alpha=5$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_100kb_gammaprior5.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=10$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_100kb_gammaprior10.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=30$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_100kb_gammaprior30.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```
+
+
+### Gamma prior $\alpha=50$
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/non_spatial/simu_nonspatial_chr1_100kb_gammaprior50.rdata")
+
+print(sprintf("true alpha = %s", alpha_prior))
+print(sprintf("estimated alpha = %s", alpha_est))
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+```

@@ -10,6 +10,8 @@ editor_options:
 
 Mutation Rate Modeling
 
+# [De novo mutation 04/22/24](https://xsun1229.github.io/mutation_rate/denovo_0422.html)
+
 
 # [De novo mutation](https://xsun1229.github.io/mutation_rate/denovo.html)
 
