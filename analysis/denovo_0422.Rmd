@@ -36,5 +36,7 @@ The window sizes for the local random effects range from hundreds kb to 1mb
 
 [spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial.html)
 
-[spatial and non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_nonspatial.html)
+[spatial and non-spatial random effects, max_spatial from uniform](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_nonspatial.html)
+
+[spatial and non-spatial random effects, max_spatial from normal](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial.html)
 

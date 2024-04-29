@@ -1,0 +1,400 @@
+---
+title: "Simulation -- combining spatial and non-spatial models"
+author: "XSun"
+date: "2024-04-23"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+## Simulation setup 
+
+We combined the spatial and non-spatial models here
+
+$y_i = \text{pois}(u_i\theta_i)$
+
+where $u_i$ is expected rate from calibrated roulette. $y_i$ is the observed mutation rate. $\theta_i$ is the random effect.
+
+1. Simulating the random effects
+
+We simulated spatial random effects as we did in [spatial-only model](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial.html) 
+We simulated spatial random effects as we did in [non-spatial-only model](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
+
+Then we summed up the spatial and non-spatial random effects, and normalized them, making $\text{mean}(\tilde\theta_i) =1$
+
+```{r}
+
+generate_randeff_nonspatial_gammaprior_spatial <-  function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, randeff_max, num_seg_spatial,alpha) {
+  
+  # Create the vector
+  randeff <- numeric(num_windows_all)
+  
+  #spatial
+  segment_lengths_spatial <- ceiling(runif(num_seg_spatial, min = num_windows_per_seg_min, max = num_windows_per_seg_max))
+  
+  # Calculate the total length covered by spatial random effects
+  total_segment_length <- sum(segment_lengths_spatial) 
+  
+  # Calculate the number of zeros needed
+  num_zeros <- num_windows_all - total_segment_length
+  
+  # Randomly select positions for spatial segment starts 
+  segment_starts_spatial <- sample(1:num_zeros, num_seg_spatial, replace = FALSE)
+  segment_ends_spatial <- segment_starts_spatial + segment_lengths_spatial - 1
+  
+  # Assign random values to segments
+  for (i in 1:(num_seg_spatial)) {
+    start_pos <- segment_starts_spatial[i]
+    end_pos <- start_pos + segment_lengths_spatial[i] - 1
+    randeff[start_pos:end_pos] <- runif(1, 0, randeff_max)
+  }
+  
+  
+  ## non-spatial
+  alpha <- alpha
+  randeff_nonspatial <- rgamma(n = num_windows_all, shape = alpha, rate = alpha)
+  
+  
+  randeff <- randeff + randeff_nonspatial
+  
+  # Adjust values to meet the mean of 1
+  mean_adjustment <- 1 - mean(randeff)
+  randeff <- randeff + mean_adjustment
+  # Clip values between 0 and randeff_max
+  randeff[randeff < 0] <- 0
+  #randeff[randeff > randeff_max] <- randeff_max
+  
+  
+  return(randeff)
+}
+
+set.seed(2)
+randeff <- generate_randeff_nonspatial_gammaprior_spatial(num_windows_all = 3000,num_windows_per_seg_min = 20,num_windows_per_seg_max = 50,randeff_max = 3,num_seg_spatial = 10,alpha = 5)
+
+plot(randeff,type = "l",ylab = "simulated random effect")
+```
+
+2. Then, we estimated $\hat\theta_i$ under different settings
+
+  - Spatial only
+  - Non-spatial only 
+  - Spatial first and non-spatial the next: 
+    Using $\hat\theta_i^{S} * \mu_i$ as $\mu_{i_{new}}$ in spatial model, estimating the random effect $\hat\theta_i^{NS}$ with non-spatial model
+  - Non-spatial first and spatial the next: 
+   Using $\hat\theta_i^{NS} * \mu_i$ as $\mu_{i_{new}}$ in spatial model, estimating the random effect $\hat\theta_i^{S}$ with spatial model
+
+
+3. If estimated using the combined model, the final estimated random effect $\hat\theta_i = \hat\theta_i^{S} * \hat\theta_i^{NS}$
+
+
+
+## Functions used
+
+```{r}
+library(ggplot2)
+
+plot_randeff_sp_nsp_joint <- function(dat) {
+  ggplot(dat, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_est_sp_only, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_est_nsf_sp_final, color = "spatial&non-spatial"), alpha = 0.5) +
+  geom_line(aes(y = randeff_est_nsp_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue", "Spatial-only" = "red", 
+                                "spatial&non-spatial" = "brown", "Non-spatial only" = "green"), 
+                     labels = c("Simulated", "Spatial-only", "spatial&non-spatial", "Non-spatial only")) +
+  theme_minimal()
+}
+
+plot_randeff_sp_after_nsp <- function(dat) {
+  ggplot(dat, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_est_sp_only, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_est_nsf_sp, color = "spatial after nonspatial fitted")) +
+  geom_line(aes(y = randeff_est_nsp_only, color = "Non-spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue",
+                                "spatial after nonspatial fitted" = "red", "Non-spatial only" = "green"), 
+                     labels = c("Simulated","spatial after nonspatial fitted (without combining", "Non-spatial only")) +
+  theme_minimal()
+}
+
+plot_randeff_nsp_after_sp <- function(dat) {
+  ggplot(dat, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  #geom_line(aes(y = randeff_est_sp_only, color = "Spatial-only")) +
+  geom_line(aes(y = randeff_est_sf_ns, color = "nonspatial after spacial fitted"),alpha= 0.5) +
+  geom_line(aes(y = randeff_est_sp_only, color = "spatial only"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue",
+                                "nonspatial after spacial fitted" = "red", "spatial only" = "green"), 
+                     labels = c("Simulated","nonspatial after spacial fitted (without combining", "spatial only")) +
+  theme_minimal()
+}
+
+plot_model <- function(data, estimate_column, title, alpha_est = NULL) {
+  print(title)
+  
+  # Optional printing of alpha, if provided
+  if (!is.null(alpha_est)) {
+    print(sprintf("alpha = %s", alpha_est))
+  }
+  
+  # Fit linear model
+  formula <- as.formula(paste(estimate_column, "~ randeff_simulated"))
+  fit <- lm(formula, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared
+  
+  # Create the plot
+  p <- ggplot(data, aes(x = randeff_simulated, y = get(estimate_column))) +
+    geom_point(color = "black") +
+    geom_abline(intercept = 0, slope = 1, color = "red") +
+    geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+              x = Inf, y = -Inf, hjust = 1, vjust = 0, color = "blue") +
+    labs(x = "true random effect theta_i",
+         y = paste("estimated random effect -", title),
+         title = title) +
+    theme_minimal()
+  
+  print(p)
+}
+
+```
+
+# 50kb 
+
+## Deciding spatial model first or non-spatial model first 
+
+### spatial window = 200kb ~ 1mb
+
+If we estimate the random effect using non-spatial model first and then fit the spatial model, we lost the signal for non-spatial model 
+
+```{r fig.width=12, fig.height=5}
+
+
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_20_minseg10_maxseg20.rdata")
+
+
+plot_randeff_sp_after_nsp(dat)
+
+```
+
+But if we fit the spatial model first, we can keep the signal for both
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_5_minseg4_maxseg20.rdata")
+
+plot_randeff_nsp_after_sp(dat)
+
+```
+
+### spatial window = 1mb ~ 2mb
+
+If we estimate the random effect using non-spatial model first and then fit the spatial model, we lost the signal for non-spatial model 
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_5_minseg20_maxseg40.rdata")
+
+plot_randeff_sp_after_nsp(dat)
+
+```
+
+But if we fit the spatial model first, we can keep the signal for both
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_5_minseg20_maxseg40.rdata")
+
+plot_randeff_nsp_after_sp(dat)
+
+```
+
+So, in the following analysis, the joint model fits spatial effects first and the non-spatial effects the next.
+
+
+## normar_var=0.5, alpha = 5, spatial window = 200kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_5_minseg4_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+
+## normar_var=1, alpha = 5, spatial window = 200kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_5_minseg4_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+## normar_var=0.5, alpha = 5, spatial window = 500kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_5_minseg10_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+
+## normar_var=1, alpha = 5, spatial window = 500kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_5_minseg10_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+## normar_var=0.5, alpha = 5, spatial window = 1mb ~ 2mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_5_minseg20_maxseg40.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+
+## normar_var=1, alpha = 5, spatial window = 1mb ~ 2mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_5_minseg20_maxseg40.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+
+## normar_var=0.5, alpha = 20, spatial window = 200kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_20_minseg4_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+
+## normar_var=1, alpha = 20, spatial window = 200kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg4_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+## normar_var=0.5, alpha = 20, spatial window = 500kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_20_minseg10_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+
+## normar_var=1, alpha = 20, spatial window = 500kb ~ 1mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg10_maxseg20.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+## normar_var=0.5, alpha = 20, spatial window = 1mb ~ 2mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_20_minseg20_maxseg40.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
+
+
+## normar_var=1, alpha = 20, spatial window = 1mb ~ 2mb
+
+```{r fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg20_maxseg40.rdata")
+
+plot_randeff_sp_nsp_joint(dat)
+
+plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
+plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
+plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+
+```
