@@ -403,7 +403,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-04-23
+<strong>Last updated:</strong> 2024-05-07
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613targetblanke1d2ae3a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1e297e8d9610c18217a7e4ba3316a8718ff6102btargetblank1e297e8a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613" target="_blank">e1d2ae3</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/1e297e8d9610c18217a7e4ba3316a8718ff6102b" target="_blank">1e297e8</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreee1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613targetblanke1d2ae3a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1e297e8d9610c18217a7e4ba3316a8718ff6102btargetblank1e297e8a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/e1d2ae3b53d2d9f5f9210d9f6e73b24b7f4f9613" target="_blank">e1d2ae3</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/1e297e8d9610c18217a7e4ba3316a8718ff6102b" target="_blank">1e297e8</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -571,10 +571,16 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
-    Ignored:    analysis/figure/
+
+Untracked files:
+    Untracked:  analysis/denovo0422_simulation_spatial_norm.Rmd
+    Untracked:  analysis/denovo0422_simulation_spatial_unif.Rmd
+    Untracked:  analysis/denovo_0422_models.Rmd
 
 Unstaged changes:
     Modified:   analysis/denovo0422_simulation_nonspatial.Rmd
+    Deleted:    analysis/denovo0422_simulation_spatial.Rmd
+    Modified:   analysis/denovo0422_simulation_spatial_norm_nonspatial.Rmd
     Modified:   analysis/denovo_0422.Rmd
 
 </code></pre>
@@ -627,6 +633,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/analysis/denovo0422_simulation_nonspatial.Rmd" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/denovo0422_simulation_nonspatial.html" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/analysis/denovo0422_simulation_nonspatial.Rmd" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -669,66 +709,27 @@ update
 id="modeling-the-non-spatial-random-effects-with-gamma-distribution"
 class="section level2">
 <h2>Modeling the non-spatial random effects with gamma distribution</h2>
-<p>We divide the genome into windows. The window sizes for the local
-random effects range from hundreds kb to 1mb.</p>
-<p>We are modeling the non-spatial random effects <span
-class="math inline">\(\theta_i\)</span> with gamma distribution:</p>
-<p><span class="math display">\[\theta_i \sim Gamma(\alpha,
-\beta)\]</span></p>
-<p>Since the observed mutation rate from Roulette <span
-class="math inline">\(\mu_i\)</span> is calibrated (the total mutation
-rate is given), we just have single overdispersion parameter</p>
-<p>so, the simple non-spatial random effect model follows</p>
-<p><span class="math display">\[\theta_i \sim Gamma(\alpha,
-\alpha)\]</span></p>
-<p>So the likelihood is :</p>
-<p><span class="math display">\[\begin{aligned}
-Pr(y_{i} |\mu_{i},\alpha) &amp;= \int_0^{+\infty}
-Pr(y_{i}|\mu_{i},\theta_{i})Pr(\theta_{i}|\alpha)\,d\theta_{i} \\
-\end{aligned}\]</span></p>
-<p>which can be optimized by MLE with different methods and different
-initial values.</p>
-<pre class="r"><code># Input is a dataframe of observed rates and expected rates
-est.alpha &lt;- function(dat) {
-  mu_pos &lt;- dat$exp &gt; 0
-  y_pos &lt;- dat$obs &gt; 0
-  dat.mu_pos &lt;- dat[(!y_pos)&amp;mu_pos,]
-  dat.y_pos &lt;- dat[y_pos,]
-  loglik &lt;- function(alpha) {
-    loglik.mu_pos &lt;- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
-    loglik.y_pos &lt;- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
-    -sum(loglik.mu_pos) - sum(loglik.y_pos)
-  }
-  res &lt;- optim(par=1, fn=loglik, method=&quot;BFGS&quot;) # May need to try different initiations and methods
-  res$par # MLE of alpha
-}</code></pre>
-<p>The posterior distribution of <span
-class="math inline">\(\tilde{\theta_{i}}\)</span> is :</p>
-<p><span class="math display">\[\theta_{i} | y_i,\mu_i,\alpha \sim
-Gamma( y_i+\alpha, \mu_i+\alpha)\]</span> So the posterior mean of <span
-class="math inline">\(\theta_{i}\)</span> is:</p>
-<p><span class="math display">\[E(\theta_{i} | y_i,\mu_i,\alpha) =
-\dfrac{y_i+\alpha}{\mu_i+\alpha}\]</span></p>
+<p>The model is described <a
+href="https://xsun1229.github.io/mutation_rate/denovo_0422_models.html">here</a></p>
 </div>
 <div id="simulation-setups" class="section level2">
 <h2>Simulation setups</h2>
 <ol style="list-style-type: decimal">
-<li>Use Gamma prior to sample <span
-class="math inline">\(\theta_i\)</span> in the simulation: <span
-class="math display">\[\tilde{\theta_{i}} \sim
-Gamma(\alpha,\alpha)\]</span> for all windows. The prior <span
-class="math inline">\(\alpha \in \{5,10,30,50\}\)</span></li>
+<li>Use Gamma prior to sample <span class="math inline">\(\tilde
+\theta_i\)</span> in the simulation: <span class="math display">\[\tilde
+\theta_{i} \sim Gamma(\alpha,\alpha)\]</span> for all windows. The prior
+<span class="math inline">\(\alpha \in \{5,10,30,50\}\)</span></li>
 </ol>
 <pre class="r"><code>randeff_simulated &lt;- rgamma(n = 3000, shape = 3, rate =3)
 plot(randeff_simulated)</code></pre>
-<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-1-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>print(sprintf(&quot;mean value of randeff_simulated = %s&quot;,mean(randeff_simulated)))</code></pre>
 <pre><code>[1] &quot;mean value of randeff_simulated = 0.998727426004424&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Sampling the observed mutation count <span
 class="math inline">\(y_i\)</span> From Poisson Distribution <span
 class="math inline">\(y_i \sim
-\text{pois}(\mu_i\tilde{\theta_i)}\)</span>, <span
+\text{pois}(\mu_i\tilde\theta_i)\)</span>, <span
 class="math inline">\(\mu_i\)</span> is the Roulette estimated mutation
 rate</p></li>
 <li><p>Estimating <span class="math inline">\(\hat{\alpha}\)</span>
@@ -742,6 +743,7 @@ class="math display">\[\dfrac{y_i+\hat{\alpha}}{\mu_i+\hat{\alpha}}
 <div id="functions-used" class="section level2">
 <h2>Functions used</h2>
 <pre class="r"><code>library(ggplot2)
+library(gridExtra)
 plot_randeff &lt;- function(data) {
   
   
@@ -757,18 +759,18 @@ plot_randeff &lt;- function(data) {
 
 scatter_plot_randeff &lt;- function(data) {
   # Fit the linear model
-  fit &lt;- lm(randeff_est ~ randeff_simulated, data = data)
+  fit &lt;- lm(randeff_simulated ~ randeff_est + 0, data = data)
   adj_rsq &lt;- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
   
   # Generate the plot
-  ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  ggplot(data, aes(x = randeff_est, y = randeff_simulated)) +
     geom_point(color = &quot;black&quot;) +
     geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;) +
     geom_text(aes(label = paste(&quot;Adj R-sq =&quot;, round(adj_rsq, 3))),
               x = Inf, y = -Inf, hjust = 1, vjust = 0,
               color = &quot;blue&quot;) +
-    labs(x = &quot;True random effect theta_i&quot;,
-         y = &quot;Estimated random effect&quot;) +
+    labs(x = &quot;Estimated random effect&quot;,
+         y = &quot;True random effect theta_i&quot;) +
     theme_minimal()
 }
 
@@ -779,6 +781,24 @@ plot_dnm &lt;- function(data, windowsize) {
     geom_line(aes(y = randeff_est), color = &quot;red&quot;, alpha = 0.5) +
     labs(x = &quot;Window index&quot;,
          y = paste0(&quot;% of DNM/window (windowsize = &quot;, as.numeric(windowsize) / 1000, &quot;kb)&quot;)) +
+    theme_minimal()
+}
+
+scatter_plot_mutct &lt;- function(data, xcol, ycol) {
+  # Fit the linear model using user-defined columns
+  formula &lt;- as.formula(paste(ycol, &quot;~&quot;, xcol,&quot;+0&quot;))
+  fit &lt;- lm(formula, data = data)
+  adj_rsq &lt;- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+  
+  # Generate the plot with user-defined columns
+  ggplot(data, aes_string(x = xcol, y = ycol)) +
+    geom_point(color = &quot;black&quot;) +
+    geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;) +
+    geom_text(aes(label = paste0(&quot;Adj R-sq = &quot;, round(adj_rsq, 3))),
+              x = Inf, y = Inf, hjust = 1.1, vjust = 1.1,
+              color = &quot;blue&quot;, parse = FALSE) +  # Ensure label is treated as text
+    labs(x = paste(&quot;Predicted y:&quot;, xcol),
+         y = paste(&quot;True y (sample):&quot;, ycol)) +
     theme_minimal()
 }</code></pre>
 </div>
@@ -792,6 +812,137 @@ plot_dnm &lt;- function(data, windowsize) {
 <h3>Gamma prior <span class="math inline">\(\alpha=5\)</span></h3>
 <pre><code>[1] &quot;true alpha = 5&quot;</code></pre>
 <pre><code>[1] &quot;estimated alpha = 5.1&quot;</code></pre>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-1.png" target="_blank">7c2db32</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
+Past versions of unnamed-chunk-3-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-2.png" target="_blank">7c2db32</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-3">
+Past versions of unnamed-chunk-3-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-3.png" target="_blank">7c2db32</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-3-4.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="gamma-prior-alpha10" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
+<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 9.57500000000001&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
@@ -815,6 +966,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-1.png" target="_blank">7c2db32</a>
@@ -855,6 +1017,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -893,6 +1066,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -906,11 +1090,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-4-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha10" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
-<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 9.57500000000001&quot;</code></pre>
+<div id="gamma-prior-alpha30" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
+<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 27.3&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
@@ -934,6 +1119,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-1.png" target="_blank">7c2db32</a>
@@ -974,6 +1170,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1012,6 +1219,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1025,11 +1243,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-5-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha30" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
-<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 27.3&quot;</code></pre>
+<div id="gamma-prior-alpha50" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
+<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 51.3&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
@@ -1053,6 +1272,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-1.png" target="_blank">7c2db32</a>
@@ -1093,6 +1323,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1131,6 +1372,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1144,11 +1396,15 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-6-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha50" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
-<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 51.3&quot;</code></pre>
+</div>
+<div id="kb-1" class="section level2">
+<h2>30 kb</h2>
+<div id="gamma-prior-alpha5-1" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=5\)</span></h3>
+<pre><code>[1] &quot;true alpha = 5&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 4.925&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
@@ -1172,6 +1428,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-1.png" target="_blank">7c2db32</a>
@@ -1212,6 +1479,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1250,6 +1528,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1263,14 +1552,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-7-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="kb-1" class="section level2">
-<h2>30 kb</h2>
-<div id="gamma-prior-alpha5-1" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=5\)</span></h3>
-<pre><code>[1] &quot;true alpha = 5&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 4.925&quot;</code></pre>
+<div id="gamma-prior-alpha10-1" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
+<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 9.77500000000001&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
@@ -1294,6 +1581,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-1.png" target="_blank">7c2db32</a>
@@ -1334,6 +1632,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1372,6 +1681,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1385,11 +1705,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-8-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha10-1" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
-<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 9.77500000000001&quot;</code></pre>
+<div id="gamma-prior-alpha30-1" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
+<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 26.1&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
@@ -1413,6 +1734,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-1.png" target="_blank">7c2db32</a>
@@ -1453,6 +1785,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1491,6 +1834,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1504,11 +1858,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-9-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha30-1" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
-<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 26.1&quot;</code></pre>
+<div id="gamma-prior-alpha50-1" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
+<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 40.1&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
@@ -1532,6 +1887,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-1.png" target="_blank">7c2db32</a>
@@ -1572,6 +1938,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1610,6 +1987,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1623,11 +2011,15 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-10-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha50-1" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
-<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 40.1&quot;</code></pre>
+</div>
+<div id="kb-2" class="section level2">
+<h2>50 kb</h2>
+<div id="gamma-prior-alpha5-2" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=5\)</span></h3>
+<pre><code>[1] &quot;true alpha = 5&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 4.9125&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
@@ -1651,6 +2043,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-1.png" target="_blank">7c2db32</a>
@@ -1691,6 +2094,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1729,6 +2143,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1742,14 +2167,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-11-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="kb-2" class="section level2">
-<h2>50 kb</h2>
-<div id="gamma-prior-alpha5-2" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=5\)</span></h3>
-<pre><code>[1] &quot;true alpha = 5&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 4.9125&quot;</code></pre>
+<div id="gamma-prior-alpha10-2" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
+<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 10.4&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
@@ -1773,6 +2196,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-1.png" target="_blank">7c2db32</a>
@@ -1813,6 +2247,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1851,6 +2296,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1864,11 +2320,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-12-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha10-2" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
-<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 10.4&quot;</code></pre>
+<div id="gamma-prior-alpha30-2" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
+<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 24.4&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
@@ -1892,6 +2349,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-1.png" target="_blank">7c2db32</a>
@@ -1932,6 +2400,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1970,6 +2449,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -1983,11 +2473,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-13-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha30-2" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
-<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 24.4&quot;</code></pre>
+<div id="gamma-prior-alpha50-2" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
+<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 31.3&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
@@ -2011,6 +2502,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-1.png" target="_blank">7c2db32</a>
@@ -2051,6 +2553,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2089,6 +2602,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2102,11 +2626,15 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-14-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha50-2" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
-<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 31.3&quot;</code></pre>
+</div>
+<div id="kb-3" class="section level2">
+<h2>100 kb</h2>
+<div id="gamma-prior-alpha5-3" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=5\)</span></h3>
+<pre><code>[1] &quot;true alpha = 5&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 4.8625&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
@@ -2130,6 +2658,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-1.png" target="_blank">7c2db32</a>
@@ -2170,6 +2709,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2208,6 +2758,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2221,14 +2782,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-15-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="kb-3" class="section level2">
-<h2>100 kb</h2>
-<div id="gamma-prior-alpha5-3" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=5\)</span></h3>
-<pre><code>[1] &quot;true alpha = 5&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 4.8625&quot;</code></pre>
+<div id="gamma-prior-alpha10-3" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
+<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 9.72500000000001&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
@@ -2252,6 +2811,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-1.png" target="_blank">7c2db32</a>
@@ -2292,6 +2862,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2330,6 +2911,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2343,11 +2935,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-16-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha10-3" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=10\)</span></h3>
-<pre><code>[1] &quot;true alpha = 10&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 9.72500000000001&quot;</code></pre>
+<div id="gamma-prior-alpha30-3" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
+<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 26.8&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
@@ -2371,6 +2964,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-1.png" target="_blank">7c2db32</a>
@@ -2411,6 +3015,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2449,6 +3064,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2462,11 +3088,12 @@ XSun
 </table>
 </div>
 </div>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-17-4.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
-<div id="gamma-prior-alpha30-3" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=30\)</span></h3>
-<pre><code>[1] &quot;true alpha = 30&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 26.8&quot;</code></pre>
+<div id="gamma-prior-alpha50-3" class="section level3">
+<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
+<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
+<pre><code>[1] &quot;estimated alpha = 42.5&quot;</code></pre>
 <p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
@@ -2490,6 +3117,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-1.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-1.png" target="_blank">7c2db32</a>
@@ -2530,6 +3168,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-2.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-2.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2568,6 +3217,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/ff5e5993d6b0ab35a96db63b8ef4f4bf88cf5cb2/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-3.png" target="_blank">ff5e599</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-04-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/7c2db3216a3b70eb447694f3e7c4afc10e663834/docs/figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-3.png" target="_blank">7c2db32</a>
 </td>
 <td>
@@ -2581,12 +3241,7 @@ XSun
 </table>
 </div>
 </div>
-</div>
-<div id="gamma-prior-alpha50-3" class="section level3">
-<h3>Gamma prior <span class="math inline">\(\alpha=50\)</span></h3>
-<pre><code>[1] &quot;true alpha = 50&quot;</code></pre>
-<pre><code>[1] &quot;estimated alpha = 42.5&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-19-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-19-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-19-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_nonspatial.Rmd/unnamed-chunk-18-4.png" width="1152" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2610,7 +3265,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] ggplot2_3.3.5
+[1] gridExtra_2.3 ggplot2_3.3.5
 
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.8.3     pillar_1.9.0     compiler_4.2.0   bslib_0.3.1     

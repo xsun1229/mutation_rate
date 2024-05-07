@@ -1,0 +1,117 @@
+---
+title: "Models"
+author: "XSun"
+date: "2024-05-06"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# The mutation count model 
+
+We partitioned the whole genome into disjoint windows (10kb, 30kb, 50kb, 100kb). 
+
+We denoted the mutation count (summing over all mutation types) in window $i$ as $y_i$, which follows a Poisson distribution 
+
+$$y_i \sim \text{pois}(\mu_i\theta_i)$$
+$\mu_i$: the expected mutation count. Here we used the estimation from [Roulette](https://www.nature.com/articles/s41588-023-01562-0)
+.
+$\theta_i$: represents additional local variation, is a "random effect" measuring the departure from the expected rate.
+
+The parameter $\theta_i$ can result from both
+
+- Non-spatial effects $\theta_i^{NS}$
+
+- Spatial effects $\theta_i^{S}$ 
+
+Where $\theta_i = \theta_i^{NS} * \theta_i^{S}$
+
+Besides, we donate $r_i$ = $y_i$/$\mu_i$ (fold change) as the ratio of observed vs. expected mutations
+
+The window sizes for the local random effects range from hundreds kb to 1mb
+
+# The non-spatial random effect model
+
+## Modeling the non-spatial random effects with gamma distribution
+
+We are modeling the non-spatial random effects $\theta_i$ with gamma distribution:
+
+$$\theta_i \sim Gamma(\alpha, \beta)$$ 
+
+Since the observed mutation rate from Roulette $\mu_i$ is calibrated (the total mutation rate is given), we just have single overdispersion parameter
+
+so, the simple non-spatial random effect model follows
+
+$$\theta_i \sim Gamma(\alpha, \alpha)$$ 
+
+So the likelihood is :
+
+$$\begin{aligned}
+Pr(y_{i} |\mu_{i},\alpha) &= \int_0^{+\infty}
+Pr(y_{i}|\mu_{i},\theta_{i})Pr(\theta_{i}|\alpha)\,d\theta_{i} \\
+\end{aligned}$$
+
+
+Integrate out $\theta$,
+\[
+Pr(y_{i} \mid \mu_{i}, \alpha) = \int_0^{+\infty} Pr(y_{i} \mid \mu_{i}, \theta_{i}) Pr(\theta_{i} \mid \alpha) d\theta_{i}
+\]
+\[
+= \int_0^{+\infty} \frac{(\mu_{i} \theta_{i})^{y_{i}} e^{-\mu_{i} \theta_{i}}}{y_{i}!} \frac{\theta_{i}^{\alpha-1} e^{-\alpha \theta_{i}}}{\Gamma(\alpha)} d\theta_{i}
+\]
+\[
+= \frac{\mu_{i}^\alpha}{y_{i}! \Gamma(\alpha)} \int_0^{+\infty} \theta_{i}^{y_{i}+\alpha-1} e^{-(\mu_{i}+\alpha)\theta_{i}} d\theta_{i}
+\]
+\[
+= \frac{\mu_{i}^\alpha}{y_{i}! \Gamma(\alpha)} \cdot \frac{\Gamma(y_{i} + \alpha)}{(\mu_{i} + \alpha)^{y_{i}+\alpha}}
+\]
+\[
+= \frac{\mu_{i}^\alpha (\mu_{i} + \alpha)^{-y_{i}-\alpha} \Gamma(y_{i} + \alpha)}{y_{i}! \Gamma(\alpha)}
+\]
+\[
+= \binom{y_{i} + \alpha - 1}{y_{i}} \left(1 - \frac{\alpha}{\mu_{i} + \alpha}\right)^{y_{i}} \left(\frac{\alpha}{\mu_{i} + \alpha}\right)^\alpha
+\]
+Therefore, $y_{i}$ follows a negative binomial distribution.
+\[
+y_{i} \sim NB\left(\alpha, \frac{\alpha}{\mu_{i} + \alpha}\right)
+\]
+
+which can be optimized by MLE with different methods and different initial values.
+
+```{r echo=T, message=FALSE, warning=FALSE}
+
+# Input is a dataframe of observed rates and expected rates
+est.alpha <- function(dat) {
+  mu_pos <- dat$exp > 0
+  y_pos <- dat$obs > 0
+  dat.mu_pos <- dat[(!y_pos)&mu_pos,]
+  dat.y_pos <- dat[y_pos,]
+  loglik <- function(alpha) {
+    loglik.mu_pos <- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
+    loglik.y_pos <- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
+    -sum(loglik.mu_pos) - sum(loglik.y_pos)
+  }
+  res <- optim(par=1, fn=loglik, method="BFGS") # May need to try different initiations and methods
+  res$par # MLE of alpha
+}
+
+```
+
+
+The posterior distribution of $\theta_{i}$ is :
+
+$$\theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
+So the posterior mean of $\theta_{i}$ is:
+
+$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha}$$
+
+
+
+# The spatial random effect model 
+
+The spatial random effects are estimated using [smash](https://jmlr.org/papers/volume22/19-042/19-042.pdf) / [smash-gen](https://stephenslab.uchicago.edu/assets/papers/dongyue-thesis.pdf)
+
+
+
+

@@ -12,57 +12,11 @@ output:
 
 ## Modeling the non-spatial random effects with gamma distribution
 
-We divide the genome into windows. The window sizes for the local random effects range from hundreds kb to 1mb.
-
-We are modeling the non-spatial random effects $\theta_i$ with gamma distribution:
-
-$$\theta_i \sim Gamma(\alpha, \beta)$$ 
-
-Since the observed mutation rate from Roulette $\mu_i$ is calibrated (the total mutation rate is given), we just have single overdispersion parameter
-
-so, the simple non-spatial random effect model follows
-
-$$\theta_i \sim Gamma(\alpha, \alpha)$$ 
-
-So the likelihood is :
-
-$$\begin{aligned}
-Pr(y_{i} |\mu_{i},\alpha) &= \int_0^{+\infty}
-Pr(y_{i}|\mu_{i},\theta_{i})Pr(\theta_{i}|\alpha)\,d\theta_{i} \\
-\end{aligned}$$
-
-which can be optimized by MLE with different methods and different initial values.
-
-```{r echo=T, message=FALSE, warning=FALSE}
-
-# Input is a dataframe of observed rates and expected rates
-est.alpha <- function(dat) {
-  mu_pos <- dat$exp > 0
-  y_pos <- dat$obs > 0
-  dat.mu_pos <- dat[(!y_pos)&mu_pos,]
-  dat.y_pos <- dat[y_pos,]
-  loglik <- function(alpha) {
-    loglik.mu_pos <- alpha*(log(alpha) - log(dat.mu_pos$exp+alpha))
-    loglik.y_pos <- log(gamma(dat.y_pos$obs+alpha)) - log(gamma(alpha)) + alpha*log(alpha) - (dat.y_pos$obs+alpha)*log(dat.y_pos$exp+alpha)
-    -sum(loglik.mu_pos) - sum(loglik.y_pos)
-  }
-  res <- optim(par=1, fn=loglik, method="BFGS") # May need to try different initiations and methods
-  res$par # MLE of alpha
-}
-
-```
-
-
-The posterior distribution of $\tilde{\theta_{i}}$ is :
-
-$$\theta_{i} | y_i,\mu_i,\alpha \sim Gamma( y_i+\alpha, \mu_i+\alpha)$$ 
-So the posterior mean of $\theta_{i}$ is:
-
-$$E(\theta_{i} | y_i,\mu_i,\alpha) = \dfrac{y_i+\alpha}{\mu_i+\alpha}$$
+The model is described [here](https://xsun1229.github.io/mutation_rate/denovo_0422_models.html)
 
 ## Simulation setups
 
-1. Use Gamma prior to sample $\theta_i$ in the simulation: $$\tilde{\theta_{i}} \sim Gamma(\alpha,\alpha)$$  for all windows. The prior $\alpha \in \{5,10,30,50\}$
+1. Use Gamma prior to sample $\tilde \theta_i$ in the simulation: $$\tilde \theta_{i} \sim Gamma(\alpha,\alpha)$$  for all windows. The prior $\alpha \in \{5,10,30,50\}$
 
 ```{r}
 randeff_simulated <- rgamma(n = 3000, shape = 3, rate =3)
@@ -71,7 +25,7 @@ print(sprintf("mean value of randeff_simulated = %s",mean(randeff_simulated)))
 ```
 
 
-2. Sampling the observed mutation count $y_i$ From Poisson Distribution $y_i \sim \text{pois}(\mu_i\tilde{\theta_i)}$, $\mu_i$ is the Roulette estimated mutation rate
+2. Sampling the observed mutation count $y_i$ From Poisson Distribution $y_i \sim \text{pois}(\mu_i\tilde\theta_i)$, $\mu_i$ is the Roulette estimated mutation rate
 
 3. Estimating $\hat{\alpha}$ using MLE Simplex (Nelder-Mead) method (see the details above)
 
@@ -82,6 +36,7 @@ print(sprintf("mean value of randeff_simulated = %s",mean(randeff_simulated)))
 
 ```{r} 
 library(ggplot2)
+library(gridExtra)
 plot_randeff <- function(data) {
   
   
@@ -97,18 +52,18 @@ plot_randeff <- function(data) {
 
 scatter_plot_randeff <- function(data) {
   # Fit the linear model
-  fit <- lm(randeff_est ~ randeff_simulated, data = data)
+  fit <- lm(randeff_simulated ~ randeff_est + 0, data = data)
   adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
   
   # Generate the plot
-  ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  ggplot(data, aes(x = randeff_est, y = randeff_simulated)) +
     geom_point(color = "black") +
     geom_abline(intercept = 0, slope = 1, color = "red") +
     geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
               x = Inf, y = -Inf, hjust = 1, vjust = 0,
               color = "blue") +
-    labs(x = "True random effect theta_i",
-         y = "Estimated random effect") +
+    labs(x = "Estimated random effect",
+         y = "True random effect theta_i") +
     theme_minimal()
 }
 
@@ -119,6 +74,24 @@ plot_dnm <- function(data, windowsize) {
     geom_line(aes(y = randeff_est), color = "red", alpha = 0.5) +
     labs(x = "Window index",
          y = paste0("% of DNM/window (windowsize = ", as.numeric(windowsize) / 1000, "kb)")) +
+    theme_minimal()
+}
+
+scatter_plot_mutct <- function(data, xcol, ycol) {
+  # Fit the linear model using user-defined columns
+  formula <- as.formula(paste(ycol, "~", xcol,"+0"))
+  fit <- lm(formula, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+  
+  # Generate the plot with user-defined columns
+  ggplot(data, aes_string(x = xcol, y = ycol)) +
+    geom_point(color = "black") +
+    geom_abline(intercept = 0, slope = 1, color = "red") +
+    geom_text(aes(label = paste0("Adj R-sq = ", round(adj_rsq, 3))),
+              x = Inf, y = Inf, hjust = 1.1, vjust = 1.1,
+              color = "blue", parse = FALSE) +  # Ensure label is treated as text
+    labs(x = paste("Predicted y:", xcol),
+         y = paste("True y (sample):", ycol)) +
     theme_minimal()
 }
 
@@ -143,6 +116,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -157,6 +135,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -171,6 +154,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -185,6 +173,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 ## 30 kb
@@ -200,6 +193,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -214,6 +212,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -228,6 +231,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -242,6 +250,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 ## 50 kb
@@ -257,6 +270,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -271,6 +289,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -285,6 +308,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -299,6 +327,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -315,6 +348,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -329,6 +367,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -343,6 +386,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```
 
 
@@ -357,4 +405,9 @@ print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
 scatter_plot_randeff(data)
+
+data$y_pred <- data$randeff_est * data$exp_rl
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
 ```

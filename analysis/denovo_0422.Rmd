@@ -8,35 +8,26 @@ editor_options:
   chunk_output_type: console
 ---
 
+# Models
+
+[link](https://xsun1229.github.io/mutation_rate/denovo_0422_models.html)
+
 # Data Overview
 
 [link](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html)
-
-# Models
-
-We partitioned the whole genome into disjoint windows (10kb, 30kb, 50kb, 100kb). 
-
-We denoted the mutation count (summing over all mutation types) in window $i$ as $y_i$, which follows a Poisson distribution 
-
-$$y_i \sim \text{pois}(\mu_i\theta_i)$$
-$\mu_i$ the expected mutation count from Roulette.
-$\theta_i$ represents additional local variation, is a "random effect"  measuring the departure from the expected rate.
-
-The parameter $\theta_i$ can result from both:
-- Non-spatial effects $\theta_i^{NS}$
-- Spatial effects $\theta_i^{S}$
-
-Besides, we donate $r_i$ = $y_i$/$\mu_i$ (fold change) as the ratio of observed vs. expected mutations
-
-The window sizes for the local random effects range from hundreds kb to 1mb
 
 # Simulation
 
 [non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
 
-[spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial.html)
+[spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm.html)
 
-[spatial and non-spatial random effects, max_spatial from uniform](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_nonspatial.html)
+[spatial and non-spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial.html)
 
-[spatial and non-spatial random effects, max_spatial from normal](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial.html)
+
+## Previous analysis
+
+[spatial and non-spatial random effects, random effects_spatial from uniform distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_nonspatial.html)
+
+[spatial random effects, random effects_spatial from uniform distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_unif.html)
 

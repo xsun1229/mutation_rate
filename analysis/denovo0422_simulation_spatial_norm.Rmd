@@ -1,0 +1,278 @@
+---
+title: "Simulation for spatial random effects (random effects_spatial from normal distribution)"
+author: "XSun"
+date: "2024-05-06"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+## Simulation setup
+
+1. The window sizes for the local random effects range from hundreds kb to 1mb.
+
+2. The random effects $\text{log}\tilde{\theta}_i$ for the hotspots were sampled from normal distribution $$\text{log}\tilde{\theta}_i \sim \text{N}(0,\sigma^2)$$, The prior $\sigma^2 \in \{0.5,1\}$.  For others, random effects $\tilde{\theta}_i$ were set to 1.
+
+3. Then the random effects across all windows were ajusted, making the $\text{mean}(\tilde{\theta}_i)=1$.
+
+Below is an example for the random effect
+
+```{r collapse=TRUE, eval=T ,message=FALSE, fig.width=12, fig.height=5}
+generate_randeff_spatial_normal <- function(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, num_seg, normal_sigma) {
+  # Generate random segment lengths
+  
+  set.seed(1)
+  segment_lengths <- ceiling(runif(num_seg, min = num_windows_per_seg_min, max = num_windows_per_seg_max))
+  
+  # Calculate the total length covered by segments
+  total_segment_length <- sum(segment_lengths)
+  
+  # Check if the total segment length is greater than the genome length
+  # If so, reduce the last segment length to fit within the genome
+  if (total_segment_length > num_windows_all) {
+    segment_lengths[num_seg] <- segment_lengths[num_seg] - (total_segment_length - num_windows_all)
+  }
+  
+  # Calculate the number of zeros needed
+  num_zeros <- num_windows_all - total_segment_length
+  
+  # Randomly select positions for segment starts
+  segment_starts <- sample(1:num_zeros, num_seg, replace = FALSE)
+  
+  # Create the vector
+  randeff <- numeric(num_windows_all)
+  
+  # Assign random values to segments
+  for (i in 1:(num_seg)) {
+    start_pos <- segment_starts[i]
+    end_pos <- start_pos + segment_lengths[i] - 1
+    
+    log_eff <- rnorm(1,mean = 0,sd=normal_sigma)
+    eff <- exp(log_eff)
+    randeff[start_pos:end_pos] <- eff
+  }
+  
+  # Adjust values to meet the mean of 1
+  mean_adjustment <- 1 - mean(randeff)
+  randeff <- randeff + mean_adjustment
+  
+  # Clip values between 0 and randeff_max
+  #randeff[randeff < 0] <- 0
+  #randeff[randeff > randeff_max] <- randeff_max
+  
+  # Return the resulting genome vector
+  return(randeff)
+}
+
+
+num_windows_all <- 1000
+num_windows_per_seg_min <- 10
+num_windows_per_seg_max <- 30  
+randeff_max <- 5
+num_seg <- 10
+normal_sigma <- 0.5
+set.seed(2)
+randeff <-generate_randeff_spatial_normal(num_windows_all, num_windows_per_seg_min, num_windows_per_seg_max, num_seg,normal_sigma = normal_sigma)
+
+plot(randeff, type="l", ylab = "random effect")
+
+```
+
+
+4. We sampled the $\tilde{y_i}$ from 
+
+$$\tilde{y_i} \sim \text{pois}(\tilde{\theta_i}\mu_i)$$
+where $\mu_i$ is the expected mutations for each window $i$ from Roulette. 
+
+5. The $\tilde{y_i}$ and $\mu_i$ were used as inputs for smashgen and the $\hat{\theta_i}$ was the output.
+
+## Functions used
+
+```{r} 
+library(ggplot2)
+library(gridExtra)
+
+plot_randeff <- function(data) {
+  
+  ggplot(data, aes(x = x)) +
+    geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+    geom_line(aes(y = randeff_est, color = "Estimated"), alpha = 0.7) +
+    labs(x = "Window index",
+         y = "random effects",
+         color = "Type") +
+    scale_color_manual(values = c("Simulated" = "blue", "Estimated" = "red")) +
+    theme_minimal()
+}
+
+
+
+plot_dnm <- function(data, windowsize) {
+   ggplot(data, aes(x = x)) +
+    geom_point(aes(y = y_sample), color = "grey") +
+    geom_line(aes(y = randeff_simulated), color = "blue") +
+    geom_line(aes(y = randeff_est), color = "red", alpha = 0.5) +
+    labs(x = "Window index",
+         y = paste0("% of DNM/window (windowsize = ", as.numeric(windowsize) / 1000, "kb)")) +
+    theme_minimal()
+}
+
+scatter_plot_randeff <- function(data) {
+  # Fit the linear model
+  fit <- lm(randeff_simulated ~ randeff_est + 0, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+  
+  # Generate the plot
+  ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+    geom_point(color = "black") +
+    geom_abline(intercept = 0, slope = 1, color = "red") +
+    geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+              x = Inf, y = -Inf, hjust = 1, vjust = 0,
+              color = "blue") +
+    labs(x = "Estimated random effect",
+         y = "True random effect theta_i") +
+    theme_minimal()
+}
+
+scatter_plot_mutct <- function(data, xcol, ycol) {
+  # Fit the linear model using user-defined columns
+  formula <- as.formula(paste(ycol, "~", xcol,"+0"))
+  fit <- lm(formula, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+  
+  # Generate the plot with user-defined columns
+  ggplot(data, aes_string(x = xcol, y = ycol)) +
+    geom_point(color = "black") +
+    geom_abline(intercept = 0, slope = 1, color = "red") +
+    geom_text(aes(label = paste0("Adj R-sq = ", round(adj_rsq, 3))),
+              x = Inf, y = Inf, hjust = 1.1, vjust = 1.1,
+              color = "blue", parse = FALSE) +  # Ensure label is treated as text
+    labs(x = paste("Predicted y:", xcol),
+         y = paste("True y (sample):", ycol)) +
+    theme_minimal()
+}
+
+```
+
+# Results
+
+The estimated mutation rates are from Roulette chr1 
+
+## 10kb
+
+### sigma^2 = 0.5
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_10kb_maxiter50_normal_sigma0.5.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### sigma^2 = 1
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_10kb_maxiter50_normal_sigma1.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+## 30kb
+
+### sigma^2 = 0.5
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_30kb_maxiter50_normal_sigma0.5.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### sigma^2 = 1
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_30kb_maxiter50_normal_sigma1.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+## 50kb
+
+### sigma^2 = 0.5
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_50kb_maxiter50_normal_sigma0.5.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### sigma^2 = 1
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_50kb_maxiter50_normal_sigma1.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+## 100kb
+
+### sigma^2 = 0.5
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_100kb_maxiter50_normal_sigma0.5.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### sigma^2 = 1
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=12, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_100kb_maxiter50_normal_sigma1.rdata")
+plot_randeff(data)
+plot_dnm(data,windowsize)
+scatter_plot_randeff(data)
+p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
