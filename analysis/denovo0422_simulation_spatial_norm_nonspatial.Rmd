@@ -187,7 +187,7 @@ plot_randeff_nsp_after_sp <- function(dat) {
 # }
 
 
-plot_model <- function(data, estimate_column, title, alpha_est = NULL) {
+plot_model <- function(data, estimate_column, title, alpha_est = NULL,colcol) {
   
   # Fit linear model
   formula <- as.formula(paste(estimate_column, "~ randeff_simulated +0"))
@@ -195,15 +195,28 @@ plot_model <- function(data, estimate_column, title, alpha_est = NULL) {
   adj_rsq <- summary(fit)$adj.r.squared
   
   # Create the plot
-  p <- ggplot(data, aes(x = randeff_simulated, y = get(estimate_column))) +
-    geom_point(color = "black") +
-    geom_abline(intercept = 0, slope = 1, color = "red") +
-    geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
-              x = Inf, y = -Inf, hjust = 1, vjust = -1, color = "blue") +
-    labs(x = paste("Estimated random effect -", title),
-         y = "True random effect theta_i",
-         title = title) +
-    theme_minimal()
+  # p <- ggplot(data, aes(x = randeff_simulated, y = get(estimate_column))) +
+  #   geom_point(color = "black") +
+  #   geom_abline(intercept = 0, slope = 1, color = "red") +
+  #   geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),
+  #             x = Inf, y = -Inf, hjust = 1, vjust = -1, color = "blue") +
+  #   labs(x = paste("Estimated random effect -", title),
+  #        y = "True random effect theta_i",
+  #        title = title) +
+  #   theme_minimal()
+  # 
+  p <- ggplot(data) +
+  geom_point(data = data[data[[colcol]] == "FALSE", ], aes(x = randeff_simulated, y = get(estimate_column)), 
+             color = "black", alpha = 0.5) +
+  geom_point(data = data[data[[colcol]] == "TRUE", ], aes(x = randeff_simulated, y = get(estimate_column)), 
+             color = "red", alpha = 1) +  # Ensure red dots are on top
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3)),
+           hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
+  labs(x = paste("Estimated random effect -", title),
+       y = "True random effect theta_i",
+       title = paste0(title," |red: spatial effects")) +
+  theme_minimal()
   
   # Add alpha_est text only if alpha_est is not NULL
   if (!is.null(alpha_est)) {
@@ -214,23 +227,49 @@ plot_model <- function(data, estimate_column, title, alpha_est = NULL) {
   return(p)
 }
 
-scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
+# scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
+#   # Fit the linear model using user-defined columns
+#   formula <- as.formula(paste(ycol, "~", xcol,"+0"))
+#   fit <- lm(formula, data = data)
+#   adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+#   
+#   # Generate the plot with user-defined columns
+#   ggplot(data, aes_string(x = xcol, y = ycol)) +
+#     geom_point(color = "black") +
+#     geom_abline(intercept = 0, slope = 1, color = "red") +
+#     geom_text(aes(label = paste0("Adj R-sq = ", round(adj_rsq, 3))),
+#               x = Inf, y = Inf, hjust = 1.1, vjust = 1.1,
+#               color = "blue", parse = FALSE) +  # Ensure label is treated as text
+#     labs(x = paste("Predicted mutation count:", xcol),
+#          y = paste("True mutation count (sampled):", ycol),
+#          title = title) +
+#     theme_minimal()
+# }
+
+scatter_plot_mutct <- function(data, xcol, ycol, colcol, title=NULL) {
   # Fit the linear model using user-defined columns
-  formula <- as.formula(paste(ycol, "~", xcol,"+0"))
+  formula <- as.formula(paste(ycol, "~", xcol, "+0"))
   fit <- lm(formula, data = data)
   adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+
   
-  # Generate the plot with user-defined columns
-  ggplot(data, aes_string(x = xcol, y = ycol)) +
-    geom_point(color = "black") +
-    geom_abline(intercept = 0, slope = 1, color = "red") +
-    geom_text(aes(label = paste0("Adj R-sq = ", round(adj_rsq, 3))),
-              x = Inf, y = Inf, hjust = 1.1, vjust = 1.1,
-              color = "blue", parse = FALSE) +  # Ensure label is treated as text
-    labs(x = paste("Predicted mutation count:", xcol),
-         y = paste("True mutation count (sampled):", ycol),
-         title = title) +
-    theme_minimal()
+  ggplot(data) +
+  geom_point(data = data[data[[colcol]] == "FALSE", ], aes_string(x = xcol, y = ycol), 
+             color = "black", alpha = 0.5) +
+  geom_point(data = data[data[[colcol]] == "TRUE", ], aes_string(x = xcol, y = ycol), 
+             color = "red", alpha = 1) +  # Ensure red dots are on top
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3)),
+           hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
+  labs(x = paste("Predicted mutation count:", xcol),
+       y = paste("True mutation count (sampled):", ycol),
+       title = paste0(title," |red:spatial effects")) +
+  #guides(color = guide_legend(title = "Mutation Flag")) +
+  #scale_color_manual(values = c("FALSE" = "black", "TRUE" = "red"), 
+  #                     name = "Spatial effects", labels = c("False", "True")) +
+    
+  theme_minimal()
+  
 }
 
 
@@ -246,7 +285,7 @@ If we estimate the random effect using non-spatial model first and then fit the 
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_30_minseg20_maxseg40.rdata")
 
 plot_randeff_sp_after_nsp(dat)
 
@@ -256,7 +295,7 @@ But if we fit the spatial model first, we can keep the signal for both
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_30_minseg20_maxseg40.rdata")
 
 plot_randeff_nsp_after_sp(dat)
 
@@ -273,16 +312,16 @@ load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 
 ```
@@ -296,16 +335,16 @@ load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -317,15 +356,15 @@ load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -338,15 +377,15 @@ load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -358,16 +397,16 @@ load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -380,15 +419,15 @@ load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -397,19 +436,19 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_20_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_30_minseg4_maxseg20.rdata")
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -418,19 +457,19 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_30_minseg4_maxseg20.rdata")
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -438,19 +477,19 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_20_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_30_minseg10_maxseg20.rdata")
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -459,19 +498,19 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_30_minseg10_maxseg20.rdata")
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -479,19 +518,19 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_20_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_30_minseg20_maxseg40.rdata")
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
@@ -500,18 +539,18 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 
 ```{r fig.width=15, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_20_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_30_minseg20_maxseg40.rdata")
 
 plot_randeff_sp_nsp_joint(dat)
 
-p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only")
-p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only)
-p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns)
+p1 <- plot_model(data = dat, estimate_column = "randeff_est_sp_only", title = "spatial only",colcol = "spatial_effect")
+p2 <- plot_model(data = dat, estimate_column = "randeff_est_nsp_only", title = "non-spatial only", alpha_est = alpha_est_nsp_only,colcol = "spatial_effect")
+p3 <- plot_model(data = dat, estimate_column = "randeff_est_sf_ns_final", title = "spatial & non-spatial", alpha_est = alpha_est_sf_ns,colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, ncol = 3)
 dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
-p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only")
-p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only")
-p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette")
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
+p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
+p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
