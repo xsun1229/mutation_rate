@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1e297e8d9610c18217a7e4ba3316a8718ff6102btargetblank1e297e8a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree82bab4c51f096c3f0a2aa228845cc5ac0556a99ctargetblank82bab4ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/1e297e8d9610c18217a7e4ba3316a8718ff6102b" target="_blank">1e297e8</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/82bab4c51f096c3f0a2aa228845cc5ac0556a99c" target="_blank">82bab4c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1e297e8d9610c18217a7e4ba3316a8718ff6102btargetblank1e297e8a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree82bab4c51f096c3f0a2aa228845cc5ac0556a99ctargetblank82bab4ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/1e297e8d9610c18217a7e4ba3316a8718ff6102b" target="_blank">1e297e8</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/82bab4c51f096c3f0a2aa228845cc5ac0556a99c" target="_blank">82bab4c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -571,18 +571,11 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
-    Ignored:    analysis/figure/
-
-Untracked files:
-    Untracked:  analysis/denovo0422_simulation_spatial_norm.Rmd
-    Untracked:  analysis/denovo0422_simulation_spatial_unif.Rmd
-    Untracked:  analysis/denovo_0422_models.Rmd
 
 Unstaged changes:
     Modified:   analysis/denovo0422_simulation_nonspatial.Rmd
-    Deleted:    analysis/denovo0422_simulation_spatial.Rmd
+    Modified:   analysis/denovo0422_simulation_spatial_norm.Rmd
     Modified:   analysis/denovo0422_simulation_spatial_norm_nonspatial.Rmd
-    Modified:   analysis/denovo_0422.Rmd
 
 </code></pre>
 <p>
@@ -630,6 +623,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/analysis/denovo0422_simulation_spatial_norm_nonspatial.Rmd" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/denovo0422_simulation_spatial_norm_nonspatial.html" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -769,6 +796,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-1-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-1-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -811,18 +849,33 @@ effect <span class="math inline">\(\hat\theta_i = \hat\theta_i^{S} *
 <h2>Functions used</h2>
 <pre class="r"><code>library(ggplot2)
 library(gridExtra)
+# plot_randeff_sp_nsp_joint &lt;- function(dat) {
+#   ggplot(dat, aes(x = seq_along(y_sample))) +
+#   geom_line(aes(y = randeff_simulated, color = &quot;Simulated&quot;), alpha = 0.3) +
+#   geom_line(aes(y = randeff_est_sp_only, color = &quot;Spatial-only&quot;)) +
+#   geom_line(aes(y = randeff_est_nsf_sp_final, color = &quot;spatial&amp;non-spatial&quot;), alpha = 0.3) +
+#   geom_line(aes(y = randeff_est_nsp_only, color = &quot;Non-spatial only&quot;), alpha = 0.3) +
+#   labs(x = &quot;Window index&quot;,
+#        y = &quot;estimated random effects&quot;) +
+#   scale_color_manual(name = &quot;Group&quot;, 
+#                      values = c(&quot;Simulated&quot; = &quot;blue&quot;, &quot;Spatial-only&quot; = &quot;red&quot;, 
+#                                 &quot;spatial&amp;non-spatial&quot; = &quot;brown&quot;, &quot;Non-spatial only&quot; = &quot;green&quot;), 
+#                      labels = c(&quot;Simulated&quot;, &quot;Spatial-only&quot;, &quot;spatial&amp;non-spatial&quot;, &quot;Non-spatial only&quot;)) +
+#   theme_minimal()
+# }
+
 plot_randeff_sp_nsp_joint &lt;- function(dat) {
   ggplot(dat, aes(x = seq_along(y_sample))) +
-  geom_line(aes(y = randeff_simulated, color = &quot;Simulated&quot;), alpha = 0.5) +
+  geom_line(aes(y = randeff_simulated, color = &quot;Simulated&quot;), alpha = 0.3) +
   geom_line(aes(y = randeff_est_sp_only, color = &quot;Spatial-only&quot;)) +
-  geom_line(aes(y = randeff_est_nsf_sp_final, color = &quot;spatial&amp;non-spatial&quot;), alpha = 0.5) +
-  geom_line(aes(y = randeff_est_nsp_only, color = &quot;Non-spatial only&quot;), alpha = 0.6) +
+  geom_line(aes(y = randeff_est_nsf_sp_final, color = &quot;spatial&amp;non-spatial&quot;), alpha = 0.3) +
+  #geom_line(aes(y = randeff_est_nsp_only, color = &quot;Non-spatial only&quot;), alpha = 0.3) +
   labs(x = &quot;Window index&quot;,
        y = &quot;estimated random effects&quot;) +
   scale_color_manual(name = &quot;Group&quot;, 
                      values = c(&quot;Simulated&quot; = &quot;blue&quot;, &quot;Spatial-only&quot; = &quot;red&quot;, 
-                                &quot;spatial&amp;non-spatial&quot; = &quot;brown&quot;, &quot;Non-spatial only&quot; = &quot;green&quot;), 
-                     labels = c(&quot;Simulated&quot;, &quot;Spatial-only&quot;, &quot;spatial&amp;non-spatial&quot;, &quot;Non-spatial only&quot;)) +
+                                &quot;spatial&amp;non-spatial&quot; = &quot;brown&quot;), 
+                     labels = c(&quot;Simulated&quot;, &quot;Spatial-only&quot;, &quot;spatial&amp;non-spatial&quot;)) +
   theme_minimal()
 }
 
@@ -856,13 +909,35 @@ plot_randeff_nsp_after_sp &lt;- function(dat) {
   theme_minimal()
 }
 
+# plot_model &lt;- function(data, estimate_column, title, alpha_est = NULL) {
+#   print(title)
+#   
+#   # Optional printing of alpha, if provided
+#   if (!is.null(alpha_est)) {
+#     print(sprintf(&quot;alpha = %s&quot;, alpha_est))
+#   }
+#   
+#   # Fit linear model
+#   formula &lt;- as.formula(paste(estimate_column, &quot;~ randeff_simulated +0&quot;))
+#   fit &lt;- lm(formula, data = data)
+#   adj_rsq &lt;- summary(fit)$adj.r.squared
+#   
+#   # Create the plot
+#   p &lt;- ggplot(data, aes(x = randeff_simulated, y = get(estimate_column))) +
+#     geom_point(color = &quot;black&quot;) +
+#     geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;) +
+#     geom_text(aes(label = paste(&quot;Adj R-sq =&quot;, round(adj_rsq, 3))),
+#               x = Inf, y = -Inf, hjust = 1, vjust = 0, color = &quot;blue&quot;) +
+#     labs(x = paste(&quot;estimated random effect -&quot;, title),
+#          y = &quot;true random effect theta_i&quot;,
+#          title = title) +
+#     theme_minimal()
+#   
+#   print(p)
+# }
+
+
 plot_model &lt;- function(data, estimate_column, title, alpha_est = NULL) {
-  print(title)
-  
-  # Optional printing of alpha, if provided
-  if (!is.null(alpha_est)) {
-    print(sprintf(&quot;alpha = %s&quot;, alpha_est))
-  }
   
   # Fit linear model
   formula &lt;- as.formula(paste(estimate_column, &quot;~ randeff_simulated +0&quot;))
@@ -874,13 +949,19 @@ plot_model &lt;- function(data, estimate_column, title, alpha_est = NULL) {
     geom_point(color = &quot;black&quot;) +
     geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;) +
     geom_text(aes(label = paste(&quot;Adj R-sq =&quot;, round(adj_rsq, 3))),
-              x = Inf, y = -Inf, hjust = 1, vjust = 0, color = &quot;blue&quot;) +
-    labs(x = paste(&quot;estimated random effect -&quot;, title),
-         y = &quot;true random effect theta_i&quot;,
+              x = Inf, y = -Inf, hjust = 1, vjust = -1, color = &quot;blue&quot;) +
+    labs(x = paste(&quot;Estimated random effect -&quot;, title),
+         y = &quot;True random effect theta_i&quot;,
          title = title) +
     theme_minimal()
   
-  print(p)
+  # Add alpha_est text only if alpha_est is not NULL
+  if (!is.null(alpha_est)) {
+    p &lt;- p + geom_text(aes(label = paste(&quot;alpha_est =&quot;, round(alpha_est, 3))),
+                       x = Inf, y = -Inf, hjust = 1, vjust = -3, color = &quot;blue&quot;)
+  }
+  
+  return(p)
 }
 
 scatter_plot_mutct &lt;- function(data, xcol, ycol) {
@@ -939,6 +1020,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-3-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-3-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -980,6 +1072,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-4-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-4-1.png" target="_blank">1e297e8</a>
@@ -1030,6 +1133,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1043,21 +1157,89 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 4.31875&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-3.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 4.14375&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
+Past versions of unnamed-chunk-5-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
 grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-5.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-3">
+Past versions of unnamed-chunk-5-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="normar_var1-alpha-5-spatial-window-200kb-1mb"
 class="section level2">
@@ -1090,6 +1272,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1103,21 +1296,89 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 3.240625&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-3.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 4.1125&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
 grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-5.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-3">
+Past versions of unnamed-chunk-6-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="normar_var0.5-alpha-5-spatial-window-500kb-1mb"
 class="section level2">
@@ -1150,6 +1411,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1163,8 +1435,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
@@ -1190,6 +1464,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1203,9 +1488,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 4.16875&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-3">
@@ -1231,6 +1516,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1244,51 +1540,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 3.9875&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-4">
-Past versions of unnamed-chunk-7-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-7-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var1-alpha-5-spatial-window-500kb-1mb"
 class="section level2">
@@ -1321,6 +1572,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1334,8 +1596,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
@@ -1361,6 +1625,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1374,9 +1649,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 2.91875&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-3">
@@ -1402,6 +1677,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1415,51 +1701,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 3.93125&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-4">
-Past versions of unnamed-chunk-8-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-8-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var0.5-alpha-5-spatial-window-1mb-2mb"
 class="section level2">
@@ -1492,6 +1733,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1505,8 +1757,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-2">
@@ -1532,6 +1786,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1545,9 +1810,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 3.725&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-3">
@@ -1573,6 +1838,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1586,51 +1862,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 4.040625&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-4">
-Past versions of unnamed-chunk-9-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-9-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var1-alpha-5-spatial-window-1mb-2mb"
 class="section level2">
@@ -1663,6 +1894,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1676,8 +1918,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-2">
@@ -1703,6 +1947,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1716,9 +1971,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 2.10625&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-3">
@@ -1744,6 +1999,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1757,51 +2023,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 3.453125&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-4">
-Past versions of unnamed-chunk-10-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var0.5-alpha-20-spatial-window-200kb-1mb"
 class="section level2">
@@ -1834,6 +2055,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1847,8 +2079,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-2">
@@ -1874,6 +2108,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1887,9 +2132,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 12.5&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-3">
@@ -1915,6 +2160,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -1928,51 +2184,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 12.3&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-4">
-Past versions of unnamed-chunk-11-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-11-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var1-alpha-20-spatial-window-200kb-1mb"
 class="section level2">
@@ -2005,6 +2216,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2018,8 +2240,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-2">
@@ -2045,6 +2269,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2058,9 +2293,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 6.00000000000001&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-3">
@@ -2086,6 +2321,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2099,51 +2345,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 13.95&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-4">
-Past versions of unnamed-chunk-12-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-12-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var0.5-alpha-20-spatial-window-500kb-1mb"
 class="section level2">
@@ -2176,6 +2377,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2189,8 +2401,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-2">
@@ -2216,6 +2430,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2229,9 +2454,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 11.7&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-3">
@@ -2257,6 +2482,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2270,51 +2506,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 11.55&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-4">
-Past versions of unnamed-chunk-13-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-13-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var1-alpha-20-spatial-window-500kb-1mb"
 class="section level2">
@@ -2347,6 +2538,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2360,8 +2562,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-2">
@@ -2387,6 +2591,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2400,9 +2615,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 5.20625&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-3">
@@ -2428,6 +2643,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2441,51 +2667,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 14.25&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-4">
-Past versions of unnamed-chunk-14-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-14-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var0.5-alpha-20-spatial-window-1mb-2mb"
 class="section level2">
@@ -2518,6 +2699,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2531,8 +2723,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-2">
@@ -2558,6 +2752,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2571,9 +2776,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 9.57500000000001&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-3">
@@ -2599,6 +2804,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2612,51 +2828,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 14.2&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-4">
-Past versions of unnamed-chunk-15-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-15-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-5.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 <div id="normar_var1-alpha-20-spatial-window-1mb-2mb"
 class="section level2">
@@ -2689,6 +2860,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-1.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2702,8 +2884,10 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)</code></pre>
-<pre><code>[1] &quot;spatial only&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sp_only&quot;, title = &quot;spatial only&quot;)
+p2 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)
+p3 &lt;- plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-2.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-2">
@@ -2729,6 +2913,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-2.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2742,9 +2937,9 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_nsp_only&quot;, title = &quot;non-spatial only&quot;, alpha_est = alpha_est_nsp_only)</code></pre>
-<pre><code>[1] &quot;non-spatial only&quot;
-[1] &quot;alpha = 3.434375&quot;</code></pre>
+<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;randeff_est_sf_ns_final&quot;, ycol = &quot;y_sample&quot;)
+p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-3.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-3">
@@ -2770,6 +2965,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-3.png" target="_blank">1e297e8</a>
 </td>
 <td>
@@ -2783,51 +2989,6 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>plot_model(data = dat, estimate_column = &quot;randeff_est_sf_ns_final&quot;, title = &quot;spatial &amp; non-spatial&quot;, alpha_est = alpha_est_sf_ns)</code></pre>
-<pre><code>[1] &quot;spatial &amp; non-spatial&quot;
-[1] &quot;alpha = 11.6&quot;</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-4.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-4">
-Past versions of unnamed-chunk-16-4.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-16-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/1e297e8d9610c18217a7e4ba3316a8718ff6102b/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-4.png" target="_blank">1e297e8</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-04-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsf_sp_final&quot;, ycol = &quot;y_sample&quot;)
-p2 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;)
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-5.png" width="1152" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

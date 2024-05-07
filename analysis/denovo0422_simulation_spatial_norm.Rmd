@@ -115,7 +115,7 @@ plot_dnm <- function(data, windowsize) {
     geom_line(aes(y = randeff_simulated), color = "blue") +
     geom_line(aes(y = randeff_est), color = "red", alpha = 0.5) +
     labs(x = "Window index",
-         y = paste0("% of DNM/window (windowsize = ", as.numeric(windowsize) / 1000, "kb)")) +
+         y = paste0("# of DNM/window (windowsize = ", as.numeric(windowsize) / 1000, "kb)")) +
     theme_minimal()
 }
 
@@ -125,7 +125,7 @@ scatter_plot_randeff <- function(data) {
   adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
   
   # Generate the plot
-  ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  ggplot(data, aes(x = randeff_est, y = randeff_simulated)) +
     geom_point(color = "black") +
     geom_abline(intercept = 0, slope = 1, color = "red") +
     geom_text(aes(label = paste("Adj R-sq =", round(adj_rsq, 3))),

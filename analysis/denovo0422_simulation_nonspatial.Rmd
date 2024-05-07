@@ -73,7 +73,7 @@ plot_dnm <- function(data, windowsize) {
     geom_line(aes(y = randeff_simulated), color = "blue") +
     geom_line(aes(y = randeff_est), color = "red", alpha = 0.5) +
     labs(x = "Window index",
-         y = paste0("% of DNM/window (windowsize = ", as.numeric(windowsize) / 1000, "kb)")) +
+         y = paste0("# of DNM/window (windowsize = ", as.numeric(windowsize) / 1000, "kb)")) +
     theme_minimal()
 }
 

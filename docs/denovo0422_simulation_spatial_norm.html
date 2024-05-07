@@ -441,10 +441,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1e297e8d9610c18217a7e4ba3316a8718ff6102btargetblank1e297e8a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree82bab4c51f096c3f0a2aa228845cc5ac0556a99ctargetblank82bab4ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/1e297e8d9610c18217a7e4ba3316a8718ff6102b" target="_blank">1e297e8</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/82bab4c51f096c3f0a2aa228845cc5ac0556a99c" target="_blank">82bab4c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree1e297e8d9610c18217a7e4ba3316a8718ff6102btargetblank1e297e8a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree82bab4c51f096c3f0a2aa228845cc5ac0556a99ctargetblank82bab4ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/1e297e8d9610c18217a7e4ba3316a8718ff6102b" target="_blank">1e297e8</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/82bab4c51f096c3f0a2aa228845cc5ac0556a99c" target="_blank">82bab4c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -572,16 +572,9 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
 
-Untracked files:
-    Untracked:  analysis/denovo0422_simulation_spatial_norm.Rmd
-    Untracked:  analysis/denovo0422_simulation_spatial_unif.Rmd
-    Untracked:  analysis/denovo_0422_models.Rmd
-
 Unstaged changes:
     Modified:   analysis/denovo0422_simulation_nonspatial.Rmd
-    Deleted:    analysis/denovo0422_simulation_spatial.Rmd
-    Modified:   analysis/denovo0422_simulation_spatial_norm_nonspatial.Rmd
-    Modified:   analysis/denovo_0422.Rmd
+    Modified:   analysis/denovo0422_simulation_spatial_norm.Rmd
 
 </code></pre>
 <p>
@@ -596,10 +589,75 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown
+(<code>analysis/denovo0422_simulation_spatial_norm.Rmd</code>) and HTML
+(<code>docs/denovo0422_simulation_spatial_norm.html</code>) files. If
+you’ve configured a remote Git repository (see
+<code>?wflow_git_remote</code>), click on the hyperlinks in the table
+below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/analysis/denovo0422_simulation_spatial_norm.Rmd" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/denovo0422_simulation_spatial_norm.html" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+<td>
+update
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -682,6 +740,43 @@ randeff &lt;-generate_randeff_spatial_normal(num_windows_all, num_windows_per_se
 
 plot(randeff, type=&quot;l&quot;, ylab = &quot;random effect&quot;)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-1-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-1-1">
+Past versions of unnamed-chunk-1-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-1-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-1-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <ol start="4" style="list-style-type: decimal">
 <li>We sampled the <span class="math inline">\(\tilde{y_i}\)</span>
 from</li>
@@ -722,7 +817,7 @@ plot_dnm &lt;- function(data, windowsize) {
     geom_line(aes(y = randeff_simulated), color = &quot;blue&quot;) +
     geom_line(aes(y = randeff_est), color = &quot;red&quot;, alpha = 0.5) +
     labs(x = &quot;Window index&quot;,
-         y = paste0(&quot;% of DNM/window (windowsize = &quot;, as.numeric(windowsize) / 1000, &quot;kb)&quot;)) +
+         y = paste0(&quot;# of DNM/window (windowsize = &quot;, as.numeric(windowsize) / 1000, &quot;kb)&quot;)) +
     theme_minimal()
 }
 
@@ -732,7 +827,7 @@ scatter_plot_randeff &lt;- function(data) {
   adj_rsq &lt;- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
   
   # Generate the plot
-  ggplot(data, aes(x = randeff_simulated, y = randeff_est)) +
+  ggplot(data, aes(x = randeff_est, y = randeff_simulated)) +
     geom_point(color = &quot;black&quot;) +
     geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;) +
     geom_text(aes(label = paste(&quot;Adj R-sq =&quot;, round(adj_rsq, 3))),
@@ -769,44 +864,1252 @@ scatter_plot_mutct &lt;- function(data, xcol, ycol) {
 <h2>10kb</h2>
 <div id="sigma2-0.5" class="section level3">
 <h3>sigma^2 = 0.5</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
+Past versions of unnamed-chunk-3-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-3">
+Past versions of unnamed-chunk-3-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-4">
+Past versions of unnamed-chunk-3-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-3-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="sigma2-1" class="section level3">
 <h3>sigma^2 = 1</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
+Past versions of unnamed-chunk-4-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-3">
+Past versions of unnamed-chunk-4-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-4">
+Past versions of unnamed-chunk-4-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-4-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="kb-1" class="section level2">
 <h2>30kb</h2>
 <div id="sigma2-0.5-1" class="section level3">
 <h3>sigma^2 = 0.5</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
+Past versions of unnamed-chunk-5-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-3">
+Past versions of unnamed-chunk-5-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-4">
+Past versions of unnamed-chunk-5-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-5-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="sigma2-1-1" class="section level3">
 <h3>sigma^2 = 1</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-3">
+Past versions of unnamed-chunk-6-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-4">
+Past versions of unnamed-chunk-6-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-6-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="kb-2" class="section level2">
 <h2>50kb</h2>
 <div id="sigma2-0.5-2" class="section level3">
 <h3>sigma^2 = 0.5</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-2">
+Past versions of unnamed-chunk-7-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-3">
+Past versions of unnamed-chunk-7-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-4">
+Past versions of unnamed-chunk-7-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-7-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="sigma2-1-2" class="section level3">
 <h3>sigma^2 = 1</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-2">
+Past versions of unnamed-chunk-8-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-3">
+Past versions of unnamed-chunk-8-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-4">
+Past versions of unnamed-chunk-8-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-8-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="kb-3" class="section level2">
 <h2>100kb</h2>
 <div id="sigma2-0.5-3" class="section level3">
 <h3>sigma^2 = 0.5</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-2">
+Past versions of unnamed-chunk-9-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-3">
+Past versions of unnamed-chunk-9-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-4">
+Past versions of unnamed-chunk-9-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-9-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="sigma2-1-3" class="section level3">
 <h3>sigma^2 = 1</h3>
-<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-2.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-3.png" width="1152" style="display: block; margin: auto;" /><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-1.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-2.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-2">
+Past versions of unnamed-chunk-10-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-2.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-3.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-3">
+Past versions of unnamed-chunk-10-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-3.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-4.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-4">
+Past versions of unnamed-chunk-10-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/82bab4c51f096c3f0a2aa228845cc5ac0556a99c/docs/figure/denovo0422_simulation_spatial_norm.Rmd/unnamed-chunk-10-4.png" target="_blank">82bab4c</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -835,17 +2138,17 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] Rcpp_1.0.8.3     pillar_1.9.0     compiler_4.2.0   bslib_0.3.1     
  [5] later_1.3.0      jquerylib_0.1.4  git2r_0.30.1     highr_0.9       
- [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    lifecycle_1.0.4  tibble_3.2.1     gtable_0.3.0    
+ [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    gtable_0.3.0    
+[13] jsonlite_1.8.0   evaluate_0.15    lifecycle_1.0.4  tibble_3.2.1    
 [17] pkgconfig_2.0.3  rlang_1.1.2      cli_3.6.1        rstudioapi_0.13 
 [21] yaml_2.3.5       xfun_0.41        fastmap_1.1.0    withr_2.5.0     
 [25] dplyr_1.1.4      stringr_1.5.1    knitr_1.39       generics_0.1.2  
 [29] fs_1.5.2         vctrs_0.6.5      sass_0.4.1       tidyselect_1.2.0
 [33] rprojroot_2.0.3  grid_4.2.0       glue_1.6.2       R6_2.5.1        
 [37] fansi_1.0.3      rmarkdown_2.25   farver_2.1.0     magrittr_2.0.3  
-[41] scales_1.2.0     promises_1.2.0.1 htmltools_0.5.2  colorspace_2.0-3
-[45] httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2       stringi_1.7.6   
-[49] munsell_0.5.0   </code></pre>
+[41] whisker_0.4      scales_1.2.0     promises_1.2.0.1 htmltools_0.5.2 
+[45] colorspace_2.0-3 httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2      
+[49] stringi_1.7.6    munsell_0.5.0   </code></pre>
 </div>
 </div>
 </div>
