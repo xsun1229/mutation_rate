@@ -190,7 +190,7 @@ plot_randeff_nsp_after_sp <- function(dat) {
 plot_model <- function(data, estimate_column, title, alpha_est = NULL,colcol) {
   
   # Fit linear model
-  formula <- as.formula(paste(estimate_column, "~ randeff_simulated +0"))
+  formula <- as.formula(paste("randeff_simulated ~ ",estimate_column, "+0"))
   fit <- lm(formula, data = data)
   adj_rsq <- summary(fit)$adj.r.squared
   
@@ -206,9 +206,9 @@ plot_model <- function(data, estimate_column, title, alpha_est = NULL,colcol) {
   #   theme_minimal()
   # 
   p <- ggplot(data) +
-  geom_point(data = data[data[[colcol]] == "FALSE", ], aes(x = randeff_simulated, y = get(estimate_column)), 
+  geom_point(data = data[data[[colcol]] == "FALSE", ], aes(x = get(estimate_column) , y = randeff_simulated), 
              color = "black", alpha = 0.5) +
-  geom_point(data = data[data[[colcol]] == "TRUE", ], aes(x = randeff_simulated, y = get(estimate_column)), 
+  geom_point(data = data[data[[colcol]] == "TRUE", ], aes(x = get(estimate_column) , y = randeff_simulated), 
              color = "red", alpha = 1) +  # Ensure red dots are on top
   geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
   annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3)),

@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreec0b686fbc4dfea90d9a449774d384b7a30e0c9c4targetblankc0b686fa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree4a9417010821f508e414cc0e5d71044b4ad6a169targetblank4a94170a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4" target="_blank">c0b686f</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/4a9417010821f508e414cc0e5d71044b4ad6a169" target="_blank">4a94170</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreec0b686fbc4dfea90d9a449774d384b7a30e0c9c4targetblankc0b686fa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree4a9417010821f508e414cc0e5d71044b4ad6a169targetblank4a94170a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4" target="_blank">c0b686f</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/4a9417010821f508e414cc0e5d71044b4ad6a169" target="_blank">4a94170</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -621,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/analysis/denovo0422_simulation_spatial_norm_nonspatial.Rmd" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/denovo0422_simulation_spatial_norm_nonspatial.html" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1006,7 +1040,7 @@ plot_randeff_nsp_after_sp &lt;- function(dat) {
 plot_model &lt;- function(data, estimate_column, title, alpha_est = NULL,colcol) {
   
   # Fit linear model
-  formula &lt;- as.formula(paste(estimate_column, &quot;~ randeff_simulated +0&quot;))
+  formula &lt;- as.formula(paste(&quot;randeff_simulated ~ &quot;,estimate_column, &quot;+0&quot;))
   fit &lt;- lm(formula, data = data)
   adj_rsq &lt;- summary(fit)$adj.r.squared
   
@@ -1022,9 +1056,9 @@ plot_model &lt;- function(data, estimate_column, title, alpha_est = NULL,colcol)
   #   theme_minimal()
   # 
   p &lt;- ggplot(data) +
-  geom_point(data = data[data[[colcol]] == &quot;FALSE&quot;, ], aes(x = randeff_simulated, y = get(estimate_column)), 
+  geom_point(data = data[data[[colcol]] == &quot;FALSE&quot;, ], aes(x = get(estimate_column) , y = randeff_simulated), 
              color = &quot;black&quot;, alpha = 0.5) +
-  geom_point(data = data[data[[colcol]] == &quot;TRUE&quot;, ], aes(x = randeff_simulated, y = get(estimate_column)), 
+  geom_point(data = data[data[[colcol]] == &quot;TRUE&quot;, ], aes(x = get(estimate_column) , y = randeff_simulated), 
              color = &quot;red&quot;, alpha = 1) +  # Ensure red dots are on top
   geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;, linetype = &quot;dashed&quot;) +
   annotate(&quot;text&quot;, x = Inf, y = Inf, label = paste0(&quot;Adj R-sq = &quot;, round(adj_rsq, 3)),
@@ -1129,6 +1163,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-3-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-3-1.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -1192,6 +1237,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-4-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-4-1.png" target="_blank">c0b686f</a>
@@ -1339,6 +1395,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-2.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -1403,6 +1470,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-3.png" target="_blank">c0b686f</a>
@@ -1547,6 +1625,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-2.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -1611,6 +1700,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-3.png" target="_blank">c0b686f</a>
@@ -1755,6 +1855,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-2.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -1830,6 +1941,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-3.png" target="_blank">c0b686f</a>
@@ -1985,6 +2107,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-2.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -2060,6 +2193,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-3.png" target="_blank">c0b686f</a>
@@ -2215,6 +2359,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-2.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -2290,6 +2445,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-3.png" target="_blank">c0b686f</a>
@@ -2445,6 +2611,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-2.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -2520,6 +2697,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-3.png" target="_blank">c0b686f</a>
@@ -2600,6 +2788,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-1.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -2673,6 +2872,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-2.png" target="_blank">c0b686f</a>
@@ -2750,6 +2960,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-3.png" target="_blank">c0b686f</a>
@@ -2830,6 +3051,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-1.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -2903,6 +3135,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-2.png" target="_blank">c0b686f</a>
@@ -2980,6 +3223,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-3.png" target="_blank">c0b686f</a>
@@ -3060,6 +3314,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-1.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -3133,6 +3398,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-2.png" target="_blank">c0b686f</a>
@@ -3210,6 +3486,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-3.png" target="_blank">c0b686f</a>
@@ -3290,6 +3577,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-1.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -3363,6 +3661,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-2.png" target="_blank">c0b686f</a>
@@ -3440,6 +3749,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-3.png" target="_blank">c0b686f</a>
@@ -3520,6 +3840,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-1.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -3593,6 +3924,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-2.png" target="_blank">c0b686f</a>
@@ -3670,6 +4012,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-3.png" target="_blank">c0b686f</a>
@@ -3750,6 +4103,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-1.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-1.png" target="_blank">c0b686f</a>
 </td>
 <td>
@@ -3823,6 +4187,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-2.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-2.png" target="_blank">c0b686f</a>
@@ -3900,6 +4275,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/4a9417010821f508e414cc0e5d71044b4ad6a169/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-3.png" target="_blank">4a94170</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/c0b686fbc4dfea90d9a449774d384b7a30e0c9c4/docs/figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-3.png" target="_blank">c0b686f</a>
