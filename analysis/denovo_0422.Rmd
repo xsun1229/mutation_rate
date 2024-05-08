@@ -22,8 +22,9 @@ editor_options:
 
 [spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm.html)
 
-[spatial and non-spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial.html)
+[2 Step estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial.html)
 
+[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen.html)
 
 ## Previous analysis
 

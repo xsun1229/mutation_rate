@@ -304,7 +304,7 @@ plot_randeff_nsp_after_sp(dat)
 So, in the following analysis, the joint model fits spatial effects first and the non-spatial effects the next.
 
 
-## normar_var=0.5, alpha = 5, spatial window = 200kb ~ 1mb
+## normal_var_spatial=0.5, alpha = 5, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -327,7 +327,7 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
 
-## normar_var=1, alpha = 5, spatial window = 200kb ~ 1mb
+## normal_var_spatial=1, alpha = 5, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -348,7 +348,7 @@ p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
-## normar_var=0.5, alpha = 5, spatial window = 500kb ~ 1mb
+## normal_var_spatial=0.5, alpha = 5, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -369,7 +369,7 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
 
-## normar_var=1, alpha = 5, spatial window = 500kb ~ 1mb
+## normal_var_spatial=1, alpha = 5, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -389,7 +389,7 @@ p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
-## normar_var=0.5, alpha = 5, spatial window = 1mb ~ 2mb
+## normal_var_spatial=0.5, alpha = 5, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -411,7 +411,7 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
 
-## normar_var=1, alpha = 5, spatial window = 1mb ~ 2mb
+## normal_var_spatial=1, alpha = 5, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -432,7 +432,7 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
 
-## normar_var=0.5, alpha = 20, spatial window = 200kb ~ 1mb
+## normal_var_spatial=0.5, alpha = 20, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -453,7 +453,7 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
 
-## normar_var=1, alpha = 20, spatial window = 200kb ~ 1mb
+## normal_var_spatial=1, alpha = 20, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -473,7 +473,7 @@ p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
-## normar_var=0.5, alpha = 20, spatial window = 500kb ~ 1mb
+## normal_var_spatial=0.5, alpha = 20, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -494,7 +494,7 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
 
-## normar_var=1, alpha = 20, spatial window = 500kb ~ 1mb
+## normal_var_spatial=1, alpha = 20, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -514,7 +514,7 @@ p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title
 grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
-## normar_var=0.5, alpha = 20, spatial window = 1mb ~ 2mb
+## normal_var_spatial=0.5, alpha = 20, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=15, fig.height=5}
 
@@ -535,7 +535,7 @@ grid.arrange(p1, p2,p3, p4, ncol = 4)
 ```
 
 
-## normar_var=1, alpha = 20, spatial window = 1mb ~ 2mb
+## normal_var_spatial=1, alpha = 20, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=15, fig.height=5}
 
