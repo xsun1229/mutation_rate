@@ -114,7 +114,18 @@ plot_randeff_allwindows <- function(dat) {
   theme_minimal()
 }
 
-
+plot_randeff_allwindows_nosmooth <- function(dat) {
+  ggplot(dat, aes(x = seq_along(y_sample))) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated"), alpha = 0.5) +
+  geom_line(aes(y = randeff_posterior_mean, color = "randeff_posterior_mean"), alpha = 0.6) +
+  labs(x = "Window index",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group", 
+                     values = c("Simulated" = "blue",
+                                "randeff_posterior_mean" = "green"), 
+                     labels = c("Simulated","randeff_posterior_mean")) +
+  theme_minimal()
+}
 
 # plot_model <- function(data, estimate_column, title, alpha_est = NULL) {
 #   print(title)
@@ -444,5 +455,199 @@ plot_model(data = data, estimate_column = "randeff_posterior_mean", title = NULL
 
 p1 <- scatter_plot_mutct(data = data, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = data, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+# 10kb 
+## normal_var_spatial=0.5, alpha = 5, spatial window = 100kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_10kb_maxiter50_normal_sigma0.5_alphansp_5_minseg10_maxseg100.rdata")
+
+plot_randeff_allwindows_nosmooth(dat)
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+## normal_var_spatial=1, alpha = 5, spatial window = 200kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_10kb_maxiter50_normal_sigma1_alphansp_5_minseg10_maxseg100.rdata")
+
+plot_randeff_allwindows_nosmooth(dat)
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+## normal_var_spatial=0.5, alpha = 30, spatial window = 100kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_10kb_maxiter50_normal_sigma0.5_alphansp_30_minseg10_maxseg100.rdata")
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+## normal_var_spatial=1, alpha = 30, spatial window = 200kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_10kb_maxiter50_normal_sigma1_alphansp_30_minseg10_maxseg100.rdata")
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+# 30kb 
+## normal_var_spatial=0.5, alpha = 5, spatial window = 120kb ~ 900kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_30kb_maxiter50_normal_sigma0.5_alphansp_5_minseg4_maxseg30.rdata")
+
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+## normal_var_spatial=1, alpha = 5, spatial window = 120kb ~ 900kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_30kb_maxiter50_normal_sigma1_alphansp_5_minseg4_maxseg30.rdata")
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+## normal_var_spatial=0.5, alpha = 30, spatial window = 120kb ~ 900kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_30kb_maxiter50_normal_sigma0.5_alphansp_30_minseg4_maxseg30.rdata")
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+## normal_var_spatial=1, alpha = 30, spatial window = 120kb ~ 900kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_30kb_maxiter50_normal_sigma1_alphansp_30_minseg4_maxseg30.rdata")
+
+plot_randeff_allwindows_nosmooth(dat)
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+# 100kb 
+## normal_var_spatial=0.5, alpha = 5, spatial window = 100kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_100kb_maxiter50_normal_sigma0.5_alphansp_5_minseg1_maxseg10.rdata")
+
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+## normal_var_spatial=1, alpha = 5, spatial window = 200kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_100kb_maxiter50_normal_sigma1_alphansp_5_minseg1_maxseg10.rdata")
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+## normal_var_spatial=0.5, alpha = 30, spatial window = 100kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_100kb_maxiter50_normal_sigma0.5_alphansp_30_minseg1_maxseg10.rdata")
+
+plot_randeff_allwindows_nosmooth(dat)
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
+grid.arrange(p1, p2, ncol = 2)
+
+```
+
+
+## normal_var_spatial=1, alpha = 30, spatial window = 200kb ~ 1mb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgen/simu_sp_nsp_chr1_100kb_maxiter50_normal_sigma1_alphansp_30_minseg1_maxseg10.rdata")
+
+plot_randeff_allwindows_nosmooth(dat)
+
+plot_model(data = dat, estimate_column = "randeff_posterior_mean", title = NULL, colcol = "spatial_effect")
+
+p1 <- scatter_plot_mutct(data = dat, xcol = "exp_posterior_mean", ycol = "y_sample", title = "exp_posterior_mean",colcol = "spatial_effect")
+p2 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
 grid.arrange(p1, p2, ncol = 2)
 ```
