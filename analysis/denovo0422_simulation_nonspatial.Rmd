@@ -115,11 +115,11 @@ print(sprintf("estimated alpha = %s", alpha_est))
 
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -134,11 +134,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -153,11 +153,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -172,11 +172,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -192,11 +192,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -211,11 +211,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -230,11 +230,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -249,11 +249,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -269,11 +269,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -288,11 +288,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -307,11 +307,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -326,11 +326,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -347,11 +347,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -366,11 +366,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -385,11 +385,11 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -404,10 +404,10 @@ print(sprintf("true alpha = %s", alpha_prior))
 print(sprintf("estimated alpha = %s", alpha_est))
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
+p1 <- scatter_plot_randeff(data)
 
 data$y_pred <- data$randeff_est * data$exp_rl
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="exp_rl" , ycol = "y_sample")
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```

@@ -169,9 +169,9 @@ The estimated mutation rates are from Roulette chr1
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_10kb_maxiter50_normal_sigma0.5.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -182,9 +182,9 @@ grid.arrange(p1, p2, ncol = 2)
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_10kb_maxiter50_normal_sigma1.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -199,9 +199,9 @@ grid.arrange(p1, p2, ncol = 2)
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_30kb_maxiter50_normal_sigma0.5.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -212,9 +212,9 @@ grid.arrange(p1, p2, ncol = 2)
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_30kb_maxiter50_normal_sigma1.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -227,9 +227,9 @@ grid.arrange(p1, p2, ncol = 2)
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_50kb_maxiter50_normal_sigma0.5.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -240,9 +240,9 @@ grid.arrange(p1, p2, ncol = 2)
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_50kb_maxiter50_normal_sigma1.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 
 ```
@@ -256,9 +256,9 @@ grid.arrange(p1, p2, ncol = 2)
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_100kb_maxiter50_normal_sigma0.5.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -269,9 +269,9 @@ grid.arrange(p1, p2, ncol = 2)
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_normal/simu_spatial_chr1_100kb_maxiter50_normal_sigma1.rdata")
 plot_randeff(data)
 plot_dnm(data,windowsize)
-scatter_plot_randeff(data)
-p1 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
-p2 <- scatter_plot_mutct(data = data, xcol ="y_roulette" , ycol = "y_sample")
+p1 <- scatter_plot_randeff(data)
+p2 <- scatter_plot_mutct(data = data, xcol = "y_pred", ycol = "y_sample")
+
 grid.arrange(p1, p2, ncol = 2)
 ```
 

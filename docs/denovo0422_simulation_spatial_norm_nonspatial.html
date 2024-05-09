@@ -403,7 +403,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-07
+<strong>Last updated:</strong> 2024-05-09
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -537,15 +537,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreebbe16883eabe6fa2753f82945996c5c35f072e19targetblankbbe1688a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree904970bddeddf027c6f0479a3b69dc90d17d62f4targetblank904970ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/bbe16883eabe6fa2753f82945996c5c35f072e19" target="_blank">bbe1688</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/904970bddeddf027c6f0479a3b69dc90d17d62f4" target="_blank">904970b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreebbe16883eabe6fa2753f82945996c5c35f072e19targetblankbbe1688a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree904970bddeddf027c6f0479a3b69dc90d17d62f4targetblank904970ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -555,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/bbe16883eabe6fa2753f82945996c5c35f072e19" target="_blank">bbe1688</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/904970bddeddf027c6f0479a3b69dc90d17d62f4" target="_blank">904970b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -574,6 +574,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/denovo0422_simulation_spatial_norm_nonspatial.Rmd
+    Modified:   analysis/denovo0422_simulation_spatial_norm_nonspatial_smashgen.Rmd
 
 </code></pre>
 <p>
@@ -621,6 +622,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/bc5264b88910316542e41fb540343888f556d31f/analysis/denovo0422_simulation_spatial_norm_nonspatial.Rmd" target="_blank">bc5264b</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-08
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/bc5264b88910316542e41fb540343888f556d31f/docs/denovo0422_simulation_spatial_norm_nonspatial.html" target="_blank">bc5264b</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-08
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1490,8 +1525,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-5-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-3">
@@ -1731,8 +1766,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-6-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-3">
@@ -1983,8 +2018,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-7-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-3">
@@ -2246,8 +2281,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-8-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-3">
@@ -2509,8 +2544,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-9-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-3">
@@ -2772,8 +2807,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-10-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-3">
@@ -3047,8 +3082,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-11-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-3">
@@ -3321,8 +3356,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-12-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-3">
@@ -3596,8 +3631,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-13-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-3">
@@ -3870,8 +3905,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-14-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-3">
@@ -4144,8 +4179,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-15-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-3">
@@ -4418,8 +4453,8 @@ XSun
 p1 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p2 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_nsp_only&quot;, ycol = &quot;y_sample&quot;, title = &quot;non-spatial only&quot;,colcol = &quot;spatial_effect&quot;)
 p3 &lt;- scatter_plot_mutct(data = dat, xcol = &quot;exp_sf_nsp_final&quot;, ycol = &quot;y_sample&quot;, title = &quot;spatial &amp; non-spatial&quot;,colcol = &quot;spatial_effect&quot;)
-p4 &lt;- scatter_plot_mutct(data = dat, xcol =&quot;roulette&quot; , ycol = &quot;y_sample&quot;, title = &quot;roulette&quot;,colcol = &quot;spatial_effect&quot;)
-grid.arrange(p1, p2,p3, p4, ncol = 4)</code></pre>
+
+grid.arrange(p1, p2,p3, ncol = 3)</code></pre>
 <p><img src="figure/denovo0422_simulation_spatial_norm_nonspatial.Rmd/unnamed-chunk-16-3.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-3">

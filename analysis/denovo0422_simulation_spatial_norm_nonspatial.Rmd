@@ -321,8 +321,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 
 ```
 
@@ -344,8 +344,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 ## normal_var_spatial=0.5, alpha = 5, spatial window = 500kb ~ 1mb
@@ -364,8 +364,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 
@@ -385,8 +385,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 ## normal_var_spatial=0.5, alpha = 5, spatial window = 1mb ~ 2mb
@@ -406,8 +406,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 
@@ -427,8 +427,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 
@@ -448,8 +448,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 
@@ -469,8 +469,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 ## normal_var_spatial=0.5, alpha = 20, spatial window = 500kb ~ 1mb
@@ -489,8 +489,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 
@@ -510,8 +510,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 ## normal_var_spatial=0.5, alpha = 20, spatial window = 1mb ~ 2mb
@@ -530,8 +530,8 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
 
 
@@ -551,6 +551,6 @@ dat$exp_sf_nsp_final <- dat$exp*dat$randeff_est_sf_ns_final
 p1 <- scatter_plot_mutct(data = dat, xcol = "exp_sp_only", ycol = "y_sample", title = "spatial only",colcol = "spatial_effect")
 p2 <- scatter_plot_mutct(data = dat, xcol = "exp_nsp_only", ycol = "y_sample", title = "non-spatial only",colcol = "spatial_effect")
 p3 <- scatter_plot_mutct(data = dat, xcol = "exp_sf_nsp_final", ycol = "y_sample", title = "spatial & non-spatial",colcol = "spatial_effect")
-p4 <- scatter_plot_mutct(data = dat, xcol ="roulette" , ycol = "y_sample", title = "roulette",colcol = "spatial_effect")
-grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+grid.arrange(p1, p2,p3, ncol = 3)
 ```
