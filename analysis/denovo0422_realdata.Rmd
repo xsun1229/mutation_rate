@@ -1,0 +1,193 @@
+---
+title: "Real data"
+author: "XSun"
+date: "2024-05-13"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+We fit the model using smashgen
+
+For each window i, 
+
+$u_i$ is the expected mutation rate from Roulette
+
+$y_i$ is the observed de novo mutations from different studies.
+
+$r_i = u_i/y_i$ is the fold change
+
+## Functions used
+
+```{r echo=F}
+
+library(ggplot2)
+library(gridExtra)
+
+plot_randeff <- function(data) {
+  ggplot(data, aes(x = pos)) +
+    geom_line(aes(y = foldchange, color = "realdata"), alpha = 0.5) +
+    geom_line(aes(y = randeff_posterior_mean, color = "randeff_posterior_mean")) +
+    labs(x = "Mb",
+         y = "Random Effects") +
+    scale_color_manual(name = "Group", 
+                       values = c("realdata" = "blue", "randeff_posterior_mean" = "red"), 
+                       labels = c("Fold change from real data", "Random effect posterior mean")) +
+    theme_minimal()
+}
+
+
+plot_regression <- function(data, indep_var, dep_var, xlab, ylab) {
+  # Fit the linear model without an intercept
+  fit <- lm(as.formula(paste(dep_var, "~", indep_var, "+ 0")), data = data)
+  adj_rsq <- summary(fit)$adj.r.squared
+  
+  # Create the plot
+  p <- ggplot(data, aes_string(x = indep_var, y = dep_var)) +
+    geom_point(color = "black") +
+    geom_abline(intercept = 0, slope = 1, color = "red") +
+    annotate("text", x = Inf, y = -Inf, hjust = 1, vjust = 0, color = "blue",
+             label = paste("Adj R-sq =", round(adj_rsq, 3))) +
+    labs(x = xlab, y = ylab) +
+    theme_minimal()
+  
+  return(p)
+}
+
+
+```
+
+
+# SSC -- fitting using the whole window
+
+## 10kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_10kb_ssc.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## 30kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_30kb_ssc.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_50kb_ssc.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_100kb_ssc.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+# mssng -- fitting using the whole window
+
+## 10kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_10kb_mssng.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## 30kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_30kb_mssng.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## 50kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_50kb_mssng.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## 100kb
+
+```{r echo=F, message=FALSE, warning=FALSE, fig.width=10, fig.height=5}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/sns_chr1_100kb_mssng.rdata")
+
+plot_randeff(data)
+plot_regression(data, indep_var = "randeff_posterior_mean", dep_var = "foldchange",
+                xlab = "foldchange r_i", ylab="posterior_mean theta_i")
+p1 <- plot_regression(data, indep_var = "exp_posterior_mean", dep_var = "obs",
+                xlab = "estimated mutation rate, posterior_mean", ylab= "observed de novo mutations")
+p2 <- plot_regression(data, indep_var = "exp_rl", dep_var = "obs",
+                xlab = "estimated mutation rate, roulette", ylab="observed de novo mutations")
+grid.arrange(p1, p2, ncol = 2)
+```
