@@ -355,7 +355,7 @@ grid.arrange(p1, p2,p3, p4, p5, ncol = 5)
 ```
 
 
-## normal_var_spatial=0.5, alpha = 20, spatial window = 200kb ~ 1mb
+## normal_var_spatial=0.5, alpha = 30, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
@@ -382,7 +382,7 @@ grid.arrange(p1, p2,p3, p4, p5, ncol = 5)
 ```
 
 
-## normal_var_spatial=1, alpha = 20, spatial window = 200kb ~ 1mb
+## normal_var_spatial=1, alpha = 30, spatial window = 200kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
@@ -408,7 +408,7 @@ p5 <- scatter_plot_mutct(data = data, xcol = "roulette", ycol = "y_sample", titl
 grid.arrange(p1, p2,p3, p4, p5, ncol = 5)
 ```
 
-## normal_var_spatial=0.5, alpha = 20, spatial window = 500kb ~ 1mb
+## normal_var_spatial=0.5, alpha = 30, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
@@ -435,7 +435,7 @@ grid.arrange(p1, p2,p3, p4, p5, ncol = 5)
 ```
 
 
-## normal_var_spatial=1, alpha = 20, spatial window = 500kb ~ 1mb
+## normal_var_spatial=1, alpha = 30, spatial window = 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
@@ -461,7 +461,7 @@ p5 <- scatter_plot_mutct(data = data, xcol = "roulette", ycol = "y_sample", titl
 grid.arrange(p1, p2,p3, p4, p5, ncol = 5)
 ```
 
-## normal_var_spatial=0.5, alpha = 20, spatial window = 1mb ~ 2mb
+## normal_var_spatial=0.5, alpha = 30, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
@@ -488,7 +488,7 @@ grid.arrange(p1, p2,p3, p4, p5, ncol = 5)
 ```
 
 
-## normal_var_spatial=1, alpha = 20, spatial window = 1mb ~ 2mb
+## normal_var_spatial=1, alpha = 30, spatial window = 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
