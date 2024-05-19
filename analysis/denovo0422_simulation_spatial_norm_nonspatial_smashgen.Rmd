@@ -189,7 +189,15 @@ scatter_plot_mutct <- function(data, xcol, ycol, colcol, title=NULL) {
 
 ```{r}
 load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/rsq_sum.rdata")
-DT::datatable(rsq_all,caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;','fitting rsq for all simulation settings'),options = list(pageLength = 10))
+
+sum_randeff <- rsq_all[,c("window_size_kb","normal_sigma","alphansp","spatialwindow_min_kb","spatialwindow_max_kb","randeff_posterior_mean","randeff_posterior_mean_highest","randeff_smoothed", "randeff_2steps","randeff_2steps_highest","randeff_nsp_only","randeff_nsp_highest")]
+colnames(sum_randeff) <- c("window_size_kb","normal_prior_sigma","gamma_prior_alpha_nsp","spatialwindow_min_kb","spatialwindow_max_kb","randeff_splitting_method","randeff_splitting_method_highest","randeff_spatial_only(smashgen_smoothed)","randeff_2steps(spatial_first)","randeff_2steps_highest","randeff_non-spatial_only","randeff_non-spatial_only_highest")
+DT::datatable(sum_randeff,caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;','fitting rsq for random effect estimations, all simulation settings'),options = list(pageLength = 10))
+
+sum_mutct <- rsq_all[,c("window_size_kb","normal_sigma","alphansp","spatialwindow_min_kb","spatialwindow_max_kb","exp_posterior_mean","exp_posterior_mean_highest","exp_smoothed","exp_2steps","exp_2steps_highest","exp_nsp_only","exp_nsp_highest","roulette")]
+colnames(sum_mutct) <- c("window_size_kb","normal_prior_sigma","gamma_prior_alpha_nsp","spatialwindow_min_kb","spatialwindow_max_kb","mutation_count_splitting_method","mutation_count_splitting_method_highest","mutation_count_spatial_only(smashgen_smoothed)","mutation_count_2steps(spatial_first)","mutation_count_2steps_highest","mutation_count_non-spatial_only","mutation_count_non-spatial_only_highest","roulette")
+DT::datatable(sum_mutct,caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;','fitting rsq for mutation count estimations, all simulation settings'),options = list(pageLength = 10))
+
 ```
 
 # 50kb 
