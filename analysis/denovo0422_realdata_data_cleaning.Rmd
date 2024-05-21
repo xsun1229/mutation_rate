@@ -1,0 +1,186 @@
+---
+title: "Data cleaning"
+author: "XSun"
+date: "2024-05-20"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+We checked the gaps from Roulette estimation here and get an overview for the observed fold change $r_i$ computed from [SSC cell 2022](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html#SSC_from_Cell_2022)
+
+```{r, message=F}
+library(ggplot2)
+library(kableExtra)
+library(dplyr)
+library(data.table)
+
+create_filtered_plot <- function(data) {
+  # Convert to data.table
+  setDT(data)
+  
+  # Create group based on rleid
+  data[, group := rleid(pass_threshold)]
+  
+  # Filter rows where pass_threshold is TRUE and the length of the group is greater than 1
+  filtered_data <- data[pass_threshold == TRUE, .SD[.N > 1], by = group]
+  
+  # Remove the group column if not needed
+  filtered_data[, group := NULL]
+  
+  # Create the plot
+  plot <- ggplot(filtered_data, aes(x = Window_Start / 1000000, y = obs_sum / rl_rescaled_sum)) +
+    geom_point() +
+    labs(x = "Genomic position (mb)", y = "fold change r_i") +
+    theme_minimal()
+  
+  return(plot)
+}
+
+
+
+```
+
+# Gaps in Roulette estimation
+
+## chr1 
+
+```{r}
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_gap_summary_chr1.rdata")
+
+ggplot(gap_summary, aes(x = Start/1000000, y = Length)) +
+  geom_point() +
+  labs(title = "Gap Length and Position",
+       x = "Start Position (mb)",
+       y = "Gap Length") +
+  theme_minimal()
+
+print("summary for the gap length")
+print(summary(gap_summary$Length))
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4.rdata")
+pct <- sum(df_per_window_data$Total_Gap_Length)/(as.numeric(df_per_window_data$Window_End[nrow(df_per_window_data)] - as.numeric(df_per_window_data$Window_Start[1])))
+print(sprintf("The percentage of positions with missing Roulette estimations is %.5f%%", pct*10))
+
+gap_table <- table(gap_summary$Length)
+gap_df <- as.data.frame(gap_table)
+colnames(gap_df) <- c("Length", "Frequency")
+
+# Convert Length to numeric
+gap_df$Length <- as.numeric(as.character(gap_df$Length))
+
+# Bin the data by 1000
+gap_df <- gap_df %>%
+  mutate(Bin = cut(Length, breaks = seq(0, max(Length) + 1000, by = 1000), right = FALSE)) %>%
+  group_by(Bin) %>%
+  summarise(Frequency = sum(Frequency)) %>%
+  ungroup()
+
+# Display the table using kable
+kable(gap_df, format = "markdown", caption = "Summary of Gap Lengths Binned by 1000") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"), full_width = F)
+
+index <- order(gap_summary$Length, decreasing = TRUE)[1:2]
+gap_summary_topremoved <- gap_summary[-index,]
+ggplot(gap_summary_topremoved, aes(x = Start/1000000, y = Length)) +
+  geom_point() +
+  labs(title = "Gap Length and Position, top 2 gaps removed",
+       x = "Start Position (mb)",
+       y = "Gap Length") +
+  theme_minimal()
+```
+
+
+# Removing the gaps and computing the fold changes 
+
+The data cleaning is performed as follows:
+
+1. Partition Chromosome into Windows:
+
+The chromosome is divided into fixed windows of various sizes (10kb, 30kb, 50kb, 100kb).
+
+2. Compute Gaps within Windows:
+
+For each window, the positions with missing roulette estimation (gaps) are computed.
+
+3. Filter Windows Based on Gaps:
+
+Windows with less than 25% gaps are retained for further analysis.
+
+4. Summarize Data within Windows:
+
+For each window, the sum of roulette estimation and the observed de novo mutation count from SSC cell 2022 are calculated.
+
+5. Split Data for Cross-Validation:
+
+Each window's positions are divided into a training set (first 90%) and a testing set (remaining 10%) for cross-validation.
+
+## An example for chr1, 100kb window size
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;',''),options = list(pageLength = 10))
+
+```
+
+Other window sizes also have similar patterns. 
+
+## fold change plots
+
+We just select rows where the "TRUE" value in the pass_threshold column is continuous for more than one row.
+
+### 10kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_10kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 30kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_30kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 50kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_50kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 100kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+
+

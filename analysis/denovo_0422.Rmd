@@ -26,7 +26,8 @@ editor_options:
 
 [SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen.html)
 
-## Previous analysis
+
+Previous simulation
 
 [spatial and non-spatial random effects, random effects_spatial from uniform distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_nonspatial.html)
 
@@ -34,5 +35,6 @@ editor_options:
 
 # Real data
 
-[link](https://xsun1229.github.io/mutation_rate/denovo0422_realdata.html)
+[Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning.html)
+
 
