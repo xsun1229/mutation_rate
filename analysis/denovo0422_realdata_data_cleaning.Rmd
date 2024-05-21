@@ -46,6 +46,14 @@ create_filtered_plot <- function(data) {
 
 # Gaps in Roulette estimation
 
+The gaps in the roulette estimation are due to:
+
+- **Long gaps:** Centromeres
+
+- **Small gaps:**
+  1. Low density of polymorphism in GNOMAD at nucleotide scale
+  2. Poor mappability issues and repetitive sequences (UCSC self chain track)
+
 ## chr1 
 
 ```{r}
@@ -130,7 +138,7 @@ DT::datatable(df_per_window_data,caption = htmltools::tags$caption(style = 'capt
 
 Other window sizes also have similar patterns. 
 
-## fold change plots
+## fold change plots for chr1
 
 We just select rows where the "TRUE" value in the pass_threshold column is continuous for more than one row.
 
@@ -175,6 +183,62 @@ print(plot)
 ```{r fig.width=10, fig.height=5}
 
 load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+
+
+
+
+## fold change plots for chr22
+
+We just select rows where the "TRUE" value in the pass_threshold column is continuous for more than one row.
+
+### 10kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_10kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 30kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_30kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 50kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_50kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 100kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_100kb_frac4.rdata")
 
 # Example usage
 plot <- create_filtered_plot(df_per_window_data)
