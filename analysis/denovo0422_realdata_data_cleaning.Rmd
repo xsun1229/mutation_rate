@@ -51,7 +51,7 @@ The gaps in the roulette estimation are due to:
 - **Long gaps:** Centromeres
 
 - **Small gaps:**
-  1. Low density of polymorphism in GNOMAD at nucleotide scale
+  1. Low density of polymorphism in GNOMAD at 100 nucleotide scale
   2. Poor mappability issues and repetitive sequences (UCSC self chain track)
 
 ## chr1 
