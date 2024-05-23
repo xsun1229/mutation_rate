@@ -32,19 +32,46 @@ create_filtered_plot <- function(data) {
   filtered_data[, group := NULL]
   
   # Create the plot
-  plot <- ggplot(filtered_data, aes(x = Window_Start / 1000000, y = obs_sum / rl_rescaled_sum)) +
-    geom_point() +
-    labs(x = "Genomic position (mb)", y = "fold change r_i") +
-    theme_minimal()
+  plot <- ggplot(filtered_data, aes(x = Window_Start / 1000000, y = foldchange)) +
+  geom_point(data = filtered_data[filtered_data$overlap_poliii == FALSE, ], aes(color = "FALSE")) +
+  geom_point(data = filtered_data[filtered_data$overlap_poliii == TRUE, ], aes(color = "TRUE")) +
+  labs(x = "Genomic position (mb)", y = "fold change r_i", color = "Overlap with polIII genes") +
+  scale_color_manual(values = c("FALSE" = "black", "TRUE" = "red")) +
+  theme_minimal()
   
   return(plot)
+}
+
+data_filter <- function(data) {
+  
+  setDT(data)
+  
+  # Create group based on rleid
+  data[, group := rleid(pass_threshold)]
+  
+  # Filter rows where pass_threshold is TRUE and the length of the group is greater than 1
+  filtered_data <- data[pass_threshold == TRUE, .SD[.N > 1], by = group]
+  
+  # Remove the group column if not needed
+  filtered_data[, group := NULL]
+  
+  return(filtered_data)
+  
 }
 
 
 
 ```
 
-# Gaps in Roulette estimation
+# Notes from Roulette 
+
+## Hotspot regions
+
+Genes transcribed by RNA polymerase III (Pol III), especially tRNA and small nuclear RNA (RNU) genes, show about a 10-fold increase in mutation rate compared to Roulette's predictions. 
+
+tRNA genes: http://gtrnadb.ucsc.edu/genomes/bacteria/Vibr_para_UCM_V493/Vibr_para_UCM_V493-gene-list.html
+
+## Gaps in Roulette estimation
 
 The gaps in the roulette estimation are due to:
 
@@ -54,7 +81,7 @@ The gaps in the roulette estimation are due to:
   1. Low density of polymorphism in GNOMAD at 100 nucleotide scale
   2. Poor mappability issues and repetitive sequences (UCSC self chain track)
 
-## chr1 
+### gaps on chr1 
 
 ```{r}
 load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_gap_summary_chr1.rdata")
@@ -151,8 +178,27 @@ load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_p
 # Example usage
 plot <- create_filtered_plot(df_per_window_data)
 print(plot)
+
+filted_data <- data_filter(df_per_window_data)
+filted_data$fold_change <- filted_data$obs_sum / filted_data$rl_rescaled_sum
+filted_data_sorted <- filted_data[order(filted_data$fold_change,decreasing = T),]
+
+DT::datatable(filted_data_sorted[1:10],caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;','the windows with largest fold change(filtered)'),options = list(pageLength = 5))
+
 ```
 
+
+Plotting 1~5 using UCSC browser: 
+
+1: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A197160007%2D197170006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
+
+2: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A246200007%2D246210006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
+
+3: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A225330007%2D225340006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
+
+4: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A32530007%2D32540006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
+
+5: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A91160007%2D91170006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
 
 ### 30kb
 
@@ -194,56 +240,56 @@ print(plot)
 
 
 
-## fold change plots for chr22
+<!-- ## fold change plots for chr22 -->
 
-We just select rows where the "TRUE" value in the pass_threshold column is continuous for more than one row.
+<!-- We just select rows where the "TRUE" value in the pass_threshold column is continuous for more than one row. -->
 
-### 10kb
+<!-- ### 10kb -->
 
-```{r fig.width=10, fig.height=5}
+<!-- ```{r fig.width=10, fig.height=5} -->
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_10kb_frac4.rdata")
+<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_10kb_frac4.rdata") -->
 
-# Example usage
-plot <- create_filtered_plot(df_per_window_data)
-print(plot)
-```
-
-
-### 30kb
-
-```{r fig.width=10, fig.height=5}
-
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_30kb_frac4.rdata")
-
-# Example usage
-plot <- create_filtered_plot(df_per_window_data)
-print(plot)
-```
+<!-- # Example usage -->
+<!-- plot <- create_filtered_plot(df_per_window_data) -->
+<!-- print(plot) -->
+<!-- ``` -->
 
 
-### 50kb
+<!-- ### 30kb -->
 
-```{r fig.width=10, fig.height=5}
+<!-- ```{r fig.width=10, fig.height=5} -->
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_50kb_frac4.rdata")
+<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_30kb_frac4.rdata") -->
 
-# Example usage
-plot <- create_filtered_plot(df_per_window_data)
-print(plot)
-```
+<!-- # Example usage -->
+<!-- plot <- create_filtered_plot(df_per_window_data) -->
+<!-- print(plot) -->
+<!-- ``` -->
 
 
-### 100kb
+<!-- ### 50kb -->
 
-```{r fig.width=10, fig.height=5}
+<!-- ```{r fig.width=10, fig.height=5} -->
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_100kb_frac4.rdata")
+<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_50kb_frac4.rdata") -->
 
-# Example usage
-plot <- create_filtered_plot(df_per_window_data)
-print(plot)
-```
+<!-- # Example usage -->
+<!-- plot <- create_filtered_plot(df_per_window_data) -->
+<!-- print(plot) -->
+<!-- ``` -->
+
+
+<!-- ### 100kb -->
+
+<!-- ```{r fig.width=10, fig.height=5} -->
+
+<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_100kb_frac4.rdata") -->
+
+<!-- # Example usage -->
+<!-- plot <- create_filtered_plot(df_per_window_data) -->
+<!-- print(plot) -->
+<!-- ``` -->
 
 
 
