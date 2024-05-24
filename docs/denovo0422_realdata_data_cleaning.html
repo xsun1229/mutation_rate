@@ -389,7 +389,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -400,8 +400,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -410,13 +410,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-22
+<strong>Last updated:</strong> 2024-05-24
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>mutation_rate/</code> <span
@@ -439,21 +439,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -544,15 +541,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreea4f63b025fa874e6b265f6d0bcd903d551702213targetblanka4f63b0a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree34810982131c5c0c780e99f33d0a3e130eddc03ftargetblank3481098a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/a4f63b025fa874e6b265f6d0bcd903d551702213" target="_blank">a4f63b0</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/34810982131c5c0c780e99f33d0a3e130eddc03f" target="_blank">3481098</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreea4f63b025fa874e6b265f6d0bcd903d551702213targetblanka4f63b0a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree34810982131c5c0c780e99f33d0a3e130eddc03ftargetblank3481098a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -562,7 +559,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/a4f63b025fa874e6b265f6d0bcd903d551702213" target="_blank">a4f63b0</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/34810982131c5c0c780e99f33d0a3e130eddc03f" target="_blank">3481098</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -578,9 +575,6 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
-
-Unstaged changes:
-    Modified:   analysis/denovo0422_realdata_data_cleaning.Rmd
 
 </code></pre>
 <p>
@@ -627,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/34810982131c5c0c780e99f33d0a3e130eddc03f/analysis/denovo0422_realdata_data_cleaning.Rmd" target="_blank">3481098</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-23
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/34810982131c5c0c780e99f33d0a3e130eddc03f/docs/denovo0422_realdata_data_cleaning.html" target="_blank">3481098</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-23
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1147,6 +1175,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/34810982131c5c0c780e99f33d0a3e130eddc03f/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-4-1.png" target="_blank">3481098</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/cc6c85cba12bbdd20f55e72bbb33872d7ea4d413/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-4-1.png" target="_blank">cc6c85c</a>
 </td>
 <td>
@@ -1216,6 +1255,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/34810982131c5c0c780e99f33d0a3e130eddc03f/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-5-1.png" target="_blank">3481098</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/cc6c85cba12bbdd20f55e72bbb33872d7ea4d413/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-5-1.png" target="_blank">cc6c85c</a>
 </td>
 <td>
@@ -1262,6 +1312,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/34810982131c5c0c780e99f33d0a3e130eddc03f/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-6-1.png" target="_blank">3481098</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/cc6c85cba12bbdd20f55e72bbb33872d7ea4d413/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-6-1.png" target="_blank">cc6c85c</a>
 </td>
 <td>
@@ -1306,6 +1367,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/34810982131c5c0c780e99f33d0a3e130eddc03f/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-7-1.png" target="_blank">3481098</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/cc6c85cba12bbdd20f55e72bbb33872d7ea4d413/docs/figure/denovo0422_realdata_data_cleaning.Rmd/unnamed-chunk-7-1.png" target="_blank">cc6c85c</a>
