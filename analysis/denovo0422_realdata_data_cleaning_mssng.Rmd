@@ -1,7 +1,7 @@
 ---
-title: "Data cleaning -- SSC"
+title: "Data cleaning -- MSSNG"
 author: "XSun"
-date: "2024-05-20"
+date: "2024-06-14"
 output:
   workflowr::wflow_html:
     code_folding: hide
@@ -10,7 +10,7 @@ output:
 
 # Introduction
 
-We checked the gaps from Roulette estimation here and get an overview for the observed fold change $r_i$ computed from [SSC cell 2022](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html#SSC_from_Cell_2022)
+We checked the gaps from Roulette estimation here and get an overview for the observed fold change $r_i$ computed from [MSSNG cell 2022](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html#MSSNG_from_Cell_2022)
 
 ```{r, message=F}
 library(ggplot2)
@@ -84,7 +84,7 @@ The gaps in the roulette estimation are due to:
 ### gaps on chr1 
 
 ```{r}
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_gap_summary_chr1.rdata")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/gap_summary_chr1.rdata")
 
 ggplot(gap_summary, aes(x = Start/1000000, y = Length)) +
   geom_point() +
@@ -96,7 +96,7 @@ ggplot(gap_summary, aes(x = Start/1000000, y = Length)) +
 print("summary for the gap length")
 print(summary(gap_summary$Length))
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4.rdata")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_100kb_frac4.rdata")
 pct <- sum(df_per_window_data$Total_Gap_Length)/(as.numeric(df_per_window_data$Window_End[nrow(df_per_window_data)] - as.numeric(df_per_window_data$Window_Start[1])))
 print(sprintf("The percentage of positions with missing Roulette estimations is %.5f%%", pct*10))
 
@@ -147,7 +147,7 @@ Windows with less than 25% gaps are retained for further analysis.
 
 4. Summarize Data within Windows:
 
-For each window, the sum of roulette estimation and the observed de novo mutation count from SSC cell 2022 are calculated.
+For each window, the sum of roulette estimation and the observed de novo mutation count from MSSNG cell 2022 are calculated.
 
 5. Split Data for Cross-Validation:
 
@@ -157,7 +157,7 @@ Each window's positions are divided into a training set (first 90%) and a testin
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4.rdata")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_100kb_frac4.rdata")
 
 DT::datatable(df_per_window_data,caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;',''),options = list(pageLength = 10))
 
@@ -173,7 +173,7 @@ We just select rows where the "TRUE" value in the pass_threshold column is conti
 
 ```{r fig.width=10, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_10kb_frac4.rdata")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_10kb_frac4.rdata")
 
 # Example usage
 plot <- create_filtered_plot(df_per_window_data)
@@ -188,23 +188,11 @@ DT::datatable(filted_data_sorted[1:10],caption = htmltools::tags$caption(style =
 ```
 
 
-Plotting 1~5 using UCSC browser: 
-
-1: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A197160007%2D197170006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
-
-2: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A246200007%2D246210006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
-
-3: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A225330007%2D225340006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
-
-4: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A32530007%2D32540006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
-
-5: https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr1%3A91160007%2D91170006&hgsid=2252702044_QDoo1lBoATegs9ldw54kQk2NfnzC
-
 ### 30kb
 
 ```{r fig.width=10, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_30kb_frac4.rdata")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_30kb_frac4.rdata")
 
 # Example usage
 plot <- create_filtered_plot(df_per_window_data)
@@ -216,7 +204,7 @@ print(plot)
 
 ```{r fig.width=10, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_50kb_frac4.rdata")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_50kb_frac4.rdata")
 
 # Example usage
 plot <- create_filtered_plot(df_per_window_data)
@@ -228,69 +216,11 @@ print(plot)
 
 ```{r fig.width=10, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4.rdata")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_100kb_frac4.rdata")
 
 # Example usage
 plot <- create_filtered_plot(df_per_window_data)
 print(plot)
 ```
-
-
-
-
-
-
-<!-- ## fold change plots for chr22 -->
-
-<!-- We just select rows where the "TRUE" value in the pass_threshold column is continuous for more than one row. -->
-
-<!-- ### 10kb -->
-
-<!-- ```{r fig.width=10, fig.height=5} -->
-
-<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_10kb_frac4.rdata") -->
-
-<!-- # Example usage -->
-<!-- plot <- create_filtered_plot(df_per_window_data) -->
-<!-- print(plot) -->
-<!-- ``` -->
-
-
-<!-- ### 30kb -->
-
-<!-- ```{r fig.width=10, fig.height=5} -->
-
-<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_30kb_frac4.rdata") -->
-
-<!-- # Example usage -->
-<!-- plot <- create_filtered_plot(df_per_window_data) -->
-<!-- print(plot) -->
-<!-- ``` -->
-
-
-<!-- ### 50kb -->
-
-<!-- ```{r fig.width=10, fig.height=5} -->
-
-<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_50kb_frac4.rdata") -->
-
-<!-- # Example usage -->
-<!-- plot <- create_filtered_plot(df_per_window_data) -->
-<!-- print(plot) -->
-<!-- ``` -->
-
-
-<!-- ### 100kb -->
-
-<!-- ```{r fig.width=10, fig.height=5} -->
-
-<!-- load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr22_100kb_frac4.rdata") -->
-
-<!-- # Example usage -->
-<!-- plot <- create_filtered_plot(df_per_window_data) -->
-<!-- print(plot) -->
-<!-- ``` -->
-
-
 
 

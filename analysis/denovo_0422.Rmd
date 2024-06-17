@@ -35,6 +35,14 @@ Previous simulation
 
 # Real data
 
+SSC
+
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning.html)
 
+[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV.html)
 
+MSSNG
+
+[Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_mssng.html)
+
+[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng.html)
