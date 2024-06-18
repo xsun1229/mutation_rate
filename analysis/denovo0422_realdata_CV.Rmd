@@ -28,8 +28,8 @@ scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
   geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
   annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3)),
            hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
-  labs(x = paste("Predicted mutation count on testing set:", xcol),
-       y = paste("Observed mutation count on testing set:", ycol),
+  labs(x = paste("Predicted mutation count:", xcol),
+       y = paste("Observed mutation count:", ycol),
        title = title) +
   theme_minimal()
   
