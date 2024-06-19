@@ -816,3 +816,34 @@ ggplot(data, aes(x = Mb, y = randeff)) +
 
 ```
 
+
+
+# Integration Cell 2022 (ASC + MSSNG + SPARK)
+
+## Rescaling
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.height=5, fig.width=5}
+
+load("/project/xinhe/xsun/mutation_rate/data/integration_trost/results/scaling_factor.rdata")
+
+
+print("fitting: observed (ASC + MSSNG + SPARK) ~ expected (Roulette) + 0")
+fit <- lm(denovo_per_chr ~ rl_per_chr + 0)
+print(summary(fit))
+
+data <- data.frame(expected = rl_per_chr, observed = denovo_per_chr)
+print(data)
+
+# Create the plot
+ggplot(data, aes(x = expected, y = observed)) +
+  geom_point() +
+  geom_abline(slope = fit$coefficients[1], intercept = 0, color = "red") +
+  xlab("Expected_Roulette") +
+  ylab("Observed_ASC + MSSNG + SPARK") 
+
+print(paste0("the scalling factor is ",round(fit$coefficients[1],digits = 5)))
+print(paste0("obs = ",round(fit$coefficients[1],digits = 5),"* exp"))
+```
+
+
+

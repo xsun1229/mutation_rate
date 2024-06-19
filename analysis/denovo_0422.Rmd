@@ -35,14 +35,36 @@ Previous simulation
 
 # Real data
 
-SSC
+[Summary table for all the real analyses](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_summary.html)
+
+
+SSC (Trost et al, Cell 2022)
 
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning.html)
 
 [Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV.html)
 
-MSSNG
+MSSNG (Trost et al, Cell 2022)
 
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_mssng.html)
 
 [Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng.html)
+
+
+SSC (An et al)
+
+Denovo mutations are from this paper: https://pubmed.ncbi.nlm.nih.gov/30545852/
+
+[Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_ssc_an.html)
+
+[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html)
+
+
+Intergration of MSSNG, ASC, SPARK (Trost et al, Cell 2022)
+
+[Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_integrate_trost.html)
+
+[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost.html)
+
+
+

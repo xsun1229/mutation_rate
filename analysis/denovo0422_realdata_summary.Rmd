@@ -1,0 +1,10 @@
+---
+title: "Summary table for all the real analyses"
+author: "XSun"
+date: "2024-06-19"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+

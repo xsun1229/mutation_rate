@@ -1,0 +1,180 @@
+---
+title: "Data cleaning -- SSC (An et al, science 2018)"
+author: "XSun"
+date: "2024-06-19"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+We checked the gaps from Roulette estimation here and get an overview for the observed fold change $r_i$ computed from [SSC Science 2018](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html), the paper is here https://pubmed.ncbi.nlm.nih.gov/30545852/
+
+
+```{r, message=F}
+library(ggplot2)
+library(kableExtra)
+library(dplyr)
+library(data.table)
+
+create_filtered_plot <- function(data) {
+  # Convert to data.table
+  setDT(data)
+  
+  # Create group based on rleid
+  data[, group := rleid(pass_threshold)]
+  
+  # Filter rows where pass_threshold is TRUE and the length of the group is greater than 1
+  filtered_data <- data[pass_threshold == TRUE, .SD[.N > 1], by = group]
+  
+  # Remove the group column if not needed
+  filtered_data[, group := NULL]
+  
+  # Create the plot
+  plot <- ggplot(filtered_data, aes(x = Window_Start / 1000000, y = foldchange)) +
+  geom_point(data = filtered_data[filtered_data$overlap_poliii == FALSE, ], aes(color = "FALSE")) +
+  geom_point(data = filtered_data[filtered_data$overlap_poliii == TRUE, ], aes(color = "TRUE")) +
+  labs(x = "Genomic position (mb)", y = "fold change r_i", color = "Overlap with polIII genes") +
+  scale_color_manual(values = c("FALSE" = "black", "TRUE" = "red")) +
+  theme_minimal()
+  
+  return(plot)
+}
+
+data_filter <- function(data) {
+  
+  setDT(data)
+  
+  # Create group based on rleid
+  data[, group := rleid(pass_threshold)]
+  
+  # Filter rows where pass_threshold is TRUE and the length of the group is greater than 1
+  filtered_data <- data[pass_threshold == TRUE, .SD[.N > 1], by = group]
+  
+  # Remove the group column if not needed
+  filtered_data[, group := NULL]
+  
+  return(filtered_data)
+  
+}
+
+
+
+```
+
+# Notes from Roulette 
+
+## Hotspot regions
+
+Genes transcribed by RNA polymerase III (Pol III), especially tRNA and small nuclear RNA (RNU) genes, show about a 10-fold increase in mutation rate compared to Roulette's predictions. 
+
+tRNA genes: http://gtrnadb.ucsc.edu/genomes/bacteria/Vibr_para_UCM_V493/Vibr_para_UCM_V493-gene-list.html
+
+## Gaps in Roulette estimation
+
+The gaps in the roulette estimation are due to:
+
+- **Long gaps:** Centromeres
+
+- **Small gaps:**
+  1. Low density of polymorphism in GNOMAD at 100 nucleotide scale
+  2. Poor mappability issues and repetitive sequences (UCSC self chain track)
+
+
+# Removing the gaps and computing the fold changes 
+
+The data cleaning is performed as follows:
+
+1. Partition Chromosome into Windows:
+
+The chromosome is divided into fixed windows of various sizes (10kb, 30kb, 50kb, 100kb).
+
+2. Compute Gaps within Windows:
+
+For each window, the positions with missing roulette estimation (gaps) are computed.
+
+3. Filter Windows Based on Gaps:
+
+Windows with less than 25% gaps are retained for further analysis.
+
+4. Summarize Data within Windows:
+
+For each window, the sum of roulette estimation and the observed de novo mutation count from MSSNG cell 2022 are calculated.
+
+5. Split Data for Cross-Validation:
+
+Each window's positions are divided into a training set (first 90%) and a testing set (remaining 10%) for cross-validation.
+
+## An example for chr1, 100kb window size
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/data_cleaning/ssc_an_per_window_chr1_100kb_frac4.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;',''),options = list(pageLength = 10))
+
+```
+
+Other window sizes also have similar patterns. 
+
+## fold change plots for chr1
+
+We just select rows where the "TRUE" value in the pass_threshold column is continuous for more than one row.
+
+### 10kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/data_cleaning/ssc_an_per_window_chr1_10kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+
+filted_data <- data_filter(df_per_window_data)
+filted_data$fold_change <- filted_data$obs_sum / filted_data$rl_rescaled_sum
+filted_data_sorted <- filted_data[order(filted_data$fold_change,decreasing = T),]
+
+DT::datatable(filted_data_sorted[1:10],caption = htmltools::tags$caption(style = 'caption-side: left; text-align: left; color:black; font-size:150%;','the windows with largest fold change(filtered)'),options = list(pageLength = 5))
+
+```
+
+
+### 30kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/data_cleaning/ssc_an_per_window_chr1_30kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 50kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/data_cleaning/ssc_an_per_window_chr1_50kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+
+### 100kb
+
+```{r fig.width=10, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/data_cleaning/ssc_an_per_window_chr1_100kb_frac4.rdata")
+
+# Example usage
+plot <- create_filtered_plot(df_per_window_data)
+print(plot)
+```
+
+

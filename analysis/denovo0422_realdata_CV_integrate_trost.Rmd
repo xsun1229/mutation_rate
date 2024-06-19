@@ -1,7 +1,7 @@
 ---
-title: "Cross Validation -- MSSNG"
+title: "Cross Validation --SSC (An et al, science 2018)"
 author: "XSun"
-date: "2024-06-12"
+date: "2024-06-19"
 output:
   workflowr::wflow_html:
     code_folding: hide
@@ -10,7 +10,7 @@ output:
 
 # Introduction
 
-We cleaned the real data [here](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_mssng.html). 
+We cleaned the real data [here](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_integrate_trost.html). 
 
 ```{r warning=F, message=F}
 library(ggplot2)
@@ -81,7 +81,7 @@ plot_randeff_genome <- function(data) {
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted_testpred.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -96,7 +96,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted_testpred.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -111,7 +111,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted_testpred.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -127,7 +127,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted_testpred.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -156,7 +156,7 @@ For each window, the first 90% base pairs are treated as training data, the rema
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted_testpred.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -170,7 +170,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted_testpred.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -185,7 +185,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted_testpred.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -200,7 +200,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted_testpred.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -218,7 +218,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted_testpred_chr.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -233,7 +233,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted_testpred_chr.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -248,7 +248,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted_testpred_chr.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -264,7 +264,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted_testpred_chr.rdata")
 
 df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -293,7 +293,7 @@ For each window, the first 90% base pairs are treated as training data, the rema
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted_testpred_chr.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -307,7 +307,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted_testpred_chr.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -322,7 +322,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted_testpred_chr.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -337,7 +337,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r}
 
-load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata")
+load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted_testpred_chr.rdata")
 
 data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -355,8 +355,8 @@ grid.arrange(p1, p2, ncol = 2)
 
 ```{r message=FALSE, warning=FALSE}
 
-df_seg <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred2.rdata"))
-df_chr <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata"))
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted_testpred.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted_testpred_chr.rdata"))
 
 
 df_compare <- data.frame(seg_est = df_seg$randeff_est,
@@ -391,8 +391,8 @@ ggplot(df_compare, aes(x =  window_start/1000000)) +
 
 ```{r message=FALSE, warning=FALSE}
 
-df_seg <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred2.rdata"))
-df_chr <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata"))
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted_testpred.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted_testpred_chr.rdata"))
 
 
 df_compare <- data.frame(seg_est = df_seg$randeff_est,
@@ -428,8 +428,8 @@ ggplot(df_compare, aes(x =  window_start/1000000)) +
 
 ```{r message=FALSE, warning=FALSE}
 
-df_seg <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred2.rdata"))
-df_chr <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata"))
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted_testpred.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted_testpred_chr.rdata"))
 
 
 df_compare <- data.frame(seg_est = df_seg$randeff_est,
@@ -465,8 +465,8 @@ ggplot(df_compare, aes(x =  window_start/1000000)) +
 
 ```{r message=FALSE, warning=FALSE}
 
-df_seg <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred2.rdata"))
-df_chr <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata"))
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted_testpred.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted_testpred_chr.rdata"))
 
 
 df_compare <- data.frame(seg_est = df_seg$randeff_est,
