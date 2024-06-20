@@ -1,5 +1,5 @@
 ---
-title: "Cross Validation --SSC (An et al, science 2018)"
+title: "Cross Validation -- Intergration of MSSNG, ASC, SPARK (Trost et al, Cell 2022) "
 author: "XSun"
 date: "2024-06-19"
 output:

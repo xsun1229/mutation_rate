@@ -8,3 +8,30 @@ editor_options:
 ---
 
 
+Below is a table summarizing the fitting rsq for `observed_mutation_count ~ predicted_mutation_count + 0` in cross validation. 
+
+by_segments means, we partitioned the chromosome if there is large gaps (>20mb)
+
+by_chr means, we treat the whole chromosome as one segment and run smashgen on it. 
+
+|                   | Roulette baseline&SSC | SSC, Trost Cell 2022 | Roulette baseline&MSSNG | MSSNG, Trost Cell 2022 | Roulette baseline&ASC+MSSNG+SPARK | ASC+MSSNG+SPARK, Trost Cell 2022 | Roulette baseline&SSC | SSC, An Science 2018 |
+|-------------------|---------------------------|----------------------|-----------------------------|------------------------|---------------------------------------|----------------------------------|---------------------------|----------------------|
+| 10kb_by segments  | 0.084                     | 0.083                | 0.032                       | 0.029                  | 0.034                                 | 0.027                            | 0.072                     | 0.073                |
+| 10kb_by chr       | 0.084                     | 0.083                | 0.032                       | 0.029                  | 0.034                                 | 0.027                            | 0.072                     | 0.072                |
+| 30kb_by segments  | 0.236                     | 0.231                | 0.086                       | 0.096                  | 0.102                                 | 0.107                            | 0.187                     | 0.19                 |
+| 30kb_by chr       | 0.236                     | 0.231                | 0.086                       | 0.096                  | 0.102                                 | 0.107                            | 0.187                     | 0.19                 |
+| 50kb_by segments  | 0.356                     | 0.358                | 0.136                       | 0.175                  | 0.154                                 | 0.193                            | 0.287                     | 0.293                |
+| 50kb_by chr       | 0.356                     | 0.358                | 0.136                       | 0.176                  | 0.154                                 | 0.194                            | 0.287                     | 0.293                |
+| 100kb_by segments | 0.466                     | 0.461                | 0.209                       | 0.25                   | 0.088                                 | 0.09                             | 0.419                     | 0.427                |
+| 100kb_by chr      | 0.466                     | 0.461                | 0.209                       | 0.25                   | 0.088                                 | 0.091                            | 0.419                     | 0.426                |
+
+
+Quick links to the detailed results
+
+SSC, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV.html
+
+MSSNG, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng.html
+
+ASC+MSSNG+SPARK, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost.html
+
+SSC, An Science 2018 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html
