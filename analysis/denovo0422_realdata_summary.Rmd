@@ -2,11 +2,59 @@
 title: "Summary table for all the real analyses"
 author: "XSun"
 date: "2024-06-19"
-output: workflowr::wflow_html
-editor_options:
-  chunk_output_type: console
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
 ---
 
+```{r warning=F, message=F}
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
+create_pairwise_scatter_plots <- function(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost) {
+  # Extract randeff_est columns
+  randeff_SSC_an <- SSC_an$randeff_est
+  randeff_SSC_trost <- SSC_trost$randeff_est
+  randeff_mssng_trost <- mssng_trost$randeff_est
+  randeff_ASC_MSSNG_SPARK_trost <- ASC_MSSNG_SPARK_trost$randeff_est
+
+  # Combine into a single data frame for pairwise comparison
+  combined_df <- data.frame(
+    randeff_SSC_an,
+    randeff_SSC_trost,
+    randeff_mssng_trost,
+    randeff_ASC_MSSNG_SPARK_trost
+  )
+
+  # Define pairs for comparison
+  pairs <- list(
+    c("randeff_SSC_an", "randeff_SSC_trost"),
+    c("randeff_SSC_an", "randeff_mssng_trost"),
+    c("randeff_SSC_an", "randeff_ASC_MSSNG_SPARK_trost"),
+    c("randeff_SSC_trost", "randeff_mssng_trost"),
+    c("randeff_SSC_trost", "randeff_ASC_MSSNG_SPARK_trost"),
+    c("randeff_mssng_trost", "randeff_ASC_MSSNG_SPARK_trost")
+  )
+
+  # Create scatter plots
+  plots <- lapply(pairs, function(pair) {
+    ggplot(combined_df, aes_string(x = pair[1], y = pair[2])) +
+      geom_point() +
+      geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "red") +
+      theme_minimal() +
+      labs(title = "Estimated nugget effects",
+           x = pair[1],
+           y = pair[2])
+  })
+
+  # Arrange plots in a 2x3 grid
+  grid.arrange(grobs = plots, ncol = 3, nrow = 2)
+}
+```
+
+# Fitting rsq in cross validation
 
 Below is a table summarizing the fitting rsq for `observed_mutation_count ~ predicted_mutation_count + 0` in cross validation. 
 
@@ -35,3 +83,56 @@ MSSNG, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_reald
 ASC+MSSNG+SPARK, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost.html
 
 SSC, An Science 2018 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html
+
+
+# Comparing the estimated nugget effects -- estimated by segments
+
+## 10kb
+
+```{r fig.width=12, fig.height=8, warning=F, message=F}
+
+SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_10kb_fitted.rdata"))
+SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted.rdata"))
+mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted.rdata"))
+ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted.rdata"))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
+```
+
+
+## 30kb
+
+```{r fig.width=12, fig.height=8, warning=F, message=F}
+
+SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_30kb_fitted.rdata"))
+SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted.rdata"))
+mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted.rdata"))
+ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted.rdata"))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
+```
+
+
+## 50kb
+
+```{r fig.width=12, fig.height=8, warning=F, message=F}
+
+SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_50kb_fitted.rdata"))
+SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted.rdata"))
+mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted.rdata"))
+ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted.rdata"))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
+```
+
+## 100kb
+
+```{r fig.width=12, fig.height=8, warning=F, message=F}
+
+SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_100kb_fitted.rdata"))
+SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted.rdata"))
+mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted.rdata"))
+ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted.rdata"))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
+```

@@ -35,6 +35,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
@@ -233,6 +234,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -357,6 +361,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Summary table for all the real
@@ -391,11 +403,11 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-06-20
+<strong>Last updated:</strong> 2024-06-26
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span> 1
 </p>
@@ -441,15 +453,99 @@ HTML.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree21bbe1e8ee6d3e31f803310a916ab189ec9b2c1ftargetblank21bbe1ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230228code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230228)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230228code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230228)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree39fa2410c28b1985cd067871f1efa7dd7c7eb5fbtargetblank39fa241a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/21bbe1e8ee6d3e31f803310a916ab189ec9b2c1f" target="_blank">21bbe1e</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/39fa2410c28b1985cd067871f1efa7dd7c7eb5fb" target="_blank">39fa241</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree21bbe1e8ee6d3e31f803310a916ab189ec9b2c1ftargetblank21bbe1ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree39fa2410c28b1985cd067871f1efa7dd7c7eb5fbtargetblank39fa241a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -459,7 +555,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/21bbe1e8ee6d3e31f803310a916ab189ec9b2c1f" target="_blank">21bbe1e</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/39fa2410c28b1985cd067871f1efa7dd7c7eb5fb" target="_blank">39fa241</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -477,8 +573,8 @@ Ignored files:
     Ignored:    .Rhistory
 
 Unstaged changes:
-    Modified:   analysis/denovo0422_realdata_CV_integrate_trost.Rmd
     Modified:   analysis/denovo0422_realdata_summary.Rmd
+    Modified:   analysis/denovo_0422.Rmd
 
 </code></pre>
 <p>
@@ -530,6 +626,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/39fa2410c28b1985cd067871f1efa7dd7c7eb5fb/analysis/denovo0422_realdata_summary.Rmd" target="_blank">39fa241</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-20
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/39fa2410c28b1985cd067871f1efa7dd7c7eb5fb/docs/denovo0422_realdata_summary.html" target="_blank">39fa241</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-20
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/12ef5590ae83b9a085e94b04cc6e576450de741f/analysis/denovo0422_realdata_summary.Rmd" target="_blank">12ef559</a>
 </td>
 <td>
@@ -549,6 +679,51 @@ update
 </div>
 </div>
 </div>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)
+library(gridExtra)
+
+create_pairwise_scatter_plots &lt;- function(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost) {
+  # Extract randeff_est columns
+  randeff_SSC_an &lt;- SSC_an$randeff_est
+  randeff_SSC_trost &lt;- SSC_trost$randeff_est
+  randeff_mssng_trost &lt;- mssng_trost$randeff_est
+  randeff_ASC_MSSNG_SPARK_trost &lt;- ASC_MSSNG_SPARK_trost$randeff_est
+
+  # Combine into a single data frame for pairwise comparison
+  combined_df &lt;- data.frame(
+    randeff_SSC_an,
+    randeff_SSC_trost,
+    randeff_mssng_trost,
+    randeff_ASC_MSSNG_SPARK_trost
+  )
+
+  # Define pairs for comparison
+  pairs &lt;- list(
+    c(&quot;randeff_SSC_an&quot;, &quot;randeff_SSC_trost&quot;),
+    c(&quot;randeff_SSC_an&quot;, &quot;randeff_mssng_trost&quot;),
+    c(&quot;randeff_SSC_an&quot;, &quot;randeff_ASC_MSSNG_SPARK_trost&quot;),
+    c(&quot;randeff_SSC_trost&quot;, &quot;randeff_mssng_trost&quot;),
+    c(&quot;randeff_SSC_trost&quot;, &quot;randeff_ASC_MSSNG_SPARK_trost&quot;),
+    c(&quot;randeff_mssng_trost&quot;, &quot;randeff_ASC_MSSNG_SPARK_trost&quot;)
+  )
+
+  # Create scatter plots
+  plots &lt;- lapply(pairs, function(pair) {
+    ggplot(combined_df, aes_string(x = pair[1], y = pair[2])) +
+      geom_point() +
+      geom_abline(slope = 1, intercept = 0, linetype = &quot;dashed&quot;, color = &quot;red&quot;) +
+      theme_minimal() +
+      labs(title = &quot;Estimated nugget effects&quot;,
+           x = pair[1],
+           y = pair[2])
+  })
+
+  # Arrange plots in a 2x3 grid
+  grid.arrange(grobs = plots, ncol = 3, nrow = 2)
+}</code></pre>
+<div id="fitting-rsq-in-cross-validation" class="section level1">
+<h1>Fitting rsq in cross validation</h1>
 <p>Below is a table summarizing the fitting rsq for
 <code>observed_mutation_count ~ predicted_mutation_count + 0</code> in
 cross validation.</p>
@@ -685,6 +860,91 @@ class="uri">https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_inte
 <p>SSC, An Science 2018 <a
 href="https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html"
 class="uri">https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html</a></p>
+</div>
+<div id="comparing-the-estimated-nugget-effects-estimated-by-segments"
+class="section level1">
+<h1>Comparing the estimated nugget effects – estimated by segments</h1>
+<div id="kb" class="section level2">
+<h2>10kb</h2>
+<pre class="r"><code>SSC_an &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_10kb_fitted.rdata&quot;))
+SSC_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted.rdata&quot;))
+mssng_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted.rdata&quot;))
+ASC_MSSNG_SPARK_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted.rdata&quot;))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)</code></pre>
+<p><img src="figure/denovo0422_realdata_summary.Rmd/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-1" class="section level2">
+<h2>30kb</h2>
+<pre class="r"><code>SSC_an &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_30kb_fitted.rdata&quot;))
+SSC_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted.rdata&quot;))
+mssng_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted.rdata&quot;))
+ASC_MSSNG_SPARK_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted.rdata&quot;))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)</code></pre>
+<p><img src="figure/denovo0422_realdata_summary.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-2" class="section level2">
+<h2>50kb</h2>
+<pre class="r"><code>SSC_an &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_50kb_fitted.rdata&quot;))
+SSC_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted.rdata&quot;))
+mssng_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted.rdata&quot;))
+ASC_MSSNG_SPARK_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted.rdata&quot;))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)</code></pre>
+<p><img src="figure/denovo0422_realdata_summary.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-3" class="section level2">
+<h2>100kb</h2>
+<pre class="r"><code>SSC_an &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_100kb_fitted.rdata&quot;))
+SSC_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted.rdata&quot;))
+mssng_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted.rdata&quot;))
+ASC_MSSNG_SPARK_trost &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted.rdata&quot;))
+
+create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)</code></pre>
+<p><img src="figure/denovo0422_realdata_summary.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] gridExtra_2.3 dplyr_1.1.4   ggplot2_3.5.1
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12      highr_0.9        pillar_1.9.0     compiler_4.2.0  
+ [5] bslib_0.3.1      later_1.3.0      jquerylib_0.1.4  git2r_0.30.1    
+ [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    jsonlite_1.8.0  
+[13] evaluate_0.15    lifecycle_1.0.4  tibble_3.2.1     gtable_0.3.0    
+[17] pkgconfig_2.0.3  rlang_1.1.2      cli_3.6.1        rstudioapi_0.13 
+[21] yaml_2.3.5       xfun_0.41        fastmap_1.1.0    withr_2.5.0     
+[25] stringr_1.5.1    knitr_1.39       generics_0.1.2   fs_1.5.2        
+[29] vctrs_0.6.5      sass_0.4.1       tidyselect_1.2.0 rprojroot_2.0.3 
+[33] grid_4.2.0       glue_1.6.2       R6_2.5.1         fansi_1.0.3     
+[37] rmarkdown_2.25   farver_2.1.0     magrittr_2.0.3   whisker_0.4     
+[41] scales_1.3.0     promises_1.2.0.1 htmltools_0.5.2  colorspace_2.0-3
+[45] httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2       stringi_1.7.6   
+[49] munsell_0.5.0   </code></pre>
+</div>
+</div>
+</div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -735,6 +995,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

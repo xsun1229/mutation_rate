@@ -35,8 +35,9 @@ Previous simulation
 
 # Real data
 
-[Summary table for all the real analyses](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_summary.html)
+## Estimating local nugget effects 
 
+[Summary table for all the real analyses](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_summary.html)
 
 SSC (Trost et al, Cell 2022)
 
@@ -49,7 +50,6 @@ MSSNG (Trost et al, Cell 2022)
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_mssng.html)
 
 [Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng.html)
-
 
 SSC (An et al)
 
@@ -65,6 +65,16 @@ Intergration of MSSNG, ASC, SPARK (Trost et al, Cell 2022)
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_integrate_trost.html)
 
 [Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost.html)
+
+
+## Constraint mapping
+
+Using nugget effects estimated by de novo mutations from 
+
+[SSC (An et al)](https://xsun1229.github.io/mutation_rate/denovo0422_constraint_mapping_ssc_an.html)
+
+
+
 
 
 
