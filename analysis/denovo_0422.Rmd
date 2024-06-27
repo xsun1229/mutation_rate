@@ -14,7 +14,9 @@ editor_options:
 
 # Data Overview
 
-[link](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html)
+[De Novo mutation](https://xsun1229.github.io/mutation_rate/denovo_data_overview.html)
+
+[Gnomad V4.1](https://xsun1229.github.io/mutation_rate/data_gnomadv41.html)
 
 # Simulation
 

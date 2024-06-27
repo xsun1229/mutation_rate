@@ -9,7 +9,10 @@ editor_options:
 
 # Introduction
 
-We follow the paper https://www.nature.com/articles/s41586-023-06045-0 to do constraint mapping
+We follow the paper https://www.nature.com/articles/s41586-023-06045-0 to do constraint mapping.
+
+The observe data are fron gnomad
+
 
 
 ```{r}

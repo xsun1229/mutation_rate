@@ -1,0 +1,148 @@
+---
+title: "Gnomad V4.1"
+author: "XSun"
+date: "2024-06-27"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+
+The gnomad data is downloaded from https://gnomad.broadinstitute.org/downloads#v4
+
+The gnomAD v4.1.0 data set contains data from 730,947 exomes and 76,215 whole genomes, all mapped to the GRCh38 reference sequence
+
+# Informations in this VCF 
+
+## Ancestries
+
+- African/African-American (afr)
+- Amish (ami)
+- Admixed American (amr)
+- Ashkenazi Jewish (asj)
+- East Asian (eas)
+- Finnish (fin)
+- Middle Eastern (mid)
+- Non-Finnish European (nfe)
+- South Asian (sas)
+- Remaining individuals (remaining)
+
+## Variant-level info
+
+Allele Counts and Frequencies:
+
+- INFO=<ID=AC,Number=A,Type=Integer,Description="Alternate allele count">
+- INFO=<ID=AN,Number=1,Type=Integer,Description="Total number of alleles">
+- INFO=<ID=AF,Number=A,Type=Float,Description="Alternate allele frequency">
+
+Genetic Ancestry Groups:
+
+- INFO=<ID=grpmax,Number=A,Type=String,Description="Genetic ancestry group with the maximum allele frequency">
+- INFO=<ID=fafmax_faf95_max,Number=A,Type=Float,Description="Maximum filtering allele frequency (using Poisson 95% CI) across genetic ancestry groups">
+
+Population-Specific Annotations:
+
+- INFO=<ID=AC_afr,Number=A,Type=Integer,Description="Alternate allele count for samples in the African/African-American genetic ancestry group">
+- INFO=<ID=AF_afr,Number=A,Type=Float,Description="Alternate allele frequency in samples in the African/African-American genetic ancestry group">
+
+Quality Metrics:
+
+- INFO=<ID=FS,Number=1,Type=Float,Description="Phred-scaled p-value of Fisher's exact test for strand bias">
+- INFO=<ID=MQ,Number=1,Type=Float,Description="Root mean square of the mapping quality of reads across all samples">
+- INFO=<ID=QD,Number=1,Type=Float,Description="Variant call confidence normalized by depth of sample reads supporting a variant">
+
+Annotations from External Tools:
+
+- INFO=<ID=vep,Number=.,Type=String,Description="Consequence annotations from Ensembl VEP. Format: Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|ALLELE_NUM|DISTANCE|STRAND|FLAGS|VARIANT_CLASS|SYMBOL_SOURCE|HGNC_ID|CANONICAL|MANE_SELECT|MANE_PLUS_CLINICAL|TSL|APPRIS|CCDS|ENSP|UNIPROT_ISOFORM|SOURCE|DOMAINS|miRNA|HGVS_OFFSET|PUBMED|MOTIF_NAME|MOTIF_POS|HIGH_INF_POS|MOTIF_SCORE_CHANGE|TRANSCRIPTION_FACTORS|LoF|LoF_filter|LoF_flags|LoF_info">
+
+Histograms and Distributions:
+
+- INFO=<ID=age_hist_het_bin_freq,Number=A,Type=String,Description="Histogram of ages of heterozygous individuals; bin edges are: 30.0|35.0|40.0|45.0|50.0|55.0|60.0|65.0|70.0|75.0|80.0; total number of individuals of any genotype bin: 1332|1401|1642|2949|4283|3601|3282|2909|1955|1202">
+
+- INFO=<ID=gq_hist_alt_bin_freq,Number=A,Type=String,Description="Histogram for GQ in heterozygous individuals calculated on high quality genotypes; bin edges are: 0|5|10|15|20|25|30|35|40|45|50|55|60|65|70|75|80|85|90|95|100">
+
+Similar fields exist for other histograms like dp_hist_alt_bin_freq, ab_hist_alt_bin_freq, etc.
+
+
+
+
+<!-- 1. File Format and Version -->
+
+<!-- ##fileformat=VCFv4.2: Specifies the VCF file format version. -->
+<!-- 2. Filters -->
+
+<!-- Filters are criteria used to determine the quality and reliability of the variants. -->
+<!-- ##FILTER=<ID=PASS,Description="All filters passed">: Indicates that the variant passed all filters. -->
+<!-- ##FILTER=<ID=AC0,Description="Allele count is zero after filtering out low-confidence genotypes (GQ < 20; DP < 10; and AB < 0.2 for het calls)">: Describes a filter for allele count. -->
+<!-- ##FILTER=<ID=AS_VQSR,Description="Failed VQSR filtering thresholds of -2.502 for SNPs and -0.7156 for indels">: Describes a filter for VQSR (Variant Quality Score Recalibration). -->
+<!-- ##FILTER=<ID=InbreedingCoeff,Description="Inbreeding coefficient < -0.3">: Describes a filter based on the inbreeding coefficient. -->
+<!-- 3. Information Fields (INFO) -->
+<!-- 4. Contig Information -->
+<!-- Provides details about the reference genome contigs (chromosomes). -->
+<!-- ##contig=<ID=chr1,length=248956422,assembly=gnomAD_GRCh38> -->
+<!-- Similar fields exist for other chromosomes (chr2, chr3, ..., chrY). -->
+<!-- 5. Software Versions -->
+
+<!-- Indicates the versions of the software tools used to generate the VCF file. -->
+<!-- ##hailversion=0.2.122-be9d88a80695 -->
+<!-- ##bcftools_viewVersion=1.9+htslib-1.9 -->
+<!-- 6. Column Headers -->
+
+<!-- Defines the columns in the VCF file. -->
+<!-- #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO -->
+<!-- Summary of Information Included -->
+
+<!-- ```{r} -->
+
+<!-- ``` -->
+
+
+
+# Process the data
+
+```{bash, eval=FALSE}
+# Process the data
+module load bcftools
+module load htslib
+
+filter_dir="/project/xinhe/xsun/mutation_rate/data/gnomad_v41/filtered_by_pass/"
+SNV_dir="/project/xinhe/xsun/mutation_rate/data/gnomad_v41/SNV/"
+
+mkdir -p $filter_dir
+mkdir -p $SNV_dir
+
+bcftools view -f "PASS" gnomad.genomes.v4.1.sites.chr$chr.vcf.bgz | bgzip > $filter_dir/chr$chr.filtered.vcf.gz
+
+input_dir=$filter_dir
+output_dir=$SNV_dir
+
+input_file="$input_dir/chr$chr.filtered.vcf.gz"
+output_file="$output_dir/chr$chr.SNV.info.txt"
+  
+# Extract columns from VCF file for SNVs only
+bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\t%INFO/AN\t%INFO/AC\t%INFO/AF\n' "$input_file" | \
+awk '{if(length($3)==1 && length($4)==1) {print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7}}' \
+> "$output_file"
+
+# set input and output directories
+input_dir=$SNV_dir
+output_dir=$SNV_dir
+
+# go to the directory containing the input files
+cd $input_dir
+
+input_file="chr$chr.SNV.info.txt"
+output_file="$output_dir/chr$chr.SNV.bed"
+tar_output_file="$output_dir/chr$chr.SNV.bed.tar.gz"
+
+# Convert to bed format
+awk '{OFS="\t"; print $1,$2-1,$2,$3,$4,$5,$6,$7}' $input_file > $output_file
+tar -czvf $tar_output_file -C $output_dir $(basename $output_file)
+
+if [ -f $tar_output_file ]; then
+    rm $output_file
+else
+    echo "Error: Failed to create $tar_output_file"
+fi
+```
