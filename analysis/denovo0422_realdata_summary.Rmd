@@ -44,7 +44,7 @@ create_pairwise_scatter_plots <- function(SSC_an, SSC_trost, mssng_trost, ASC_MS
       geom_point() +
       geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "red") +
       theme_minimal() +
-      labs(title = "Estimated nugget effects",
+      labs(title = "Estimated random effects",
            x = pair[1],
            y = pair[2])
   })
@@ -62,7 +62,7 @@ by_segments means, we partitioned the chromosome if there is large gaps (>20mb)
 
 by_chr means, we treat the whole chromosome as one segment and run smashgen on it. 
 
-|                   | Roulette baseline&SSC | SSC, Trost Cell 2022 | Roulette baseline&MSSNG | MSSNG, Trost Cell 2022 | Roulette baseline&ASC+MSSNG+SPARK | ASC+MSSNG+SPARK, Trost Cell 2022 | Roulette baseline&SSC | SSC, An Science 2018 |
+|                   | Roulette baseline&SSC | SSC, Trost Cell 2022,samplesize 9205,avg.#ofDNMs/10kb for chr1:1.15  | Roulette baseline&MSSNG | MSSNG, Trost Cell 2022,samplesize 11312 ,avg.#ofDNMs/10kb for chr1: 0.38  | Roulette baseline&ASC+MSSNG+SPARK | ASC+MSSNG+SPARK, Trost Cell 2022,samplesize 11312 + 9209 trios (WES included) ,avg.#ofDNMs/10kb for chr1: 0.52  | Roulette baseline&SSC | SSC, An Science 2018, samplesize 7608,avg.#ofDNMs/10kb for chr1: 0.74  |
 |-------------------|---------------------------|----------------------|-----------------------------|------------------------|---------------------------------------|----------------------------------|---------------------------|----------------------|
 | 10kb_by segments  | 0.084                     | 0.083                | 0.032                       | 0.029                  | 0.034                                 | 0.027                            | 0.072                     | 0.073                |
 | 10kb_by chr       | 0.084                     | 0.083                | 0.032                       | 0.029                  | 0.034                                 | 0.027                            | 0.072                     | 0.072                |
@@ -85,7 +85,7 @@ ASC+MSSNG+SPARK, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo
 SSC, An Science 2018 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html
 
 
-# Comparing the estimated nugget effects -- estimated by segments
+# Comparing the estimated random effects -- estimated by segments
 
 ## 10kb
 

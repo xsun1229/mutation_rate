@@ -38,8 +38,8 @@ scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
 plot_scatter_randeff <- function(data) {
   ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_point() +
-  labs(x = "nugget effects estimated from partitioned segments",
-       y= "nugget effects estimated from whole chromosome") +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
   geom_abline(slope = 1, intercept = 0, col="red") +
   theme_minimal()
 }
@@ -69,7 +69,7 @@ plot_randeff_genome <- function(data) {
 
 ## The whole window prediction
 
-* Run smashgen on the whole window, to get an estimation for the local nugget effects 
+* Run smashgen on the whole window, to get an estimation for the local random effects 
 
 `fit = ebps(df_seg_non0$obs_sum,df_seg_non0$rl_rescaled_sum,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
 
@@ -142,7 +142,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 For each window, the first 90% base pairs are treated as training data, the remaining 10% are testing data
 
-* Run smashgen on the training data, to get an estimation for the local nugget effects 
+* Run smashgen on the training data, to get an estimation for the local random effects 
 
 `fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
 
@@ -279,7 +279,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 For each window, the first 90% base pairs are treated as training data, the remaining 10% are testing data
 
-* Run smashgen on the training data, to get an estimation for the local nugget effects
+* Run smashgen on the training data, to get an estimation for the local random effects
 
 `fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
 
@@ -349,7 +349,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 
 
-# Comparing the nugget effects estimated by smashgen for setting 1 and 2
+# Comparing the random effects estimated by smashgen for setting 1 and 2
 
 ### 10kb
 
@@ -367,8 +367,8 @@ df_compare <- data.frame(seg_est = df_seg$randeff_est,
 
 ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_point() +
-  labs(x = "nugget effects estimated from partitioned segments",
-       y= "nugget effects estimated from whole chromosome") +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
   geom_abline(slope = 1, intercept = 0, col="red") +
   theme_minimal()
 
@@ -403,8 +403,8 @@ df_compare <- data.frame(seg_est = df_seg$randeff_est,
 
 ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_point() +
-  labs(x = "nugget effects estimated from partitioned segments",
-       y= "nugget effects estimated from whole chromosome") +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
   geom_abline(slope = 1, intercept = 0, col="red") +
   theme_minimal()
 
@@ -440,8 +440,8 @@ df_compare <- data.frame(seg_est = df_seg$randeff_est,
 
 ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_point() +
-  labs(x = "nugget effects estimated from partitioned segments",
-       y= "nugget effects estimated from whole chromosome") +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
   geom_abline(slope = 1, intercept = 0, col="red") +
   theme_minimal()
 
@@ -477,8 +477,8 @@ df_compare <- data.frame(seg_est = df_seg$randeff_est,
 
 ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_point() +
-  labs(x = "nugget effects estimated from partitioned segments",
-       y= "nugget effects estimated from whole chromosome") +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
   geom_abline(slope = 1, intercept = 0, col="red") +
   theme_minimal()
 
