@@ -38,6 +38,14 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
 <link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
 
@@ -402,7 +410,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-06-29
+<strong>Last updated:</strong> 2024-08-21
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -536,15 +544,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree528ff5bb31dea189bcefc4fc6e5816192efc5ec6targetblank528ff5ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree57cfab95372c690dbde16463c114d5a6bd9c8a73targetblank57cfab9a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/528ff5bb31dea189bcefc4fc6e5816192efc5ec6" target="_blank">528ff5b</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/57cfab95372c690dbde16463c114d5a6bd9c8a73" target="_blank">57cfab9</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree528ff5bb31dea189bcefc4fc6e5816192efc5ec6targetblank528ff5ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree57cfab95372c690dbde16463c114d5a6bd9c8a73targetblank57cfab9a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -554,7 +562,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/528ff5bb31dea189bcefc4fc6e5816192efc5ec6" target="_blank">528ff5b</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/57cfab95372c690dbde16463c114d5a6bd9c8a73" target="_blank">57cfab9</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -570,13 +578,10 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
+    Ignored:    analysis/figure/
 
 Unstaged changes:
-    Modified:   analysis/denovo0422_realdata_CV_integrate_trost.Rmd
     Modified:   analysis/denovo0422_realdata_CV_mssng.Rmd
-    Modified:   analysis/denovo0422_realdata_CV_ssc_an.Rmd
-    Modified:   analysis/denovo0422_realdata_summary.Rmd
-    Modified:   analysis/denovo_0422.Rmd
 
 </code></pre>
 <p>
@@ -623,6 +628,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/57cfab95372c690dbde16463c114d5a6bd9c8a73/analysis/denovo0422_realdata_CV_mssng.Rmd" target="_blank">57cfab9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-29
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/57cfab95372c690dbde16463c114d5a6bd9c8a73/docs/denovo0422_realdata_CV_mssng.html" target="_blank">57cfab9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-29
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1305,6 +1344,25 @@ XSun
 </table>
 </div>
 </div>
+<p>There are 23 windows with large observed mutation rate on testing set
+(4 ~ 6), but their expected rates are &lt;1. We’ll figure out why this
+happeded.</p>
+<p>These windows are</p>
+<pre class="r"><code>data_large &lt;- data[data$obs_test &gt;=4 &amp; data$obs_test &lt;=6, ]
+data_large &lt;- data_large[order(data_large$obs_test, decreasing = T),]
+
+colnames(data_large)[c(7,10,13,16)] &lt;- c(&quot;rl_rescaled_wholewindow&quot;,&quot;obs_wholewindow&quot;,&quot;foldchange_wholewindow&quot;,&quot;randeff_est_wholewindow&quot;)
+DT::datatable(data_large,caption = htmltools::tags$caption( style = &#39;caption-side: left; text-align: left; color:black;  font-size:150% ;&#39;,&#39;windows with large observed mutation rate on testing set (4~6), but low expected rates&#39;),options = list(pageLength = 10) )</code></pre>
+<div id="htmlwidget-ed24df5b4846e30c77de" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed24df5b4846e30c77de">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: left; text-align: left; color:black;  font-size:150% ;\">windows with large observed mutation rate on testing set (4~6), but low expected rates<\/caption>","data":[["25","518","1189","2312","2458","24","361","394","1744","2344","2360","187","273","287","291","437","971","1141","1179","1580","1691","2128","2162"],[25,518,1189,2312,2458,24,361,394,1744,2344,2360,187,273,287,291,437,971,1141,1179,1580,1691,2128,2162],[2410007,51710007,118810007,231110007,245710007,2310007,36010007,39310007,174310007,234310007,235910007,18610007,27210007,28610007,29010007,43610007,97010007,114010007,117810007,157910007,169010007,212710007,216110007],[2510006,51810006,118910006,231210006,245810006,2410006,36110006,39410006,174410006,234410006,236010006,18710006,27310006,28710006,29110006,43710006,97110006,114110006,117910006,158010006,169110006,212810006,216210006],[101,0,2605,0,101,403,0,0,201,501,0,0,0,101,0,0,0,0,0,0,303,0,0],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true],[2,5,7,19,19,2,5,5,17,19,19,5,5,5,5,5,5,7,7,17,17,17,17],[5.52443798,3.44501192,3.71555349,3.97859126,3.84155885,5.58032582,3.91580142,3.62985088,3.78494545,3.74158236,4.01342698,4.08934711,3.91276335,4.41140871,3.68823364,4.06954007,3.66025079,3.85047263,3.47422744,3.65415306,3.61772937,3.65011828,3.64297896],[4.89662339,3.09836339,3.36183262,3.53915282,3.42894352,5.01932208,3.47639324,3.27262614,3.42169081,3.37477795,3.61579885,3.66917324,3.51676518,3.95706824,3.29119065,3.67362316,3.31662554,3.45674736,3.11836304,3.29433327,3.22633939,3.28532106,3.28241831],[0.62781459,0.34664853,0.35372087,0.43943844,0.41261533,0.56100374,0.43940818,0.35722474,0.36325464,0.36680441,0.39762813,0.42017387,0.39599817,0.45434047,0.39704299,0.39591691,0.34362525,0.39372527,0.3558644,0.35981979,0.39138998,0.36479722,0.36056065],[10,12,7,9,6,12,13,11,13,6,8,12,10,12,11,9,8,4,9,6,4,10,13],[4,6,1,3,0,7,8,6,8,1,3,8,6,8,7,5,4,0,5,2,0,6,9],[6,6,6,6,6,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4],[1.81013888402816,3.48329709117523,1.88397233920591,2.26210721631153,1.56186595970019,2.15041207038337,3.3198823447998,3.03042751993162,3.43465980467433,1.603599606451,1.99330897008122,2.9344537592946,2.55573851661639,2.72021950104006,2.98245747793787,2.2115521275602,2.18564258543606,1.03883351067996,2.59050397690716,1.64196734550577,1.10566590004492,2.73963724813871,3.56850812006886],[false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false],[1,1,1,3,3,1,1,1,3,3,3,1,1,1,1,1,1,1,1,3,3,3,3],[1.74166841019209,3.21543905783657,1.58773201882076,2.06844169509786,1.61071747464716,2.06475040023809,3.06037398887723,2.78783342502073,3.25943857975516,1.46814733830774,1.88337077974074,2.63379068096572,2.37559366326684,2.60968495122669,2.75161647790398,2.12236330565564,1.93132667779111,0.934114840641811,2.27634852113091,1.39843742048524,1.00723039270565,2.46031903080292,3.3320100216539],[0.864006230843642,1.82490781056105,0.391166169756052,0.872653012256473,0.413771072874082,1.35269913321411,2.11689420156121,1.68752108442483,2.22409234481814,0.455731813072938,0.90372939356889,1.94882856034124,1.61341003647434,1.96755498549115,1.96872676838223,1.37880038709064,1.09208340772753,0.26104335973373,1.41022836086867,0.60235900826621,0.271303517448869,1.62431286655106,2.55474648442351],[0.542435717574547,0.632601609916505,0.138363637880678,0.383477278367286,0.170728287778393,0.758869272827874,0.930180628360564,0.602824280628176,0.807911864043667,0.167164438812449,0.359348228790832,0.818846838165108,0.638907421903473,0.893939856858894,0.781669162611516,0.545890388763732,0.375267434001223,0.10277936729287,0.501850069503511,0.216740691858956,0.106185478268243,0.592544818128058,0.921141053008957]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Window<\/th>\n      <th>Window_Start<\/th>\n      <th>Window_End<\/th>\n      <th>Total_Gap_Length<\/th>\n      <th>pass_threshold<\/th>\n      <th>Part<\/th>\n      <th>rl_rescaled_wholewindow<\/th>\n      <th>rl_rescaled_train<\/th>\n      <th>rl_rescaled_test<\/th>\n      <th>obs_wholewindow<\/th>\n      <th>obs_train<\/th>\n      <th>obs_test<\/th>\n      <th>foldchange_wholewindow<\/th>\n      <th>overlap_poliii<\/th>\n      <th>segment<\/th>\n      <th>randeff_est_wholewindow<\/th>\n      <th>randeff_est_train<\/th>\n      <th>test_pred<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,6,7,8,9,10,11,12,13,15,16,17,18]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>There are also some windows having high predicted rates but low
+observed mutations on testing set.</p>
+<pre class="r"><code>data_small &lt;- data[order(data$test_pred,decreasing = T),][1:10,]
+
+colnames(data_small)[c(7,10,13,16)] &lt;- c(&quot;rl_rescaled_wholewindow&quot;,&quot;obs_wholewindow&quot;,&quot;foldchange_wholewindow&quot;,&quot;randeff_est_wholewindow&quot;)
+DT::datatable(data_small,caption = htmltools::tags$caption( style = &#39;caption-side: left; text-align: left; color:black;  font-size:150% ;&#39;,&#39;windows with large expected rates&#39;),options = list(pageLength = 10) )</code></pre>
+<div id="htmlwidget-e3ebcc25fa9af5c1bc6c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e3ebcc25fa9af5c1bc6c">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: left; text-align: left; color:black;  font-size:150% ;\">windows with large expected rates<\/caption>","data":[["454","315","2254","744","111","497","1678","34","286","1563"],[454,315,2254,744,111,497,1678,34,286,1563],[45310007,31410007,225310007,74310007,11010007,49610007,167710007,3310007,28510007,156210007],[45410006,31510006,225410006,74410006,11110006,49710006,167810006,3410006,28610006,156310006],[0,101,0,0,0,0,0,202,0,202],[true,true,true,true,true,true,true,true,true,true],[5,5,18,5,3,5,17,3,5,17],[3.67368606,3.94869166,3.55117998,3.54928346,4.30020729,3.41927341,3.67577842,5.18173957,4.38829449,4.1647416],[3.33922908,3.52047424,3.19993941,3.20046403,3.89984658,3.07786802,3.2842997,4.60504823,3.9819984,3.7244841],[0.33445698,0.42821742,0.35124057,0.34881943,0.40036071,0.34140539,0.39147872,0.57669134,0.40629609,0.4402575],[50,32,32,30,31,23,20,21,21,17],[50,32,32,30,31,23,20,18,20,17],[0,0,0,0,0,0,0,3,1,0],[13.6103083342946,8.10395005620672,9.01108932248486,8.45241027889049,7.20895480366482,6.72657528138412,5.44102438035424,4.0526930611451,4.78545823391173,4.0818858965944],[false,false,false,false,false,false,true,false,false,false],[1,1,3,1,1,1,3,1,1,3],[12.9541378807047,7.64881536067256,8.46471424768969,8.04727653889747,6.78361761870225,6.34122398112169,5.09703449442278,3.86059167483849,4.53460656326977,3.83132137367915],[14.2275166763324,8.55436039922746,9.39185482635768,8.85897212949633,7.46930359435698,7.00205433152727,5.67772628312594,3.6922970566424,4.72518606990246,4.26420562274652],[4.75849226046579,3.66312613990735,3.29880044256712,3.0901816085968,2.99041569024231,2.39053908985626,2.2227090178285,2.12931573727316,1.91982462472384,1.87734850695632]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Window<\/th>\n      <th>Window_Start<\/th>\n      <th>Window_End<\/th>\n      <th>Total_Gap_Length<\/th>\n      <th>pass_threshold<\/th>\n      <th>Part<\/th>\n      <th>rl_rescaled_wholewindow<\/th>\n      <th>rl_rescaled_train<\/th>\n      <th>rl_rescaled_test<\/th>\n      <th>obs_wholewindow<\/th>\n      <th>obs_train<\/th>\n      <th>obs_test<\/th>\n      <th>foldchange_wholewindow<\/th>\n      <th>overlap_poliii<\/th>\n      <th>segment<\/th>\n      <th>randeff_est_wholewindow<\/th>\n      <th>randeff_est_train<\/th>\n      <th>test_pred<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,6,7,8,9,10,11,12,13,15,16,17,18]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -1316,106 +1374,6 @@ class="section level1">
 <div id="kb-8" class="section level3">
 <h3>10kb</h3>
 <pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata&quot;)
-
-df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
-data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
-
-p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
-p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
-
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
-Past versions of unnamed-chunk-10-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-10-1.png" target="_blank">09213b4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-06-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="kb-9" class="section level3">
-<h3>30kb</h3>
-<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata&quot;)
-
-df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
-data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
-
-p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
-p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
-
-grid.arrange(p1, p2, ncol = 2)</code></pre>
-<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
-Past versions of unnamed-chunk-11-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-11-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-11-1.png" target="_blank">09213b4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-06-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="kb-10" class="section level3">
-<h3>50kb</h3>
-<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata&quot;)
 
 df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -1463,9 +1421,9 @@ XSun
 </div>
 </div>
 </div>
-<div id="kb-11" class="section level3">
-<h3>100kb</h3>
-<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata&quot;)
+<div id="kb-9" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata&quot;)
 
 df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
@@ -1513,29 +1471,15 @@ XSun
 </div>
 </div>
 </div>
-</div>
-<div id="cross-validation-1" class="section level2">
-<h2>Cross validation</h2>
-<p>For each window, the first 90% base pairs are treated as training
-data, the remaining 10% are testing data</p>
-<ul>
-<li>Run smashgen on the training data, to get an estimation for the
-local random effects</li>
-</ul>
-<p><code>fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))</code></p>
-<ul>
-<li>Predict the mutation rate on testing data, based on the rescaled
-Roulette estimation.</li>
-</ul>
-<p><code>df_per_window_data$test_pred &lt;- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test</code></p>
-<div id="kb-12" class="section level3">
-<h3>10kb</h3>
-<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata&quot;)
+<div id="kb-10" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata&quot;)
 
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
-p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
 
 grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1577,14 +1521,15 @@ XSun
 </div>
 </div>
 </div>
-<div id="kb-13" class="section level3">
-<h3>30kb</h3>
-<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata&quot;)
+<div id="kb-11" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata&quot;)
 
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
 data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
-p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
 
 grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1626,9 +1571,24 @@ XSun
 </div>
 </div>
 </div>
-<div id="kb-14" class="section level3">
-<h3>50kb</h3>
-<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata&quot;)
+</div>
+<div id="cross-validation-1" class="section level2">
+<h2>Cross validation</h2>
+<p>For each window, the first 90% base pairs are treated as training
+data, the remaining 10% are testing data</p>
+<ul>
+<li>Run smashgen on the training data, to get an estimation for the
+local random effects</li>
+</ul>
+<p><code>fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))</code></p>
+<ul>
+<li>Predict the mutation rate on testing data, based on the rescaled
+Roulette estimation.</li>
+</ul>
+<p><code>df_per_window_data$test_pred &lt;- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test</code></p>
+<div id="kb-12" class="section level3">
+<h3>10kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata&quot;)
 
 data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -1675,9 +1635,9 @@ XSun
 </div>
 </div>
 </div>
-<div id="kb-15" class="section level3">
-<h3>100kb</h3>
-<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata&quot;)
+<div id="kb-13" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata&quot;)
 
 data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
@@ -1724,31 +1684,16 @@ XSun
 </div>
 </div>
 </div>
-</div>
-</div>
-<div
-id="comparing-the-random-effects-estimated-by-smashgen-for-setting-1-and-2"
-class="section level1">
-<h1>Comparing the random effects estimated by smashgen for setting 1 and
-2</h1>
-<div id="kb-16" class="section level3">
-<h3>10kb</h3>
-<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred2.rdata&quot;))
-df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata&quot;))
+<div id="kb-14" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata&quot;)
 
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
-                         chr_est = df_chr$randeff_est,
-                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
-                         window_start = df_seg$Window_Start)
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
 
-
-ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
-  geom_point() +
-  labs(x = &quot;random effects estimated from partitioned segments&quot;,
-       y= &quot;random effects estimated from whole chromosome&quot;) +
-  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
-  theme_minimal()</code></pre>
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
@@ -1774,6 +1719,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/57cfab95372c690dbde16463c114d5a6bd9c8a73/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-18-1.png" target="_blank">57cfab9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-18-1.png" target="_blank">09213b4</a>
 </td>
 <td>
@@ -1787,74 +1743,17 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
-  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
-  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
-  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
-  labs(x = &quot;gemonic position (mb)&quot;,
-       y = &quot;estimated random effects&quot;) +
-  scale_color_manual(name = &quot;Group&quot;,
-                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
-                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
-                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
-  theme_minimal()</code></pre>
-<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-18-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-2">
-Past versions of unnamed-chunk-18-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-18-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-18-2.png" target="_blank">09213b4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-06-18
-</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</div>
-<div id="kb-17" class="section level3">
-<h3>30kb</h3>
-<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred2.rdata&quot;))
-df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata&quot;))
+<div id="kb-15" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata&quot;)
 
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
-                         chr_est = df_chr$randeff_est,
-                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
-                         window_start = df_seg$Window_Start)
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
 
-
-ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
-  geom_point() +
-  labs(x = &quot;random effects estimated from partitioned segments&quot;,
-       y= &quot;random effects estimated from whole chromosome&quot;) +
-  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
-  theme_minimal()</code></pre>
+grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
@@ -1880,6 +1779,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/57cfab95372c690dbde16463c114d5a6bd9c8a73/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-19-1.png" target="_blank">57cfab9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-29
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-19-1.png" target="_blank">09213b4</a>
 </td>
 <td>
@@ -1893,60 +1803,18 @@ XSun
 </table>
 </div>
 </div>
-<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
-  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
-  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
-  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
-  labs(x = &quot;gemonic position (mb)&quot;,
-       y = &quot;estimated random effects&quot;) +
-  scale_color_manual(name = &quot;Group&quot;,
-                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
-                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
-                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
-  theme_minimal()</code></pre>
-<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-19-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-2">
-Past versions of unnamed-chunk-19-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-19-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-19-2.png" target="_blank">09213b4</a>
-</td>
-<td>
-XSun
-</td>
-<td>
-2024-06-18
-</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
-<div id="kb-18" class="section level3">
-<h3>50kb</h3>
-<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred2.rdata&quot;))
-df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata&quot;))
+<div
+id="comparing-the-random-effects-estimated-by-smashgen-for-setting-1-and-2"
+class="section level1">
+<h1>Comparing the random effects estimated by smashgen for setting 1 and
+2</h1>
+<div id="kb-16" class="section level3">
+<h3>10kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred2.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr2.rdata&quot;))
 
 
 df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
@@ -1984,6 +1852,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/57cfab95372c690dbde16463c114d5a6bd9c8a73/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-20-1.png" target="_blank">57cfab9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-20-1.png" target="_blank">09213b4</a>
@@ -2049,10 +1928,10 @@ XSun
 </div>
 </div>
 </div>
-<div id="kb-19" class="section level3">
-<h3>100kb</h3>
-<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred2.rdata&quot;))
-df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata&quot;))
+<div id="kb-17" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred2.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr2.rdata&quot;))
 
 
 df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
@@ -2090,6 +1969,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/57cfab95372c690dbde16463c114d5a6bd9c8a73/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-21-1.png" target="_blank">57cfab9</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-29
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-21-1.png" target="_blank">09213b4</a>
@@ -2154,6 +2044,218 @@ XSun
 </table>
 </div>
 </div>
+</div>
+<div id="kb-18" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred2.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr2.rdata&quot;))
+
+
+df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = &quot;random effects estimated from partitioned segments&quot;,
+       y= &quot;random effects estimated from whole chromosome&quot;) +
+  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
+Past versions of unnamed-chunk-22-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-22-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-22-1.png" target="_blank">09213b4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
+  labs(x = &quot;gemonic position (mb)&quot;,
+       y = &quot;estimated random effects&quot;) +
+  scale_color_manual(name = &quot;Group&quot;,
+                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
+                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
+                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-22-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-2">
+Past versions of unnamed-chunk-22-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-22-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-22-2.png" target="_blank">09213b4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="kb-19" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred2.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr2.rdata&quot;))
+
+
+df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = &quot;random effects estimated from partitioned segments&quot;,
+       y= &quot;random effects estimated from whole chromosome&quot;) +
+  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-1">
+Past versions of unnamed-chunk-23-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-23-1.png" target="_blank">09213b4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
+  labs(x = &quot;gemonic position (mb)&quot;,
+       y = &quot;estimated random effects&quot;) +
+  scale_color_manual(name = &quot;Group&quot;,
+                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
+                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
+                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-23-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-2">
+Past versions of unnamed-chunk-23-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/09213b4981b1d35da6d519399f35408c6786c39d/docs/figure/denovo0422_realdata_CV_mssng.Rmd/unnamed-chunk-23-2.png" target="_blank">09213b4</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-06-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2180,19 +2282,20 @@ other attached packages:
 [1] gridExtra_2.3 ggplot2_3.5.1
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.12      highr_0.9        pillar_1.9.0     compiler_4.2.0  
- [5] bslib_0.3.1      later_1.3.0      jquerylib_0.1.4  git2r_0.30.1    
- [9] workflowr_1.7.0  tools_4.2.0      digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    lifecycle_1.0.4  tibble_3.2.1     gtable_0.3.0    
-[17] pkgconfig_2.0.3  rlang_1.1.2      cli_3.6.1        rstudioapi_0.13 
-[21] yaml_2.3.5       xfun_0.41        fastmap_1.1.0    withr_2.5.0     
-[25] dplyr_1.1.4      stringr_1.5.1    knitr_1.39       generics_0.1.2  
-[29] fs_1.5.2         vctrs_0.6.5      sass_0.4.1       tidyselect_1.2.0
-[33] rprojroot_2.0.3  grid_4.2.0       glue_1.6.2       R6_2.5.1        
-[37] fansi_1.0.3      rmarkdown_2.25   farver_2.1.0     magrittr_2.0.3  
-[41] whisker_0.4      scales_1.3.0     promises_1.2.0.1 htmltools_0.5.2 
-[45] colorspace_2.0-3 httpuv_1.6.5     labeling_0.4.2   utf8_1.2.2      
-[49] stringi_1.7.6    munsell_0.5.0    crayon_1.5.1    </code></pre>
+ [1] Rcpp_1.0.12       highr_0.9         pillar_1.9.0      compiler_4.2.0   
+ [5] bslib_0.3.1       later_1.3.0       jquerylib_0.1.4   git2r_0.30.1     
+ [9] workflowr_1.7.0   tools_4.2.0       digest_0.6.29     jsonlite_1.8.0   
+[13] evaluate_0.15     lifecycle_1.0.4   tibble_3.2.1      gtable_0.3.0     
+[17] pkgconfig_2.0.3   rlang_1.1.2       cli_3.6.1         rstudioapi_0.13  
+[21] crosstalk_1.2.0   yaml_2.3.5        xfun_0.41         fastmap_1.1.0    
+[25] withr_2.5.0       dplyr_1.1.4       stringr_1.5.1     knitr_1.39       
+[29] htmlwidgets_1.5.4 generics_0.1.2    fs_1.5.2          vctrs_0.6.5      
+[33] sass_0.4.1        DT_0.22           tidyselect_1.2.0  rprojroot_2.0.3  
+[37] grid_4.2.0        glue_1.6.2        R6_2.5.1          fansi_1.0.3      
+[41] rmarkdown_2.25    farver_2.1.0      magrittr_2.0.3    whisker_0.4      
+[45] scales_1.3.0      promises_1.2.0.1  htmltools_0.5.2   colorspace_2.0-3 
+[49] httpuv_1.6.5      labeling_0.4.2    utf8_1.2.2        stringi_1.7.6    
+[53] munsell_0.5.0     crayon_1.5.1     </code></pre>
 </div>
 </div>
 </div>

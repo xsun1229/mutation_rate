@@ -210,6 +210,29 @@ p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_tes
 grid.arrange(p1, p2, ncol = 2)
 ```
 
+There are 23 windows with large observed mutation rate on testing set (4 ~ 6), but their expected rates are <1. We'll figure out why this happeded. 
+
+These windows are 
+
+```{r}
+
+data_large <- data[data$obs_test >=4 & data$obs_test <=6, ]
+data_large <- data_large[order(data_large$obs_test, decreasing = T),]
+
+colnames(data_large)[c(7,10,13,16)] <- c("rl_rescaled_wholewindow","obs_wholewindow","foldchange_wholewindow","randeff_est_wholewindow")
+DT::datatable(data_large,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','windows with large observed mutation rate on testing set (4~6), but low expected rates'),options = list(pageLength = 10) )
+```
+
+There are also some windows having high predicted rates but low observed mutations on testing set. 
+
+```{r}
+
+data_small <- data[order(data$test_pred,decreasing = T),][1:10,]
+
+colnames(data_small)[c(7,10,13,16)] <- c("rl_rescaled_wholewindow","obs_wholewindow","foldchange_wholewindow","randeff_est_wholewindow")
+DT::datatable(data_small,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','windows with large expected rates'),options = list(pageLength = 10) )
+```
+
 # Setting two: treat the whole genome as one segment
 
 ## The whole window prediction
