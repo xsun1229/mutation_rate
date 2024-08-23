@@ -1,0 +1,499 @@
+---
+title: "Cross Validation -- SSC, Trost: half training and half testing"
+author: "XSun"
+date: "2024-08-21"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+We cleaned the real data [here](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning.html). 
+
+```{r warning=F, message=F}
+library(ggplot2)
+library(gridExtra)
+
+scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
+  # Fit the linear model using user-defined columns
+  formula <- as.formula(paste(ycol, "~", xcol, "+0"))
+  fit <- lm(formula, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+
+  
+  ggplot(data) +
+  geom_point(data = data, aes_string(x = xcol, y = ycol),color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3)),
+           hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
+  labs(x = paste("Predicted mutation count:", xcol),
+       y = paste("Observed mutation count:", ycol),
+       title = title) +
+  theme_minimal()
+  
+}
+
+plot_scatter_randeff <- function(data) {
+  ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
+  geom_abline(slope = 1, intercept = 0, col="red") +
+  theme_minimal()
+}
+
+plot_randeff_genome <- function(data) {
+  ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = "estimated from partitioned segments"), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = "estimated from whole chr"), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = "observed fold change"), alpha = 0.1) +
+  labs(x = "gemonic position (mb)",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("estimated from partitioned segments" = "blue",
+                                "estimated from whole chr" = "green", "observed fold change" = "red"),
+                     labels = c("estimated from partitioned segments","estimated from whole chr", "observed fold change")) +
+  theme_minimal()
+}
+
+```
+
+
+
+# Setting one: partition the gaps based on large gaps 
+
+* For large gap: treat as different segments. So for chr1, there will be 3 segments. 
+* For small gaps like 50kb, treat them as continuous ones. 
+
+## The whole window prediction
+
+* Run smashgen on the whole window, to get an estimation for the local random effects 
+
+`fit = ebps(df_seg_non0$obs_sum,df_seg_non0$rl_rescaled_sum,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
+
+* Predict the mutation rate on the whole window, based on the rescaled Roulette estimation.
+
+`df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum`
+
+### 10kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### 30kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### 50kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+### 100kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+## Cross validation
+
+For each window, the first 90% base pairs are treated as training data, the remaining 10% are testing data
+
+* Run smashgen on the training data, to get an estimation for the local random effects 
+
+`fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
+
+* Predict the mutation rate on testing data, based on the rescaled Roulette estimation.
+
+`df_per_window_data$test_pred <- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test`
+
+
+
+### 10kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### 30kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+### 50kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+### 100kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+# Setting two: treat the whole genome as one segment
+
+## The whole window prediction
+
+### 10kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### 30kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### 50kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+### 100kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+## Cross validation
+
+For each window, the first 90% base pairs are treated as training data, the remaining 10% are testing data
+
+* Run smashgen on the training data, to get an estimation for the local random effects
+
+`fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
+
+* Predict the mutation rate on testing data, based on the rescaled Roulette estimation.
+
+`df_per_window_data$test_pred <- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test`
+
+
+
+### 10kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### 30kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+### 50kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+### 100kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+# Comparing the random effects estimated by smashgen for setting 1 and 2
+
+### 10kb
+
+```{r message=FALSE, warning=FALSE}
+
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata"))
+
+
+df_compare <- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
+  geom_abline(slope = 1, intercept = 0, col="red") +
+  theme_minimal()
+
+ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = "estimated from partitioned segments"), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = "estimated from whole chr"), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = "observed fold change"), alpha = 0.1) +
+  labs(x = "gemonic position (mb)",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("estimated from partitioned segments" = "blue",
+                                "estimated from whole chr" = "green", "observed fold change" = "red"),
+                     labels = c("estimated from partitioned segments","estimated from whole chr", "observed fold change")) +
+  theme_minimal()
+
+
+```
+
+### 30kb
+
+```{r message=FALSE, warning=FALSE}
+
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata"))
+
+
+df_compare <- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
+  geom_abline(slope = 1, intercept = 0, col="red") +
+  theme_minimal()
+
+ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = "estimated from partitioned segments"), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = "estimated from whole chr"), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = "observed fold change"), alpha = 0.1) +
+  labs(x = "gemonic position (mb)",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("estimated from partitioned segments" = "blue",
+                                "estimated from whole chr" = "green", "observed fold change" = "red"),
+                     labels = c("estimated from partitioned segments","estimated from whole chr", "observed fold change")) +
+  theme_minimal()
+
+
+```
+
+### 50kb
+
+
+```{r message=FALSE, warning=FALSE}
+
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata"))
+
+
+df_compare <- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
+  geom_abline(slope = 1, intercept = 0, col="red") +
+  theme_minimal()
+
+ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = "estimated from partitioned segments"), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = "estimated from whole chr"), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = "observed fold change"), alpha = 0.1) +
+  labs(x = "gemonic position (mb)",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("estimated from partitioned segments" = "blue",
+                                "estimated from whole chr" = "green", "observed fold change" = "red"),
+                     labels = c("estimated from partitioned segments","estimated from whole chr", "observed fold change")) +
+  theme_minimal()
+
+
+```
+
+
+### 100kb
+
+```{r message=FALSE, warning=FALSE}
+
+df_seg <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata"))
+df_chr <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata"))
+
+
+df_compare <- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
+  geom_abline(slope = 1, intercept = 0, col="red") +
+  theme_minimal()
+
+ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = "estimated from partitioned segments"), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = "estimated from whole chr"), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = "observed fold change"), alpha = 0.1) +
+  labs(x = "gemonic position (mb)",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("estimated from partitioned segments" = "blue",
+                                "estimated from whole chr" = "green", "observed fold change" = "red"),
+                     labels = c("estimated from partitioned segments","estimated from whole chr", "observed fold change")) +
+  theme_minimal()
+
+
+```

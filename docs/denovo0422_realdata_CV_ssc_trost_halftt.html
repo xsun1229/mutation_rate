@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="XSun" />
+
+<meta name="date" content="2024-08-21" />
+
+<title>Cross Validation – SSC, Trost: half training and half testing</title>
+
+<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.22/datatables.js"></script>
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/font-awesome-6.4.2/css/all.min.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">mutation_rate</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/xsun1229/mutation_rate">
+    <span class="fab fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Cross Validation – SSC, Trost: half
+training and half testing</h1>
+<h4 class="author">XSun</h4>
+<h4 class="date">2024-08-21</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-08-21
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>mutation_rate/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230228code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230228)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230228code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230228)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree25dc0891f3e45c340b9cedd5de2b33806d881945targetblank25dc089a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/xsun1229/mutation_rate/tree/25dc0891f3e45c340b9cedd5de2b33806d881945" target="_blank">25dc089</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree25dc0891f3e45c340b9cedd5de2b33806d881945targetblank25dc089a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/xsun1229/mutation_rate/tree/25dc0891f3e45c340b9cedd5de2b33806d881945" target="_blank">25dc089</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+
+Untracked files:
+    Untracked:  analysis/denovo0422_realdata_CV_mssng_halftt.Rmd
+    Untracked:  analysis/denovo0422_realdata_CV_ssc_trost_halftt.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>We cleaned the real data <a
+href="https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning.html">here</a>.</p>
+<pre class="r"><code>library(ggplot2)
+library(gridExtra)
+
+scatter_plot_mutct &lt;- function(data, xcol, ycol, title=NULL) {
+  # Fit the linear model using user-defined columns
+  formula &lt;- as.formula(paste(ycol, &quot;~&quot;, xcol, &quot;+0&quot;))
+  fit &lt;- lm(formula, data = data)
+  adj_rsq &lt;- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+
+  
+  ggplot(data) +
+  geom_point(data = data, aes_string(x = xcol, y = ycol),color = &quot;black&quot;) +
+  geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;, linetype = &quot;dashed&quot;) +
+  annotate(&quot;text&quot;, x = Inf, y = Inf, label = paste0(&quot;Adj R-sq = &quot;, round(adj_rsq, 3)),
+           hjust = 1.1, vjust = 1.1, color = &quot;blue&quot;, parse = FALSE) +  # Adjust text positioning and color
+  labs(x = paste(&quot;Predicted mutation count:&quot;, xcol),
+       y = paste(&quot;Observed mutation count:&quot;, ycol),
+       title = title) +
+  theme_minimal()
+  
+}
+
+plot_scatter_randeff &lt;- function(data) {
+  ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = &quot;random effects estimated from partitioned segments&quot;,
+       y= &quot;random effects estimated from whole chromosome&quot;) +
+  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
+  theme_minimal()
+}
+
+plot_randeff_genome &lt;- function(data) {
+  ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
+  labs(x = &quot;gemonic position (mb)&quot;,
+       y = &quot;estimated random effects&quot;) +
+  scale_color_manual(name = &quot;Group&quot;,
+                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
+                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
+                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
+  theme_minimal()
+}</code></pre>
+</div>
+<div id="setting-one-partition-the-gaps-based-on-large-gaps"
+class="section level1">
+<h1>Setting one: partition the gaps based on large gaps</h1>
+<ul>
+<li>For large gap: treat as different segments. So for chr1, there will
+be 3 segments.</li>
+<li>For small gaps like 50kb, treat them as continuous ones.</li>
+</ul>
+<div id="the-whole-window-prediction" class="section level2">
+<h2>The whole window prediction</h2>
+<ul>
+<li>Run smashgen on the whole window, to get an estimation for the local
+random effects</li>
+</ul>
+<p><code>fit = ebps(df_seg_non0$obs_sum,df_seg_non0$rl_rescaled_sum,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))</code></p>
+<ul>
+<li>Predict the mutation rate on the whole window, based on the rescaled
+Roulette estimation.</li>
+</ul>
+<p><code>df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum</code></p>
+<div id="kb" class="section level3">
+<h3>10kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)</code></pre>
+<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+i Please use tidy evaluation idioms with `aes()`.
+i See also `vignette(&quot;ggplot2-in-packages&quot;)` for more information.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.</code></pre>
+<pre class="r"><code>p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-1" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-2" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-3" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="cross-validation" class="section level2">
+<h2>Cross validation</h2>
+<p>For each window, the first 90% base pairs are treated as training
+data, the remaining 10% are testing data</p>
+<ul>
+<li>Run smashgen on the training data, to get an estimation for the
+local random effects</li>
+</ul>
+<p><code>fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))</code></p>
+<ul>
+<li>Predict the mutation rate on testing data, based on the rescaled
+Roulette estimation.</li>
+</ul>
+<p><code>df_per_window_data$test_pred &lt;- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test</code></p>
+<div id="kb-4" class="section level3">
+<h3>10kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-5" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-6" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-7" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>There are some windows with large observed mutation rate on testing
+set, but their expected rates are very low.</p>
+<pre class="r"><code>data_large &lt;- data[order(data$obs_test,decreasing = T),][1:5,]
+data_large &lt;- data_large[order(data_large$obs_test, decreasing = T),]
+
+colnames(data_large)[c(7,10,13,16)] &lt;- c(&quot;rl_rescaled_wholewindow&quot;,&quot;obs_wholewindow&quot;,&quot;foldchange_wholewindow&quot;,&quot;randeff_est_wholewindow&quot;)
+DT::datatable(data_large,caption = htmltools::tags$caption( style = &#39;caption-side: left; text-align: left; color:black;  font-size:150% ;&#39;,&#39;windows with large observed mutation rate on testing set (4~6), but low expected rates&#39;),options = list(pageLength = 10) )</code></pre>
+<div id="htmlwidget-ed24df5b4846e30c77de" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed24df5b4846e30c77de">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: left; text-align: left; color:black;  font-size:150% ;\">windows with large observed mutation rate on testing set (4~6), but low expected rates<\/caption>","data":[["2254","111","2319","326","682"],[2254,111,2319,326,682],[225310007,11010007,231810007,32510007,68110007],[225410006,11110006,231910006,32610006,68210006],[0,0,0,101,0],[true,true,true,true,true],[22,3,23,5,5],[11.07132582,13.40652861,11.47454293,12.64971617,11.27136478],[5.45690491,6.60483668,5.7532242,6.33436072,5.6618045],[5.61442091,6.80169193,5.72131873,6.31535545,5.60956028],[34,30,38,31,30],[6,6,14,8,9],[28,24,24,23,21],[3,1,3,1,1],[1.65260998551974,1.43617462804487,1.76368540195444,1.50262854233746,1.55540944078994],[1.02068659351886,0.958315094767831,1.40137437109571,1.03593193424052,1.09919962304345],[5.73056415320894,6.51816404647954,8.01770943709183,6.54227838673488,6.16602654521553]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Window<\/th>\n      <th>Window_Start<\/th>\n      <th>Window_End<\/th>\n      <th>Total_Gap_Length<\/th>\n      <th>pass_threshold<\/th>\n      <th>Part<\/th>\n      <th>rl_rescaled_wholewindow<\/th>\n      <th>rl_rescaled_train<\/th>\n      <th>rl_rescaled_test<\/th>\n      <th>obs_wholewindow<\/th>\n      <th>obs_train<\/th>\n      <th>obs_test<\/th>\n      <th>foldchange_wholewindow<\/th>\n      <th>randeff_est<\/th>\n      <th>randeff_est_train<\/th>\n      <th>randeff_est_wholewindow<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,6,7,8,9,10,11,12,13,14,15,16]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>There are also some windows having high predicted rates but low
+observed mutations on testing set.</p>
+<pre class="r"><code>data_small &lt;- data[order(data$test_pred,decreasing = T),][1:10,]
+
+colnames(data_small)[c(7,10,13,16)] &lt;- c(&quot;rl_rescaled_wholewindow&quot;,&quot;obs_wholewindow&quot;,&quot;foldchange_wholewindow&quot;,&quot;randeff_est_wholewindow&quot;)
+DT::datatable(data_small,caption = htmltools::tags$caption( style = &#39;caption-side: left; text-align: left; color:black;  font-size:150% ;&#39;,&#39;windows with large expected rates&#39;),options = list(pageLength = 10) )</code></pre>
+<div id="htmlwidget-e3ebcc25fa9af5c1bc6c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e3ebcc25fa9af5c1bc6c">{"x":{"filter":"none","vertical":false,"caption":"<caption style=\"caption-side: left; text-align: left; color:black;  font-size:150% ;\">windows with large expected rates<\/caption>","data":[["1251","1972","10","13","1250","12","2462","23","547","31"],[1251,1972,10,13,1250,12,2462,23,547,31],[125010007,197110007,910007,1210007,124910007,1110007,246110007,2210007,54610007,3010007],[125110006,197210006,1010006,1310006,125010006,1210006,246210006,2310006,54710006,3110006],[1626,101,1004,704,23520,1004,0,303,0,202],[true,true,true,true,true,true,true,true,true,true],[10,20,2,2,10,2,23,2,5,3],[26.96769479,10.5033333,18.3482131,19.5386673,20.38578432,17.81992871,11.79270776,17.5328876,12.41168257,15.41149476],[13.35993207,5.19141678,9.28815248,9.75129987,10.0928907,8.94332653,5.87635274,8.73728744,6.2220304,7.62038505],[13.60776272,5.31191652,9.06006062,9.78736743,10.29289362,8.87660218,5.91635502,8.79560016,6.18965217,7.79110971],[26,38,40,35,37,38,30,30,33,25],[11,30,24,21,16,22,23,18,26,19],[15,8,16,14,21,16,7,12,7,6],[2,3,1,1,2,1,3,1,1,1],[1.05186357271624,1.82499262516487,1.54152920527757,1.36313473869214,1.6997915558921,1.5084098837161,1.48969585847166,1.30334962788277,1.59253882640271,1.24243053956687],[1.05195127109708,2.57951482334145,1.50676321626326,1.36231628610788,1.28477236349565,1.44619453147164,1.94129921255521,1.30017225994912,1.84230855780444,1.40093706482167],[14.3147032900915,13.7021674036923,13.6513660793313,13.3334900480109,13.2240252633767,12.8372935307653,11.4854153415231,11.435795337636,11.4032491626238,10.914854368831]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Window<\/th>\n      <th>Window_Start<\/th>\n      <th>Window_End<\/th>\n      <th>Total_Gap_Length<\/th>\n      <th>pass_threshold<\/th>\n      <th>Part<\/th>\n      <th>rl_rescaled_wholewindow<\/th>\n      <th>rl_rescaled_train<\/th>\n      <th>rl_rescaled_test<\/th>\n      <th>obs_wholewindow<\/th>\n      <th>obs_train<\/th>\n      <th>obs_test<\/th>\n      <th>foldchange_wholewindow<\/th>\n      <th>randeff_est<\/th>\n      <th>randeff_est_train<\/th>\n      <th>randeff_est_wholewindow<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,6,7,8,9,10,11,12,13,14,15,16]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="setting-two-treat-the-whole-genome-as-one-segment"
+class="section level1">
+<h1>Setting two: treat the whole genome as one segment</h1>
+<div id="the-whole-window-prediction-1" class="section level2">
+<h2>The whole window prediction</h2>
+<div id="kb-8" class="section level3">
+<h3>10kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-9" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-10" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-11" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+df_per_window_data$sum_pred &lt;- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;sum_pred&quot;, ycol = &quot;obs_sum&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_sum&quot;, ycol = &quot;obs_sum&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="cross-validation-1" class="section level2">
+<h2>Cross validation</h2>
+<p>For each window, the first 90% base pairs are treated as training
+data, the remaining 10% are testing data</p>
+<ul>
+<li>Run smashgen on the training data, to get an estimation for the
+local random effects</li>
+</ul>
+<p><code>fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))</code></p>
+<ul>
+<li>Predict the mutation rate on testing data, based on the rescaled
+Roulette estimation.</li>
+</ul>
+<p><code>df_per_window_data$test_pred &lt;- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test</code></p>
+<div id="kb-12" class="section level3">
+<h3>10kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-13" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-14" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-15" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata&quot;)
+
+data &lt;- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+p1 &lt;- scatter_plot_mutct(data = data, xcol = &quot;test_pred&quot;, ycol = &quot;obs_test&quot;,title = &quot;smashgen prediction&quot;)
+p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, ycol = &quot;obs_test&quot;,title = &quot;Roulette baseline&quot;)
+
+grid.arrange(p1, p2, ncol = 2)</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div
+id="comparing-the-random-effects-estimated-by-smashgen-for-setting-1-and-2"
+class="section level1">
+<h1>Comparing the random effects estimated by smashgen for setting 1 and
+2</h1>
+<div id="kb-16" class="section level3">
+<h3>10kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata&quot;))
+
+
+df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = &quot;random effects estimated from partitioned segments&quot;,
+       y= &quot;random effects estimated from whole chromosome&quot;) +
+  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
+  labs(x = &quot;gemonic position (mb)&quot;,
+       y = &quot;estimated random effects&quot;) +
+  scale_color_manual(name = &quot;Group&quot;,
+                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
+                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
+                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-20-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-17" class="section level3">
+<h3>30kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata&quot;))
+
+
+df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = &quot;random effects estimated from partitioned segments&quot;,
+       y= &quot;random effects estimated from whole chromosome&quot;) +
+  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
+  labs(x = &quot;gemonic position (mb)&quot;,
+       y = &quot;estimated random effects&quot;) +
+  scale_color_manual(name = &quot;Group&quot;,
+                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
+                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
+                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-21-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-18" class="section level3">
+<h3>50kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata&quot;))
+
+
+df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = &quot;random effects estimated from partitioned segments&quot;,
+       y= &quot;random effects estimated from whole chromosome&quot;) +
+  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
+  labs(x = &quot;gemonic position (mb)&quot;,
+       y = &quot;estimated random effects&quot;) +
+  scale_color_manual(name = &quot;Group&quot;,
+                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
+                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
+                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-22-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="kb-19" class="section level3">
+<h3>100kb</h3>
+<pre class="r"><code>df_seg &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata&quot;))
+df_chr &lt;- get(load(&quot;/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata&quot;))
+
+
+df_compare &lt;- data.frame(seg_est = df_seg$randeff_est,
+                         chr_est = df_chr$randeff_est,
+                         fold_change = df_seg$obs_sum/df_seg$randeff_est,
+                         window_start = df_seg$Window_Start)
+
+
+ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = &quot;random effects estimated from partitioned segments&quot;,
+       y= &quot;random effects estimated from whole chromosome&quot;) +
+  geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = &quot;observed fold change&quot;), alpha = 0.1) +
+  labs(x = &quot;gemonic position (mb)&quot;,
+       y = &quot;estimated random effects&quot;) +
+  scale_color_manual(name = &quot;Group&quot;,
+                     values = c(&quot;estimated from partitioned segments&quot; = &quot;blue&quot;,
+                                &quot;estimated from whole chr&quot; = &quot;green&quot;, &quot;observed fold change&quot; = &quot;red&quot;),
+                     labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="figure/denovo0422_realdata_CV_ssc_trost_halftt.Rmd/unnamed-chunk-23-2.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
+
+locale:
+[1] C
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] gridExtra_2.3 ggplot2_3.5.1
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.12       highr_0.9         pillar_1.9.0      compiler_4.2.0   
+ [5] bslib_0.3.1       later_1.3.0       jquerylib_0.1.4   git2r_0.30.1     
+ [9] workflowr_1.7.0   tools_4.2.0       digest_0.6.29     jsonlite_1.8.0   
+[13] evaluate_0.15     lifecycle_1.0.4   tibble_3.2.1      gtable_0.3.0     
+[17] pkgconfig_2.0.3   rlang_1.1.2       cli_3.6.1         rstudioapi_0.13  
+[21] crosstalk_1.2.0   yaml_2.3.5        xfun_0.41         fastmap_1.1.0    
+[25] withr_2.5.0       dplyr_1.1.4       stringr_1.5.1     knitr_1.39       
+[29] htmlwidgets_1.5.4 generics_0.1.2    fs_1.5.2          vctrs_0.6.5      
+[33] sass_0.4.1        DT_0.22           tidyselect_1.2.0  rprojroot_2.0.3  
+[37] grid_4.2.0        glue_1.6.2        R6_2.5.1          fansi_1.0.3      
+[41] rmarkdown_2.25    farver_2.1.0      magrittr_2.0.3    scales_1.3.0     
+[45] promises_1.2.0.1  htmltools_0.5.2   colorspace_2.0-3  httpuv_1.6.5     
+[49] labeling_0.4.2    utf8_1.2.2        stringi_1.7.6     munsell_0.5.0    
+[53] crayon_1.5.1     </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

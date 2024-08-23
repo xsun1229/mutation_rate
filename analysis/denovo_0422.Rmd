@@ -45,13 +45,17 @@ SSC (Trost et al, Cell 2022)
 
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning.html)
 
-[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV.html)
+[Cross Validation -- 90% training, 10% testing](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV.html)
+
+[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_halftt.html)
 
 MSSNG (Trost et al, Cell 2022)
 
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_mssng.html)
 
-[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng.html)
+[Cross Validation -- 90% training, 10% testing](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng.html)
+
+[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng_halftt.html)
 
 SSC (An et al)
 
@@ -59,14 +63,18 @@ Denovo mutations are from this paper: https://pubmed.ncbi.nlm.nih.gov/30545852/
 
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_ssc_an.html)
 
-[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html)
+[Cross Validation -- 90% training, 10% testing](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html)
+
+[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an_halftt.html)
 
 
 Intergration of MSSNG, ASC, SPARK (Trost et al, Cell 2022)
 
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_integrate_trost.html)
 
-[Cross Validation](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost.html)
+[Cross Validation -- 90% training, 10% testing](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost.html)
+
+[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost_halftt.html)
 
 
 ## Constraint mapping
