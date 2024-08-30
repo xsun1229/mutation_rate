@@ -15,6 +15,7 @@ We cleaned the real data [here](https://xsun1229.github.io/mutation_rate/denovo0
 ```{r warning=F, message=F}
 library(ggplot2)
 library(gridExtra)
+library(data.table)
 
 scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
   # Fit the linear model using user-defined columns
@@ -140,7 +141,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ## Cross validation
 
-For each window, the first 90% base pairs are treated as training data, the remaining 10% are testing data
+We partition each window into 1kb bins, use odd bins to train the local effect, and test on the even bins
 
 * Run smashgen on the training data, to get an estimation for the local random effects 
 
@@ -220,6 +221,75 @@ data_large <- data_large[order(data_large$obs_test, decreasing = T),]
 colnames(data_large)[c(7,10,13,16)] <- c("rl_rescaled_wholewindow","obs_wholewindow","foldchange_wholewindow","randeff_est_wholewindow")
 DT::datatable(data_large,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','windows with large observed mutation rate on testing set (4~6), but low expected rates'),options = list(pageLength = 10) )
 ```
+We look into the window 2254. We varied the bin sizes (500bp, 1kb, 2kb) and checked how this window is divided. 
+
+```{r}
+obs <- fread("/project/xinhe/xsun/mutation_rate/data/trost_denovo/processed/alltype.mssng.bed")
+colnames(obs) <- c("CHROM","START","REF","ALT")
+obs_window <- obs[obs$START > 225310007 & obs$START < 225410006 & obs$CHROM ==1, ]
+
+start_window <- 225310007
+end_window <- 225410006
+bin_sizes <- c(500, 1000, 2000)
+
+# Function to assign training or testing based on bin size
+assign_bin_varying_size <- function(start_position, bin_size) {
+  bins <- seq(start_window, end_window, by = bin_size)
+  bin_index <- findInterval(start_position, bins)
+  if (bin_index %% 2 == 1) {
+    return("training")
+  } else {
+    return("testing")
+  }
+}
+
+# Loop over the different bin sizes and add a new column for each
+for (bin_size in bin_sizes) {
+  column_name <- paste0("set_", bin_size)
+  obs_window[[column_name]] <- sapply(obs_window$START, assign_bin_varying_size, bin_size = bin_size)
+}
+
+DT::datatable(obs_window,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','how the window is divided when bin size varies'),options = list(pageLength = 10) )
+
+sprintf("bin size 500bp, number of training= %s, number of testing = %s",sum(obs_window$set_500 =="training"),sum(obs_window$set_500 =="testing"))
+sprintf("bin size 1000bp, number of training= %s, number of testing = %s",sum(obs_window$set_1000 =="training"),sum(obs_window$set_1000 =="testing"))
+sprintf("bin size 2000bp, number of training= %s, number of testing = %s",sum(obs_window$set_2000 =="training"),sum(obs_window$set_2000 =="testing"))
+
+```
+
+We also look into the window 315. 
+
+```{r}
+obs_window <- obs[obs$START > 31410007 & obs$START < 31510006 & obs$CHROM ==1, ]
+
+start_window <- 31410007
+end_window <- 31510006
+bin_sizes <- c(500, 1000, 2000)
+
+# Function to assign training or testing based on bin size
+assign_bin_varying_size <- function(start_position, bin_size) {
+  bins <- seq(start_window, end_window, by = bin_size)
+  bin_index <- findInterval(start_position, bins)
+  if (bin_index %% 2 == 1) {
+    return("training")
+  } else {
+    return("testing")
+  }
+}
+
+# Loop over the different bin sizes and add a new column for each
+for (bin_size in bin_sizes) {
+  column_name <- paste0("set_", bin_size)
+  obs_window[[column_name]] <- sapply(obs_window$START, assign_bin_varying_size, bin_size = bin_size)
+}
+
+DT::datatable(obs_window,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','how the window is divided when bin size varies'),options = list(pageLength = 10) )
+
+sprintf("bin size 500bp, number of training= %s, number of testing = %s",sum(obs_window$set_500 =="training"),sum(obs_window$set_500 =="testing"))
+sprintf("bin size 1000bp, number of training= %s, number of testing = %s",sum(obs_window$set_1000 =="training"),sum(obs_window$set_1000 =="testing"))
+sprintf("bin size 2000bp, number of training= %s, number of testing = %s",sum(obs_window$set_2000 =="training"),sum(obs_window$set_2000 =="testing"))
+```
+
 
 There are also some windows having high predicted rates but low observed mutations on testing set. 
 
@@ -230,6 +300,39 @@ data_small <- data[order(data$test_pred,decreasing = T),][1:10,]
 colnames(data_small)[c(7,10,13,16)] <- c("rl_rescaled_wholewindow","obs_wholewindow","foldchange_wholewindow","randeff_est_wholewindow")
 DT::datatable(data_small,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','windows with large expected rates'),options = list(pageLength = 10) )
 ```
+We look into the window 454. 
+
+```{r}
+obs_window <- obs[obs$START > 45310007 & obs$START < 45410006 & obs$CHROM ==1, ]
+
+start_window <- 45310007
+end_window <- 45410006
+bin_sizes <- c(500, 1000, 2000)
+
+# Function to assign training or testing based on bin size
+assign_bin_varying_size <- function(start_position, bin_size) {
+  bins <- seq(start_window, end_window, by = bin_size)
+  bin_index <- findInterval(start_position, bins)
+  if (bin_index %% 2 == 1) {
+    return("training")
+  } else {
+    return("testing")
+  }
+}
+
+# Loop over the different bin sizes and add a new column for each
+for (bin_size in bin_sizes) {
+  column_name <- paste0("set_", bin_size)
+  obs_window[[column_name]] <- sapply(obs_window$START, assign_bin_varying_size, bin_size = bin_size)
+}
+
+DT::datatable(obs_window,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','how the window is divided when bin size varies'),options = list(pageLength = 10) )
+
+sprintf("bin size 500bp, number of training= %s, number of testing = %s",sum(obs_window$set_500 =="training"),sum(obs_window$set_500 =="testing"))
+sprintf("bin size 1000bp, number of training= %s, number of testing = %s",sum(obs_window$set_1000 =="training"),sum(obs_window$set_1000 =="testing"))
+sprintf("bin size 2000bp, number of training= %s, number of testing = %s",sum(obs_window$set_2000 =="training"),sum(obs_window$set_2000 =="testing"))
+```
+
 
 # Setting two: treat the whole genome as one segment
 
@@ -298,7 +401,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ## Cross validation
 
-For each window, the first 90% base pairs are treated as training data, the remaining 10% are testing data
+We partition each window into 1kb bins, use odd bins to train the local effect, and test on the even bins
 
 * Run smashgen on the training data, to get an estimation for the local random effects
 
