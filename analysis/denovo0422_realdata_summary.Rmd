@@ -91,7 +91,7 @@ SSC, An Science 2018 https://xsun1229.github.io/mutation_rate/denovo0422_realdat
 
 
 
-# Fitting rsq in cross validation -- 50% training & 50% testing (1kb windows)
+# Fitting rsq in cross validation -- 50% training & 50% testing (1kb bins)
 
 Below is a table summarizing the fitting rsq for `observed_mutation_count ~ predicted_mutation_count + 0` in cross validation. 
 
