@@ -140,7 +140,7 @@ grid.arrange(p1, p2, ncol = 2)
 
 ## Cross validation
 
-For each window, the first 90% base pairs are treated as training data, the remaining 10% are testing data
+For each window, we partition each window into 1kb bins, use odd bins to train the local effect, and test on the even bins. This way, the training and testing data are more uniformly distributed within a window
 
 * Run smashgen on the training data, to get an estimation for the local random effects 
 

@@ -47,7 +47,7 @@ SSC (Trost et al, Cell 2022)
 
 [Cross Validation -- 90% training, 10% testing](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV.html)
 
-[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_halftt.html)
+[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_trost_halftt.html)
 
 MSSNG (Trost et al, Cell 2022)
 
@@ -74,7 +74,7 @@ Intergration of MSSNG, ASC, SPARK (Trost et al, Cell 2022)
 
 [Cross Validation -- 90% training, 10% testing](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost.html)
 
-[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integrate_trost_halftt.html)
+[Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integration_trost_halftt.html)
 
 
 ## Constraint mapping

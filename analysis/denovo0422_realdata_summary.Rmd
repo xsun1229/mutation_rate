@@ -54,7 +54,7 @@ create_pairwise_scatter_plots <- function(SSC_an, SSC_trost, mssng_trost, ASC_MS
 }
 ```
 
-# Fitting rsq in cross validation
+# Fitting rsq in cross validation -- 90% training & 10% testing
 
 Below is a table summarizing the fitting rsq for `observed_mutation_count ~ predicted_mutation_count + 0` in cross validation. 
 
@@ -85,54 +85,91 @@ ASC+MSSNG+SPARK, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo
 SSC, An Science 2018 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an.html
 
 
-# Comparing the estimated random effects -- estimated by segments
-
-## 10kb
-
-```{r fig.width=12, fig.height=8, warning=F, message=F}
-
-SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_10kb_fitted.rdata"))
-SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted.rdata"))
-mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted.rdata"))
-ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted.rdata"))
-
-create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
-```
 
 
-## 30kb
-
-```{r fig.width=12, fig.height=8, warning=F, message=F}
-
-SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_30kb_fitted.rdata"))
-SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted.rdata"))
-mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted.rdata"))
-ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted.rdata"))
-
-create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
-```
 
 
-## 50kb
 
-```{r fig.width=12, fig.height=8, warning=F, message=F}
 
-SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_50kb_fitted.rdata"))
-SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted.rdata"))
-mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted.rdata"))
-ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted.rdata"))
+# Fitting rsq in cross validation -- 50% training & 50% testing (1kb windows)
 
-create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
-```
+Below is a table summarizing the fitting rsq for `observed_mutation_count ~ predicted_mutation_count + 0` in cross validation. 
 
-## 100kb
+by_segments means, we partitioned the chromosome if there is large gaps (>20mb)
 
-```{r fig.width=12, fig.height=8, warning=F, message=F}
+by_chr means, we treat the whole chromosome as one segment and run smashgen on it. 
 
-SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_100kb_fitted.rdata"))
-SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted.rdata"))
-mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted.rdata"))
-ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted.rdata"))
+|                   | Roulette baseline&SSC | SSC, Trost Cell 2022,samplesize 9205,avg.#ofDNMs/10kb for chr1:1.15 | Roulette baseline&MSSNG | MSSNG, Trost Cell 2022,samplesize 11312 ,avg.#ofDNMs/10kb for chr1: 0.38 | Roulette baseline&ASC+MSSNG+SPARK | ASC+MSSNG+SPARK, Trost Cell 2022,samplesize 11312 + 9209 trios (WES included) ,avg.#ofDNMs/10kb for chr1: 0.52 | Roulette baseline&SSC | SSC, An Science 2018, samplesize 7608,avg.#ofDNMs/10kb for chr1: 0.74 |
+|:-----------------:|:---------------------:|:-------------------------------------------------------------------:|:-----------------------:|:------------------------------------------------------------------------:|:---------------------------------:|:--------------------------------------------------------------------------------------------------------------:|:---------------------:|:---------------------------------------------------------------------:|
+| 10kb_by segments  | 0.324                 | 0.311                                                               | 0.113                   | 0.075                                                                    | 0.113                             | 0.064                                                                                                          | 0.278                 | 0.281                                                                 |
+| 10kb_by chr       | 0.324                 | 0.308                                                               | 0.113                   | 0.073                                                                    | 0.113                             | 0.064                                                                                                          | 0.278                 | 0.278                                                                 |
+| 30kb_by segments  | 0.583                 | 0.572                                                               | 0.239                   | 0.241                                                                    | 0.234                             | 0.225                                                                                                          | 0.526                 | 0.534                                                                 |
+| 30kb_by chr       | 0.583                 | 0.573                                                               | 0.239                   | 0.241                                                                    | 0.234                             | 0.225                                                                                                          | 0.526                 | 0.528                                                                 |
+| 50kb_by segments  | 0.692                 | 0.683                                                               | 0.313                   | 0.349                                                                    | 0.311                             | 0.344                                                                                                          | 0.638                 | 0.646                                                                 |
+| 50kb_by chr       | 0.692                 | 0.682                                                               | 0.313                   | 0.35                                                                     | 0.311                             | 0.345                                                                                                          | 0.638                 | 0.64                                                                  |
+| 100kb_by segments | 0.814                 | 0.809                                                               | 0.415                   | 0.508                                                                    | 0.417                             | 0.507                                                                                                          | 0.77                  | 0.781                                                                 |
+| 100kb_by chr      | 0.814                 | 0.809                                                               | 0.415                   | 0.509                                                                    | 0.417                             | 0.508                                                                                                          | 0.77                  | 0.775                                                                 |
 
-create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost)
-```
+Quick links to the detailed results
+
+SSC, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_halftt.html
+
+MSSNG, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng_halftt.html
+
+ASC+MSSNG+SPARK, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_integration_trost_halftt.html
+
+SSC, An Science 2018 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_an_halftt.html
+
+
+
+<!-- # Comparing the estimated random effects -- estimated by segments (90% training) -->
+
+<!-- ## 10kb -->
+
+<!-- ```{r fig.width=12, fig.height=8, warning=F, message=F} -->
+
+<!-- SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_10kb_fitted.rdata")) -->
+<!-- SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_10kb_fitted.rdata")) -->
+<!-- mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted.rdata")) -->
+<!-- ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_10kb_fitted.rdata")) -->
+
+<!-- create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost) -->
+<!-- ``` -->
+
+
+<!-- ## 30kb -->
+
+<!-- ```{r fig.width=12, fig.height=8, warning=F, message=F} -->
+
+<!-- SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_30kb_fitted.rdata")) -->
+<!-- SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_30kb_fitted.rdata")) -->
+<!-- mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted.rdata")) -->
+<!-- ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_30kb_fitted.rdata")) -->
+
+<!-- create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost) -->
+<!-- ``` -->
+
+
+<!-- ## 50kb -->
+
+<!-- ```{r fig.width=12, fig.height=8, warning=F, message=F} -->
+
+<!-- SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_50kb_fitted.rdata")) -->
+<!-- SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_50kb_fitted.rdata")) -->
+<!-- mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted.rdata")) -->
+<!-- ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_50kb_fitted.rdata")) -->
+
+<!-- create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost) -->
+<!-- ``` -->
+
+<!-- ## 100kb -->
+
+<!-- ```{r fig.width=12, fig.height=8, warning=F, message=F} -->
+
+<!-- SSC_an <- get(load("/project/xinhe/xsun/mutation_rate/12.denovo_real_ssc_an/results/ssc_an_per_window_chr1_100kb_fitted.rdata")) -->
+<!-- SSC_trost <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/ssc_trost_per_window_chr1_100kb_fitted.rdata")) -->
+<!-- mssng_trost <- get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted.rdata")) -->
+<!-- ASC_MSSNG_SPARK_trost <- get(load("/project/xinhe/xsun/mutation_rate/13.denovo_real_integration_trost/results/integration_trost_per_window_chr1_100kb_fitted.rdata")) -->
+
+<!-- create_pairwise_scatter_plots(SSC_an, SSC_trost, mssng_trost, ASC_MSSNG_SPARK_trost) -->
+<!-- ``` -->
