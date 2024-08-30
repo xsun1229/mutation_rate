@@ -545,15 +545,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree95bf2071fd343ac2f8d8c86be4f8212c254a13b1targetblank95bf207a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreed7785e1527e49019f546556d315ef289b4d9b51ctargetblankd7785e1a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/xsun1229/mutation_rate/tree/95bf2071fd343ac2f8d8c86be4f8212c254a13b1" target="_blank">95bf207</a>
+<a href="https://github.com/xsun1229/mutation_rate/tree/d7785e1527e49019f546556d315ef289b4d9b51c" target="_blank">d7785e1</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetree95bf2071fd343ac2f8d8c86be4f8212c254a13b1targetblank95bf207a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomxsun1229mutationratetreed7785e1527e49019f546556d315ef289b4d9b51ctargetblankd7785e1a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -563,7 +563,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/xsun1229/mutation_rate/tree/95bf2071fd343ac2f8d8c86be4f8212c254a13b1" target="_blank">95bf207</a>.
+<a href="https://github.com/xsun1229/mutation_rate/tree/d7785e1527e49019f546556d315ef289b4d9b51c" target="_blank">d7785e1</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -579,15 +579,9 @@ were generated:
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
-    Ignored:    analysis/figure/
 
 Unstaged changes:
-    Modified:   analysis/denovo0422_realdata_CV_integration_trost_halftt.Rmd
     Modified:   analysis/denovo0422_realdata_CV_mssng_halftt.Rmd
-    Modified:   analysis/denovo0422_realdata_CV_ssc_an_halftt.Rmd
-    Modified:   analysis/denovo0422_realdata_CV_ssc_trost_halftt.Rmd
-    Modified:   analysis/denovo0422_realdata_summary.Rmd
-    Deleted:    analysis/denovo0422_realdata_summary_halftt.Rmd
 
 </code></pre>
 <p>
@@ -634,6 +628,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/analysis/denovo0422_realdata_CV_mssng_halftt.Rmd" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+<td>
+update
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/xsun1229/mutation_rate/d7785e1527e49019f546556d315ef289b4d9b51c/docs/denovo0422_realdata_CV_mssng_halftt.html" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+<td>
+update
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -689,11 +717,17 @@ scatter_plot_mutct &lt;- function(data, xcol, ycol, title=NULL) {
   fit &lt;- lm(formula, data = data)
   adj_rsq &lt;- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
 
+  x_values &lt;- data[[xcol]]
+  y_values &lt;- data[[ycol]]
+
+  # Calculate the LPD (Log Predictive Density)
+  lpd &lt;- sum(y_values * log(x_values),na.rm = T) - sum(x_values)
   
   ggplot(data) +
-  geom_point(data = data, aes_string(x = xcol, y = ycol),color = &quot;black&quot;) +
+  geom_point(data = data, aes_string(x = xcol, y = ycol), color = &quot;black&quot;) +
   geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;, linetype = &quot;dashed&quot;) +
-  annotate(&quot;text&quot;, x = Inf, y = Inf, label = paste0(&quot;Adj R-sq = &quot;, round(adj_rsq, 3)),
+  annotate(&quot;text&quot;, x = Inf, y = Inf, label = paste0(&quot;Adj R-sq = &quot;, round(adj_rsq, 3), 
+                                                    &quot;\nLPD = &quot;, round(lpd, 3)),
            hjust = 1.1, vjust = 1.1, color = &quot;blue&quot;, parse = FALSE) +  # Adjust text positioning and color
   labs(x = paste(&quot;Predicted mutation count:&quot;, xcol),
        y = paste(&quot;Observed mutation count:&quot;, ycol),
@@ -701,6 +735,24 @@ scatter_plot_mutct &lt;- function(data, xcol, ycol, title=NULL) {
   theme_minimal()
   
 }
+
+# scatter_plot_mutct &lt;- function(data, xcol, ycol, title=NULL) {
+#   # Fit the linear model using user-defined columns
+#   formula &lt;- as.formula(paste(ycol, &quot;~&quot;, xcol, &quot;+0&quot;))
+#   fit &lt;- lm(formula, data = data)
+#   adj_rsq &lt;- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+#   
+#   ggplot(data) +
+#   geom_point(data = data, aes_string(x = xcol, y = ycol),color = &quot;black&quot;) +
+#   geom_abline(intercept = 0, slope = 1, color = &quot;red&quot;, linetype = &quot;dashed&quot;) +
+#   annotate(&quot;text&quot;, x = Inf, y = Inf, label = paste0(&quot;Adj R-sq = &quot;, round(adj_rsq, 3)),
+#            hjust = 1.1, vjust = 1.1, color = &quot;blue&quot;, parse = FALSE) +  # Adjust text positioning and color
+#   labs(x = paste(&quot;Predicted mutation count:&quot;, xcol),
+#        y = paste(&quot;Observed mutation count:&quot;, ycol),
+#        title = title) +
+#   theme_minimal()
+#   
+# }
 
 plot_scatter_randeff &lt;- function(data) {
   ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
@@ -1324,6 +1376,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-15-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1cfb705060135d96910dfe731747631019448d58/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-15-1.png" target="_blank">1cfb705</a>
 </td>
 <td>
@@ -1372,6 +1435,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-16-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1cfb705060135d96910dfe731747631019448d58/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-16-1.png" target="_blank">1cfb705</a>
@@ -1424,6 +1498,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-17-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1cfb705060135d96910dfe731747631019448d58/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-17-1.png" target="_blank">1cfb705</a>
 </td>
 <td>
@@ -1472,6 +1557,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-18-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1cfb705060135d96910dfe731747631019448d58/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-18-1.png" target="_blank">1cfb705</a>
@@ -1538,6 +1634,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-19-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1cfb705060135d96910dfe731747631019448d58/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-19-1.png" target="_blank">1cfb705</a>
 </td>
 <td>
@@ -1585,6 +1692,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-20-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1cfb705060135d96910dfe731747631019448d58/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-20-1.png" target="_blank">1cfb705</a>
@@ -1636,6 +1754,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-21-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/xsun1229/mutation_rate/blob/1cfb705060135d96910dfe731747631019448d58/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-21-1.png" target="_blank">1cfb705</a>
 </td>
 <td>
@@ -1661,6 +1790,43 @@ p2 &lt;- scatter_plot_mutct(data = data, xcol = &quot;rl_rescaled_test&quot;, yc
 
 grid.arrange(p1, p2, ncol = 2)</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
+Past versions of unnamed-chunk-22-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-22-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-22-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1688,6 +1854,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-1">
+Past versions of unnamed-chunk-23-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-23-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
   geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
   geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
@@ -1700,6 +1903,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
                      labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-23-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-23-2">
+Past versions of unnamed-chunk-23-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-23-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-23-2.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="kb-17" class="section level3">
 <h3>30kb</h3>
@@ -1720,6 +1960,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-24-1">
+Past versions of unnamed-chunk-24-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-24-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-24-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
   geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
   geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
@@ -1732,6 +2009,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
                      labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-24-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-24-2">
+Past versions of unnamed-chunk-24-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-24-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-24-2.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="kb-18" class="section level3">
 <h3>50kb</h3>
@@ -1752,6 +2066,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-1">
+Past versions of unnamed-chunk-25-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-25-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-25-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
   geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
   geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
@@ -1764,6 +2115,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
                      labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-25-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-2">
+Past versions of unnamed-chunk-25-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-25-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-25-2.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="kb-19" class="section level3">
 <h3>100kb</h3>
@@ -1784,6 +2172,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
   geom_abline(slope = 1, intercept = 0, col=&quot;red&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-26-1">
+Past versions of unnamed-chunk-26-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-26-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-26-1.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(df_compare, aes(x =  window_start/1000000)) +
   geom_line(aes(y = seg_est, color = &quot;estimated from partitioned segments&quot;), alpha = 0.4) +
   geom_line(aes(y = chr_est, color = &quot;estimated from whole chr&quot;), alpha = 0.3) +
@@ -1796,6 +2221,43 @@ ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
                      labels = c(&quot;estimated from partitioned segments&quot;,&quot;estimated from whole chr&quot;, &quot;observed fold change&quot;)) +
   theme_minimal()</code></pre>
 <p><img src="figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-26-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-26-2">
+Past versions of unnamed-chunk-26-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-26-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/xsun1229/mutation_rate/blob/d7785e1527e49019f546556d315ef289b4d9b51c/docs/figure/denovo0422_realdata_CV_mssng_halftt.Rmd/unnamed-chunk-26-2.png" target="_blank">d7785e1</a>
+</td>
+<td>
+XSun
+</td>
+<td>
+2024-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

@@ -23,11 +23,17 @@ scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
   fit <- lm(formula, data = data)
   adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
 
+  x_values <- data[[xcol]]
+  y_values <- data[[ycol]]
+
+  # Calculate the LPD (Log Predictive Density)
+  lpd <- sum(y_values * log(x_values),na.rm = T) - sum(x_values)
   
   ggplot(data) +
-  geom_point(data = data, aes_string(x = xcol, y = ycol),color = "black") +
+  geom_point(data = data, aes_string(x = xcol, y = ycol), color = "black") +
   geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
-  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3)),
+  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3), 
+                                                    "\nLPD = ", round(lpd, 3)),
            hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
   labs(x = paste("Predicted mutation count:", xcol),
        y = paste("Observed mutation count:", ycol),
@@ -35,6 +41,24 @@ scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
   theme_minimal()
   
 }
+
+# scatter_plot_mutct <- function(data, xcol, ycol, title=NULL) {
+#   # Fit the linear model using user-defined columns
+#   formula <- as.formula(paste(ycol, "~", xcol, "+0"))
+#   fit <- lm(formula, data = data)
+#   adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+#   
+#   ggplot(data) +
+#   geom_point(data = data, aes_string(x = xcol, y = ycol),color = "black") +
+#   geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+#   annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3)),
+#            hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
+#   labs(x = paste("Predicted mutation count:", xcol),
+#        y = paste("Observed mutation count:", ycol),
+#        title = title) +
+#   theme_minimal()
+#   
+# }
 
 plot_scatter_randeff <- function(data) {
   ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
