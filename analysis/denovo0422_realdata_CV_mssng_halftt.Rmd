@@ -243,7 +243,7 @@ data_large <- data[order(data$obs_test,decreasing = T),][1:5,]
 data_large <- data_large[order(data_large$obs_test, decreasing = T),]
 
 colnames(data_large)[c(7,10,13,16)] <- c("rl_rescaled_wholewindow","obs_wholewindow","foldchange_wholewindow","randeff_est_wholewindow")
-DT::datatable(data_large,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','windows with large observed mutation rate on testing set (4~6), but low expected rates'),options = list(pageLength = 10) )
+DT::datatable(data_large,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','windows with large observed mutation rate on testing set, but low expected rates'),options = list(pageLength = 10) )
 ```
 We look into the window 2254. We varied the bin sizes (500bp, 1kb, 2kb) and checked how this window is divided. 
 

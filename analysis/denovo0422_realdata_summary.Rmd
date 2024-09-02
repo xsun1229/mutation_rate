@@ -112,7 +112,7 @@ by_chr means, we treat the whole chromosome as one segment and run smashgen on i
 
 Quick links to the detailed results
 
-SSC, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_halftt.html
+SSC, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_ssc_trost_halftt.html
 
 MSSNG, Trost Cell 2022 https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng_halftt.html
 
