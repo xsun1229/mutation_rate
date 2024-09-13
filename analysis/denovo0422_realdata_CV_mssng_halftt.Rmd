@@ -1,5 +1,5 @@
 ---
-title: "Cross Validation -- MSSNG: half training and half testing"
+title: "Cross Validation -- MSSNG: half training and half testing: bin size 1kb"
 author: "XSun"
 date: "2024-08-21"
 output:
@@ -83,6 +83,24 @@ plot_randeff_genome <- function(data) {
   theme_minimal()
 }
 
+
+plot_randeff_windows <- function(data) {
+  
+  ggplot(data, aes(x = Window_Start/1000000)) +
+  geom_line(aes(y = randeff_est, color = "Estimated random effect"), alpha = 0.4) +
+  geom_line(aes(y = rl_rescaled_sum, color = "Roulette predicted mutation count"), alpha = 0.3) +
+  geom_line(aes(y = obs_sum, color = "Observed de novo mutations"), alpha = 0.1) +
+  labs(x = "Genomic position (Mb)",
+       y = "Estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("Estimated random effect" = "blue",
+                                "Roulette predicted mutation count" = "green", 
+                                "Observed de novo mutations" = "red")) +
+  guides(color = guide_legend(override.aes = list(alpha = 1))) +
+  theme_minimal()
+  
+}
+
 ```
 
 
@@ -92,84 +110,228 @@ plot_randeff_genome <- function(data) {
 * For large gap: treat as different segments. So for chr1, there will be 3 segments. 
 * For small gaps like 50kb, treat them as continuous ones. 
 
-<!-- ## The whole window prediction -->
+## The whole window prediction
 
-<!-- * Run smashgen on the whole window, to get an estimation for the local random effects  -->
+* Run smashgen on the whole window, to get an estimation for the local random effects
 
-<!-- `fit = ebps(df_seg_non0$obs_sum,df_seg_non0$rl_rescaled_sum,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))` -->
+`fit = ebps(df_seg_non0$obs_sum,df_seg_non0$rl_rescaled_sum,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
 
-<!-- * Predict the mutation rate on the whole window, based on the rescaled Roulette estimation. -->
+* Predict the mutation rate on the whole window, based on the rescaled Roulette estimation.
 
-<!-- `df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum` -->
+`df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum`
 
-<!-- ### 10kb -->
+### 10kb
 
-<!-- ```{r} -->
+```{r}
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata") -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_halftt.rdata")
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+grid.arrange(p1, p2, ncol = 2)
+```
 
-<!-- ### 30kb -->
+### 30kb
 
-<!-- ```{r} -->
+```{r}
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata") -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_halftt.rdata")
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+grid.arrange(p1, p2, ncol = 2)
+```
 
-<!-- ### 50kb -->
+### 50kb
 
-<!-- ```{r} -->
+```{r}
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata") -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_halftt.rdata")
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+grid.arrange(p1, p2, ncol = 2)
+```
 
 
-<!-- ### 100kb -->
+### 100kb
 
-<!-- ```{r} -->
+#### SMASHGEN mean
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata") -->
+```{r}
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_halftt.rdata")
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+```{r}
+
+print("fitting output example")
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/fit_example_100kb_seg1.rdata")
+str(fit)
+
+```
+
+
+```{r}
+
+ggplot(data, aes(x = randeff_est)) + 
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of estimated random effects ",
+       x = "Estimated random effects ") +
+  geom_vline(xintercept = 1, color = "red", linetype = "dashed", size = 1.2) +
+  annotate("text", x = 1, y = Inf, label = "x = 1", vjust = 2, color = "red")
+
+```
+
+
+
+
+We plot some regions to check the results.
+
+```{r}
+
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(400:500),]
+plot_randeff_windows(plot_data)
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(750:850),]
+plot_randeff_windows(plot_data)
+
+plot_data <- data[data$Window %in% c(1850:2100),]
+plot_randeff_windows(plot_data)
+
+```
+
+
+
+
+#### SMASHGEN mean_smooth
+
+```{r}
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_halftt_smooth.rdata")
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+```{r}
+
+ggplot(data, aes(x = randeff_est)) + 
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of estimated random effects ",
+       x = "Estimated random effects ") +
+  geom_vline(xintercept = 1, color = "red", linetype = "dashed", size = 1.2) +
+  annotate("text", x = 1, y = Inf, label = "x = 1", vjust = 2, color = "red")
+
+```
+
+We plot some regions to check the results.
+
+```{r}
+
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(400:500),]
+plot_randeff_windows(plot_data)
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(750:850),]
+plot_randeff_windows(plot_data)
+
+plot_data <- data[data$Window %in% c(1850:2100),]
+plot_randeff_windows(plot_data)
+
+```
+
+
+#### Non-spatial only (computed from gamma estimation)
+
+```{r}
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_halftt_gammaonly.rdata")
+
+sprintf("estimated alpha = %s", unique(df_per_window_data$alpha_est))
+
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "Gamma prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+```{r}
+
+ggplot(data, aes(x = randeff_est)) + 
+  geom_histogram(binwidth = 0.5, fill = "skyblue", color = "black") +
+  labs(title = "Histogram of estimated random effects",
+       x = "Estimated random effects") +
+  geom_vline(xintercept = 1, color = "red", linetype = "dashed", size = 1.2) +
+  annotate("text", x = 1, y = Inf, label = "x = 1", vjust = 2, color = "red")
+
+```
+
+We plot some regions to check the results.
+
+```{r}
+
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(400:500),]
+plot_randeff_windows(plot_data)
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(750:850),]
+plot_randeff_windows(plot_data)
+
+plot_data <- data[data$Window %in% c(1850:2100),]
+plot_randeff_windows(plot_data)
+
+```
 
 ## Cross validation
 
@@ -183,9 +345,9 @@ We partition each window into 1kb bins, use odd bins to train the local effect, 
 
 `df_per_window_data$test_pred <- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test`
 
-
-
 ### 10kb
+
+#### smashgen mean
 
 ```{r}
 
@@ -201,7 +363,44 @@ p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_tes
 grid.arrange(p1, p2, ncol = 2)
 ```
 
+
+#### smashgen mean_smooth
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_halftt_smooth.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+#### gamma non-spatial
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_halftt_gammaonly.rdata")
+
+sprintf("estimated alpha = %s", unique(df_per_window_data$alpha_est))
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "Gamma prediction prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
 ### 30kb
+
+#### smashgen mean
 
 ```{r}
 
@@ -218,7 +417,43 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
+#### smashgen mean_smooth
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_halftt_smooth.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+#### gamma non-spatial
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_halftt_gammaonly.rdata")
+
+sprintf("estimated alpha = %s", unique(df_per_window_data$alpha_est))
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "Gamma prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
 ### 50kb
+
+#### smashgen mean
 
 ```{r}
 
@@ -235,7 +470,44 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
+#### smashgen mean_smooth
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_halftt_smooth.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+#### gamma non-spatial
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_halftt_gammaonly.rdata")
+
+sprintf("estimated alpha = %s", unique(df_per_window_data$alpha_est))
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "Gamma prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
 ### 100kb
+
+#### smashgen mean
 
 ```{r}
 
@@ -271,7 +543,7 @@ obs_window <- obs[obs$START > 225310007 & obs$START < 225410006 & obs$CHROM ==1,
 
 start_window <- 225310007
 end_window <- 225410006
-bin_sizes <- c(500, 1000, 2000)
+bin_sizes <- c(100, 500, 1000, 2000)
 
 # Function to assign training or testing based on bin size
 assign_bin_varying_size <- function(start_position, bin_size) {
@@ -292,6 +564,7 @@ for (bin_size in bin_sizes) {
 
 DT::datatable(obs_window,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','how the window is divided when bin size varies'),options = list(pageLength = 10) )
 
+sprintf("bin size 100bp, number of training= %s, number of testing = %s",sum(obs_window$set_100 =="training"),sum(obs_window$set_100 =="testing"))
 sprintf("bin size 500bp, number of training= %s, number of testing = %s",sum(obs_window$set_500 =="training"),sum(obs_window$set_500 =="testing"))
 sprintf("bin size 1000bp, number of training= %s, number of testing = %s",sum(obs_window$set_1000 =="training"),sum(obs_window$set_1000 =="testing"))
 sprintf("bin size 2000bp, number of training= %s, number of testing = %s",sum(obs_window$set_2000 =="training"),sum(obs_window$set_2000 =="testing"))
@@ -305,7 +578,7 @@ obs_window <- obs[obs$START > 31410007 & obs$START < 31510006 & obs$CHROM ==1, ]
 
 start_window <- 31410007
 end_window <- 31510006
-bin_sizes <- c(500, 1000, 2000)
+bin_sizes <- c(100, 500, 1000, 2000)
 
 # Function to assign training or testing based on bin size
 assign_bin_varying_size <- function(start_position, bin_size) {
@@ -326,6 +599,7 @@ for (bin_size in bin_sizes) {
 
 DT::datatable(obs_window,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','how the window is divided when bin size varies'),options = list(pageLength = 10) )
 
+sprintf("bin size 100bp, number of training= %s, number of testing = %s",sum(obs_window$set_100 =="training"),sum(obs_window$set_100 =="testing"))
 sprintf("bin size 500bp, number of training= %s, number of testing = %s",sum(obs_window$set_500 =="training"),sum(obs_window$set_500 =="testing"))
 sprintf("bin size 1000bp, number of training= %s, number of testing = %s",sum(obs_window$set_1000 =="training"),sum(obs_window$set_1000 =="testing"))
 sprintf("bin size 2000bp, number of training= %s, number of testing = %s",sum(obs_window$set_2000 =="training"),sum(obs_window$set_2000 =="testing"))
@@ -375,78 +649,113 @@ sprintf("bin size 2000bp, number of training= %s, number of testing = %s",sum(ob
 ```
 
 
+#### smashgen mean_smooth
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_halftt_smooth.rdata")
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+#### gamma non-spatial
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_halftt_gammaonly.rdata")
+
+sprintf("estimated alpha = %s", unique(df_per_window_data$alpha_est))
+
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
+
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = data, xcol = "test_pred", ycol = "obs_test",title = "Gamma prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
 # Setting two: treat the whole genome as one segment
 
-<!-- ## The whole window prediction -->
+## The whole window prediction
 
-<!-- ### 10kb -->
+### 10kb
 
-<!-- ```{r} -->
+```{r}
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata") -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_10kb_fitted_testpred_chr_halftt.rdata")
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+grid.arrange(p1, p2, ncol = 2)
+```
 
-<!-- ### 30kb -->
+### 30kb
 
-<!-- ```{r} -->
+```{r}
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata") -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_testpred_chr_halftt.rdata")
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+grid.arrange(p1, p2, ncol = 2)
+```
 
-<!-- ### 50kb -->
+### 50kb
 
-<!-- ```{r} -->
+```{r}
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata") -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_testpred_chr_halftt.rdata")
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+grid.arrange(p1, p2, ncol = 2)
+```
 
 
-<!-- ### 100kb -->
+### 100kb
 
-<!-- ```{r} -->
+```{r}
 
-<!-- load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata") -->
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_testpred_chr_halftt.rdata")
 
-<!-- df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum -->
-<!-- data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),] -->
+df_per_window_data$sum_pred <- df_per_window_data$randeff_est*df_per_window_data$rl_rescaled_sum
+data <- df_per_window_data[complete.cases(df_per_window_data$test_pred),]
 
-<!-- DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) ) -->
+DT::datatable(data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
 
-<!-- p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction") -->
-<!-- p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline") -->
+p1 <- scatter_plot_mutct(data = data, xcol = "sum_pred", ycol = "obs_sum",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = data, xcol = "rl_rescaled_sum", ycol = "obs_sum",title = "Roulette baseline")
 
-<!-- grid.arrange(p1, p2, ncol = 2) -->
-<!-- ``` -->
+grid.arrange(p1, p2, ncol = 2)
+```
 
 ## Cross validation
 
