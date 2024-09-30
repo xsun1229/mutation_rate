@@ -86,18 +86,20 @@ plot_randeff_genome <- function(data) {
 
 plot_randeff_windows <- function(data) {
   
-  ggplot(data, aes(x = Window_Start/1000000)) +
-  geom_line(aes(y = randeff_est, color = "Estimated random effect"), alpha = 0.4) +
-  geom_line(aes(y = rl_rescaled_sum, color = "Roulette predicted mutation count"), alpha = 0.3) +
-  geom_line(aes(y = obs_sum, color = "Observed de novo mutations"), alpha = 0.1) +
-  labs(x = "Genomic position (Mb)",
-       y = "Estimated random effects") +
-  scale_color_manual(name = "Group",
-                     values = c("Estimated random effect" = "blue",
-                                "Roulette predicted mutation count" = "green", 
-                                "Observed de novo mutations" = "red")) +
-  guides(color = guide_legend(override.aes = list(alpha = 1))) +
-  theme_minimal()
+  ggplot(data, aes(x = Window_Start / 1000000)) +
+    geom_line(aes(y = randeff_est, color = "Estimated random effect"), alpha = 0.4) +
+    geom_line(aes(y = rl_rescaled_sum, color = "Roulette predicted mutation count"), alpha = 0.3) +
+    geom_line(aes(y = obs_sum, color = "Observed de novo mutations"), alpha = 0.1) +
+    geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 1) +  # y=1 line
+    annotate("text", x = Inf, y = 1, label = "y = 1", vjust = -1, hjust = 1.1, color = "black") +  # y=1 text
+    labs(x = "Genomic position (Mb)",
+         y = "Estimated random effects") +
+    scale_color_manual(name = "Group",
+                       values = c("Estimated random effect" = "blue",
+                                  "Roulette predicted mutation count" = "green", 
+                                  "Observed de novo mutations" = "red")) +
+    guides(color = guide_legend(override.aes = list(alpha = 1))) +
+    theme_minimal()
   
 }
 
@@ -332,6 +334,8 @@ plot_data <- data[data$Window %in% c(1850:2100),]
 plot_randeff_windows(plot_data)
 
 ```
+
+
 
 ## Cross validation
 

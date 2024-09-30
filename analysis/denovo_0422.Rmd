@@ -53,6 +53,8 @@ MSSNG (Trost et al, Cell 2022)
 
 [Data cleaning](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_mssng.html)
 
+[Estimated Random effects](https://xsun1229.github.io/mutation_rate/denovo0422_estimated_randeff_mssng.html)
+
 [Cross Validation -- 90% training, 10% testing](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng.html)
 
 [Cross Validation -- half training, half testing, 1kb window](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_CV_mssng_halftt.html)

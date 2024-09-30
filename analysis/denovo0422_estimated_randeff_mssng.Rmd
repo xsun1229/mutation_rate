@@ -1,0 +1,273 @@
+---
+title: "Estimated Random effects"
+author: "XSun"
+date: "2024-09-30"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+```{r message=F, warning=F}
+library(ggplot2)
+library(gridExtra)
+
+plot_randeff_windows_smashgen <- function(data) {
+  
+  ggplot(data, aes(x = Window_Start / 1000000)) +
+  geom_line(aes(y = randeff_est_spatial_smashgen, color = "Estimated random effects -- spatial"), alpha = 0.4) +
+  geom_line(aes(y = randeff_est_nonspatial_smashgen, color = "Estimated random effects -- nonspatial"), alpha = 0.4) +
+  geom_line(aes(y = randeff_est_total_smashgen, color = "Estimated random effects -- total"), alpha = 0.4) +
+  geom_line(aes(y = rl_rescaled_sum, color = "Roulette predicted mutation count"), alpha = 0.4) +
+  geom_line(aes(y = obs_sum, color = "Observed de novo mutations"), alpha = 0.4) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.3) +  # y=1 line
+  annotate("text", x = Inf, y = 1, label = "y = 1", vjust = -1, hjust = 1.1, color = "black", size = 2.5) +  # y=1 text
+  labs(x = "Genomic position (Mb)",
+       y = "Estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("Estimated random effects -- spatial" = "purple",
+                                "Estimated random effects -- nonspatial" = "orange",
+                                "Estimated random effects -- total" = "blue",
+                                "Roulette predicted mutation count" = "green", 
+                                "Observed de novo mutations" = "red")) +
+  guides(color = guide_legend(override.aes = list(alpha = 1))) +
+  ggtitle("smashgen estimation")+ 
+  theme_minimal()
+  
+}
+
+plot_randeff_windows_gamma <- function(data) {
+  
+  ggplot(data, aes(x = Window_Start / 1000000)) +
+  geom_line(aes(y = randeff_est_gamma, color = "Estimated random effects -- gamma"), alpha = 0.4) +
+  geom_line(aes(y = rl_rescaled_sum, color = "Roulette predicted mutation count"), alpha = 0.4) +
+  geom_line(aes(y = obs_sum, color = "Observed de novo mutations"), alpha = 0.4) +
+  geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.3) +  # y=1 line
+  annotate("text", x = Inf, y = 1, label = "y = 1", vjust = -1, hjust = 1.1, color = "black", size = 2.5) +  # y=1 text
+  annotate("text", x = Inf, y = Inf, label = sprintf("alpha_estimated = %.2f", unique(data$alpha_est[!is.na(data$alpha_est)])), vjust = 1.5, hjust = 1.5, size = 3.5, color = "blue") +
+  labs(x = "Genomic position (Mb)",
+       y = "Estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("Estimated random effects -- gamma" = "blue",
+                                "Roulette predicted mutation count" = "green", 
+                                "Observed de novo mutations" = "red")) +
+  guides(color = guide_legend(override.aes = list(alpha = 1))) +
+  ggtitle("gamma estimation")+ 
+  theme_minimal()
+  
+}
+
+plot_randeff_hist <- function(data, col, title) {
+  
+  ggplot(data, aes(x = data[[col]])) + 
+    geom_histogram(binwidth = 0.05, fill = "skyblue") +
+    labs(title = "Histogram of estimated random effects",
+         x = "Estimated random effects ") +
+    geom_vline(xintercept = 1, color = "red", linetype = "dashed", size = 0.2) +
+    annotate("text", x = 1, y = Inf, label = "x = 1", vjust = 2, color = "red", size = 2.5) +
+    ggtitle(title) +
+    theme_minimal()
+  
+}
+  
+```
+
+
+
+
+# Introduction
+
+We compare the random effects estimated by smashgen, gamma estimation here. 
+
+* For large gap: treat as different segments. So for chr1, there will be 3 segments. 
+* For small gaps like 50kb, treat them as continuous ones. 
+* Run smashgen/gamma estimation on the whole window, to get an estimation for the local random effects
+
+
+# Results
+
+## 30kb
+
+```{r fig.width=20, warning=FALSE, message=FALSE}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_30kb_fitted_smashgen_gamma_wholewindow_.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+data <- df_per_window_data
+
+p1 <- plot_randeff_windows_smashgen(data = data)
+p2 <- plot_randeff_windows_gamma(data = data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+sprintf("estimated alpha = %s", unique(data$alpha_est[!is.na(data$alpha_est)]))
+p1 <- plot_randeff_hist(data = data, col = "randeff_est_total_smashgen",title = "randeff_est_total_smashgen")
+p2 <- plot_randeff_hist(data = data, col = "randeff_est_spatial_smashgen",title = "randeff_est_spatial_smashgen")
+p3 <- plot_randeff_hist(data = data, col = "randeff_est_nonspatial_smashgen",title = "randeff_est_nonspatial_smashgen")
+p4 <- plot_randeff_hist(data = data, col = "randeff_est_gamma",title = "randeff_est_gamma")
+grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(1461:1561),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(1000:1100),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(3430:3550),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(6450:6550),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+## 50kb
+
+```{r fig.width=20, warning=FALSE, message=FALSE}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_50kb_fitted_smashgen_gamma_wholewindow_.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+data <- df_per_window_data
+
+p1 <- plot_randeff_windows_smashgen(data = data)
+p2 <- plot_randeff_windows_gamma(data = data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+sprintf("estimated alpha = %s", unique(data$alpha_est[!is.na(data$alpha_est)]))
+p1 <- plot_randeff_hist(data = data, col = "randeff_est_total_smashgen",title = "randeff_est_total_smashgen")
+p2 <- plot_randeff_hist(data = data, col = "randeff_est_spatial_smashgen",title = "randeff_est_spatial_smashgen")
+p3 <- plot_randeff_hist(data = data, col = "randeff_est_nonspatial_smashgen",title = "randeff_est_nonspatial_smashgen")
+p4 <- plot_randeff_hist(data = data, col = "randeff_est_gamma",title = "randeff_est_gamma")
+grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(841:951),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+plot_data <- data[data$Window %in% c(560:660),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(2050:2150),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(3720:3820),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+
+
+
+
+
+## 100kb
+
+```{r fig.width=20, warning=FALSE, message=FALSE}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/mssng_trost_per_window_chr1_100kb_fitted_smashgen_gamma_wholewindow_.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+data <- df_per_window_data
+
+p1 <- plot_randeff_windows_smashgen(data = data)
+p2 <- plot_randeff_windows_gamma(data = data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+sprintf("estimated alpha = %s", unique(data$alpha_est[!is.na(data$alpha_est)]))
+p1 <- plot_randeff_hist(data = data, col = "randeff_est_total_smashgen",title = "randeff_est_total_smashgen")
+p2 <- plot_randeff_hist(data = data, col = "randeff_est_spatial_smashgen",title = "randeff_est_spatial_smashgen")
+p3 <- plot_randeff_hist(data = data, col = "randeff_est_nonspatial_smashgen",title = "randeff_est_nonspatial_smashgen")
+p4 <- plot_randeff_hist(data = data, col = "randeff_est_gamma",title = "randeff_est_gamma")
+grid.arrange(p1, p2,p3, p4, ncol = 4)
+
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(400:500),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(750:850),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+print("Windows with small estimated random effects")
+
+plot_data <- data[data$Window %in% c(1850:2100),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+```
+
+
+
+
+
+
