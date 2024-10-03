@@ -127,6 +127,25 @@ p2 <- plot_randeff_windows_gamma(data = plot_data)
 
 grid.arrange(p1, p2, ncol = 2)
 
+print("Windows with large spatial random effects")
+
+plot_data <- data[data$Window %in% c(2420:2520),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+print("Windows with large spatial random effects")
+
+plot_data <- data[data$Window %in% c(5777:5877),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
 print("Windows with small estimated random effects")
 
 plot_data <- data[data$Window %in% c(3430:3550),]
@@ -146,6 +165,17 @@ p2 <- plot_randeff_windows_gamma(data = plot_data)
 
 grid.arrange(p1, p2, ncol = 2)
 ```
+
+```{r fig.width=3, fig.height=3, warning=FALSE, message=FALSE}
+
+ggplot(data = data, aes(x= randeff_est_nonspatial_smashgen, y = randeff_est_gamma)) + 
+  geom_point() + 
+  xlab("non-spatial random effects -- smashgen") + 
+  ylab("random effects -- gamma") +
+  theme_minimal()
+
+```
+
 
 
 ## 50kb
@@ -179,6 +209,8 @@ p2 <- plot_randeff_windows_gamma(data = plot_data)
 
 grid.arrange(p1, p2, ncol = 2)
 
+print("Windows with large estimated random effects")
+
 plot_data <- data[data$Window %in% c(560:660),]
 
 p1 <- plot_randeff_windows_smashgen(data = plot_data)
@@ -186,6 +218,24 @@ p2 <- plot_randeff_windows_gamma(data = plot_data)
 
 grid.arrange(p1, p2, ncol = 2)
 
+print("Windows with large estimated spatial random effects")
+
+plot_data <- data[data$Window %in% c(1438:1538),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+print("Windows with large estimated  spatial  random effects")
+
+plot_data <- data[data$Window %in% c(4871:4971),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
 
 print("Windows with small estimated random effects")
 
@@ -208,7 +258,15 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
+```{r fig.width=3, fig.height=3, warning=FALSE, message=FALSE}
 
+ggplot(data = data, aes(x= randeff_est_nonspatial_smashgen, y = randeff_est_gamma)) + 
+  geom_point() + 
+  xlab("non-spatial random effects -- smashgen") + 
+  ylab("random effects -- gamma") +
+  theme_minimal()
+
+```
 
 
 
@@ -245,6 +303,32 @@ p2 <- plot_randeff_windows_gamma(data = plot_data)
 
 grid.arrange(p1, p2, ncol = 2)
 
+print("Windows with large estimated random effects")
+
+plot_data <- data[data$Window %in% c(560:660),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+print("Windows with large estimated spatial random effects")
+
+plot_data <- data[data$Window %in% c(700:800),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
+
+print("Windows with large estimated spatial random effects")
+
+plot_data <- data[data$Window %in% c(450:550),]
+
+p1 <- plot_randeff_windows_smashgen(data = plot_data)
+p2 <- plot_randeff_windows_gamma(data = plot_data)
+
+grid.arrange(p1, p2, ncol = 2)
 
 print("Windows with small estimated random effects")
 
@@ -267,7 +351,15 @@ grid.arrange(p1, p2, ncol = 2)
 ```
 
 
+```{r fig.width=3, fig.height=3, warning=FALSE, message=FALSE}
 
+ggplot(data = data, aes(x= randeff_est_nonspatial_smashgen, y = randeff_est_gamma)) + 
+  geom_point() + 
+  xlab("non-spatial random effects -- smashgen") + 
+  ylab("random effects -- gamma") +
+  theme_minimal()
+
+```
 
 
 
