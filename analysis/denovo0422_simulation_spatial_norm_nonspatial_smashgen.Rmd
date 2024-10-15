@@ -522,6 +522,12 @@ p5 <- scatter_plot_mutct(data = data, xcol = "roulette", ycol = "y_sample", titl
 grid.arrange(p1, p2,p3, p4, p5, ncol = 5)
 ```
 
+
+
+
+
+
+
 # 10kb 
 ## normal_var_spatial=0.5, alpha = 5, spatial window = 100kb ~ 1mb
 

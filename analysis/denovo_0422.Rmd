@@ -24,7 +24,6 @@ Small alpha (1/0.5)
 
 [SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha.html)
 
-
 Large alpha (5/30)
 
 [non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
