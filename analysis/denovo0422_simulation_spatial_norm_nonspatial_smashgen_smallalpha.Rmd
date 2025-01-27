@@ -1,10 +1,11 @@
 ---
-title: "SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution"
+title: "SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution --- total windows = 3000"
 author: "XSun"
 date: "2024-10-03"
-output: workflowr::wflow_html
-editor_options:
-  chunk_output_type: console
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
 ---
 
 # Introduction
@@ -92,26 +93,38 @@ plot_randeff_windows_smashgen <- function(data) {
   
   ggplot(data, aes(x = window)) +
   geom_line(aes(y = randeff_est_spatial_smashgen, color = "Estimated random effects -- spatial"), alpha = 0.4) +
-  #geom_line(aes(y = randeff_est_nonspatial_smashgen, color = "Estimated random effects -- nonspatial"), alpha = 0.2) +
+  geom_line(aes(y = randeff_simulated_spatial, color = "Simulated random effects -- spatial"), alpha = 0.4) +
   geom_line(aes(y = randeff_est_total_smashgen, color = "Estimated random effects -- total"), alpha = 0.2) +
   #geom_line(aes(y = roulette, color = "Roulette predicted mutation count"), alpha = 0.2) +
-  geom_line(aes(y = randeff_simulated, color = "Simulated random effects"), alpha = 0.1) +
+  geom_line(aes(y = randeff_simulated, color = "Simulated random effects -- total"), alpha = 0.1) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 0.3) +  # y=1 line
   annotate("text", x = Inf, y = 1, label = "y = 1", vjust = -1, hjust = 1.1, color = "black", size = 2.5) +  # y=1 text
-  labs(x = "Genomic position (Mb)",
+  labs(#x = "Genomic position (Mb)",
+       x = "Windows",
        y = "Random effects") +
   scale_color_manual(name = "Group",
                      values = c("Estimated random effects -- spatial" = "purple",
-                                #"Estimated random effects -- nonspatial" = "orange",
+                                "Simulated random effects -- spatial" = "orange",
                                 "Estimated random effects -- total" = "blue",
                                 #"Roulette predicted mutation count" = "green", 
-                                "Simulated random effects" = "red")) +
+                                "Simulated random effects -- total" = "red")) +
   guides(color = guide_legend(override.aes = list(alpha = 1))) +
   ggtitle("smashgen estimation")+ 
   theme_minimal()
   
 }
 
+scatter_simulated_estimated_spatial <- function(data) {
+  
+  dat_spatial <- data[data$randeff_simulated_spatial != 1,]
+  
+  ggplot(data = dat_spatial, aes(x=randeff_simulated_spatial, y = randeff_est_spatial_smashgen)) +
+    geom_point() + 
+    labs(x = "simulated spatial random effects", y = "smashgen estimated spatial random effects") +
+    geom_abline(slope = 1,intercept = 0, col = "red") +
+    #ylim(0,1) +
+    theme_minimal()
+}
 
 ```
 
@@ -124,32 +137,44 @@ plot_randeff_windows_smashgen <- function(data) {
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -157,44 +182,60 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg40_maxseg80.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg40_maxseg80.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_0.5_minseg160_maxseg200.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -208,32 +249,44 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -241,43 +294,59 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg40_maxseg80.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg40_maxseg80.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_0.5_minseg160_maxseg200.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -296,32 +365,44 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -329,44 +410,60 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg40_maxseg80.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg40_maxseg80.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_1_minseg160_maxseg200.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -380,32 +477,44 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -413,43 +522,59 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg40_maxseg80.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg40_maxseg80.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_1_minseg160_maxseg200.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -469,32 +594,44 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -502,44 +639,60 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg40_maxseg80.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg40_maxseg80.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_2_minseg160_maxseg200.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -553,32 +706,44 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -586,43 +751,59 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg40_maxseg80.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg40_maxseg80.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_2_minseg160_maxseg200.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -636,32 +817,44 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -669,44 +862,59 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg40_maxseg80.rdata")
-
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg40_maxseg80.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma0.5_alphansp_3_minseg160_maxseg200.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -720,32 +928,44 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=16, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg4_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg4_maxseg20.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 500kb ~ 1mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg10_maxseg20.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg10_maxseg20.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 1mb ~ 2mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg20_maxseg40.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg20_maxseg40.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 
@@ -753,43 +973,59 @@ plot_randeff_windows_smashgen(dat)
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg40_maxseg80.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg40_maxseg80.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 4mb ~ 6mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg80_maxseg120.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg80_maxseg120.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 ### 6mb ~ 8mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg120_maxseg160.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg120_maxseg160.rdata")
 
 
 
 plot_randeff_windows_smashgen(dat)
 ```
 
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
+```
+
 ### 8mb ~ 10mb
 
 ```{r fig.width=20, fig.height=5}
 
-load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg160_maxseg200.rdata")
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/spatial_nonspatial_sp_normal_smashgenonly_r2/simu_sp_nsp_chr1_50kb_maxiter50_normal_sigma1_alphansp_3_minseg160_maxseg200.rdata")
 
 
 plot_randeff_windows_smashgen(dat)
+```
+
+```{r fig.width=4, fig.height=4}
+scatter_simulated_estimated_spatial(dat)
 ```
 
 

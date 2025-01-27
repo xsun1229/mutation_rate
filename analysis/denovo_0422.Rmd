@@ -20,11 +20,15 @@ editor_options:
 
 # Simulation
 
-Small alpha (1/0.5)
+Small alpha (0.5, 1, 2, 3)
 
-[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha.html)
+[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 3000 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha.html)
 
-Large alpha (5/30)
+[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 1000 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha_1000windows.html)
+
+[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 500 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha_500windows.html)
+
+Large alpha (5, 30)
 
 [non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
 
