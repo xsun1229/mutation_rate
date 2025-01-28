@@ -62,6 +62,8 @@ Previous simulation
 
 # Real data
 
+[Examining the data](https://xsun1229.github.io/mutation_rate/denovo0422_examining_data.html)
+
 ## Estimating local random effects 
 
 [Summary table for all the real analyses](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_summary.html)
