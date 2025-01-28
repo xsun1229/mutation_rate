@@ -1,0 +1,145 @@
+---
+title: "Examining the data"
+author: "XSun"
+date: "2025-01-28"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+```{r}
+library(data.table)
+library(ggplot2)
+
+
+plot_obs_exp_count <- function(data, title) {
+  
+  ggplot(data = data, aes(x = start/1000000)) + 
+    geom_line(aes(y = obs, color = "Observed mutation count")) +
+    geom_line(aes(y = exp, color = "Scaled roulette expected mutation count") )+ 
+    labs(x = "mb", y = "count") +
+    scale_color_manual(name = "Group",
+                     values = c("Observed mutation count" = "purple",
+                                "Scaled roulette expected mutation count" = "orange")) +
+    ggtitle(title) + 
+    theme_minimal()
+  
+}
+
+
+
+plot_randeff <- function(data, title) {
+
+  ggplot(data = data, aes(x = start/1000000, y = obs/exp)) + 
+  geom_line() + 
+  labs(x = "mb", y = "Observed count - expected count") +  
+  geom_abline(slope = 0, intercept = 1, col="red") + 
+  ggtitle(title) + 
+  theme_minimal()
+  
+}
+
+
+```
+
+# SSC
+
+## chr1, 50kb window size
+
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=4}
+file <- paste0("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_50000.txt")
+dat_rl <- fread(file)
+colnames(dat_rl) <- c("chr", "start", "end","obs","exp")
+
+plot_obs_exp_count(dat_rl, "50kb window size")
+plot_randeff(dat_rl, "50kb window size")
+
+dat_rl$randeff <- dat_rl$obs/dat_rl$exp
+DT::datatable(dat_rl,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;',),options = list(pageLength = 10) )
+
+```
+
+
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=4}
+
+print("zoom in the regions with large differences")
+
+dat_plot <- dat_rl[3510:3530,]
+plot_obs_exp_count(dat_plot, NULL)
+plot_randeff(dat_plot, NULL)
+
+dat_plot <- dat_rl[4000:4200,]
+plot_obs_exp_count(dat_plot, NULL)
+plot_randeff(dat_plot, NULL)
+
+dat_plot <- dat_rl[4000:4200,]
+plot_obs_exp_count(dat_plot, NULL)
+plot_randeff(dat_plot, NULL)
+```
+
+## chr1, 100kb window size
+
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=4}
+file <- paste0("/project/xinhe/xsun/mutation_rate/6.de_novo_ssc_trost/data/per_chr_processed/chr1/rl_ssc_trost_combine_chr1_100000.txt")
+dat_rl <- fread(file)
+colnames(dat_rl) <- c("chr", "start", "end","obs","exp")
+
+plot_obs_exp_count(dat_rl, "100kb window size")
+plot_randeff(dat_rl, "100kb window size")
+
+dat_rl$randeff <- dat_rl$obs/dat_rl$exp
+DT::datatable(dat_rl,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;',),options = list(pageLength = 10) )
+```
+
+
+
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=4}
+
+print("zoom in the regions with large differences")
+
+dat_plot <- dat_rl[1700:1800,]
+plot_obs_exp_count(dat_plot, NULL)
+plot_randeff(dat_plot, NULL)
+
+dat_plot <- dat_rl[2000:2150,]
+plot_obs_exp_count(dat_plot, NULL)
+plot_randeff(dat_plot, NULL)
+
+```
+
+
+# MSSNG
+
+## chr1, 50kb window size
+
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=4}
+file <- paste0("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/rl_trost_combine_chr1_50000_mssng.txt")
+dat_rl <- fread(file)
+colnames(dat_rl) <- c("chr", "start", "end","obs","exp")
+
+plot_obs_exp_count(dat_rl, "50kb window size")
+plot_randeff(dat_rl, "50kb window size")
+
+dat_rl$randeff <- dat_rl$obs/dat_rl$exp
+DT::datatable(dat_rl,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;',),options = list(pageLength = 10) )
+
+```
+
+Zoomed in plots are here https://xsun1229.github.io/mutation_rate/denovo0422_estimated_randeff_mssng.html#50kb
+
+## chr1, 100kb window size
+
+```{r warning=FALSE, message=FALSE, fig.width=10, fig.height=4}
+file <- paste0("/project/xinhe/xsun/mutation_rate/5.de_novo_trost/data/per_chr_processed/chr1/rl_trost_combine_chr1_100000_mssng.txt")
+dat_rl <- fread(file)
+colnames(dat_rl) <- c("chr", "start", "end","obs","exp")
+
+plot_obs_exp_count(dat_rl, "100kb window size")
+plot_randeff(dat_rl, "100kb window size")
+
+dat_rl$randeff <- dat_rl$obs/dat_rl$exp
+DT::datatable(dat_rl,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;',),options = list(pageLength = 10) )
+```
+
+Zoomed in plots are here https://xsun1229.github.io/mutation_rate/denovo0422_estimated_randeff_mssng.html#100kb

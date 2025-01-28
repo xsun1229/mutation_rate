@@ -18,9 +18,14 @@ editor_options:
 
 [Gnomad V4.1](https://xsun1229.github.io/mutation_rate/data_gnomadv41.html)
 
+[Examining the data](https://xsun1229.github.io/mutation_rate/denovo0422_examining_data.html)
+
 # Simulation
 
 Small alpha (0.5, 1, 2, 3)
+
+
+ssc
 
 [SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 3000 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha.html)
 
@@ -28,7 +33,17 @@ Small alpha (0.5, 1, 2, 3)
 
 [SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 500 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha_500windows.html)
 
+mssng
+
+[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 3000 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha_mssng.html)
+
+[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 1000 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha_1000windows_mssng.html)
+
+[SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution -- 500 windows](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_spatial_norm_nonspatial_smashgen_smallalpha_500windows_mssng.html)
+
 Large alpha (5, 30)
+
+ssc
 
 [non-spatial random effects](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_nonspatial.html)
 

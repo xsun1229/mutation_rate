@@ -1,7 +1,7 @@
 ---
 title: "SMASHgen estimation: spatial and non-spatial random effects, random effects_spatial from normal distribution --- total windows = 1000"
 author: "XSun"
-date: "2024-10-03"
+date: "2025-01-27"
 output:
   workflowr::wflow_html:
     code_folding: hide
