@@ -1,0 +1,144 @@
+---
+title: "Real data cross validation summary: smashgen and gamma"
+author: "XSun"
+date: "2025-02-13"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+We partition each window into 1kb bins, use odd bins to train the local effect, and test on the even bins
+
+- Run smashgen / Gamma estimation on the training data, to get an estimation for the local random effects.
+
+- Predict the mutation rate on testing data, based on the rescaled Roulette estimation.
+
+
+```{r}
+library(ggplot2)
+library(gridExtra)
+
+scatter_plot_mutct <- function(data, xcol, ycol, alpha_col = NULL ,title=NULL) {
+  # Fit the linear model using user-defined columns
+  formula <- as.formula(paste(ycol, "~", xcol, "+0"))
+  fit <- lm(formula, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+
+  x_values <- data[[xcol]]
+  y_values <- data[[ycol]]
+
+  # Calculate the LPD (Log Predictive Density)
+  #lpd <- sum(y_values * log(x_values),na.rm = T) - sum(x_values)
+  
+  if(is.null(alpha_col)) {
+    
+  ggplot(data) +
+  geom_point(data = data, aes_string(x = xcol, y = ycol), color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3) #, 
+                                                    #"\nLPD = ", round(lpd, 3)
+                                                    ),
+           hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
+  labs(x = paste("Predicted mutation count:", gsub(x = xcol,pattern = "mutct_pred_test_",replacement = "")),
+       y = paste("Observed mutation count:", ycol),
+       title = title) +
+  theme_minimal()
+    
+    
+  }else {
+    
+    alpha_est <- unique(data[[alpha_col]])[!is.na(unique(data[[alpha_col]]))]
+    
+  ggplot(data) +
+  geom_point(data = data, aes_string(x = xcol, y = ycol), color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3) , 
+                                                    "\nestimated alpha = ", round(alpha_est, 3)),
+           hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
+  labs(x = paste("Predicted mutation count:", gsub(x = xcol,pattern = "mutct_pred_test_",replacement = "")),
+       y = paste("Observed mutation count:", ycol),
+       title = title) +
+  theme_minimal()
+    
+  }
+  
+  
+  
+  
+  
+}
+  
+```
+
+# SSC 
+
+## Window size 50kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/summary/ssc_trost_per_window_chr1_50kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 10) )
+
+p1 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test", alpha_col = "alpha_nsp_est_gamma",title = "Total effect -- Gamma")
+p2 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "Total effect -- smashgen")
+p3 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_spatial_smashgen", ycol = "obs_test",title = "Spatial only -- smashgen")
+p4 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_nonspatial_smashgen", ycol = "obs_test",title = "Non-Spatial only -- smashgen")
+p5 <- scatter_plot_mutct(df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+grid.arrange(p5, p1, p2, p3, p4, nrow = 1)
+```
+
+## Window size 100kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/10.denovo_real/results/summary/ssc_trost_per_window_chr1_100kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 10) )
+
+p1 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test", alpha_col = "alpha_nsp_est_gamma",title = "Total effect -- Gamma")
+p2 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "Total effect -- smashgen")
+p3 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_spatial_smashgen", ycol = "obs_test",title = "Spatial only -- smashgen")
+p4 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_nonspatial_smashgen", ycol = "obs_test",title = "Non-Spatial only -- smashgen")
+p5 <- scatter_plot_mutct(df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+grid.arrange(p5, p1, p2, p3, p4, nrow = 1)
+```
+
+# mssng
+
+## Window size 50kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/summary/mssng_trost_per_window_chr1_50kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 10) )
+
+p1 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test", alpha_col = "alpha_nsp_est_gamma",title = "Total effect -- Gamma")
+p2 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "Total effect -- smashgen")
+p3 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_spatial_smashgen", ycol = "obs_test",title = "Spatial only -- smashgen")
+p4 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_nonspatial_smashgen", ycol = "obs_test",title = "Non-Spatial only -- smashgen")
+p5 <- scatter_plot_mutct(df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+grid.arrange(p5, p1, p2, p3, p4, nrow = 1)
+```
+
+## Window size 100kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/results/summary/mssng_trost_per_window_chr1_100kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 10) )
+
+p1 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test", alpha_col = "alpha_nsp_est_gamma",title = "Total effect -- Gamma")
+p2 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "Total effect -- smashgen")
+p3 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_spatial_smashgen", ycol = "obs_test",title = "Spatial only -- smashgen")
+p4 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_nonspatial_smashgen", ycol = "obs_test",title = "Non-Spatial only -- smashgen")
+p5 <- scatter_plot_mutct(df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+grid.arrange(p5, p1, p2, p3, p4, nrow = 1)
+```
+
+

@@ -22,8 +22,10 @@ editor_options:
 
 # Simulation
 
-Small alpha (0.5, 1, 2, 3)
+[Summary for all settings](https://xsun1229.github.io/mutation_rate/denovo0422_simulation_summary_for_all.html)
 
+
+Small alpha (0.5, 1, 2, 3)
 
 ssc
 
@@ -64,9 +66,11 @@ Previous simulation
 
 [Examining the data](https://xsun1229.github.io/mutation_rate/denovo0422_examining_data.html)
 
+[Real data cross validation summary: smashgen and gamma](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_summary_for_all.html)
+
 ## Estimating local random effects 
 
-[Summary table for all the real analyses](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_summary.html)
+[Summary table for all the real analyses -- smashgen estimation only](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_summary.html)
 
 SSC (Trost et al, Cell 2022)
 

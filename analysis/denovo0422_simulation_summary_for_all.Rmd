@@ -1,0 +1,235 @@
+---
+title: "Simulation summary for all settings"
+author: "XSun"
+date: "2025-02-12"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+We compared the \( R^2 \) values obtained from fitting simulated random effects and estimated random effects.  
+
+- `_total_smashgen`: Total random effect estimated by Smashgen.  
+- `_spatial_smashgen`: Spatial random effect estimated by Smashgen.  
+- `_nonspatial_smashgen`: Nonspatial random effect estimated by Smashgen.  
+- `_total_gamma`: Total random effect estimated by the gamma model.  
+
+```{r }
+library(ggplot2)
+library(gridExtra)
+
+
+plot_rsq_comparison_randeff <- function(data, color_var, color_label) {
+  ggplot(data, aes(x = as.numeric(rsq_randeff_total_gamma), 
+                   y = as.numeric(rsq_randeff_total_smashgen), 
+                   color = .data[[color_var]])) +
+    geom_point() +
+    geom_abline(slope = 1, intercept = 0, col = "black") +
+    labs(x = "rsq -- total randeff -- Gamma", 
+         y = "rsq -- total randeff -- smashgen", 
+         color = color_label) +
+    theme_minimal()
+}
+
+plot_rsq_comparison_mutct <- function(data, color_var, color_label) {
+  ggplot(data, aes(x = as.numeric(rsq_mutct_total_gamma), 
+                   y = as.numeric(rsq_mutct_total_smashgen), 
+                   color = .data[[color_var]])) +
+    geom_point() +
+    geom_abline(slope = 1, intercept = 0, col = "black") +
+    labs(x = "rsq -- mutation count -- Gamma", 
+         y = "rsq -- mutation count -- smashgen", 
+         color = color_label) +
+    theme_minimal()
+}
+
+```
+
+# SSC 
+
+## Window size = 50kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_50kb.rdata")
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+summary_all <-c()
+summary_all <- rbind(summary_all, summary)
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+
+```
+
+
+## Window size = 100kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_100kb.rdata")
+
+summary_all <- rbind(summary_all, summary)
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+```
+
+## Window size = 500kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_500kb.rdata")
+
+summary_all <- rbind(summary_all, summary)
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+```
+
+## Pooling all window sizes
+
+```{r fig.width=6, fig.height=5}
+
+plot_rsq_comparison_randeff(summary_all, "windowsize", "windowsize")
+
+plot_rsq_comparison_mutct(summary_all, "windowsize", "windowsize")
+```
+
+
+
+# MSSNG
+
+## Window size = 50kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_50kb_mssng.rdata")
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+summary_all <-c()
+summary_all <- rbind(summary_all, summary)
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+
+```
+
+
+## Window size = 100kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_100kb_mssng.rdata")
+
+summary_all <- rbind(summary_all, summary)
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+```
+
+## Window size = 500kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_500kb_mssng.rdata")
+
+summary_all <- rbind(summary_all, summary)
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+```
+
+## Pooling all window sizes
+
+```{r fig.width=6, fig.height=5}
+
+plot_rsq_comparison_randeff(summary_all, "windowsize", "windowsize")
+
+plot_rsq_comparison_mutct(summary_all, "windowsize", "windowsize")
+```
