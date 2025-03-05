@@ -46,6 +46,18 @@ plot_rsq_comparison_mutct <- function(data, color_var, color_label) {
     theme_minimal()
 }
 
+plot_rsq_comparison_mutct_withrl <- function(data, color_var, color_label) {
+  ggplot(data, aes(x = as.numeric(rsq_mutct_roulette), 
+                   y = as.numeric(rsq_mutct_total_smashgen), 
+                   color = .data[[color_var]])) +
+    geom_point() +
+    geom_abline(slope = 1, intercept = 0, col = "black") +
+    labs(x = "rsq -- mutation count -- Gamma", 
+         y = "rsq -- mutation count -- smashgen", 
+         color = color_label) +
+    theme_minimal()
+}
+
 ```
 
 # SSC 
@@ -75,7 +87,12 @@ p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
 
 grid.arrange(p1, p2, p3, p4, nrow = 1)
 
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
 
+grid.arrange(p1, p2, p3, p4, nrow = 1)
 ```
 
 
@@ -102,7 +119,12 @@ p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_m
 p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
 
 grid.arrange(p1, p2, p3, p4, nrow = 1)
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
 
+grid.arrange(p1, p2, p3, p4, nrow = 1)
 ```
 
 ## Window size = 500kb
@@ -128,7 +150,12 @@ p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_m
 p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
 
 grid.arrange(p1, p2, p3, p4, nrow = 1)
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
 
+grid.arrange(p1, p2, p3, p4, nrow = 1)
 ```
 
 ## Pooling all window sizes
@@ -138,6 +165,8 @@ grid.arrange(p1, p2, p3, p4, nrow = 1)
 plot_rsq_comparison_randeff(summary_all, "windowsize", "windowsize")
 
 plot_rsq_comparison_mutct(summary_all, "windowsize", "windowsize")
+
+plot_rsq_comparison_mutct_withrl(summary_all, "windowsize", "windowsize")
 ```
 
 
@@ -169,7 +198,12 @@ p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
 
 grid.arrange(p1, p2, p3, p4, nrow = 1)
 
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
 
+grid.arrange(p1, p2, p3, p4, nrow = 1)
 ```
 
 
@@ -196,7 +230,12 @@ p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_m
 p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
 
 grid.arrange(p1, p2, p3, p4, nrow = 1)
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
 
+grid.arrange(p1, p2, p3, p4, nrow = 1)
 ```
 
 ## Window size = 500kb
@@ -222,7 +261,12 @@ p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_m
 p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
 
 grid.arrange(p1, p2, p3, p4, nrow = 1)
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
 
+grid.arrange(p1, p2, p3, p4, nrow = 1)
 ```
 
 ## Pooling all window sizes
@@ -232,4 +276,116 @@ grid.arrange(p1, p2, p3, p4, nrow = 1)
 plot_rsq_comparison_randeff(summary_all, "windowsize", "windowsize")
 
 plot_rsq_comparison_mutct(summary_all, "windowsize", "windowsize")
+
+plot_rsq_comparison_mutct_withrl(summary_all, "windowsize", "windowsize")
 ```
+
+# SSC + deCODE
+
+## Window size = 50kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_50kb_chen.rdata")
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+summary_all <-c()
+summary_all <- rbind(summary_all, summary)
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+```
+
+
+## Window size = 100kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_100kb_chen.rdata")
+
+summary_all <- rbind(summary_all, summary)
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+```
+
+## Window size = 500kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/9.denovo_simulation_0422/results/summary/winsize_500kb_chen.rdata")
+
+summary_all <- rbind(summary_all, summary)
+
+DT::datatable(summary,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Summary for different simulation settings'),options = list(pageLength = 10) )
+
+p1 <- plot_rsq_comparison_randeff(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_randeff(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_randeff(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_randeff(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+
+p1 <- plot_rsq_comparison_mutct(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+p1 <- plot_rsq_comparison_mutct_withrl(summary, "non_spatial_alpha_true", "Non-spatial alpha -- true")
+p2 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_sigma", "spatial_sigma")
+p3 <- plot_rsq_comparison_mutct_withrl(summary, "spatial_region_min", "spatial_region_min")
+p4 <- plot_rsq_comparison_mutct_withrl(summary, "total_windows", "total_windows")
+
+grid.arrange(p1, p2, p3, p4, nrow = 1)
+```
+
+## Pooling all window sizes
+
+```{r fig.width=6, fig.height=5}
+
+plot_rsq_comparison_randeff(summary_all, "windowsize", "windowsize")
+
+plot_rsq_comparison_mutct(summary_all, "windowsize", "windowsize")
+
+plot_rsq_comparison_mutct_withrl(summary_all, "windowsize", "windowsize")
+```
+

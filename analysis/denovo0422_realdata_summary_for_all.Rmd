@@ -142,3 +142,41 @@ grid.arrange(p5, p1, p2, p3, p4, nrow = 1)
 ```
 
 
+
+
+# SSC + deCODE
+
+## Window size 50kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/results/summary/chen_per_window_chr1_50kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 10) )
+
+p1 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test", alpha_col = "alpha_nsp_est_gamma",title = "Total effect -- Gamma")
+p2 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "Total effect -- smashgen")
+p3 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_spatial_smashgen", ycol = "obs_test",title = "Spatial only -- smashgen")
+p4 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_nonspatial_smashgen", ycol = "obs_test",title = "Non-Spatial only -- smashgen")
+p5 <- scatter_plot_mutct(df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+grid.arrange(p5, p1, p2, p3, p4, nrow = 1)
+```
+
+## Window size 100kb
+
+```{r fig.width=20, fig.height=5}
+
+load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/results/summary/chen_per_window_chr1_100kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 10) )
+
+p1 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test", alpha_col = "alpha_nsp_est_gamma",title = "Total effect -- Gamma")
+p2 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "Total effect -- smashgen")
+p3 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_spatial_smashgen", ycol = "obs_test",title = "Spatial only -- smashgen")
+p4 <- scatter_plot_mutct(df_per_window_data, xcol = "mutct_pred_test_nonspatial_smashgen", ycol = "obs_test",title = "Non-Spatial only -- smashgen")
+p5 <- scatter_plot_mutct(df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+grid.arrange(p5, p1, p2, p3, p4, nrow = 1)
+```
+
+
+

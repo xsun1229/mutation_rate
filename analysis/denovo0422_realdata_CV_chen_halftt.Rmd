@@ -1,0 +1,150 @@
+---
+title: "Cross Validation -- SSC + deCODE: half training and half testing: bin size 1kb"
+author: "XSun"
+date: "2024-08-21"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+# Introduction
+
+We cleaned the real data [here](https://xsun1229.github.io/mutation_rate/denovo0422_realdata_data_cleaning_chen.html). 
+
+```{r warning=F, message=F}
+library(ggplot2)
+library(gridExtra)
+library(data.table)
+
+scatter_plot_mutct <- function(data, xcol, ycol, title=NULL,gamma) {
+  # Fit the linear model using user-defined columns
+  formula <- as.formula(paste(ycol, "~", xcol, "+0"))
+  fit <- lm(formula, data = data)
+  adj_rsq <- summary(fit)$adj.r.squared  # Extract the adjusted R-squared
+
+  x_values <- data[[xcol]]
+  y_values <- data[[ycol]]
+
+  # Calculate the LPD (Log Predictive Density)
+  #lpd <- sum(y_values * log(x_values),na.rm = T) - sum(x_values)
+  
+  ggplot(data) +
+  geom_point(data = data, aes_string(x = xcol, y = ycol), color = "black") +
+  geom_abline(intercept = 0, slope = 1, color = "red", linetype = "dashed") +
+  annotate("text", x = Inf, y = Inf, label = paste0("Adj R-sq = ", round(adj_rsq, 3) #, 
+                                                    #"\nLPD = ", round(lpd, 3)
+                                                    ),
+           hjust = 1.1, vjust = 1.1, color = "blue", parse = FALSE) +  # Adjust text positioning and color
+  labs(x = paste("Predicted mutation count:", xcol),
+       y = paste("Observed mutation count:", ycol),
+       title = title) +
+  theme_minimal()
+  
+}
+
+plot_scatter_randeff <- function(data) {
+  ggplot(data = df_compare) +aes(x=seg_est,y=chr_est) +
+  geom_point() +
+  labs(x = "random effects estimated from partitioned segments",
+       y= "random effects estimated from whole chromosome") +
+  geom_abline(slope = 1, intercept = 0, col="red") +
+  theme_minimal()
+}
+
+plot_randeff_genome <- function(data) {
+  ggplot(df_compare, aes(x =  window_start/1000000)) +
+  geom_line(aes(y = seg_est, color = "estimated from partitioned segments"), alpha = 0.4) +
+  geom_line(aes(y = chr_est, color = "estimated from whole chr"), alpha = 0.3) +
+  geom_line(aes(y = fold_change, color = "observed fold change"), alpha = 0.1) +
+  labs(x = "gemonic position (mb)",
+       y = "estimated random effects") +
+  scale_color_manual(name = "Group",
+                     values = c("estimated from partitioned segments" = "blue",
+                                "estimated from whole chr" = "green", "observed fold change" = "red"),
+                     labels = c("estimated from partitioned segments","estimated from whole chr", "observed fold change")) +
+  theme_minimal()
+}
+
+
+plot_randeff_windows <- function(data) {
+  
+  ggplot(data, aes(x = Window_Start / 1000000)) +
+    geom_line(aes(y = randeff_est, color = "Estimated random effect"), alpha = 0.4) +
+    geom_line(aes(y = rl_rescaled_sum, color = "Roulette predicted mutation count"), alpha = 0.3) +
+    geom_line(aes(y = obs_sum, color = "Observed de novo mutations"), alpha = 0.1) +
+    geom_hline(yintercept = 1, linetype = "dashed", color = "black", size = 1) +  # y=1 line
+    annotate("text", x = Inf, y = 1, label = "y = 1", vjust = -1, hjust = 1.1, color = "black") +  # y=1 text
+    labs(x = "Genomic position (Mb)",
+         y = "Estimated random effects") +
+    scale_color_manual(name = "Group",
+                       values = c("Estimated random effect" = "blue",
+                                  "Roulette predicted mutation count" = "green", 
+                                  "Observed de novo mutations" = "red")) +
+    guides(color = guide_legend(override.aes = list(alpha = 1))) +
+    theme_minimal()
+  
+}
+
+```
+
+
+# Cross validation
+
+We partition each window into 1kb bins, use odd bins to train the local effect, and test on the even bins
+
+* Run smashgen on the training data, to get an estimation for the local random effects
+
+`fit = ebps(df_seg_non0$obs_train,df_seg_non0$rl_rescaled_train,smooth_control = list(wave_trans='ndwt',ndwt_method='smash'), general_control = list(verbose=T,printevery=1, maxiter=50))`
+
+* Predict the mutation rate on testing data, based on the rescaled Roulette estimation.
+
+`df_per_window_data$test_pred <- df_per_window_data$randeff_est_train*df_per_window_data$rl_rescaled_test`
+
+
+## 50kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/results/summary/chen_per_window_chr1_50kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test",title = "gamma prediction")
+p3 <- scatter_plot_mutct(data = df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2,p3, ncol = 3)
+```
+
+
+## 100kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/results/summary/chen_per_window_chr1_100kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test",title = "gamma prediction")
+p3 <- scatter_plot_mutct(data = df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2,p3, ncol = 3)
+```
+
+
+## 500kb
+
+```{r}
+
+load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/results/summary/chen_per_window_chr1_500kb_frac4_halftt.rdata")
+
+DT::datatable(df_per_window_data,caption = htmltools::tags$caption( style = 'caption-side: left; text-align: left; color:black;  font-size:150% ;','Details for each window'),options = list(pageLength = 5) )
+
+p1 <- scatter_plot_mutct(data = df_per_window_data, xcol = "mutct_pred_test_total_smashgen", ycol = "obs_test",title = "smashgen prediction")
+p2 <- scatter_plot_mutct(data = df_per_window_data, xcol = "mutct_pred_test_total_gamma", ycol = "obs_test",title = "gamma prediction")
+p3 <- scatter_plot_mutct(data = df_per_window_data, xcol = "rl_rescaled_test", ycol = "obs_test",title = "Roulette baseline")
+
+grid.arrange(p1, p2,p3, ncol = 3)
+```

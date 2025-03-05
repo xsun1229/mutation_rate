@@ -1,0 +1,331 @@
+---
+title: "Comparing real data"
+author: "XSun"
+date: "2025-02-24"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+    toc: true
+---
+
+## Introduction
+
+```{r}
+
+library(ggplot2)
+
+# scatter_compare_mutct <- function(ssc, mssng, windowsize) {
+#   
+#   df <- data.frame(Window = ssc$Window,
+#                    Window_Start = ssc$Window_Start,
+#                    Window_End = ssc$Window_End,
+#                    ssc = ssc$obs_sum,
+#                    mssng = mssng$obs_sum)
+#   
+#   fit <- lm(formula = df$mssng~df$ssc + 0)
+#   
+#   slope <- fit$coefficients
+#   
+#   ggplot(data = df, aes(x = ssc, y = mssng)) +
+#     geom_point() +
+#     labs(x = "ssc observed count per window", y = "mssng observed count per window") + 
+#     ggtitle(paste0("windowsize:",windowsize)) +
+#     geom_abline(slope = slope, intercept = 0, col = "red") +
+#     theme_minimal() +
+#     # Add slope text annotation (top-right corner)
+#     annotate(
+#       "text", 
+#       x = Inf, y = Inf, 
+#       label = paste0("slope = ", round(slope, 3)),  # Round to 3 decimal places
+#       hjust = 1.1, vjust = 1.1,  # Adjust position slightly inward
+#       color = "red", size = 5
+#     )
+#   
+# }
+
+scatter_compare_mutct_chen <- function(ssc, chen, window_start, windowsize) {
+  
+  df <- data.frame(Window_Start = window_start,
+                   ssc = ssc,
+                   chen = chen)
+  
+  fit <- lm(formula = df$chen~df$ssc + 0)
+  
+  slope <- fit$coefficients
+  
+  ggplot(data = df, aes(x = ssc, y = chen)) +
+    geom_point() +
+    labs(x = "ssc observed count per window", y = "ssc + deCODE observed count per window") + 
+    ggtitle(paste0("windowsize:",windowsize)) +
+    geom_abline(slope = slope, intercept = 0, col = "red") +
+    theme_minimal() +
+    # Add slope text annotation (top-right corner)
+    annotate(
+      "text", 
+      x = Inf, y = Inf, 
+      label = paste0("slope = ", round(slope, 3)),  # Round to 3 decimal places
+      hjust = 1.1, vjust = 1.1,  # Adjust position slightly inward
+      color = "red", size = 5
+    )
+  
+}
+
+scatter_compare_mutct_mssng <- function(ssc, mssng, window_start, windowsize) {
+  
+  df <- data.frame(Window_Start = window_start,
+                   ssc = ssc,
+                   mssng = mssng)
+  
+  fit <- lm(formula = df$mssng~df$ssc + 0)
+  
+  slope <- fit$coefficients
+  
+  ggplot(data = df, aes(x = ssc, y = mssng)) +
+    geom_point() +
+    labs(x = "ssc observed count per window", y = "mssng observed count per window") + 
+    ggtitle(paste0("windowsize:",windowsize)) +
+    geom_abline(slope = slope, intercept = 0, col = "red") +
+    theme_minimal() +
+    # Add slope text annotation (top-right corner)
+    annotate(
+      "text", 
+      x = Inf, y = Inf, 
+      label = paste0("slope = ", round(slope, 3)),  # Round to 3 decimal places
+      hjust = 1.1, vjust = 1.1,  # Adjust position slightly inward
+      color = "red", size = 5
+    )
+  
+}
+
+# region_plot_obs_mut <- function(index, ssc, mssng, windowsize) {
+#   
+#   ssc_select <- ssc[(index - 10):(index + 10),]
+#   mssng_select <- mssng[(index - 10):(index + 10),]
+#   
+#   df <- data.frame(
+#     x = ssc_select$Window_Start / 1000000,
+#     ssc = ssc_select$obs_sum,
+#     mssng = mssng_select$obs_sum
+#   )
+#   
+#   # Plot using ggplot2
+#   ggplot(df, aes(x = x)) +
+#     geom_line(aes(y = ssc, color = "ssc")) +
+#     geom_line(aes(y = mssng, color = "mssng")) +
+#     labs(x = "Window Start (Mb)", y = "Observed mutation count", color = "Dataset") +
+#     ggtitle(paste0("windowsize:",windowsize)) +
+#     theme_minimal()
+#   
+# }
+
+region_plot_obs_mut_chen <- function(index, ssc, chen, window_start, windowsize) {
+  
+  ssc_select <- ssc[(index - 10):(index + 10)]
+  chen_select <- chen[(index - 10):(index + 10)]
+  
+  df <- data.frame(
+    x = window_start[(index - 10):(index + 10)] / 1000000,
+    ssc = ssc_select,
+    chen = chen_select
+  )
+  
+  # Plot using ggplot2
+  ggplot(df, aes(x = x)) +
+    geom_line(aes(y = ssc, color = "ssc")) +
+    geom_line(aes(y = chen, color = "ssc + deCODE")) +
+    labs(x = "Window Start (Mb)", y = "Observed mutation count", color = "Dataset") +
+    ggtitle(paste0("windowsize:",windowsize)) +
+    theme_minimal()
+  
+}
+
+
+region_plot_obs_mut_mssng <- function(index, ssc, mssng, window_start, windowsize) {
+  
+  ssc_select <- ssc[(index - 10):(index + 10)]
+  mssng_select <- mssng[(index - 10):(index + 10)]
+  
+  df <- data.frame(
+    x = window_start[(index - 10):(index + 10)] / 1000000,
+    ssc = ssc_select,
+    mssng = mssng_select
+  )
+  
+  # Plot using ggplot2
+  ggplot(df, aes(x = x)) +
+    geom_line(aes(y = ssc, color = "ssc")) +
+    geom_line(aes(y = mssng, color = "mssng")) +
+    labs(x = "Window Start (Mb)", y = "Observed mutation count", color = "Dataset") +
+    ggtitle(paste0("windowsize:",windowsize)) +
+    theme_minimal()
+  
+}
+```
+
+# Comparing SSC and MSSNG
+
+## window size 50kb
+
+
+```{r}
+
+ssc <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_50kb_frac4_segadded.rdata"))
+ssc <- ssc[complete.cases(ssc$rl_rescaled_sum),]
+mssng <-  get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_50kb_frac4_segadded.rdata"))
+mssng <- mssng[complete.cases(mssng$rl_rescaled_sum),]
+
+ssc <- ssc[ssc$pass_threshold,]
+mssng <- mssng[mssng$pass_threshold,]
+
+ssc_merge <- merge(ssc,mssng,by="Window_Start")
+ssc_merge <- ssc_merge[ssc_merge$pass_threshold.x ==T & ssc_merge$pass_threshold.y ==T,]
+
+scatter_compare_mutct_mssng(ssc = ssc_merge$obs_sum.x,mssng = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start,windowsize = "50kb")
+
+index <- which(ssc_merge$obs_sum.x < 10 & ssc_merge$obs_sum.y > 40 )
+region_plot_obs_mut_mssng(index = index, ssc = ssc_merge$obs_sum.x, mssng = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "50kb")
+
+index <- which(ssc_merge$obs_sum.x < 10 & ssc_merge$obs_sum.y > 30 & ssc_merge$obs_sum.y < 40)
+region_plot_obs_mut_mssng(index = index, ssc = ssc_merge$obs_sum.x, mssng = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "50kb")
+
+```
+
+
+## window size 100kb
+
+```{r}
+
+ssc <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4_segadded.rdata"))
+ssc <- ssc[complete.cases(ssc$rl_rescaled_sum),]
+mssng <-  get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_100kb_frac4_segadded.rdata"))
+mssng <- mssng[complete.cases(mssng$rl_rescaled_sum),]
+
+ssc <- ssc[ssc$pass_threshold,]
+mssng <- mssng[mssng$pass_threshold,]
+
+ssc_merge <- merge(ssc,mssng,by="Window_Start")
+ssc_merge <- ssc_merge[ssc_merge$pass_threshold.x ==T & ssc_merge$pass_threshold.y ==T,]
+
+scatter_compare_mutct_mssng(ssc = ssc_merge$obs_sum.x,mssng = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start,windowsize = "100kb")
+
+index <- which(ssc_merge$obs_sum.x < 15 & ssc_merge$obs_sum.y > 40 )
+region_plot_obs_mut_mssng(index = index, ssc = ssc_merge$obs_sum.x, mssng = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "100kb")
+
+index <- which(ssc_merge$obs_sum.x < 15 & ssc_merge$obs_sum.y > 30 & ssc_merge$obs_sum.y < 40)
+region_plot_obs_mut_mssng(index = index, ssc = ssc_merge$obs_sum.x, mssng = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "100kb")
+
+```
+
+
+## window size 500kb
+
+```{r}
+
+ssc <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_500kb_frac4_halftt.rdata"))
+mssng <-  get(load("/project/xinhe/xsun/mutation_rate/11.denovo_real_mssng/data_cleaning/mssng_trost_per_window_chr1_500kb_frac4_halftt.rdata"))
+
+ssc <- ssc[ssc$pass_threshold,]
+mssng <- mssng[mssng$pass_threshold,]
+
+scatter_compare_mutct(ssc = ssc,mssng = mssng,windowsize = "500kb")
+
+df <- data.frame(ssc = ssc$obs_sum,
+                 mssng = mssng$obs_sum)
+
+index <- 64
+region_plot_obs_mut(index = index,ssc = ssc,mssng = mssng,windowsize = "500kb")
+
+index <- which(df$ssc >50 & df$mssng == 0)
+
+for (inx in c(11, 28,60,120)){
+  
+  print(region_plot_obs_mut(index = inx,ssc = ssc,mssng = mssng,windowsize = "500kb"))
+  
+}
+
+```
+
+
+
+# Comparing SSC and SSC + deCODE
+
+## window size 50kb
+
+```{r}
+
+ssc <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_50kb_frac4_segadded.rdata"))
+ssc <- ssc[complete.cases(ssc$rl_rescaled_sum),]
+chen <-  get(load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/data_cleaning/chen_per_window_chr1_50kb_frac4_halftt_segadded.rdata"))
+chen <- chen[complete.cases(chen$rl_rescaled_sum),]
+
+ssc <- ssc[ssc$pass_threshold,]
+chen <- chen[chen$pass_threshold,]
+
+ssc_merge <- merge(ssc,chen,by="Window_Start")
+ssc_merge <- ssc_merge[ssc_merge$pass_threshold.x ==T & ssc_merge$pass_threshold.y ==T,]
+
+scatter_compare_mutct_chen(ssc = ssc_merge$obs_sum.x,chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start,windowsize = "50kb")
+
+index <- which(ssc_merge$obs_sum.x >30 & ssc_merge$obs_sum.y < 15 )
+region_plot_obs_mut_chen(index = index, ssc = ssc_merge$obs_sum.x, chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "50kb")
+
+index <- which(ssc_merge$obs_sum.y < 15 & ssc_merge$obs_sum.x > 26 & ssc_merge$obs_sum.x < 30)
+region_plot_obs_mut_chen(index = index, ssc = ssc_merge$obs_sum.x, chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "50kb")
+
+```
+
+
+## window size 100kb
+
+```{r}
+
+ssc <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_100kb_frac4_segadded.rdata"))
+ssc <- ssc[complete.cases(ssc$rl_rescaled_sum),]
+chen <-  get(load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/data_cleaning/chen_per_window_chr1_100kb_frac4_halftt_segadded.rdata"))
+chen <- chen[complete.cases(chen$rl_rescaled_sum),]
+
+
+ssc <- ssc[ssc$pass_threshold,]
+chen <- chen[chen$pass_threshold,]
+
+ssc_merge <- merge(ssc,chen,by="Window_Start")
+ssc_merge <- ssc_merge[ssc_merge$pass_threshold.x ==T & ssc_merge$pass_threshold.y ==T,]
+
+scatter_compare_mutct_chen(ssc = ssc_merge$obs_sum.x,chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start,windowsize = "50kb")
+
+index <- which(ssc_merge$obs_sum.x >35 & ssc_merge$obs_sum.y == 20 )
+region_plot_obs_mut_chen(index = index, ssc = ssc_merge$obs_sum.x, chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "100kb")
+
+
+index <- which(ssc_merge$obs_sum.x >30 & ssc_merge$obs_sum.y == 14)
+region_plot_obs_mut_chen(index = index, ssc = ssc_merge$obs_sum.x, chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "100kb")
+
+```
+
+
+## window size 500kb
+
+```{r}
+
+ssc <- get(load("/project/xinhe/xsun/mutation_rate/10.denovo_real/data_cleaning/ssc_trost_per_window_chr1_500kb_frac4_halftt.rdata"))
+ssc <- ssc[complete.cases(ssc$rl_rescaled_sum),]
+chen <-  get(load("/project/xinhe/xsun/mutation_rate/15.denovo_real_chen/data_cleaning/chen_per_window_chr1_500kb_frac4_halftt_segadded.rdata"))
+chen <- chen[complete.cases(chen$rl_rescaled_sum),]
+
+
+ssc <- ssc[ssc$pass_threshold,]
+chen <- chen[chen$pass_threshold,]
+
+ssc_merge <- merge(ssc,chen,by="Window_Start")
+ssc_merge <- ssc_merge[ssc_merge$pass_threshold.x ==T & ssc_merge$pass_threshold.y ==T,]
+
+scatter_compare_mutct_chen(ssc = ssc_merge$obs_sum.x,chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start,windowsize = "500b")
+
+index <- which(ssc_merge$obs_sum.x >100 & ssc_merge$obs_sum.y < 75 )
+region_plot_obs_mut_chen(index = index, ssc = ssc_merge$obs_sum.x, chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "500kb")
+
+
+index <- which(ssc_merge$obs_sum.x ==99 & ssc_merge$obs_sum.y <75)
+region_plot_obs_mut_chen(index = index+5, ssc = ssc_merge$obs_sum.x, chen = ssc_merge$obs_sum.y, window_start = ssc_merge$Window_Start, windowsize = "100kb")
+
+```
